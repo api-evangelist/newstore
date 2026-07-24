@@ -1,0 +1,481 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: NewStore address audit-events API
+  description: NewStore public APIs
+  contact:
+    email: support@newstore.com
+    name: NewStore API Support
+    url: https://developer.newstore.com
+host: dodici-demo.p.newstore.net
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security: []
+tags:
+- name: audit-events
+  description: Audit event operations.
+paths:
+  /audit-events:
+    get:
+      description: "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 1 requests per second.\n</div>\n\nList audit events for the tenant."
+      summary: listAuditEvents
+      tags:
+      - audit-events
+      operationId: listAuditEvents
+      deprecated: false
+      produces:
+      - application/problem+json
+      - application/json
+      parameters:
+      - name: from
+        in: query
+        required: false
+        type: string
+        format: date-time
+        description: Only return events at or after this RFC 3339 timestamp (inclusive start of the time range). Required together with `to` for a fresh query; omit both when paginating with `cursor`, which resumes the original query and ignores them.
+      - name: to
+        in: query
+        required: false
+        type: string
+        format: date-time
+        description: Only return events at or before this RFC 3339 timestamp (inclusive end of the time range). Required together with `from` for a fresh query; omit both when paginating with `cursor`, which resumes the original query and ignores them.
+      - name: resource
+        in: query
+        required: false
+        type: string
+        maxLength: 256
+        description: Filter events by the resource type or identifier affected.
+      - name: operation
+        in: query
+        required: false
+        enum:
+        - CREATED
+        - UPDATED
+        - DELETED
+        type: string
+        description: Filter events by the operation performed.
+      - name: actor_id
+        in: query
+        required: false
+        type: string
+        maxLength: 64
+        description: Filter events by the actor's NewStore user id (actor.user_id).
+      - name: actor_name
+        in: query
+        required: false
+        type: string
+        maxLength: 256
+        description: Filter events by a case-insensitive substring of the actor's display name (actor.display_name).
+      - name: resource_id
+        in: query
+        required: false
+        type: string
+        maxLength: 64
+        description: Filter events by the identifier of the specific resource affected.
+      - name: cursor
+        in: query
+        required: false
+        type: string
+        minLength: 1
+        maxLength: 8192
+        description: Opaque pagination token. Pass the `next_cursor` from a previous response to fetch the next page; omit it to fetch the first page. The other filter parameters must be unchanged across a paged sequence.
+      - name: page_size
+        in: query
+        required: false
+        default: 25
+        type: integer
+        format: int32
+        minimum: 1.0
+        maximum: 100.0
+        exclusiveMaximum: false
+        exclusiveMinimum: false
+        description: Maximum number of events to return in this page. Defaults to 25; capped at 100. Pagination via `cursor` walks the full result set this many at a time.
+      responses:
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              detail: An unexpected error occurred while processing the request.
+              status: 500
+              title: Internal Server Error
+              type: https://docs.newstore.com/problems/internal-server-error
+          headers: {}
+        '200':
+          description: A list of audit events matching the supplied filters.
+          schema:
+            $ref: '#/definitions/AuditEventList'
+          examples:
+            application/json:
+              items:
+              - actor:
+                  display_name: Jane Operator
+                  idp_user_id: auth0|5f3c2b1a
+                created_at: '2024-01-15T09:30:00Z'
+                event_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                level: AUDIT
+                operation: UPDATED
+                request:
+                  method: PATCH
+                  path: /api/v1/users/9c1e7e36
+                  request_id: req-7f3a91
+                resource: user
+                resource_id: 9c1e7e36-7d2c-4f1a-8a9b-2d6f0c5e1b44
+                tenant: dodici
+              next_cursor: eyJxdWVyeUV4ZWN1dGlvbklkIjoiYWJjMTIzIn0=
+          headers: {}
+        '400':
+          description: The request was malformed.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              detail: The 'from' parameter is not a valid RFC 3339 timestamp.
+              status: 400
+              title: Bad Request
+              type: https://docs.newstore.com/problems/bad-request
+          headers: {}
+        '401':
+          description: The request lacked valid authentication credentials.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              detail: The access token is missing, expired, or invalid.
+              status: 401
+              title: Unauthorized
+              type: https://docs.newstore.com/problems/unauthorized
+          headers: {}
+        '403':
+          description: The authenticated client is not permitted to access this resource.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              detail: The access token does not grant the required 'audit-events:read' scope.
+              status: 403
+              title: Forbidden
+              type: https://docs.newstore.com/problems/forbidden
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: An unexpected server error occurred.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              detail: An unexpected error occurred while processing the request.
+              status: 500
+              title: Internal Server Error
+              type: https://docs.newstore.com/problems/internal-server-error
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - audit-events:read
+definitions:
+  AuditEventList:
+    title: AuditEventList
+    description: One page of audit log events, ordered newest first.
+    example:
+      items:
+      - actor:
+          display_name: Jane Operator
+          idp_user_id: auth0|5f3c2b1a
+        created_at: '2024-01-15T09:30:00Z'
+        event_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        level: AUDIT
+        operation: UPDATED
+        request:
+          method: PATCH
+          path: /api/v1/users/9c1e7e36
+          request_id: req-7f3a91
+        resource: user
+        resource_id: 9c1e7e36-7d2c-4f1a-8a9b-2d6f0c5e1b44
+        tenant: dodici
+      next_cursor: eyJxdWVyeUV4ZWN1dGlvbklkIjoiYWJjMTIzIn0=
+    type: object
+    properties:
+      items:
+        description: The audit log events in this page, newest first.
+        example:
+        - actor:
+            display_name: Jane Operator
+            idp_user_id: auth0|5f3c2b1a
+          created_at: '2024-01-15T09:30:00Z'
+          event_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          level: AUDIT
+          operation: UPDATED
+          request:
+            method: PATCH
+            path: /api/v1/users/9c1e7e36
+            request_id: req-7f3a91
+          resource: user
+          resource_id: 9c1e7e36-7d2c-4f1a-8a9b-2d6f0c5e1b44
+          tenant: dodici
+        type: array
+        items:
+          $ref: '#/definitions/AuditEvent'
+        maxItems: 100
+      next_cursor:
+        description: Opaque cursor for the next page. Pass it back as the `cursor` query parameter to continue paging. Absent when the last page has been reached.
+        example: eyJxdWVyeUV4ZWN1dGlvbklkIjoiYWJjMTIzIn0=
+        type: string
+        maxLength: 8192
+    required:
+    - items
+  Problem:
+    title: Problem
+    type: object
+    properties:
+      detail:
+        description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some description for the error situation
+        type: string
+      error_code:
+        type: string
+      instance:
+        description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+        example: /some/uri-reference#specific-occurrence-context
+        type: string
+      message:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      request_id:
+        type: string
+      status:
+        description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        type: integer
+        minimum: 100.0
+        maximum: 600.0
+        exclusiveMaximum: true
+        format: int32
+      title:
+        description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some title for the error situation
+        type: string
+      type:
+        description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+        example: /some/uri-reference
+        type: string
+        default: about:blank
+  AuditOperation:
+    title: AuditOperation
+    description: The operation performed on the resource.
+    example: UPDATED
+    type: string
+    enum:
+    - CREATED
+    - UPDATED
+    - DELETED
+  RequestContext:
+    title: RequestContext
+    description: The HTTP request that carried the audited change.
+    type: object
+    properties:
+      method:
+        description: HTTP method.
+        type: string
+        maxLength: 16
+      path:
+        description: HTTP URL path.
+        type: string
+        maxLength: 2048
+      request_id:
+        description: X-Newstore-Request-Id header.
+        type: string
+        maxLength: 256
+      source_ip:
+        description: Client IP (first X-Forwarded-For hop, else RemoteAddr).
+        type: string
+        maxLength: 64
+      trace_id:
+        description: W3C traceparent trace-id segment.
+        type: string
+        maxLength: 256
+      user_agent:
+        description: User-Agent header.
+        type: string
+        maxLength: 1024
+  Actor:
+    title: Actor
+    description: Who (or what) caused the audited change. Sourced from the caller's JWT; empty fields are omitted from the payload.
+    type: object
+    properties:
+      authenticated_at:
+        description: When the actor authenticated (from the JWT `auth_time` claim).
+        type: string
+        format: date-time
+      authorized_party:
+        description: JWT `azp` — channel or integration that called the API.
+        type: string
+        maxLength: 256
+      display_name:
+        description: JWT `name`.
+        type: string
+        maxLength: 256
+      idp_user_id:
+        description: JWT `sub` — IDP user id (human or technical user).
+        type: string
+        maxLength: 256
+      session_id:
+        description: JWT `sid` — correlates events in the same auth session.
+        type: string
+        maxLength: 256
+      token_id:
+        description: JWT `jti` — per-token identifier.
+        type: string
+        maxLength: 256
+      user_id:
+        description: Legacy internal NewStore user id.
+        type: string
+        maxLength: 256
+  AuditEvent:
+    title: AuditEvent
+    description: A single audit log event.
+    example:
+      actor:
+        authorized_party: newstore-manager
+        display_name: Jane Operator
+        idp_user_id: auth0|5f3c2b1a
+      after:
+        name: Jane O.
+      created_at: '2024-01-15T09:30:00Z'
+      event_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+      level: AUDIT
+      operation: UPDATED
+      request:
+        method: PATCH
+        path: /api/v1/users/9c1e7e36
+        request_id: req-7f3a91
+        source_ip: 203.0.113.7
+      resource: user
+      resource_id: 9c1e7e36-7d2c-4f1a-8a9b-2d6f0c5e1b44
+      tenant: dodici
+    type: object
+    properties:
+      actor:
+        type: object
+        allOf:
+        - $ref: '#/definitions/Actor'
+        - description: Who (or what) caused the audited change. Sourced from the caller's JWT; empty fields are omitted from the payload.
+      after:
+        description: 'A point in time snapshot of the resource state before the change. Present for UPDATED and DELETED events.
+
+          Unlike the rest of the event structure, the contents of this fields are not covered by the API''s versioning and compatibility guarantees'
+        type: object
+      before:
+        description: 'A point in time snapshot of the resource state before the change. Present for UPDATED and DELETED events.
+
+          Unlike the rest of the event structure, the contents of this fields are not covered by the API''s versioning and compatibility guarantees'
+        type: object
+      created_at:
+        description: When the audited change occurred (RFC 3339).
+        example: '2024-01-15T09:30:00Z'
+        type: string
+        format: date-time
+      event_id:
+        description: Unique identifier for the audit log event (UUIDv4).
+        example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        type: string
+        maxLength: 256
+      level:
+        description: Log-level discriminator for downstream aggregators; always "AUDIT".
+        example: AUDIT
+        type: string
+        default: AUDIT
+      operation:
+        type: object
+        allOf:
+        - $ref: '#/definitions/AuditOperation'
+        - description: The operation performed on the resource.
+          example: UPDATED
+      request:
+        type: object
+        allOf:
+        - $ref: '#/definitions/RequestContext'
+        - description: The HTTP request that carried the audited change.
+      resource:
+        description: The type of resource affected.
+        example: user
+        type: string
+        maxLength: 256
+      resource_id:
+        description: Identifier of the specific resource affected.
+        example: 9c1e7e36-7d2c-4f1a-8a9b-2d6f0c5e1b44
+        type: string
+        maxLength: 256
+      tenant:
+        description: Tenant the event belongs to.
+        example: dodici
+        type: string
+        maxLength: 256
+    required:
+    - actor
+    - created_at
+    - event_id
+    - level
+    - operation
+    - request
+    - resource
+    - resource_id
+    - tenant
+securityDefinitions:
+  oauth:
+    type: oauth2
+    flow: application
+    tokenUrl: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+    scopes:
+      catalog:import-schemas:read: Grants privileges to read import schema
+      catalog:import-schemas:write: Grants privileges to write import schema
+      catalog:pricebook-export:read: Grants privileges to export pricebook data
+      catalog:product-export:read: Grants privileges to export product data
+      checkout:carts:read: Grants privileges to read cart data
+      checkout:carts:write: Grants privileges to write cart data
+      clienteling:profile:read: Grants privileges to read clienteling profiles
+      customer:profile:read: Grants privileges to read API customer data
+      customer:profile:write: Grants privileges to modify API customer data
+      newstore:configuration:read: Grants privileges to read configuration
+      newstore:configuration:write: Grants privileges to write configuration
+      fiscalization:orders:read: View orders with fiscal transactions and signatures
+      fiscalization:orders:write: Create orders with fiscal transactions and signatures
+      shipments:read: Read Shipping Options and Audits
+      iam:providers:read: ' Grants read privileges to provider resources'
+      iam:providers:write: ' Grants write privileges to provider resources'
+      iam:roles:read: ' Grants privileges to read roles data'
+      iam:roles:write: ' Grants privileges to write roles data'
+      iam:users:read: ' Grants privileges to read user data'
+      iam:users:write: ' Grants privileges to write user data'
+      inventory:reservations:read: Allows access to retrieve reservations
+      inventory:reservations:write: Allows access to create and update reservations
+      promotions:config:read: Grants privileges to read configuration
+      promotions:config:write: Grants privileges to write into configuration
+      promotions:reason-codes:read: Grants privileges to list reason codes
+      promotions:reason-codes:write: Grants privileges to create and update reason codes
+      audit-events:read: Grants read access to the tenant's audit events.
+      taxes:preview-transactions:write: Preview tax transactions
+      taxes:transactions:read: Read tax transactions

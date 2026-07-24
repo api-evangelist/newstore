@@ -1,0 +1,663 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: NewStore address order-injection API
+  description: NewStore public APIs
+  contact:
+    email: support@newstore.com
+    name: NewStore API Support
+    url: https://developer.newstore.com
+host: dodici-demo.p.newstore.net
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security: []
+tags:
+- name: order-injection
+  description: Order Injection
+paths:
+  /v0/d/fulfill_order:
+    post:
+      description: "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 20 requests per second.\n</div>\n\nCreates an order in NewStore by importing an order placed via an external system.\nThis is also referred as *injecting an order*.\n\nEach request creates a single order in NewStore.\n\nThe request payload depends on the order you are creating. For example:\n\n- A pre-routed order relies on a `routing strategy` defined with the\n[fulfillment configuration](/newstore-cloud/newstore.html#fulfillment-configuration).\n- An in-store pickup order relies on the `in-store configuration` defined\nwith the [in-store pickup config resource](/newstore-cloud/store_operations/in_store_pickup.html).\n\nThis method is idempotent, with regards to the `external_id` property. You can use the\nmethod multiple times to create the same order in the platform. The order itself is created\nonly once, with the same response payload returned every time.\n\nThere can be transient errors (`500`) when creating an order, such as a timeout when communicating\nwith the shipping provider. To fix these errors, retry the method again with the same payload.\n\n**Important**:\n- Ensure that the request payload is same when creating an order with several\ntries. A retry with the same `external_id` but a different payload will fail.\n- Ensure that there is a small delay between each retry.\n- Only the `200` response implies that the order has been created correctly. Therefore,\nensure that your integration has a retry logic set up.\n\nFor more information, see the request examples and\n[Importing orders](https://docs.newstore.com/docs/importing-orders).\n\n**Add-ons**\nAn item can be declared as an add-on of another item by setting\n`shipments[].items[].addon_parent_external_item_id` to the `external_item_id`\nof the parent item. The add-on is created as a separate line item linked to\nthat parent and carries its own price. The parent must be a non-add-on item in\nthe **same shipment**; add-ons cannot be nested (the parent must not itself be\nan add-on) and an item cannot reference itself. A reference that breaks these\nrules is rejected with `400` (error code `addon_invalid_parent_item`).\nAn add-on's own and its parent's `external_item_id` must be unique across the\nwhole order; a duplicate makes the linkage ambiguous and is rejected with `400`\n(error code `addon_duplicate_external_item_id`).\n\n**Configuration**\nThere are two configuration settings that impact injection flow: `big_sales_order`\nand `skip_soft_routing_on_injection`. For more information, see the page with all\n[order_injection configuration](https://docs.newstore.net/api/configuration/order-management/order_injection_admin/#tag/Injection-configuration/operation/updateConfig).\n\n**Notes:**\n- Ensure that you specify the correct number of decimal places for monetary values of\nprices, according to the specified currency. For example, if the currency is specified as\n``USD`` and the price has more than 2 decimal places, it is considered as invalid by the\nplatform. For more information, see\n[pricing dependencies on currency](https://docs.newstore.com/v1/docs/set-up-payments#managing-product-pricing-dependencies-on-currency).\n- To send payment-related metadata with the order, use the\n[Create financial instrument](https://docs.newstore.net/api/webhooks/fat_psp_hook/#operation/createFinancialInstrument)\nmethod in the Payment Provider webhooks.\n- The validity of a shipping offer token can vary based on the shipping\nprovider and shipping offer. For `in-store pickup` orders, a shipping offer\ntoken does not expire.\n- If you set `shipments[].shipment_option.routing_strategy` as \"external\" and the routing failed to communicate\nwith shipping provider, the order will be cancelled. Check shipping provider integration, if you have customer\nintegration, otherwise contact team delivery for support.\n- If the customer's phone number does not have a country calling code, the platform will attempt to use the\nbilling address country code to derive the calling code while formatting the phone number to the E.164\nstandard. If the phone number cannot be formatted, it will be placed in the extended attribute\n`injected-invalid-phone-number` on customer profile. It can be updated later, if needed.\n"
+      summary: createInjectedOrder
+      tags:
+      - order-injection
+      operationId: createInjectedOrder
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/InjectedOrderRequest'
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: '- If the same order is sent twice, the same response is returned each time.
+
+            - If a different order with the same `external_id` is sent, a response identical to the response for the first order is returned.
+
+            - No modifications are made to the order after it is created.'
+          schema:
+            $ref: '#/definitions/InjectedOrderResponse'
+          examples:
+            application/json:
+              external_id: INJECTED_6fa1c9c1-daf7-4aac-96bd-1a1436affb5d
+              id: c93e1a37-b5d2-41a5-a3d0-4c3756b5fa3e
+              items:
+              - external_item_id: EXT1000761
+                id: 03a06f1c-4797-441e-ac15-a07a3df23a92
+                product_id: '1000761'
+          headers: {}
+        '400':
+          description: "- The input data is invalid.\n- Multiple shipping options are provided that are identified by service level identifiers.\n- Order exceeds the maximum number of items allowed (error code `maximum_allowed_number_of_items_exceeded`).\n   This means the order was cancelled as the maximum number of items was exceeded, and will need to be retried once limits are updated.\n   For more information on updating the max limit, refer to `big_sales_order` in the [order_injection configuration](https://docs.newstore.net/api/configuration/order-management/order_injection_admin/#tag/Injection-configuration/operation/updateConfig).\n- Mixed shipping option types are provided that are identified by service level identifiers and\n   shipping offer tokens.\n- Price is specified with invalid number of decimal places according to the specified currency.\n   For example, if the currency is specified as ``USD`` and the product price has more than 2 decimal places, it is considered as invalid by the platform.\n   For more information, see [pricing dependencies on currency](https://docs.newstore.com/v1/docs/set-up-payments#managing-product-pricing-dependencies-on-currency).\n- The order's total payment amount is different from the sum of each item and shipping amount.\n   For example, if the incorrect `price_method` is sent or if the `item_discount_info` or `item_order_discount_info` are missing.\n- An item's `addon_parent_external_item_id` does not reference another item in the same shipment,\n   references the item itself, or references an item that is itself an add-on (error code `addon_invalid_parent_item`).\n- An add-on's or its parent's `external_item_id` is not unique across the order (error code `addon_duplicate_external_item_id`)."
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: invalid_shipments
+              message: Failed to read shipping options by shipping offer token. At least one of the provided shipping offer tokens could not be parsed.
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: "An internal error occurred. In most cases the error is transient and the request should be retried with the same payload.\n - shipping_provider_communication_error: There was a transient error getting shipping options from the shipping providers. A retry with the same payload will likely fix the issue. If not, check your integration with the shipping providers.\n - grpc_unavailable: Some part of the Newstore platform was temporarily unavailable. A retry with the same payload will likely fix the issue.\n - rpc_timeout: An internal call timed out. A retry with the same payload will likely fix the issue.\n - rpc_timeout for sales_order: An internal call timed out. WARNING: The order may have been partially created. The request needs to be retried with the same payload to complete the order creation in the platform."
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: shipping_provider_communication_error
+              message: Could not get shipping offers.
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '504':
+          description: Your order injection request is experiencing delays, possibly due to high system load or slow responses from your configured shipping providers. Even though this specific call failed, we are continuing to process your order injection in the background. If the order data is valid, an order will be automatically created, without requiring additional calls to this endpoint. To check the status of your order injection, simply retry this call. If the process is complete, you'll receive an immediate response.
+          headers: {}
+      security:
+      - oauth: []
+definitions:
+  Problem:
+    title: Problem
+    type: object
+    properties:
+      detail:
+        description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some description for the error situation
+        type: string
+      error_code:
+        type: string
+      instance:
+        description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+        example: /some/uri-reference#specific-occurrence-context
+        type: string
+      message:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      request_id:
+        type: string
+      status:
+        description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        type: integer
+        minimum: 100.0
+        maximum: 600.0
+        exclusiveMaximum: true
+        format: int32
+      title:
+        description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some title for the error situation
+        type: string
+      type:
+        description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+        example: /some/uri-reference
+        type: string
+        default: about:blank
+  InjectedOrderRequest:
+    title: InjectedOrderRequest
+    description: An order placed in an external system, identified by its `external_id` in NewStore. An order contains a list of shipments and the products in each shipment.
+    type: object
+    properties:
+      associate_id:
+        description: ID of the store associate who processed this order.
+        type: string
+        maxLength: 256
+      billing_address:
+        $ref: '#/definitions/InjectedOrderAddress'
+      channel_name:
+        description: A string used to distinguish between various sources of orders.
+        type: string
+        minLength: 1
+        maxLength: 64
+      channel_type:
+        $ref: '#/definitions/ChannelType1'
+      currency:
+        type: object
+        allOf:
+        - $ref: '#/definitions/Currency2'
+        - description: The currency for all the prices contained within this payload.
+      customer_email:
+        type: string
+        minLength: 1
+        maxLength: 64
+      customer_language:
+        description: Language code according to ISO 639-1 to be used in the communication with the consumer (e.g. 'de', 'en' or 'fr')
+        type: string
+        maxLength: 2
+      customer_name:
+        type: string
+        minLength: 1
+        maxLength: 128
+      extended_attributes:
+        type: array
+        items:
+          $ref: '#/definitions/InjectedOrderExtendedAttribute'
+          maxProperties: 2
+        maxItems: 100
+        maxProperties: 2
+      external_customer_id:
+        type: string
+        maxLength: 64
+      external_id:
+        type: string
+        minLength: 1
+        maxLength: 64
+      ip_address: {}
+      is_fulfilled:
+        description: Set to true if the order was already fulfilled. It is either an in-store purchase, or the order was fulfilled by an external system.
+        type: boolean
+        default: false
+      is_historical:
+        description: Set to true if the order is historical was created and fulfilled by an external system.
+        type: boolean
+        default: false
+      is_offline:
+        description: Set to true if the order was handled offline. It is an in-store purchase with internet connection failure.
+        type: boolean
+        default: false
+      is_preconfirmed:
+        description: Set to true, if the customer was already notified about order being placed. This is always true for in-store orders.
+        type: boolean
+        default: false
+      notification_blacklist:
+        description: Excludes the specified notifications from being sent to the customer.
+        type: array
+        items:
+          type: string
+      payments:
+        type: array
+        items:
+          $ref: '#/definitions/InjectedOrderPayment'
+        maxItems: 40
+      placed_at:
+        description: Date representation of when the order was placed, containing date, time and timezone as defined by https://tools.ietf.org/html/rfc3339 (ISO 8601).
+        type: string
+        format: date-time
+      price_method:
+        type: object
+        allOf:
+        - $ref: '#/definitions/F11nTaxMethod'
+        - description: Specifies if the prices for the shipment items and shipping options include tax or not. This is used in calculating the total order price to determine if the tax price should be included in the calculation or not.
+      shipments:
+        type: array
+        items: {}
+        minItems: 1
+        maxItems: 10
+      shipping_address:
+        $ref: '#/definitions/InjectedOrderAddress'
+      shop:
+        description: The shop containing the items of the order.
+        type: string
+        minLength: 1
+        maxLength: 128
+      shop_locale:
+        description: The locale of the customer used for the shop, in RFC 5646.
+        type: string
+        minLength: 1
+        maxLength: 128
+      store_id:
+        description: ID of the store where this order was placed.
+        type: string
+        maxLength: 256
+    required:
+    - channel_name
+    - channel_type
+    - currency
+    - external_id
+    - shipments
+    - shop
+    - shop_locale
+  ChannelType1:
+    title: ChannelType1
+    type: string
+    enum:
+    - web
+    - mobile
+    - store
+  InjectedOrderAddress:
+    title: InjectedOrderAddress
+    type: object
+    properties:
+      address_line_1:
+        type: string
+        minLength: 1
+        maxLength: 128
+      address_line_2:
+        type: string
+        maxLength: 256
+      city:
+        type: string
+        maxLength: 64
+      country:
+        description: The code of the country in the ISO ALPHA-2 format.
+        type: string
+        minLength: 2
+        maxLength: 2
+      first_name:
+        type: string
+        maxLength: 64
+      last_name:
+        type: string
+        maxLength: 64
+      phone:
+        type: string
+        maxLength: 128
+      salutation:
+        type: string
+        maxLength: 32
+      state:
+        type: string
+        maxLength: 32
+      suffix:
+        type: string
+        maxLength: 32
+      title:
+        type: string
+        maxLength: 32
+      zip_code:
+        type: string
+        maxLength: 32
+    required:
+    - address_line_1
+    - country
+  InjectedOrderExtendedAttribute:
+    title: InjectedOrderExtendedAttribute
+    description: Extra information about the order, which is propagated through NewStore applications.
+    type: object
+    properties:
+      name:
+        type: string
+        minLength: 1
+        maxLength: 100
+      value:
+        type: string
+        maxLength: 8192
+    required:
+    - name
+    - value
+    maxProperties: 2
+  InjectedOrderPayment:
+    title: InjectedOrderPayment
+    description: A payment supplied for this order. Only payments that are already authorized or captured are supported. Tokens that are not authorized are not supported. The validity of a payment is not checked during import, so an order with invalid payments is imported successfully and fulfilled. For example, a payment validity issue can be a voided authorization or an incorrect payment amount.
+    type: object
+    properties:
+      amount:
+        type: number
+        minimum: 0.0
+        exclusiveMinimum: true
+        multipleOf: 0.01
+        format: double
+      correlation_ref:
+        description: Identifies the payment for the given order among all payments. This identifier must be unique in the given order, regardless of the payment processor.
+        type: string
+        minLength: 1
+        maxLength: 128
+      metadata:
+        description: Payment method specific information.
+        type: object
+        maxProperties: 100
+      method:
+        description: The selected payment method. Typical values are 'cash', 'credit_card', 'gift_card', or 'paypal'. Other values are possible depending on your payment providers.
+        type: string
+        minLength: 1
+        maxLength: 64
+      processed_at:
+        description: Date representation of when the payment was processed, containing date, time and timezone as defined by https://tools.ietf.org/html/rfc3339 (ISO 8601).
+        type: string
+        format: date-time
+      processor:
+        description: Identifies the payment provider (processor) used to process the payment. Supported providers are stripe, paypal, cash, gift_card.
+        type: string
+        minLength: 1
+        maxLength: 32
+      type:
+        type: object
+        allOf:
+        - $ref: '#/definitions/Type12'
+        - description: 'The type of payment information that is passed: either the payment is already authorized, or already captured. The Order Injection API does not support not authorized payments (tokens).'
+      wallet:
+        description: The payment wallet used in the transaction. For example, Apple Pay, Google Pay, etc. or Direct (when no wallet was used).
+        type: string
+        minLength: 1
+        maxLength: 64
+    required:
+    - amount
+    - correlation_ref
+    - method
+    - processed_at
+    - processor
+    - type
+  Type12:
+    title: Type12
+    description: 'The type of payment information that is passed: either the payment is already authorized, or already captured. The Order Injection API does not support not authorized payments (tokens).'
+    type: string
+    enum:
+    - authorized
+    - captured
+  Currency2:
+    title: Currency2
+    description: The currency for all the prices contained within this payload.
+    type: string
+    enum:
+    - AED
+    - AFN
+    - ALL
+    - AMD
+    - ANG
+    - AOA
+    - ARS
+    - AUD
+    - AWG
+    - AZN
+    - BAM
+    - BBD
+    - BDT
+    - BGN
+    - BHD
+    - BIF
+    - BMD
+    - BND
+    - BOB
+    - BOV
+    - BRL
+    - BSD
+    - BTN
+    - BWP
+    - BYN
+    - BZD
+    - CAD
+    - CDF
+    - CHE
+    - CHF
+    - CHW
+    - CLF
+    - CLP
+    - CNY
+    - COP
+    - COU
+    - CRC
+    - CUC
+    - CUP
+    - CVE
+    - CZK
+    - DJF
+    - DKK
+    - DOP
+    - DZD
+    - EGP
+    - ERN
+    - ETB
+    - EUR
+    - FJD
+    - FKP
+    - GBP
+    - GEL
+    - GHS
+    - GIP
+    - GMD
+    - GNF
+    - GTQ
+    - GYD
+    - HKD
+    - HNL
+    - HRK
+    - HTG
+    - HUF
+    - IDR
+    - ILS
+    - INR
+    - IQD
+    - IRR
+    - ISK
+    - JMD
+    - JOD
+    - JPY
+    - KES
+    - KGS
+    - KHR
+    - KMF
+    - KPW
+    - KRW
+    - KWD
+    - KYD
+    - KZT
+    - LAK
+    - LBP
+    - LKR
+    - LRD
+    - LSL
+    - LYD
+    - MAD
+    - MDL
+    - MGA
+    - MKD
+    - MMK
+    - MNT
+    - MOP
+    - MRU
+    - MUR
+    - MVR
+    - MWK
+    - MXN
+    - MXV
+    - MYR
+    - MZN
+    - NAD
+    - NGN
+    - NIO
+    - NOK
+    - NPR
+    - NZD
+    - OMR
+    - PAB
+    - PEN
+    - PGK
+    - PHP
+    - PKR
+    - PLN
+    - PYG
+    - QAR
+    - RON
+    - RSD
+    - RUB
+    - RWF
+    - SAR
+    - SBD
+    - SCR
+    - SDG
+    - SEK
+    - SGD
+    - SHP
+    - SLL
+    - SOS
+    - SRD
+    - SSP
+    - STN
+    - SVC
+    - SYP
+    - SZL
+    - THB
+    - TJS
+    - TMT
+    - TND
+    - TOP
+    - TRY
+    - TTD
+    - TWD
+    - TZS
+    - UAH
+    - UGX
+    - USD
+    - USN
+    - UYI
+    - UYU
+    - UYW
+    - UZS
+    - VES
+    - VND
+    - VUV
+    - WST
+    - XAF
+    - XAG
+    - XAU
+    - XBA
+    - XBB
+    - XBC
+    - XBD
+    - XCD
+    - XDR
+    - XOF
+    - XPD
+    - XPF
+    - XPT
+    - XSU
+    - XTS
+    - XUA
+    - XXX
+    - YER
+    - ZAR
+    - ZMW
+    - ZWL
+  InjectedOrderResponse:
+    title: InjectedOrderResponse
+    type: object
+    properties:
+      external_id:
+        type: string
+        minLength: 1
+        maxLength: 64
+      id:
+        description: The identifier of the order assigned internally by the system.
+        type: string
+        minLength: 1
+        maxLength: 64
+      items:
+        description: Identifiers of the order items.
+        type: array
+        items:
+          $ref: '#/definitions/InjectedOrderItemIds'
+        minItems: 1
+    required:
+    - external_id
+    - id
+    - items
+  InjectedOrderItemIds:
+    title: InjectedOrderItemIds
+    type: object
+    properties:
+      external_item_id:
+        description: The external order item id as specified in the request.
+        type: string
+        minLength: 1
+        maxLength: 64
+      id:
+        description: An identifier that is assigned to the item by the system.
+        type: string
+        minLength: 36
+        maxLength: 36
+      product_id:
+        description: The product id from the catalog.
+        type: string
+        minLength: 1
+        maxLength: 64
+    required:
+    - external_item_id
+    - id
+    - product_id
+  F11nTaxMethod:
+    title: F11nTaxMethod
+    description: Defines the tax method used (tax inclusive or exclusive).
+    example: tax_included
+    type: string
+    enum:
+    - tax_included
+    - tax_excluded
+securityDefinitions:
+  oauth:
+    type: oauth2
+    flow: application
+    tokenUrl: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+    scopes:
+      catalog:import-schemas:read: Grants privileges to read import schema
+      catalog:import-schemas:write: Grants privileges to write import schema
+      catalog:pricebook-export:read: Grants privileges to export pricebook data
+      catalog:product-export:read: Grants privileges to export product data
+      checkout:carts:read: Grants privileges to read cart data
+      checkout:carts:write: Grants privileges to write cart data
+      clienteling:profile:read: Grants privileges to read clienteling profiles
+      customer:profile:read: Grants privileges to read API customer data
+      customer:profile:write: Grants privileges to modify API customer data
+      newstore:configuration:read: Grants privileges to read configuration
+      newstore:configuration:write: Grants privileges to write configuration
+      fiscalization:orders:read: View orders with fiscal transactions and signatures
+      fiscalization:orders:write: Create orders with fiscal transactions and signatures
+      shipments:read: Read Shipping Options and Audits
+      iam:providers:read: ' Grants read privileges to provider resources'
+      iam:providers:write: ' Grants write privileges to provider resources'
+      iam:roles:read: ' Grants privileges to read roles data'
+      iam:roles:write: ' Grants privileges to write roles data'
+      iam:users:read: ' Grants privileges to read user data'
+      iam:users:write: ' Grants privileges to write user data'
+      inventory:reservations:read: Allows access to retrieve reservations
+      inventory:reservations:write: Allows access to create and update reservations
+      promotions:config:read: Grants privileges to read configuration
+      promotions:config:write: Grants privileges to write into configuration
+      promotions:reason-codes:read: Grants privileges to list reason codes
+      promotions:reason-codes:write: Grants privileges to create and update reason codes
+      audit-events:read: Grants read access to the tenant's audit events.
+      taxes:preview-transactions:write: Preview tax transactions
+      taxes:transactions:read: Read tax transactions

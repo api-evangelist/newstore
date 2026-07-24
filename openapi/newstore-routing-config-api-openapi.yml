@@ -1,0 +1,1246 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: NewStore address routing-config API
+  description: NewStore public APIs
+  contact:
+    email: support@newstore.com
+    name: NewStore API Support
+    url: https://developer.newstore.com
+host: dodici-demo.p.newstore.net
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security: []
+tags:
+- name: routing-config
+  description: Routing Configuration
+paths:
+  /v0/config/routing/can_update_ffr_processed_externally:
+    get:
+      description: 'Retrieves the current configuration to determine if you can update
+
+        the status for fulfillment requests that were processed outside of the NewStore platform,
+
+        because of possible issues with fulfillment or shipping status updates.
+
+
+        For more information, see the
+
+        [guide](https://docs.newstore.com/docs/monitoring-orders#updating-the-shipment-status-for-external-orders).
+
+        '
+      summary: showExternalFulfillmentSettings
+      tags:
+      - routing-config
+      operationId: showExternalFulfillmentSettings
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters: []
+      responses:
+        default:
+          description: Unexpected error.
+          headers: {}
+        '200':
+          description: Successfully retrieved the config value
+          schema:
+            $ref: '#/definitions/ExternalFulfillmentSettingsResponse'
+          headers: {}
+        '404':
+          description: Config key doesn't exist (it is not a case when key exists but just not set).
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    post:
+      description: 'Enables the configuration to allow you to update
+
+        the status for fulfillment requests that were processed outside of the NewStore platform,
+
+        because of possible issues with fulfillment or shipping status updates.
+
+
+        For more information, see the
+
+        [guide](https://docs.newstore.com/docs/monitoring-orders#updating-the-shipment-status-for-external-orders).
+
+        '
+      summary: createExternalFulfillmentSettings
+      tags:
+      - routing-config
+      operationId: createExternalFulfillmentSettings
+      deprecated: false
+      produces:
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: false
+        description: ''
+        schema:
+          $ref: '#/definitions/ExternalFulfillmentSettingsRequest'
+      responses:
+        default:
+          description: Unexpected error.
+          headers: {}
+        '200':
+          description: Successfully saved config value
+          headers: {}
+        '400':
+          description: Incorrect payload for config (validation failed).
+          headers: {}
+        '409':
+          description: Cannot update the configuration due to a potential race condition. Please retry.
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+  /v0/config/routing/cancel_on_conflict:
+    get:
+      description: 'Retrieves the configuration based on which it is determined if orders in your business are
+
+        canceled automatically in case of a conflict.
+
+
+        The configuration also contains the reasons for which orders can be canceled automatically.
+
+        For more information about the properties, see the [guide](/developers/configuration/config-insuff-inv).
+
+        '
+      summary: showCancellationPolicySettings
+      tags:
+      - routing-config
+      operationId: showCancellationPolicySettings
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters: []
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: Value was successfully retrieved.
+          schema:
+            $ref: '#/definitions/CancellationPolicySettings'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    post:
+      description: 'Sets the configuration based on which it is determined if orders in your business are
+
+        canceled automatically in case of a conflict.
+
+
+        The configuration also contains the reasons for which orders can be canceled automatically.
+
+        For more information about the properties, see the [guide](/developers/configuration/config-insuff-inv).
+
+        '
+      summary: createCancellationPolicySettings
+      tags:
+      - routing-config
+      operationId: createCancellationPolicySettings
+      deprecated: false
+      produces:
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: false
+        description: ''
+        schema:
+          $ref: '#/definitions/CancellationPolicySettings'
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: Value was successfully updated.
+          headers: {}
+        '400':
+          description: Bad request.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+  /v0/config/routing/enable_automatic_rerouting:
+    get:
+      description: 'Retrieves the current configuration that determines if on hold orders are routed to
+
+        fulfillment locations automatically when stock becomes available in these locations.
+
+        '
+      summary: showAutomaticReroutingSetting
+      tags:
+      - routing-config
+      operationId: showAutomaticReroutingSetting
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters: []
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: Value was successfully retrieved.
+          schema:
+            $ref: '#/definitions/AutomaticReroutingSettings'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    post:
+      description: 'Sets the configuration that determines if on hold orders are routed to
+
+        fulfillment locations automatically when stock becomes available in these locations.
+
+        '
+      summary: createAutomaticReroutingSetting
+      tags:
+      - routing-config
+      operationId: createAutomaticReroutingSetting
+      deprecated: false
+      produces:
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: false
+        description: ''
+        schema:
+          $ref: '#/definitions/AutomaticReroutingSettings'
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: Value was successfully updated.
+          headers: {}
+        '400':
+          description: Bad request.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+  /v0/config/routing/enable_capacity_based_routing:
+    get:
+      description: 'Retrieves the current configuration that determines if orders are routed to fulfillment locations based on a capacity aware algorithm.
+
+        '
+      summary: showCapacityBasedRoutingSettings
+      tags:
+      - routing-config
+      operationId: showCapacityBasedRoutingSettings
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters: []
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: Succesfully returning the value of the capacity based routing toggle
+          schema:
+            $ref: '#/definitions/CapacityBasedRoutingSettings'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: An internal error occurred.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    post:
+      description: 'Sets the current configuration that determines if orders are routed to
+
+        fulfillment locations based on a capacity aware algorithm.
+
+        '
+      summary: createCapacityBasedRoutingSettings
+      tags:
+      - routing-config
+      operationId: createCapacityBasedRoutingSettings
+      deprecated: false
+      produces:
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/CapacityBasedRoutingSettings'
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: Value was successfully updated.
+          headers: {}
+        '400':
+          description: Bad request.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+  /v0/config/routing/reroute_to_rejected_fulfillment_nodes:
+    get:
+      description: 'Retrieves the configuration that determines if orders will be automatically routed to
+
+        fulfillment locations where stock has become available, even if these locations had
+
+        rejected the order fulfillment request earlier, due to insufficient stock at
+
+        these locations.
+
+        '
+      summary: showRejectedReroutingSettings
+      tags:
+      - routing-config
+      operationId: showRejectedReroutingSettings
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters: []
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: Value was successfully retrieved.
+          schema:
+            $ref: '#/definitions/RejectedReroutingSettings'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    post:
+      description: 'Sets the configuration that determines if orders will be automatically routed to
+
+        fulfillment locations where stock has become available, even if these locations had
+
+        rejected the order fulfillment request earlier, due to insufficient stock at
+
+        these locations.
+
+        '
+      summary: createRejectedReroutingSettings
+      tags:
+      - routing-config
+      operationId: createRejectedReroutingSettings
+      deprecated: false
+      produces:
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: false
+        description: ''
+        schema:
+          $ref: '#/definitions/RejectedReroutingSettings'
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: Value was successfully updated.
+          headers: {}
+        '400':
+          description: Bad request.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+  /v0/config/routing/skip_shipping_offer_update_for_dc_orders:
+    get:
+      description: 'Retrieves the current configuration, which determines if NewStore skips updating shipping
+
+        offers when orders are routed to a warehouse or DC for fulfillment. By default, this is set to `true`.
+
+
+        We recommend setting this configuration to ``true``.
+
+
+        Please be aware that having this value set to `true` can cause a fulfillment request routed to DC to have an empty shipping provider field if the tenant is also configured, skipping soft routing on an order injection.
+
+        '
+      summary: showShippingOfferUpdateSettings
+      tags:
+      - routing-config
+      operationId: showShippingOfferUpdateSettings
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters: []
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: Value was successfully retrieved.
+          schema:
+            $ref: '#/definitions/ShippingOfferUpdateSettings'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    post:
+      description: 'Sets the configuration that allows NewStore to skip updating shipping offers when orders
+
+        are routed to a warehouse or DC for fulfillment.
+
+
+        We recommend setting this configuration to ``true``.
+
+        '
+      summary: createShippingOfferUpdateSettings
+      tags:
+      - routing-config
+      operationId: createShippingOfferUpdateSettings
+      deprecated: false
+      produces:
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: false
+        description: ''
+        schema:
+          $ref: '#/definitions/ShippingOfferUpdateSettings'
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: Value was successfully updated.
+          headers: {}
+        '400':
+          description: Bad request.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+  /v0/config/routing/uses_external_atp:
+    get:
+      description: 'Specifies if ATP is requested from an external source or from NewStore.
+
+
+        If set to ``true``, NewStore uses ATP from an external availability source such as
+
+        an [external OMS](/product/processes/about-ffment/#external-oms-config).
+
+        If not set or set to ``false``, NewStore retrieves ATP based on
+
+        the stock on hand) for the products.
+
+        '
+      summary: showExternalAtpSettings
+      tags:
+      - routing-config
+      operationId: showExternalAtpSettings
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters: []
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: Value was successfully retrieved.
+          schema:
+            $ref: '#/definitions/ExternalAtpSettings'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    post:
+      description: 'Specifies if ATP is requested from an external source or from NewStore.
+
+
+        If set to ``true``, NewStore uses ATP from an external availability source such as
+
+        an [external OMS](/product/processes/about-ffment/#external-oms-config).
+
+        If not set or set to ``false``, NewStore retrieves ATP based on
+
+        the stock on hand for the products.
+
+        '
+      summary: createExternalAtpSettings
+      tags:
+      - routing-config
+      operationId: createExternalAtpSettings
+      deprecated: false
+      produces:
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: false
+        description: ''
+        schema:
+          $ref: '#/definitions/ExternalAtpSettings'
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: Value was successfully updated.
+          headers: {}
+        '400':
+          description: Bad request.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+  /v0/routing/shipments_limit:
+    get:
+      description: 'List all shipments limits. This method is limited to return a maximum of 10.000 shipments limits per tenant.
+
+        '
+      summary: listShipmentLimits
+      tags:
+      - routing-config
+      operationId: listShipmentLimits
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters: []
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: Succesfully returning list of shipments limits
+          schema:
+            $ref: '#/definitions/ShipmentLimitsResponse'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: An internal error occurred.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    post:
+      description: 'Upsert a shipment limit for a (`currency`,`service_level`) pair.
+
+
+        An order will be marked as a conflict if any limit on `limit_exceeded_when` is reached.
+
+
+        It is not allowed to have two limits with the same `shipment_count_gt` value.
+
+
+        The  `order_amount_lt` of a given limit should be greater than or equal to others limits with
+
+        smaller `shipment_count_gt`.
+
+        '
+      summary: createShipmentLimits
+      tags:
+      - routing-config
+      operationId: createShipmentLimits
+      deprecated: false
+      produces:
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/ShipmentLimitsRequest'
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '204':
+          description: Shipment limit was set successfully.
+          headers: {}
+        '400':
+          description: "Invalid input data\n  * Duplicate `shipment_count_gt` on `limit_exceeded_when` array\n  * Inconsistent `order_amount_lt` value. It should be greater or equal rules with smaller `shipment_count_gt`.\n  * Missing required field"
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: An internal error occurred.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+definitions:
+  CapacityBasedRoutingSettings:
+    title: CapacityBasedRoutingSettings
+    type: object
+    properties:
+      updated_at:
+        readOnly: true
+        type: string
+        format: date-time
+      value:
+        description: Tenant-based release toggle for the feature of capacity-based routing.
+        type: boolean
+    required:
+    - value
+  Problem:
+    title: Problem
+    type: object
+    properties:
+      detail:
+        description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some description for the error situation
+        type: string
+      error_code:
+        type: string
+      instance:
+        description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+        example: /some/uri-reference#specific-occurrence-context
+        type: string
+      message:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      request_id:
+        type: string
+      status:
+        description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        type: integer
+        minimum: 100.0
+        maximum: 600.0
+        exclusiveMaximum: true
+        format: int32
+      title:
+        description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some title for the error situation
+        type: string
+      type:
+        description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+        example: /some/uri-reference
+        type: string
+        default: about:blank
+  ShipmentLimitsRequest:
+    title: ShipmentLimitsRequest
+    description: Limit shipment rules for given currency x service level
+    type: object
+    properties:
+      currency:
+        description: Currency alpha code in ISO 4217 format. Per example USD, EUR or JPY
+        type: string
+        minLength: 3
+        maxLength: 3
+      limit_exceeded_when:
+        type: array
+        items:
+          $ref: '#/definitions/LimitExceededWhen'
+      service_level:
+        description: Shipping service level
+        type: string
+    required:
+    - currency
+    - limit_exceeded_when
+    - service_level
+  ShipmentLimitsResponse:
+    title: ShipmentLimitsResponse
+    description: List of all shipments limit rules
+    type: object
+    properties:
+      shipments_limit:
+        type: array
+        items:
+          $ref: '#/definitions/ShipmentLimitsRequest'
+    required:
+    - shipments_limit
+  LimitExceededWhen:
+    title: LimitExceededWhen
+    type: object
+    properties:
+      order_amount_lt:
+        description: AND order amount less than
+        type: number
+        minimum: 0.0
+        format: double
+      shipment_count_gt:
+        description: 'AAAAACondition: number of shipments greater than'
+        type: integer
+        minimum: 0.0
+        format: int64
+    required:
+    - order_amount_lt
+    - shipment_count_gt
+  CancellationPolicySettings:
+    title: CancellationPolicySettings
+    type: object
+    properties:
+      updated_at:
+        readOnly: true
+        type: string
+        format: date-time
+      value:
+        type: object
+        allOf:
+        - $ref: '#/definitions/CancellationPolicySettingsValue'
+        - description: Order cancellation policies.
+    required:
+    - value
+  CancellationPolicySettingsValue:
+    title: CancellationPolicySettingsValue
+    description: Order cancellation policies.
+    type: object
+    properties:
+      default:
+        description: Determines whether orders are canceled automatically in case of a conflict.
+        type: boolean
+        default: true
+      reasons_to_overwrite_default:
+        description: A list of reasons to prevent an automatic cancelation of an order (in case default is 'true') or to prevent an order being in the conflict state.
+        type: array
+        items:
+          $ref: '#/definitions/CancellationPolicySettingsReasons'
+        minItems: 1
+  ShippingOfferUpdateSettings:
+    title: ShippingOfferUpdateSettings
+    type: object
+    properties:
+      updated_at:
+        readOnly: true
+        type: string
+        format: date-time
+      value:
+        description: Determines whether an order routed to a DC needs a shipping offer update.
+        type: boolean
+    required:
+    - value
+  AutomaticReroutingSettings:
+    title: AutomaticReroutingSettings
+    type: object
+    properties:
+      updated_at:
+        readOnly: true
+        type: string
+        format: date-time
+      value:
+        description: Tenant-based release toggle for the automatic rerouting feature in order to roll it out on a per tenant basis.
+        type: boolean
+    required:
+    - value
+  ExternalFulfillmentSettingsResponse:
+    title: ExternalFulfillmentSettingsResponse
+    description: Current external-fulfillment configuration setting.
+    type: object
+    properties:
+      updated_at:
+        description: Contains date-time in ISO8601 UTC format when config was updated at least once. Value can be null if config value has not been specified yet by the retailer.
+        type: string
+      value:
+        description: Tenant-based release toggle for updating the status of a fulfillment request in NOM.
+        type: boolean
+    required:
+    - updated_at
+    - value
+  ExternalFulfillmentSettingsRequest:
+    title: ExternalFulfillmentSettingsRequest
+    description: Payload for setting external-fulfillment configuration.
+    type: object
+    properties:
+      value:
+        description: Tenant-based release toggle for updating the status of a fulfillment request in NOM.
+        type: boolean
+    required:
+    - value
+  ExternalAtpSettings:
+    title: ExternalAtpSettings
+    type: object
+    properties:
+      updated_at:
+        readOnly: true
+        type: string
+        format: date-time
+      value:
+        description: If true, use availability service to request ATP data; otherwise use unallocated items count.
+        type: boolean
+    required:
+    - value
+  RejectedReroutingSettings:
+    title: RejectedReroutingSettings
+    type: object
+    properties:
+      updated_at:
+        readOnly: true
+        type: string
+        format: date-time
+      value:
+        description: Tells the routing engine if it should ignore fulfillment nodes that already rejected the fulfillment request at hand.
+        type: boolean
+    required:
+    - value
+  CancellationPolicySettingsReasons:
+    title: CancellationPolicySettingsReasons
+    type: string
+    enum:
+    - insufficient_stock
+    - failed_fulfillment_node_mapping
+    - shipping_offer_update_error
+    - error
+    - not_enough_stock_to_create_allocation
+    - limit_of_shipments_exceeded
+securityDefinitions:
+  oauth:
+    type: oauth2
+    flow: application
+    tokenUrl: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+    scopes:
+      catalog:import-schemas:read: Grants privileges to read import schema
+      catalog:import-schemas:write: Grants privileges to write import schema
+      catalog:pricebook-export:read: Grants privileges to export pricebook data
+      catalog:product-export:read: Grants privileges to export product data
+      checkout:carts:read: Grants privileges to read cart data
+      checkout:carts:write: Grants privileges to write cart data
+      clienteling:profile:read: Grants privileges to read clienteling profiles
+      customer:profile:read: Grants privileges to read API customer data
+      customer:profile:write: Grants privileges to modify API customer data
+      newstore:configuration:read: Grants privileges to read configuration
+      newstore:configuration:write: Grants privileges to write configuration
+      fiscalization:orders:read: View orders with fiscal transactions and signatures
+      fiscalization:orders:write: Create orders with fiscal transactions and signatures
+      shipments:read: Read Shipping Options and Audits
+      iam:providers:read: ' Grants read privileges to provider resources'
+      iam:providers:write: ' Grants write privileges to provider resources'
+      iam:roles:read: ' Grants privileges to read roles data'
+      iam:roles:write: ' Grants privileges to write roles data'
+      iam:users:read: ' Grants privileges to read user data'
+      iam:users:write: ' Grants privileges to write user data'
+      inventory:reservations:read: Allows access to retrieve reservations
+      inventory:reservations:write: Allows access to create and update reservations
+      promotions:config:read: Grants privileges to read configuration
+      promotions:config:write: Grants privileges to write into configuration
+      promotions:reason-codes:read: Grants privileges to list reason codes
+      promotions:reason-codes:write: Grants privileges to create and update reason codes
+      audit-events:read: Grants read access to the tenant's audit events.
+      taxes:preview-transactions:write: Preview tax transactions
+      taxes:transactions:read: Read tax transactions

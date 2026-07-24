@@ -1,0 +1,715 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: NewStore address users API
+  description: NewStore public APIs
+  contact:
+    email: support@newstore.com
+    name: NewStore API Support
+    url: https://developer.newstore.com
+host: dodici-demo.p.newstore.net
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security: []
+tags:
+- name: users
+  description: Users
+paths:
+  /iam/users:
+    get:
+      description: Retrieves all available user accounts for the retailer. Searches if the query parameter is used.
+      summary: listUsers
+      tags:
+      - users
+      operationId: listUsers
+      deprecated: false
+      produces:
+      - application/problem+json
+      - application/json
+      parameters:
+      - name: q
+        in: query
+        required: false
+        type: string
+        description: Query the resulting list by first/last name or email address.
+      - name: associate_id
+        in: query
+        required: false
+        type: string
+        description: Filter to get user with the given associate_id.
+      - name: offset
+        in: query
+        required: false
+        default: 0
+        type: integer
+        format: int32
+        minimum: 0.0
+        maximum: 1000000.0
+        exclusiveMaximum: false
+        exclusiveMinimum: false
+        description: The offset to be used for the resulting user account list.
+      - name: count
+        in: query
+        required: false
+        default: 25
+        type: integer
+        format: int32
+        maximum: 50.0
+        exclusiveMaximum: false
+        description: The number of requested user accounts.
+      - name: role
+        in: query
+        required: false
+        type: string
+        description: The role of the users to filter by.
+      responses:
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '200':
+          description: Returns all users.
+          schema:
+            $ref: '#/definitions/GetUsersResponse'
+          headers: {}
+        '400':
+          description: Bad Request, invalid query parameters.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '401':
+          description: Unauthorized.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - iam:users:read
+    post:
+      description: 'Creates a new user account.
+
+
+        To assign roles to a new user account, provide the IDs of the relevant roles in the `roles` property.
+
+        To retrieve the role IDs, use the [List roles method](#operation/ListRoles).
+
+
+        If the `external_directory` property is set to `false`, the user account is created
+
+        in Auth0 as well and an email with password setup instructions is sent. The user can then use these
+
+        credentials to log into NewStore.
+
+
+        **Note:** If the user has no roles assigned, they will be able to log in to NOM but will not be able to interact
+
+        with NOM until you assign roles to the user to allow them to interact with the various apps. See the
+
+        [Create user role](#operation/CreateRole) method.
+
+        '
+      summary: createUser
+      tags:
+      - users
+      operationId: createUser
+      deprecated: false
+      produces:
+      - application/problem+json
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/PostUsersRequest'
+      responses:
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '201':
+          description: The user account is created.
+          schema:
+            $ref: '#/definitions/User'
+          headers: {}
+        '400':
+          description: Bad Request, invalid request body.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '401':
+          description: Unauthorized.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '409':
+          description: The provided email address is already in use.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '412':
+          description: One or more user roles used were not found.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - iam:users:write
+  /iam/users/{id}:
+    delete:
+      description: 'Deletes the user account with the specified ID.
+
+
+        If the `external_directory` property is set to `false`, the user account will be deleted in Auth0 as well.
+
+
+        If the `external_directory` property is set to `true`, the user account will not be deleted from the
+
+        respective enterprise directory.
+
+        '
+      summary: destroyUser
+      tags:
+      - users
+      operationId: destroyUser
+      deprecated: false
+      produces:
+      - application/problem+json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: user id
+      responses:
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '204':
+          description: The deletion request was successful.
+          headers: {}
+        '401':
+          description: Unauthorized.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: User account was not found.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - iam:users:write
+    get:
+      description: Retrieves the user account with the specified ID.
+      summary: showUser
+      tags:
+      - users
+      operationId: showUser
+      deprecated: false
+      produces:
+      - application/problem+json
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: user id
+      responses:
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '200':
+          description: Returns specific user
+          schema:
+            $ref: '#/definitions/User'
+          headers: {}
+        '401':
+          description: Unauthorized.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: User not found.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - iam:users:read
+    put:
+      description: 'Updates the user account with the specified ID.
+
+
+        If the `external_directory` property is changed to `false`, the user account will be created in
+
+        Auth0 as well and an email with password setup instructions will be send. The user can then use
+
+        these credentials to log into NewStore.
+
+
+        **Note:** If the user has no roles assigned, they will be able to log in to NOM but will not be able to interact
+
+        with NOM until you assign roles to the user to allow them to interact with the various apps. See the
+
+        [Create user role](#operation/CreateRole) method..
+
+
+        If the `external_directory` property is changed to `true`, the user account will be deleted from Auth0.
+
+        The user then can login with the enterprise directory credentials.
+
+        '
+      summary: replaceUser
+      tags:
+      - users
+      operationId: replaceUser
+      deprecated: false
+      produces:
+      - application/problem+json
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: user id
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/PutUsersByIdRequest'
+      responses:
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '200':
+          description: The updated user account.
+          schema:
+            $ref: '#/definitions/User'
+          headers: {}
+        '400':
+          description: Bad Request, invalid request body.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '401':
+          description: Unauthorized.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: User account was not found.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '412':
+          description: One or more user roles used were not found.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - iam:users:write
+definitions:
+  GetUsersResponse:
+    title: GetUsersResponse
+    description: Gets all users
+    type: object
+    properties:
+      elements:
+        type: array
+        items:
+          $ref: '#/definitions/User'
+      pagination_info:
+        type: object
+        allOf:
+        - $ref: '#/definitions/PaginatedResponse'
+        - description: Contains default fields for paginatable APIs.
+  PaginatedResponse:
+    title: PaginatedResponse
+    description: Contains default fields for paginatable APIs.
+    type: object
+    properties:
+      count:
+        description: Contains the count of returned elements.
+        type: integer
+        format: int32
+      offset:
+        description: Contains the current offset.
+        type: integer
+        format: int32
+      total:
+        description: Contains the total count of elements.
+        type: integer
+        format: int32
+    required:
+    - count
+    - offset
+    - total
+  Problem:
+    title: Problem
+    type: object
+    properties:
+      detail:
+        description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some description for the error situation
+        type: string
+      error_code:
+        type: string
+      instance:
+        description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+        example: /some/uri-reference#specific-occurrence-context
+        type: string
+      message:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      request_id:
+        type: string
+      status:
+        description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        type: integer
+        minimum: 100.0
+        maximum: 600.0
+        exclusiveMaximum: true
+        format: int32
+      title:
+        description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some title for the error situation
+        type: string
+      type:
+        description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+        example: /some/uri-reference
+        type: string
+        default: about:blank
+  User:
+    title: User
+    type: object
+    properties:
+      associate_id:
+        description: External identifier for the NewStore plattform. Formerly known as "newstore_id".
+        type: string
+      created_at:
+        type: string
+        format: date-time
+      email:
+        description: Email address of the user.
+        type: string
+      external_directory:
+        description: User is managed by an external directory.
+        type: boolean
+      first_name:
+        description: First name of the user.
+        type: string
+      id:
+        description: Identifier of the user.
+        type: string
+      is_active:
+        description: Whether the user can login or not.
+        type: boolean
+      last_login_at:
+        description: Shows last login time of the user. If user never logged in the property is not presence.
+        type: string
+        format: date-time
+      last_name:
+        description: Last name of the user.
+        type: string
+      phone:
+        description: Telephone number of the user.
+        type: string
+      roles:
+        description: List of roles the user is assigned to.
+        type: array
+        items:
+          $ref: '#/definitions/RoleItem'
+      updated_at:
+        type: string
+        format: date-time
+  PostUsersRequest:
+    title: PostUsersRequest
+    type: object
+    properties:
+      email:
+        description: Email address of the user.
+        type: string
+      external_directory:
+        description: User is managed by an external directory.
+        type: boolean
+      first_name:
+        description: First name of the user.
+        type: string
+      is_active:
+        description: Whether the user can login or not.
+        type: boolean
+      last_name:
+        description: Last name of the user.
+        type: string
+      phone:
+        description: Telephone number of the user.
+        type: string
+      roles:
+        description: List of role names the user is assigned to.
+        type: array
+        items:
+          type: string
+    required:
+    - email
+  RoleItem:
+    title: RoleItem
+    description: Needed for granting permissions per group not individually.
+    type: object
+    properties:
+      id:
+        description: Identifier of the role.
+        type: string
+      is_readonly:
+        description: The role is read-only and not editable.
+        type: boolean
+      name:
+        description: Name of the role.
+        type: string
+      updated_at:
+        type: string
+        format: date-time
+    required:
+    - id
+    - name
+  PutUsersByIdRequest:
+    title: PutUsersByIdRequest
+    type: object
+    properties:
+      external_directory:
+        description: User is managed by an external directory.
+        type: boolean
+      first_name:
+        description: First name of the user.
+        type: string
+      is_active:
+        description: Whether the user can login or not.
+        type: boolean
+      last_name:
+        description: Last name of the user.
+        type: string
+      phone:
+        description: Telephone number of the user.
+        type: string
+      roles:
+        description: List of role names the user is assigned to.
+        type: array
+        items:
+          type: string
+    required:
+    - external_directory
+    - first_name
+    - is_active
+    - last_name
+    - phone
+    - roles
+securityDefinitions:
+  oauth:
+    type: oauth2
+    flow: application
+    tokenUrl: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+    scopes:
+      catalog:import-schemas:read: Grants privileges to read import schema
+      catalog:import-schemas:write: Grants privileges to write import schema
+      catalog:pricebook-export:read: Grants privileges to export pricebook data
+      catalog:product-export:read: Grants privileges to export product data
+      checkout:carts:read: Grants privileges to read cart data
+      checkout:carts:write: Grants privileges to write cart data
+      clienteling:profile:read: Grants privileges to read clienteling profiles
+      customer:profile:read: Grants privileges to read API customer data
+      customer:profile:write: Grants privileges to modify API customer data
+      newstore:configuration:read: Grants privileges to read configuration
+      newstore:configuration:write: Grants privileges to write configuration
+      fiscalization:orders:read: View orders with fiscal transactions and signatures
+      fiscalization:orders:write: Create orders with fiscal transactions and signatures
+      shipments:read: Read Shipping Options and Audits
+      iam:providers:read: ' Grants read privileges to provider resources'
+      iam:providers:write: ' Grants write privileges to provider resources'
+      iam:roles:read: ' Grants privileges to read roles data'
+      iam:roles:write: ' Grants privileges to write roles data'
+      iam:users:read: ' Grants privileges to read user data'
+      iam:users:write: ' Grants privileges to write user data'
+      inventory:reservations:read: Allows access to retrieve reservations
+      inventory:reservations:write: Allows access to create and update reservations
+      promotions:config:read: Grants privileges to read configuration
+      promotions:config:write: Grants privileges to write into configuration
+      promotions:reason-codes:read: Grants privileges to list reason codes
+      promotions:reason-codes:write: Grants privileges to create and update reason codes
+      audit-events:read: Grants read access to the tenant's audit events.
+      taxes:preview-transactions:write: Preview tax transactions
+      taxes:transactions:read: Read tax transactions

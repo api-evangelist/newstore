@@ -1,0 +1,203 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: NewStore address Pricebook export API
+  description: NewStore public APIs
+  contact:
+    email: support@newstore.com
+    name: NewStore API Support
+    url: https://developer.newstore.com
+host: dodici-demo.p.newstore.net
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security: []
+tags:
+- name: Pricebook export
+  description: Pricebook Export
+paths:
+  /catalog/exports/catalogs/{catalog}/pricebooks/{pricebook}:
+    get:
+      description: 'Use this resource to export a specific price book. The export can be requested in CSV or SQLite format.
+
+        The export contains the following fields:
+
+
+        | product_id (string) | price (float32) | currency_code (string) |
+
+        |---|---|---|
+
+        |  prod1 | 16.99  |  USD |
+
+
+        Export API are not immediately scheduling new export.
+
+        Exports are automatically scheduled daily. Usually at 8:00 UTC. They are usually finished before 9:00 UTC.
+
+        API can be used to retrieve max 1 day old snapshot of pricing data.
+
+
+        Response header `Last-Modified` can be used to determine when file was updated last time (example value `Mon, 18 Dec 2023 08:00:21 GMT`).
+
+        Response header `ETag` can be used to determine whether version you already downloaded before match current one. (example value `"2ad5ba4e24fe1c0d225e9a94049f142d"`)
+
+        Please use it with combination with `If-None-Match` request header to download file only when something changed.
+
+        '
+      summary: showPricebookExport
+      tags:
+      - Pricebook export
+      operationId: showPricebookExport
+      deprecated: false
+      produces:
+      - application/problem+json
+      parameters:
+      - name: catalog
+        in: path
+        required: true
+        type: string
+        description: The catalog the pricebook, the user wants to export, belongs to.
+      - name: pricebook
+        in: path
+        required: true
+        type: string
+        description: The pricebook the user wants to export.
+      - name: format
+        in: query
+        required: false
+        enum:
+        - csv
+        - sqlite
+        default: csv
+        type: string
+        description: The desired response format, defaults to 'csv'.
+      responses:
+        '302':
+          description: Temporary redirect to actual export file, stored in S3.
+          headers:
+            Location:
+              description: The S3 presigned URL to redirect to, to access the requested priceook export.
+              type: string
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '403':
+          description: Forbidden, authentication scope did not met requirements
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - catalog:pricebook-export:read
+definitions:
+  Problem:
+    title: Problem
+    type: object
+    properties:
+      detail:
+        description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some description for the error situation
+        type: string
+      error_code:
+        type: string
+      instance:
+        description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+        example: /some/uri-reference#specific-occurrence-context
+        type: string
+      message:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      request_id:
+        type: string
+      status:
+        description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        type: integer
+        minimum: 100.0
+        maximum: 600.0
+        exclusiveMaximum: true
+        format: int32
+      title:
+        description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some title for the error situation
+        type: string
+      type:
+        description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+        example: /some/uri-reference
+        type: string
+        default: about:blank
+securityDefinitions:
+  oauth:
+    type: oauth2
+    flow: application
+    tokenUrl: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+    scopes:
+      catalog:import-schemas:read: Grants privileges to read import schema
+      catalog:import-schemas:write: Grants privileges to write import schema
+      catalog:pricebook-export:read: Grants privileges to export pricebook data
+      catalog:product-export:read: Grants privileges to export product data
+      checkout:carts:read: Grants privileges to read cart data
+      checkout:carts:write: Grants privileges to write cart data
+      clienteling:profile:read: Grants privileges to read clienteling profiles
+      customer:profile:read: Grants privileges to read API customer data
+      customer:profile:write: Grants privileges to modify API customer data
+      newstore:configuration:read: Grants privileges to read configuration
+      newstore:configuration:write: Grants privileges to write configuration
+      fiscalization:orders:read: View orders with fiscal transactions and signatures
+      fiscalization:orders:write: Create orders with fiscal transactions and signatures
+      shipments:read: Read Shipping Options and Audits
+      iam:providers:read: ' Grants read privileges to provider resources'
+      iam:providers:write: ' Grants write privileges to provider resources'
+      iam:roles:read: ' Grants privileges to read roles data'
+      iam:roles:write: ' Grants privileges to write roles data'
+      iam:users:read: ' Grants privileges to read user data'
+      iam:users:write: ' Grants privileges to write user data'
+      inventory:reservations:read: Allows access to retrieve reservations
+      inventory:reservations:write: Allows access to create and update reservations
+      promotions:config:read: Grants privileges to read configuration
+      promotions:config:write: Grants privileges to write into configuration
+      promotions:reason-codes:read: Grants privileges to list reason codes
+      promotions:reason-codes:write: Grants privileges to create and update reason codes
+      audit-events:read: Grants read access to the tenant's audit events.
+      taxes:preview-transactions:write: Preview tax transactions
+      taxes:transactions:read: Read tax transactions

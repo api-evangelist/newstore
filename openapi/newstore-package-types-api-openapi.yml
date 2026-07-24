@@ -1,0 +1,554 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: NewStore address package-types API
+  description: NewStore public APIs
+  contact:
+    email: support@newstore.com
+    name: NewStore API Support
+    url: https://developer.newstore.com
+host: dodici-demo.p.newstore.net
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security: []
+tags:
+- name: package-types
+  description: Package Types
+  externalDocs:
+    url: https://docs.newstore.com/
+    description: 'Package types allow associates to select which type of package they have packed items into during the packing flow in the Associate App. If no package types are configured, the step to select a package type will be skipped.
+
+
+      The dimensions and weight of the selected package will be sent to the shipping adapter when booking the shipment, via the `package_option` field. See the [Shipping Provider Webhook docs](https://docs.newstore.net/api/webhooks/delivery_hook#tag/Shipments/operation/book-shipment) for more information.'
+paths:
+  /fulfillment/package-types:
+    get:
+      description: "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>\U0001F6A7 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nReturns all configured package types sorted by alphabetical order. These define the packages available for an associate to choose from during the packing flow in the Associate App."
+      summary: listPackageTypes
+      tags:
+      - package-types
+      operationId: listPackageTypes
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters: []
+      responses:
+        default:
+          description: Default Response
+          headers: {}
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/PackageTypesResponse'
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    post:
+      description: "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>\U0001F6A7 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nCreates a new package type for the tenant. Once created, the package type will be available for associates to select during the packing flow in alphabetical order in the Associate App. Returns a 201 with the new package type's ID in the Location header."
+      summary: createPackageType
+      tags:
+      - package-types
+      operationId: createPackageType
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/CreatePackageTypeRequest'
+      responses:
+        default:
+          description: Default Response
+          headers: {}
+        '201':
+          description: Successful Response
+          schema: {}
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+  /fulfillment/package-types/{package_type_id}:
+    delete:
+      description: "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>\U0001F6A7 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nDeletes an existing package type. Once deleted, the package type will no longer be available for associates to select during the packing flow in the Associate App. Package types are available in alphabetical order when listed."
+      summary: destroyPackageType
+      tags:
+      - package-types
+      operationId: destroyPackageType
+      deprecated: false
+      produces:
+      - application/problem+json
+      parameters:
+      - name: package_type_id
+        in: path
+        required: true
+        type: string
+        format: uuid
+        description: ''
+      responses:
+        default:
+          description: Default Response
+          headers: {}
+        '204':
+          description: Successful Response
+          headers: {}
+        '404':
+          description: Package type not found.
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    get:
+      description: "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>\U0001F6A7 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nReturns a single package type by its ID. Package types are available in alphabetical order when listed."
+      summary: showPackageType
+      tags:
+      - package-types
+      operationId: showPackageType
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters:
+      - name: package_type_id
+        in: path
+        required: true
+        type: string
+        format: uuid
+        description: ''
+      responses:
+        default:
+          description: Default Response
+          headers: {}
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/PackageTypeResponse'
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: Package type not found.
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    patch:
+      description: "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>\U0001F6A7 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nPartially updates an existing package type. Only the provided fields will be updated; omitted fields remain unchanged. Package types are available in alphabetical order when listed."
+      summary: updatePackageType
+      tags:
+      - package-types
+      operationId: updatePackageType
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: package_type_id
+        in: path
+        required: true
+        type: string
+        format: uuid
+        description: ''
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/UpdatePackageTypeRequest'
+      responses:
+        default:
+          description: Default Response
+          headers: {}
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/PackageTypeResponse'
+          headers: {}
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: Package type not found.
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+definitions:
+  weight_unit:
+    title: weight_unit
+    description: Unit of measurement for the weight.
+    type: string
+    enum:
+    - lb
+    - oz
+    - kg
+    - g
+  Problem:
+    title: Problem
+    type: object
+    properties:
+      detail:
+        description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some description for the error situation
+        type: string
+      error_code:
+        type: string
+      instance:
+        description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+        example: /some/uri-reference#specific-occurrence-context
+        type: string
+      message:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      request_id:
+        type: string
+      status:
+        description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        type: integer
+        minimum: 100.0
+        maximum: 600.0
+        exclusiveMaximum: true
+        format: int32
+      title:
+        description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some title for the error situation
+        type: string
+      type:
+        description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+        example: /some/uri-reference
+        type: string
+        default: about:blank
+  PackageWeight:
+    title: PackageWeight
+    description: The weight of a package type.
+    type: object
+    properties:
+      amount:
+        description: Weight of the package.
+        type: number
+        minimum: 0.0
+        exclusiveMinimum: true
+        format: double
+      unit:
+        type: object
+        allOf:
+        - $ref: '#/definitions/weight_unit'
+        - description: Unit of measurement for the weight.
+    required:
+    - amount
+    - unit
+  PackageTypeResponse:
+    title: PackageTypeResponse
+    description: A package type that is available for associates to select during the packing flow.
+    type: object
+    properties:
+      dimensions:
+        type: object
+        allOf:
+        - $ref: '#/definitions/PackageDimensions'
+        - description: The physical dimensions of a package type.
+      id:
+        description: Unique identifier of the package type.
+        type: string
+        format: uuid
+      name:
+        description: Display name shown to associates when selecting a package.
+        type: string
+      weight:
+        type: object
+        allOf:
+        - $ref: '#/definitions/PackageWeight'
+        - description: The weight of a package type.
+    required:
+    - dimensions
+    - id
+    - name
+    - weight
+  CreatePackageTypeRequest:
+    title: CreatePackageTypeRequest
+    description: 'Request body for creating a new package type. Package types define the packages
+
+      available for an associate to choose from during the packing flow in the Associate App.'
+    example:
+      dimensions:
+        height: 385
+        length: 70
+        unit: mm
+        width: 260
+      name: Small Padded Satchel
+      weight:
+        amount: 20
+        unit: g
+    type: object
+    properties:
+      dimensions:
+        type: object
+        allOf:
+        - $ref: '#/definitions/PackageDimensions'
+        - description: The physical dimensions of a package type.
+      name:
+        description: Display name shown to associates when selecting a package.
+        type: string
+      weight:
+        type: object
+        allOf:
+        - $ref: '#/definitions/PackageWeight'
+        - description: The weight of a package type.
+    required:
+    - dimensions
+    - name
+    - weight
+  UpdatePackageTypeRequest:
+    title: UpdatePackageTypeRequest
+    description: 'Request body for updating an existing package type. All fields are optional;
+
+      only provided fields will be updated.'
+    type: object
+    properties:
+      dimensions:
+        $ref: '#/definitions/PackageDimensions'
+      name:
+        description: Display name shown to associates when selecting a package.
+        type: string
+      weight:
+        $ref: '#/definitions/PackageWeight'
+  PackageDimensions:
+    title: PackageDimensions
+    description: The physical dimensions of a package type.
+    type: object
+    properties:
+      height:
+        description: Height of the package.
+        type: number
+        minimum: 0.0
+        exclusiveMinimum: true
+        format: double
+      length:
+        description: Length of the package.
+        type: number
+        minimum: 0.0
+        exclusiveMinimum: true
+        format: double
+      unit:
+        type: object
+        allOf:
+        - $ref: '#/definitions/dimension_unit'
+        - description: Unit of measurement for the dimensions.
+      width:
+        description: Width of the package.
+        type: number
+        minimum: 0.0
+        exclusiveMinimum: true
+        format: double
+    required:
+    - height
+    - length
+    - unit
+    - width
+  dimension_unit:
+    title: dimension_unit
+    description: Unit of measurement for the dimensions.
+    type: string
+    enum:
+    - mm
+    - cm
+    - m
+    - in
+    - ft
+  PackageTypesResponse:
+    title: PackageTypesResponse
+    description: List of all package types configured.
+    type: object
+    properties:
+      package_types:
+        type: array
+        items:
+          $ref: '#/definitions/PackageTypeResponse'
+    required:
+    - package_types
+securityDefinitions:
+  oauth:
+    type: oauth2
+    flow: application
+    tokenUrl: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+    scopes:
+      catalog:import-schemas:read: Grants privileges to read import schema
+      catalog:import-schemas:write: Grants privileges to write import schema
+      catalog:pricebook-export:read: Grants privileges to export pricebook data
+      catalog:product-export:read: Grants privileges to export product data
+      checkout:carts:read: Grants privileges to read cart data
+      checkout:carts:write: Grants privileges to write cart data
+      clienteling:profile:read: Grants privileges to read clienteling profiles
+      customer:profile:read: Grants privileges to read API customer data
+      customer:profile:write: Grants privileges to modify API customer data
+      newstore:configuration:read: Grants privileges to read configuration
+      newstore:configuration:write: Grants privileges to write configuration
+      fiscalization:orders:read: View orders with fiscal transactions and signatures
+      fiscalization:orders:write: Create orders with fiscal transactions and signatures
+      shipments:read: Read Shipping Options and Audits
+      iam:providers:read: ' Grants read privileges to provider resources'
+      iam:providers:write: ' Grants write privileges to provider resources'
+      iam:roles:read: ' Grants privileges to read roles data'
+      iam:roles:write: ' Grants privileges to write roles data'
+      iam:users:read: ' Grants privileges to read user data'
+      iam:users:write: ' Grants privileges to write user data'
+      inventory:reservations:read: Allows access to retrieve reservations
+      inventory:reservations:write: Allows access to create and update reservations
+      promotions:config:read: Grants privileges to read configuration
+      promotions:config:write: Grants privileges to write into configuration
+      promotions:reason-codes:read: Grants privileges to list reason codes
+      promotions:reason-codes:write: Grants privileges to create and update reason codes
+      audit-events:read: Grants read access to the tenant's audit events.
+      taxes:preview-transactions:write: Preview tax transactions
+      taxes:transactions:read: Read tax transactions

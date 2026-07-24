@@ -1,0 +1,673 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: NewStore address API
+  description: NewStore public APIs
+  contact:
+    email: support@newstore.com
+    name: NewStore API Support
+    url: https://developer.newstore.com
+host: dodici-demo.p.newstore.net
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security: []
+tags:
+- name: address
+  description: Customer Profile Addresses
+paths:
+  /customer/profiles/{profile_id}/addresses:
+    get:
+      description: Returns a list of addresses for given customer `profile_id`.
+      summary: listAddresses
+      tags:
+      - address
+      operationId: listAddresses
+      deprecated: false
+      produces:
+      - application/problem+json
+      - application/json
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        type: string
+        description: Profile ID
+      - name: offset
+        in: query
+        required: false
+        default: 0
+        type: integer
+        format: int64
+        minimum: 0.0
+        exclusiveMinimum: false
+        description: The addresses page offset.
+      - name: count
+        in: query
+        required: false
+        default: 10
+        type: integer
+        format: int64
+        minimum: 1.0
+        maximum: 1000.0
+        exclusiveMaximum: false
+        exclusiveMinimum: false
+        description: The number of requested addresses.
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '200':
+          description: The addresses list.
+          schema:
+            $ref: '#/definitions/ListAddressesResponse'
+          headers: {}
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: Profile not found.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - customer:profile:read
+    post:
+      description: 'Retrieves an existing address or creates a new address in case it has not been added yet.
+
+
+        **Note:**
+
+        A maximum of 1000 addresses can be stored per customer profile.
+
+        When a new address is added after reaching the 1000 limit, the oldest address will be automatically replaced.
+
+        '
+      summary: createOrShowAddress
+      tags:
+      - address
+      operationId: createOrShowAddress
+      deprecated: false
+      produces:
+      - application/problem+json
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        type: string
+        description: Profile ID
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: Request payload
+        schema:
+          $ref: '#/definitions/AddressModel'
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '200':
+          description: Existing address response.
+          schema:
+            $ref: '#/definitions/AddressResponse'
+          headers: {}
+        '201':
+          description: The create addresses response.
+          schema:
+            $ref: '#/definitions/AddressResponse'
+          headers: {}
+        '400':
+          description: Bad Request.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: Profile not found.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '422':
+          description: Unable to process the entity.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - customer:profile:write
+  /customer/profiles/{profile_id}/addresses/{address_id}:
+    delete:
+      description: 'Deletes address from the latest customer profile.
+
+        '
+      summary: destroyAddress
+      tags:
+      - address
+      operationId: destroyAddress
+      deprecated: false
+      produces:
+      - application/problem+json
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        type: string
+        description: Profile ID
+      - name: address_id
+        in: path
+        required: true
+        type: string
+        description: Address ID
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '204':
+          description: The delete address response.
+          headers: {}
+        '400':
+          description: Address deletion bad request.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: Profile or address not found.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '409':
+          description: Address deletion conflict.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - customer:profile:write
+    get:
+      description: Returns an address for the given customer `profile_id` and `address_id`.
+      summary: showAddress
+      tags:
+      - address
+      operationId: showAddress
+      deprecated: false
+      produces:
+      - application/problem+json
+      - application/json
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        type: string
+        description: Profile ID
+      - name: address_id
+        in: path
+        required: true
+        type: string
+        description: Address ID
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '200':
+          description: The address.
+          schema:
+            $ref: '#/definitions/AddressResponse'
+          headers: {}
+        '400':
+          description: Bad Request.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: Profile or address not found.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - customer:profile:read
+    patch:
+      description: Updates address for the given customer `profile_id` and `address_id`.
+      summary: updateAddress
+      tags:
+      - address
+      operationId: updateAddress
+      deprecated: false
+      produces:
+      - application/problem+json
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: profile_id
+        in: path
+        required: true
+        type: string
+        description: Profile ID
+      - name: address_id
+        in: path
+        required: true
+        type: string
+        description: Address ID
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: Request payload
+        schema:
+          $ref: '#/definitions/UpdateAddressRequest'
+      responses:
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '200':
+          description: The update address response.
+          schema:
+            $ref: '#/definitions/AddressResponse'
+          headers: {}
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: Profile or address not found.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '409':
+          description: Update conflict.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '422':
+          description: Unable to process the entity.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - customer:profile:write
+definitions:
+  UpdateAddressRequest:
+    title: UpdateAddressRequest
+    description: Update address request.
+    type: object
+    properties:
+      last_updated_at:
+        type: string
+        format: date-time
+      address_line_1:
+        description: First line of the address. Typically, the street and house number.
+        type: string
+      address_line_2:
+        description: Second line of the address. Typically, the apartment number or PO box
+        type: string
+      city:
+        description: The city/town of the address.
+        type: string
+      company_name:
+        description: Company name.
+        type: string
+      contact_phone:
+        description: Phone number of the address.
+        type: string
+      country_code:
+        description: Country code in ISO 3166-1 alpha-2 format.
+        type: string
+      full_name:
+        description: Full name.
+        type: string
+      state:
+        description: State/province or region of the address.
+        type: string
+      zip_code:
+        description: Postal code of the address.
+        type: string
+    required:
+    - last_updated_at
+  ListAddressesResponse:
+    title: ListAddressesResponse
+    description: List addresses response
+    type: object
+    properties:
+      addresses:
+        type: array
+        items:
+          $ref: '#/definitions/AddressResponse'
+      pagination_info:
+        $ref: '#/definitions/PaginationInfo'
+    required:
+    - addresses
+    - pagination_info
+  Problem:
+    title: Problem
+    type: object
+    properties:
+      detail:
+        description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some description for the error situation
+        type: string
+      error_code:
+        type: string
+      instance:
+        description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+        example: /some/uri-reference#specific-occurrence-context
+        type: string
+      message:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      request_id:
+        type: string
+      status:
+        description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        type: integer
+        minimum: 100.0
+        maximum: 600.0
+        exclusiveMaximum: true
+        format: int32
+      title:
+        description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some title for the error situation
+        type: string
+      type:
+        description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+        example: /some/uri-reference
+        type: string
+        default: about:blank
+  PaginationInfo:
+    title: PaginationInfo
+    description: Pagination info.
+    type: object
+    properties:
+      count:
+        description: Amount of items in the current page.
+        type: integer
+        format: int64
+      offset:
+        description: Offset of the current page.
+        type: integer
+        format: int64
+      total:
+        description: Total amount of the items for given filters set.
+        type: integer
+        format: int64
+    required:
+    - count
+    - offset
+    - total
+  AddressModel:
+    title: AddressModel
+    description: Address model request without autogenerated fields like created_at, token, id, etc..
+    type: object
+    properties:
+      address_line_1:
+        description: First line of the address. Typically, the street and house number.
+        type: string
+      address_line_2:
+        description: Second line of the address. Typically, the apartment number or PO box
+        type: string
+      city:
+        description: The city/town of the address.
+        type: string
+      company_name:
+        description: Company name.
+        type: string
+      contact_phone:
+        description: Phone number of the address.
+        type: string
+      country_code:
+        description: Country code in ISO 3166-1 alpha-2 format.
+        type: string
+      full_name:
+        description: Full name.
+        type: string
+      state:
+        description: State/province or region of the address.
+        type: string
+      zip_code:
+        description: Postal code of the address.
+        type: string
+    required:
+    - country_code
+  AddressResponse:
+    title: AddressResponse
+    type: object
+    properties:
+      id:
+        description: Identifier of the address.
+        example: NS-EU-01FXX4THCG41RFCXVEQGKD60Y4-01FXX4TTF7X8CF5JR3B35TD70F
+        type: string
+      address_line_1:
+        description: First line of the address. Typically, the street and house number.
+        type: string
+      address_line_2:
+        description: Second line of the address. Typically, the apartment number or PO box
+        type: string
+      city:
+        description: The city/town of the address.
+        type: string
+      company_name:
+        description: Company name.
+        type: string
+      contact_phone:
+        description: Phone number of the address.
+        type: string
+      country_code:
+        description: Country code in ISO 3166-1 alpha-2 format.
+        type: string
+      full_name:
+        description: Full name.
+        type: string
+      state:
+        description: State/province or region of the address.
+        type: string
+      zip_code:
+        description: Postal code of the address.
+        type: string
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+    required:
+    - id
+    - country_code
+    - created_at
+    - updated_at
+securityDefinitions:
+  oauth:
+    type: oauth2
+    flow: application
+    tokenUrl: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+    scopes:
+      catalog:import-schemas:read: Grants privileges to read import schema
+      catalog:import-schemas:write: Grants privileges to write import schema
+      catalog:pricebook-export:read: Grants privileges to export pricebook data
+      catalog:product-export:read: Grants privileges to export product data
+      checkout:carts:read: Grants privileges to read cart data
+      checkout:carts:write: Grants privileges to write cart data
+      clienteling:profile:read: Grants privileges to read clienteling profiles
+      customer:profile:read: Grants privileges to read API customer data
+      customer:profile:write: Grants privileges to modify API customer data
+      newstore:configuration:read: Grants privileges to read configuration
+      newstore:configuration:write: Grants privileges to write configuration
+      fiscalization:orders:read: View orders with fiscal transactions and signatures
+      fiscalization:orders:write: Create orders with fiscal transactions and signatures
+      shipments:read: Read Shipping Options and Audits
+      iam:providers:read: ' Grants read privileges to provider resources'
+      iam:providers:write: ' Grants write privileges to provider resources'
+      iam:roles:read: ' Grants privileges to read roles data'
+      iam:roles:write: ' Grants privileges to write roles data'
+      iam:users:read: ' Grants privileges to read user data'
+      iam:users:write: ' Grants privileges to write user data'
+      inventory:reservations:read: Allows access to retrieve reservations
+      inventory:reservations:write: Allows access to create and update reservations
+      promotions:config:read: Grants privileges to read configuration
+      promotions:config:write: Grants privileges to write into configuration
+      promotions:reason-codes:read: Grants privileges to list reason codes
+      promotions:reason-codes:write: Grants privileges to create and update reason codes
+      audit-events:read: Grants read access to the tenant's audit events.
+      taxes:preview-transactions:write: Preview tax transactions
+      taxes:transactions:read: Read tax transactions

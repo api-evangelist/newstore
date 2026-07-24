@@ -1,0 +1,379 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: NewStore address Inventory Configuration API
+  description: NewStore public APIs
+  contact:
+    email: support@newstore.com
+    name: NewStore API Support
+    url: https://developer.newstore.com
+host: dodici-demo.p.newstore.net
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security: []
+tags:
+- name: Inventory Configuration
+  description: Inventory Configuration
+paths:
+  /inventory/config:
+    get:
+      description: Returns the current inventory configuration.
+      summary: showInventoryConfig
+      tags:
+      - Inventory Configuration
+      operationId: showInventoryConfig
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters:
+      - name: store_id
+        in: query
+        required: false
+        type: string
+        description: Store Identifier for store configuration at store level.
+      responses:
+        '200':
+          description: Current inventory configuration
+          schema:
+            $ref: '#/definitions/ConfigModelResponse'
+          headers: {}
+        '400':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - newstore:configuration:read
+    put:
+      description: 'Sets the configuration. Note: you can pass an * to enable store-dependent features.'
+      summary: replaceInventoryConfig
+      tags:
+      - Inventory Configuration
+      operationId: replaceInventoryConfig
+      deprecated: false
+      produces:
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/ConfigModel'
+      responses:
+        '204':
+          description: Successful Response
+          headers: {}
+        '400':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - newstore:configuration:write
+definitions:
+  ConfigModelResponse:
+    title: ConfigModelResponse
+    type: object
+    properties:
+      allow_adjustments_manual_quantity_editing:
+        description: Allow setting the product quantity when scanning an item on Adjustments
+        type: boolean
+      allow_counts_manual_quantity_editing:
+        description: Allow setting the product quantity when scanning an item on Count Tasks
+        type: boolean
+      allow_full_counts_manual_quantity_editing:
+        description: Allow setting the product quantity when scanning items on Full counts
+        type: boolean
+      allow_receiving_manual_quantity_editing:
+        description: Allow setting the product quantity when scanning an item on Receiving
+        type: boolean
+      allow_transfers_manual_quantity_editing:
+        description: Allow setting the product quantity when scanning an item on Transfers
+        type: boolean
+      enabled:
+        description: Returns true if inventory is enabled for the provided store.
+        type: boolean
+      enabled_adjustments_stores:
+        description: Stores that can create adjustments
+        type: array
+        items:
+          type: string
+      enabled_carton_receiving_stores:
+        description: Stores which allow receiving using a carton identifier
+        type: array
+        items:
+          type: string
+      enabled_counts_stores:
+        description: Stores that can do counts
+        type: array
+        items:
+          type: string
+      enabled_full_counts_stores:
+        description: Stores that can do full counts
+        type: array
+        items:
+          type: string
+      enabled_receiving_stores:
+        description: Stores that can receive
+        type: array
+        items:
+          type: string
+      enabled_receiving_without_asn_stores:
+        description: Stores which can receive without an ASN (blind receiving)
+        type: array
+        items:
+          type: string
+      enabled_reservations_stores:
+        description: Stores that can do customer reservations
+        type: array
+        items:
+          type: string
+      enabled_store_initiated_transfers_stores:
+        description: Stores where a transfer can be initiated
+        type: array
+        items:
+          type: string
+      enabled_transfers_stores:
+        description: Stores that allow transfers
+        type: array
+        items:
+          type: string
+      require_confirmation_on_scanning:
+        description: Require confirmation when scanning an item
+        type: boolean
+      store_config:
+        description: Feature toggles for the provided store
+    required:
+    - allow_adjustments_manual_quantity_editing
+    - allow_counts_manual_quantity_editing
+    - allow_full_counts_manual_quantity_editing
+    - allow_receiving_manual_quantity_editing
+    - allow_transfers_manual_quantity_editing
+    - enabled_adjustments_stores
+    - enabled_carton_receiving_stores
+    - enabled_counts_stores
+    - enabled_full_counts_stores
+    - enabled_receiving_stores
+    - enabled_receiving_without_asn_stores
+    - enabled_reservations_stores
+    - enabled_store_initiated_transfers_stores
+    - enabled_transfers_stores
+    - require_confirmation_on_scanning
+  ConfigModel:
+    title: ConfigModel
+    type: object
+    properties:
+      allow_adjustments_manual_quantity_editing:
+        description: Allow setting the product quantity when scanning an item on Adjustments
+        type: boolean
+      allow_counts_manual_quantity_editing:
+        description: Allow setting the product quantity when scanning an item on Count Tasks
+        type: boolean
+      allow_full_counts_manual_quantity_editing:
+        description: Allow setting the product quantity when scanning items on Full counts
+        type: boolean
+      allow_receiving_manual_quantity_editing:
+        description: Allow setting the product quantity when scanning an item on Receiving
+        type: boolean
+      allow_transfers_manual_quantity_editing:
+        description: Allow setting the product quantity when scanning an item on Transfers
+        type: boolean
+      enabled_adjustments_stores:
+        description: Stores that can create adjustments
+        type: array
+        items:
+          type: string
+      enabled_carton_receiving_stores:
+        description: Stores which allow receiving using a carton identifier
+        type: array
+        items:
+          type: string
+      enabled_counts_stores:
+        description: Stores that can do counts
+        type: array
+        items:
+          type: string
+      enabled_full_counts_stores:
+        description: Stores that can do full counts
+        type: array
+        items:
+          type: string
+      enabled_receiving_stores:
+        description: Stores that can receive
+        type: array
+        items:
+          type: string
+      enabled_receiving_without_asn_stores:
+        description: Stores which can receive without an ASN (blind receiving)
+        type: array
+        items:
+          type: string
+      enabled_reservations_stores:
+        description: Stores that can do customer reservations
+        type: array
+        items:
+          type: string
+      enabled_store_initiated_transfers_stores:
+        description: Stores where a transfer can be initiated
+        type: array
+        items:
+          type: string
+      enabled_transfers_stores:
+        description: Stores that allow transfers
+        type: array
+        items:
+          type: string
+      require_confirmation_on_scanning:
+        description: Require confirmation when scanning an item
+        type: boolean
+    required:
+    - allow_adjustments_manual_quantity_editing
+    - allow_counts_manual_quantity_editing
+    - allow_full_counts_manual_quantity_editing
+    - allow_receiving_manual_quantity_editing
+    - allow_transfers_manual_quantity_editing
+    - enabled_adjustments_stores
+    - enabled_carton_receiving_stores
+    - enabled_counts_stores
+    - enabled_full_counts_stores
+    - enabled_receiving_stores
+    - enabled_receiving_without_asn_stores
+    - enabled_reservations_stores
+    - enabled_store_initiated_transfers_stores
+    - enabled_transfers_stores
+    - require_confirmation_on_scanning
+  Problem:
+    title: Problem
+    type: object
+    properties:
+      detail:
+        description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some description for the error situation
+        type: string
+      error_code:
+        type: string
+      instance:
+        description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+        example: /some/uri-reference#specific-occurrence-context
+        type: string
+      message:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      request_id:
+        type: string
+      status:
+        description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        type: integer
+        minimum: 100.0
+        maximum: 600.0
+        exclusiveMaximum: true
+        format: int32
+      title:
+        description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some title for the error situation
+        type: string
+      type:
+        description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+        example: /some/uri-reference
+        type: string
+        default: about:blank
+securityDefinitions:
+  oauth:
+    type: oauth2
+    flow: application
+    tokenUrl: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+    scopes:
+      catalog:import-schemas:read: Grants privileges to read import schema
+      catalog:import-schemas:write: Grants privileges to write import schema
+      catalog:pricebook-export:read: Grants privileges to export pricebook data
+      catalog:product-export:read: Grants privileges to export product data
+      checkout:carts:read: Grants privileges to read cart data
+      checkout:carts:write: Grants privileges to write cart data
+      clienteling:profile:read: Grants privileges to read clienteling profiles
+      customer:profile:read: Grants privileges to read API customer data
+      customer:profile:write: Grants privileges to modify API customer data
+      newstore:configuration:read: Grants privileges to read configuration
+      newstore:configuration:write: Grants privileges to write configuration
+      fiscalization:orders:read: View orders with fiscal transactions and signatures
+      fiscalization:orders:write: Create orders with fiscal transactions and signatures
+      shipments:read: Read Shipping Options and Audits
+      iam:providers:read: ' Grants read privileges to provider resources'
+      iam:providers:write: ' Grants write privileges to provider resources'
+      iam:roles:read: ' Grants privileges to read roles data'
+      iam:roles:write: ' Grants privileges to write roles data'
+      iam:users:read: ' Grants privileges to read user data'
+      iam:users:write: ' Grants privileges to write user data'
+      inventory:reservations:read: Allows access to retrieve reservations
+      inventory:reservations:write: Allows access to create and update reservations
+      promotions:config:read: Grants privileges to read configuration
+      promotions:config:write: Grants privileges to write into configuration
+      promotions:reason-codes:read: Grants privileges to list reason codes
+      promotions:reason-codes:write: Grants privileges to create and update reason codes
+      audit-events:read: Grants read access to the tenant's audit events.
+      taxes:preview-transactions:write: Preview tax transactions
+      taxes:transactions:read: Read tax transactions

@@ -1,0 +1,1127 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: NewStore address stores API
+  description: NewStore public APIs
+  contact:
+    email: support@newstore.com
+    name: NewStore API Support
+    url: https://developer.newstore.com
+host: dodici-demo.p.newstore.net
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security: []
+tags:
+- name: stores
+  description: Fiscal stores
+paths:
+  /stores:
+    get:
+      description: List stores for the given query.
+      summary: listStores
+      tags:
+      - stores
+      operationId: listStores
+      deprecated: false
+      produces:
+      - application/problem+json
+      - application/json
+      parameters:
+      - name: limit
+        in: query
+        required: true
+        type: integer
+        format: int32
+        description: Limit for the number of results.
+      - name: start_at
+        in: query
+        required: false
+        type: string
+        description: 'Key for retrieving the next page.
+
+          * The value of `next_page_key` field from the response payload can be used for retrieving the next page.'
+      - name: include_cashboxes
+        in: query
+        required: false
+        default: false
+        type: boolean
+        description: Include cashboxes belonging to the store in the result.
+      - name: country_codes
+        in: query
+        required: false
+        type: array
+        maxItems: 251
+        uniqueItems: false
+        items:
+          type: string
+        description: Country codes to filter by.
+      responses:
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '200':
+          description: List of stores.
+          schema:
+            $ref: '#/definitions/StoreListV1Dto'
+          headers: {}
+        '400':
+          description: Bad request.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '401':
+          description: Unauthorized.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - newstore:configuration:read
+  /stores/{storeId}:
+    get:
+      description: Get store for the given store identifier.
+      summary: showStore
+      tags:
+      - stores
+      operationId: showStore
+      deprecated: false
+      produces:
+      - application/problem+json
+      - application/json
+      parameters:
+      - name: storeId
+        in: path
+        required: true
+        type: string
+        description: ''
+      responses:
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '200':
+          description: Store.
+          schema:
+            $ref: '#/definitions/StoreV1Dto'
+          headers: {}
+        '401':
+          description: Unauthorized.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: Store not found.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - newstore:configuration:read
+    patch:
+      description: Updates a store for the given store identifier.
+      summary: updateStore
+      tags:
+      - stores
+      operationId: updateStore
+      deprecated: false
+      produces:
+      - application/problem+json
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: storeId
+        in: path
+        required: true
+        type: string
+        description: ''
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/StoreUpdateV1Dto'
+      responses:
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '200':
+          description: Store that was updated.
+          schema:
+            $ref: '#/definitions/StoreV1Dto'
+          headers: {}
+        '400':
+          description: Bad request.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '401':
+          description: Unauthorized.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '403':
+          description: Forbidden.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: Store not found.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth:
+        - newstore:configuration:write
+definitions:
+  StoreV1Dto:
+    title: StoreV1Dto
+    type: object
+    properties:
+      cashboxes:
+        description: List of cashboxes belonging to the store.
+        type: array
+        items:
+          $ref: '#/definitions/CashboxV1Dto'
+      config:
+        type: object
+        allOf:
+        - $ref: '#/definitions/StoreConfigV1Dto'
+        - description: Store configuration.
+          example:
+            auto_report_types:
+            - month-report
+            - year-report
+            report_types:
+            - month-report
+            - year-report
+            timezone: Europe/Vienna
+      country_code:
+        type: string
+      description:
+        description: Store name/description.
+        example: Dodici Paris Store
+        type: string
+      id:
+        description: Store identifier.
+        example: f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a
+        type: string
+      multi_cashbox:
+        description: Flag that indicates if multiple cashboxes are allowed in the store.
+        example: false
+        type: boolean
+      tenant:
+        description: Tenant identifier.
+        example: dodici
+        type: string
+    required:
+    - config
+    - country_code
+    - id
+    - multi_cashbox
+    - tenant
+  StoreListV1Dto:
+    title: StoreListV1Dto
+    type: object
+    properties:
+      items:
+        description: List of stores.
+        type: array
+        items:
+          $ref: '#/definitions/StoreV1Dto'
+        maxItems: 100
+      next_page_key:
+        description: 'Next page key.
+
+          * The value can be used for retrieving the next page by setting the `start_at` query parameter.
+
+          * Having no value indicates that there are no further pages to be retrieved.'
+        type: string
+    required:
+    - items
+  Problem:
+    title: Problem
+    type: object
+    properties:
+      detail:
+        description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some description for the error situation
+        type: string
+      error_code:
+        type: string
+      instance:
+        description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+        example: /some/uri-reference#specific-occurrence-context
+        type: string
+      message:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      request_id:
+        type: string
+      status:
+        description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        type: integer
+        minimum: 100.0
+        maximum: 600.0
+        exclusiveMaximum: true
+        format: int32
+      title:
+        description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some title for the error situation
+        type: string
+      type:
+        description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+        example: /some/uri-reference
+        type: string
+        default: about:blank
+  CashboxV1Dto:
+    title: CashboxV1Dto
+    type: object
+    properties:
+      activated_at:
+        description: Timestamp of the cashbox activation.
+        type: string
+        format: date-time
+      config:
+        description: Fiscal provider configuration.
+      deactivated_at:
+        description: Timestamp of the cashbox deactivation.
+        type: string
+        format: date-time
+      fiscal_provider_id:
+        $ref: '#/definitions/FiscalProviderId'
+      id:
+        description: Cashbox identifier.
+        example: dodici-f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a-1
+        type: string
+      state:
+        $ref: '#/definitions/CashboxState'
+      store_id:
+        description: Store identifier that the cashbox belongs to.
+        example: f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a
+        type: string
+      tenant:
+        description: Tenant identifier.
+        example: dodici
+        type: string
+    required:
+    - activated_at
+    - config
+    - fiscal_provider_id
+    - id
+    - state
+    - store_id
+    - tenant
+  CashboxState:
+    title: CashboxState
+    description: The state of the cashbox, whether it is activated or deactivated.
+    example: activated
+    type: string
+    enum:
+    - activated
+    - deactivated
+  Timezone:
+    title: Timezone
+    description: Timezone.
+    example: Europe/Berlin
+    type: string
+    enum:
+    - Africa/Abidjan
+    - Africa/Accra
+    - Africa/Addis_Ababa
+    - Africa/Algiers
+    - Africa/Asmara
+    - Africa/Asmera
+    - Africa/Bamako
+    - Africa/Bangui
+    - Africa/Banjul
+    - Africa/Bissau
+    - Africa/Blantyre
+    - Africa/Brazzaville
+    - Africa/Bujumbura
+    - Africa/Cairo
+    - Africa/Casablanca
+    - Africa/Ceuta
+    - Africa/Conakry
+    - Africa/Dakar
+    - Africa/Dar_es_Salaam
+    - Africa/Djibouti
+    - Africa/Douala
+    - Africa/El_Aaiun
+    - Africa/Freetown
+    - Africa/Gaborone
+    - Africa/Harare
+    - Africa/Johannesburg
+    - Africa/Juba
+    - Africa/Kampala
+    - Africa/Khartoum
+    - Africa/Kigali
+    - Africa/Kinshasa
+    - Africa/Lagos
+    - Africa/Libreville
+    - Africa/Lome
+    - Africa/Luanda
+    - Africa/Lubumbashi
+    - Africa/Lusaka
+    - Africa/Malabo
+    - Africa/Maputo
+    - Africa/Maseru
+    - Africa/Mbabane
+    - Africa/Mogadishu
+    - Africa/Monrovia
+    - Africa/Nairobi
+    - Africa/Ndjamena
+    - Africa/Niamey
+    - Africa/Nouakchott
+    - Africa/Ouagadougou
+    - Africa/Porto-Novo
+    - Africa/Sao_Tome
+    - Africa/Timbuktu
+    - Africa/Tripoli
+    - Africa/Tunis
+    - Africa/Windhoek
+    - America/Adak
+    - America/Anchorage
+    - America/Anguilla
+    - America/Antigua
+    - America/Araguaina
+    - America/Argentina/Buenos_Aires
+    - America/Argentina/Catamarca
+    - America/Argentina/ComodRivadavia
+    - America/Argentina/Cordoba
+    - America/Argentina/Jujuy
+    - America/Argentina/La_Rioja
+    - America/Argentina/Mendoza
+    - America/Argentina/Rio_Gallegos
+    - America/Argentina/Salta
+    - America/Argentina/San_Juan
+    - America/Argentina/San_Luis
+    - America/Argentina/Tucuman
+    - America/Argentina/Ushuaia
+    - America/Aruba
+    - America/Asuncion
+    - America/Atikokan
+    - America/Atka
+    - America/Bahia
+    - America/Bahia_Banderas
+    - America/Barbados
+    - America/Belem
+    - America/Belize
+    - America/Blanc-Sablon
+    - America/Boa_Vista
+    - America/Bogota
+    - America/Boise
+    - America/Buenos_Aires
+    - America/Cambridge_Bay
+    - America/Campo_Grande
+    - America/Cancun
+    - America/Caracas
+    - America/Catamarca
+    - America/Cayenne
+    - America/Cayman
+    - America/Chicago
+    - America/Chihuahua
+    - America/Coral_Harbour
+    - America/Cordoba
+    - America/Costa_Rica
+    - America/Creston
+    - America/Cuiaba
+    - America/Curacao
+    - America/Danmarkshavn
+    - America/Dawson
+    - America/Dawson_Creek
+    - America/Denver
+    - America/Detroit
+    - America/Dominica
+    - America/Edmonton
+    - America/Eirunepe
+    - America/El_Salvador
+    - America/Ensenada
+    - America/Fort_Nelson
+    - America/Fort_Wayne
+    - America/Fortaleza
+    - America/Glace_Bay
+    - America/Godthab
+    - America/Goose_Bay
+    - America/Grand_Turk
+    - America/Grenada
+    - America/Guadeloupe
+    - America/Guatemala
+    - America/Guayaquil
+    - America/Guyana
+    - America/Halifax
+    - America/Havana
+    - America/Hermosillo
+    - America/Indiana/Indianapolis
+    - America/Indiana/Knox
+    - America/Indiana/Marengo
+    - America/Indiana/Petersburg
+    - America/Indiana/Tell_City
+    - America/Indiana/Vevay
+    - America/Indiana/Vincennes
+    - America/Indiana/Winamac
+    - America/Indianapolis
+    - America/Inuvik
+    - America/Iqaluit
+    - America/Jamaica
+    - America/Jujuy
+    - America/Juneau
+    - America/Kentucky/Louisville
+    - America/Kentucky/Monticello
+    - America/Knox_IN
+    - America/Kralendijk
+    - America/La_Paz
+    - America/Lima
+    - America/Los_Angeles
+    - America/Louisville
+    - America/Lower_Princes
+    - America/Maceio
+    - America/Managua
+    - America/Manaus
+    - America/Marigot
+    - America/Martinique
+    - America/Matamoros
+    - America/Mazatlan
+    - America/Mendoza
+    - America/Menominee
+    - America/Merida
+    - America/Metlakatla
+    - America/Mexico_City
+    - America/Miquelon
+    - America/Moncton
+    - America/Monterrey
+    - America/Montevideo
+    - America/Montreal
+    - America/Montserrat
+    - America/Nassau
+    - America/New_York
+    - America/Nipigon
+    - America/Nome
+    - America/Noronha
+    - America/North_Dakota/Beulah
+    - America/North_Dakota/Center
+    - America/North_Dakota/New_Salem
+    - America/Nuuk
+    - America/Ojinaga
+    - America/Panama
+    - America/Pangnirtung
+    - America/Paramaribo
+    - America/Phoenix
+    - America/Port-au-Prince
+    - America/Port_of_Spain
+    - America/Porto_Acre
+    - America/Porto_Velho
+    - America/Puerto_Rico
+    - America/Punta_Arenas
+    - America/Rainy_River
+    - America/Rankin_Inlet
+    - America/Recife
+    - America/Regina
+    - America/Resolute
+    - America/Rio_Branco
+    - America/Rosario
+    - America/Santa_Isabel
+    - America/Santarem
+    - America/Santiago
+    - America/Santo_Domingo
+    - America/Sao_Paulo
+    - America/Scoresbysund
+    - America/Shiprock
+    - America/Sitka
+    - America/St_Barthelemy
+    - America/St_Johns
+    - America/St_Kitts
+    - America/St_Lucia
+    - America/St_Thomas
+    - America/St_Vincent
+    - America/Swift_Current
+    - America/Tegucigalpa
+    - America/Thule
+    - America/Thunder_Bay
+    - America/Tijuana
+    - America/Toronto
+    - America/Tortola
+    - America/Vancouver
+    - America/Virgin
+    - America/Whitehorse
+    - America/Winnipeg
+    - America/Yakutat
+    - America/Yellowknife
+    - Antarctica/Casey
+    - Antarctica/Davis
+    - Antarctica/DumontDUrville
+    - Antarctica/Macquarie
+    - Antarctica/Mawson
+    - Antarctica/McMurdo
+    - Antarctica/Palmer
+    - Antarctica/Rothera
+    - Antarctica/South_Pole
+    - Antarctica/Syowa
+    - Antarctica/Troll
+    - Antarctica/Vostok
+    - Arctic/Longyearbyen
+    - Asia/Aden
+    - Asia/Almaty
+    - Asia/Amman
+    - Asia/Anadyr
+    - Asia/Aqtau
+    - Asia/Aqtobe
+    - Asia/Ashgabat
+    - Asia/Ashkhabad
+    - Asia/Atyrau
+    - Asia/Baghdad
+    - Asia/Bahrain
+    - Asia/Baku
+    - Asia/Bangkok
+    - Asia/Barnaul
+    - Asia/Beirut
+    - Asia/Bishkek
+    - Asia/Brunei
+    - Asia/Calcutta
+    - Asia/Chita
+    - Asia/Choibalsan
+    - Asia/Chongqing
+    - Asia/Chungking
+    - Asia/Colombo
+    - Asia/Dacca
+    - Asia/Damascus
+    - Asia/Dhaka
+    - Asia/Dili
+    - Asia/Dubai
+    - Asia/Dushanbe
+    - Asia/Famagusta
+    - Asia/Gaza
+    - Asia/Harbin
+    - Asia/Hebron
+    - Asia/Ho_Chi_Minh
+    - Asia/Hong_Kong
+    - Asia/Hovd
+    - Asia/Irkutsk
+    - Asia/Istanbul
+    - Asia/Jakarta
+    - Asia/Jayapura
+    - Asia/Jerusalem
+    - Asia/Kabul
+    - Asia/Kamchatka
+    - Asia/Karachi
+    - Asia/Kashgar
+    - Asia/Kathmandu
+    - Asia/Katmandu
+    - Asia/Khandyga
+    - Asia/Kolkata
+    - Asia/Krasnoyarsk
+    - Asia/Kuala_Lumpur
+    - Asia/Kuching
+    - Asia/Kuwait
+    - Asia/Macao
+    - Asia/Macau
+    - Asia/Magadan
+    - Asia/Makassar
+    - Asia/Manila
+    - Asia/Muscat
+    - Asia/Nicosia
+    - Asia/Novokuznetsk
+    - Asia/Novosibirsk
+    - Asia/Omsk
+    - Asia/Oral
+    - Asia/Phnom_Penh
+    - Asia/Pontianak
+    - Asia/Pyongyang
+    - Asia/Qatar
+    - Asia/Qostanay
+    - Asia/Qyzylorda
+    - Asia/Rangoon
+    - Asia/Riyadh
+    - Asia/Saigon
+    - Asia/Sakhalin
+    - Asia/Samarkand
+    - Asia/Seoul
+    - Asia/Shanghai
+    - Asia/Singapore
+    - Asia/Srednekolymsk
+    - Asia/Taipei
+    - Asia/Tashkent
+    - Asia/Tbilisi
+    - Asia/Tehran
+    - Asia/Tel_Aviv
+    - Asia/Thimbu
+    - Asia/Thimphu
+    - Asia/Tokyo
+    - Asia/Tomsk
+    - Asia/Ujung_Pandang
+    - Asia/Ulaanbaatar
+    - Asia/Ulan_Bator
+    - Asia/Urumqi
+    - Asia/Ust-Nera
+    - Asia/Vientiane
+    - Asia/Vladivostok
+    - Asia/Yakutsk
+    - Asia/Yangon
+    - Asia/Yekaterinburg
+    - Asia/Yerevan
+    - Atlantic/Azores
+    - Atlantic/Bermuda
+    - Atlantic/Canary
+    - Atlantic/Cape_Verde
+    - Atlantic/Faeroe
+    - Atlantic/Faroe
+    - Atlantic/Jan_Mayen
+    - Atlantic/Madeira
+    - Atlantic/Reykjavik
+    - Atlantic/South_Georgia
+    - Atlantic/St_Helena
+    - Atlantic/Stanley
+    - Australia/ACT
+    - Australia/Adelaide
+    - Australia/Brisbane
+    - Australia/Broken_Hill
+    - Australia/Canberra
+    - Australia/Currie
+    - Australia/Darwin
+    - Australia/Eucla
+    - Australia/Hobart
+    - Australia/LHI
+    - Australia/Lindeman
+    - Australia/Lord_Howe
+    - Australia/Melbourne
+    - Australia/NSW
+    - Australia/North
+    - Australia/Perth
+    - Australia/Queensland
+    - Australia/South
+    - Australia/Sydney
+    - Australia/Tasmania
+    - Australia/Victoria
+    - Australia/West
+    - Australia/Yancowinna
+    - Brazil/Acre
+    - Brazil/DeNoronha
+    - Brazil/East
+    - Brazil/West
+    - CET
+    - CST6CDT
+    - Canada/Atlantic
+    - Canada/Central
+    - Canada/Eastern
+    - Canada/Mountain
+    - Canada/Newfoundland
+    - Canada/Pacific
+    - Canada/Saskatchewan
+    - Canada/Yukon
+    - Chile/Continental
+    - Chile/EasterIsland
+    - Cuba
+    - EET
+    - EST
+    - EST5EDT
+    - Egypt
+    - Eire
+    - Etc/GMT
+    - Etc/GMT+0
+    - Etc/GMT+1
+    - Etc/GMT+10
+    - Etc/GMT+11
+    - Etc/GMT+12
+    - Etc/GMT+2
+    - Etc/GMT+3
+    - Etc/GMT+4
+    - Etc/GMT+5
+    - Etc/GMT+6
+    - Etc/GMT+7
+    - Etc/GMT+8
+    - Etc/GMT+9
+    - Etc/GMT-0
+    - Etc/GMT-1
+    - Etc/GMT-10
+    - Etc/GMT-11
+    - Etc/GMT-12
+    - Etc/GMT-13
+    - Etc/GMT-14
+    - Etc/GMT-2
+    - Etc/GMT-3
+    - Etc/GMT-4
+    - Etc/GMT-5
+    - Etc/GMT-6
+    - Etc/GMT-7
+    - Etc/GMT-8
+    - Etc/GMT-9
+    - Etc/GMT0
+    - Etc/Greenwich
+    - Etc/UCT
+    - Etc/UTC
+    - Etc/Universal
+    - Etc/Zulu
+    - Europe/Amsterdam
+    - Europe/Andorra
+    - Europe/Astrakhan
+    - Europe/Athens
+    - Europe/Belfast
+    - Europe/Belgrade
+    - Europe/Berlin
+    - Europe/Bratislava
+    - Europe/Brussels
+    - Europe/Bucharest
+    - Europe/Budapest
+    - Europe/Busingen
+    - Europe/Chisinau
+    - Europe/Copenhagen
+    - Europe/Dublin
+    - Europe/Gibraltar
+    - Europe/Guernsey
+    - Europe/Helsinki
+    - Europe/Isle_of_Man
+    - Europe/Istanbul
+    - Europe/Jersey
+    - Europe/Kaliningrad
+    - Europe/Kiev
+    - Europe/Kirov
+    - Europe/Lisbon
+    - Europe/Ljubljana
+    - Europe/London
+    - Europe/Luxembourg
+    - Europe/Madrid
+    - Europe/Malta
+    - Europe/Mariehamn
+    - Europe/Minsk
+    - Europe/Monaco
+    - Europe/Moscow
+    - Europe/Nicosia
+    - Europe/Oslo
+    - Europe/Paris
+    - Europe/Podgorica
+    - Europe/Prague
+    - Europe/Riga
+    - Europe/Rome
+    - Europe/Samara
+    - Europe/San_Marino
+    - Europe/Sarajevo
+    - Europe/Saratov
+    - Europe/Simferopol
+    - Europe/Skopje
+    - Europe/Sofia
+    - Europe/Stockholm
+    - Europe/Tallinn
+    - Europe/Tirane
+    - Europe/Tiraspol
+    - Europe/Ulyanovsk
+    - Europe/Uzhgorod
+    - Europe/Vaduz
+    - Europe/Vatican
+    - Europe/Vienna
+    - Europe/Vilnius
+    - Europe/Volgograd
+    - Europe/Warsaw
+    - Europe/Zagreb
+    - Europe/Zaporozhye
+    - Europe/Zurich
+    - GB
+    - GB-Eire
+    - GMT
+    - GMT+0
+    - GMT-0
+    - GMT0
+    - Greenwich
+    - HST
+    - Hongkong
+    - Iceland
+    - Indian/Antananarivo
+    - Indian/Chagos
+    - Indian/Christmas
+    - Indian/Cocos
+    - Indian/Comoro
+    - Indian/Kerguelen
+    - Indian/Mahe
+    - Indian/Maldives
+    - Indian/Mauritius
+    - Indian/Mayotte
+    - Indian/Reunion
+    - Iran
+    - Israel
+    - Jamaica
+    - Japan
+    - Kwajalein
+    - Libya
+    - MET
+    - MST
+    - MST7MDT
+    - Mexico/BajaNorte
+    - Mexico/BajaSur
+    - Mexico/General
+    - NZ
+    - NZ-CHAT
+    - Navajo
+    - PRC
+    - PST8PDT
+    - Pacific/Apia
+    - Pacific/Auckland
+    - Pacific/Bougainville
+    - Pacific/Chatham
+    - Pacific/Chuuk
+    - Pacific/Easter
+    - Pacific/Efate
+    - Pacific/Enderbury
+    - Pacific/Fakaofo
+    - Pacific/Fiji
+    - Pacific/Funafuti
+    - Pacific/Galapagos
+    - Pacific/Gambier
+    - Pacific/Guadalcanal
+    - Pacific/Guam
+    - Pacific/Honolulu
+    - Pacific/Johnston
+    - Pacific/Kiritimati
+    - Pacific/Kosrae
+    - Pacific/Kwajalein
+    - Pacific/Majuro
+    - Pacific/Marquesas
+    - Pacific/Midway
+    - Pacific/Nauru
+    - Pacific/Niue
+    - Pacific/Norfolk
+    - Pacific/Noumea
+    - Pacific/Pago_Pago
+    - Pacific/Palau
+    - Pacific/Pitcairn
+    - Pacific/Pohnpei
+    - Pacific/Ponape
+    - Pacific/Port_Moresby
+    - Pacific/Rarotonga
+    - Pacific/Saipan
+    - Pacific/Samoa
+    - Pacific/Tahiti
+    - Pacific/Tarawa
+    - Pacific/Tongatapu
+    - Pacific/Truk
+    - Pacific/Wake
+    - Pacific/Wallis
+    - Pacific/Yap
+    - Poland
+    - Portugal
+    - ROC
+    - ROK
+    - Singapore
+    - Turkey
+    - UCT
+    - US/Alaska
+    - US/Aleutian
+    - US/Arizona
+    - US/Central
+    - US/East-Indiana
+    - US/Eastern
+    - US/Hawaii
+    - US/Indiana-Starke
+    - US/Michigan
+    - US/Mountain
+    - US/Pacific
+    - US/Pacific-New
+    - US/Samoa
+    - UTC
+    - Universal
+    - W-SU
+    - WET
+    - Zulu
+  StoreUpdateV1Dto:
+    title: StoreUpdateV1Dto
+    type: object
+    properties:
+      config:
+        description: Store configuration.
+      country_code:
+        type: string
+      description:
+        description: Store description.
+        example: Dodici Paris Store
+        type: string
+    required:
+    - country_code
+  FiscalProviderId:
+    title: FiscalProviderId
+    description: The fiscal provider id being used.
+    example: axena-se
+    type: string
+    enum:
+    - axena-se
+    - dummy
+    - epson-it
+    - fiskaltrust-at
+    - fiskaltrust-de
+    - fiskaltrust-fr
+    - newstore-ie
+    - newstore-no
+    - posnet-pl
+    - ycs-pr
+    - newstore-in
+    - newstore-th
+    - newstore-es
+    - newstore-be
+    - efsta-pt
+  StoreConfigV1Dto:
+    title: StoreConfigV1Dto
+    type: object
+    properties:
+      auto_report_types:
+        description: List of periodic report types that should be closed automatically before the first transaction in the next period.
+        example:
+        - month-report
+        - year-report
+        type: array
+        items:
+          $ref: '#/definitions/PeriodType'
+        maxItems: 5
+      report_types:
+        description: List of supported periodic report types.
+        example:
+        - month-report
+        - year-report
+        type: array
+        items:
+          $ref: '#/definitions/PeriodType'
+        maxItems: 5
+      timezone:
+        $ref: '#/definitions/Timezone'
+    required:
+    - auto_report_types
+    - report_types
+    - timezone
+  PeriodType:
+    title: PeriodType
+    description: Period of the report.
+    example: shift-report
+    type: string
+    enum:
+    - shift-report
+    - day-report
+    - month-report
+    - year-report
+    - grand-totals-report
+securityDefinitions:
+  oauth:
+    type: oauth2
+    flow: application
+    tokenUrl: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+    scopes:
+      catalog:import-schemas:read: Grants privileges to read import schema
+      catalog:import-schemas:write: Grants privileges to write import schema
+      catalog:pricebook-export:read: Grants privileges to export pricebook data
+      catalog:product-export:read: Grants privileges to export product data
+      checkout:carts:read: Grants privileges to read cart data
+      checkout:carts:write: Grants privileges to write cart data
+      clienteling:profile:read: Grants privileges to read clienteling profiles
+      customer:profile:read: Grants privileges to read API customer data
+      customer:profile:write: Grants privileges to modify API customer data
+      newstore:configuration:read: Grants privileges to read configuration
+      newstore:configuration:write: Grants privileges to write configuration
+      fiscalization:orders:read: View orders with fiscal transactions and signatures
+      fiscalization:orders:write: Create orders with fiscal transactions and signatures
+      shipments:read: Read Shipping Options and Audits
+      iam:providers:read: ' Grants read privileges to provider resources'
+      iam:providers:write: ' Grants write privileges to provider resources'
+      iam:roles:read: ' Grants privileges to read roles data'
+      iam:roles:write: ' Grants privileges to write roles data'
+      iam:users:read: ' Grants privileges to read user data'
+      iam:users:write: ' Grants privileges to write user data'
+      inventory:reservations:read: Allows access to retrieve reservations
+      inventory:reservations:write: Allows access to create and update reservations
+      promotions:config:read: Grants privileges to read configuration
+      promotions:config:write: Grants privileges to write into configuration
+      promotions:reason-codes:read: Grants privileges to list reason codes
+      promotions:reason-codes:write: Grants privileges to create and update reason codes
+      audit-events:read: Grants read access to the tenant's audit events.
+      taxes:preview-transactions:write: Preview tax transactions
+      taxes:transactions:read: Read tax transactions

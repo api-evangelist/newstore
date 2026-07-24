@@ -1,0 +1,398 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: NewStore address order-injection-config API
+  description: NewStore public APIs
+  contact:
+    email: support@newstore.com
+    name: NewStore API Support
+    url: https://developer.newstore.com
+host: dodici-demo.p.newstore.net
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security: []
+tags:
+- name: order-injection-config
+  description: Order Injection Configuration
+paths:
+  /v1/r/config/order_injection:
+    get:
+      description: 'Retrieves the current order injection configuration set up for your business. The response payload
+
+        also contains the current version of the configuration, the timestamp when it was
+
+        last updated, and who updated it.
+
+        '
+      summary: showOrderInjectionConfiguration
+      tags:
+      - order-injection-config
+      operationId: showOrderInjectionConfiguration
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters: []
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: Current configuration
+          schema:
+            $ref: '#/definitions/OrderInjectionConfigurationResponse'
+          headers: {}
+        '404':
+          description: Tenant or service not found
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: not_found
+              messages:
+              - tenant not found
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: An internal error occurred
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    patch:
+      description: 'Updates the current order injection configuration for your business. The version value in the query parameter
+
+        must match the latest version returned by the GET endpoint.
+
+        '
+      summary: updateOrderInjectionConfiguration
+      tags:
+      - order-injection-config
+      operationId: updateOrderInjectionConfiguration
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: version
+        in: query
+        required: true
+        type: string
+        description: ''
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: false
+        description: The updated config value
+        schema:
+          $ref: '#/definitions/OrderInjectionTenantConfiguration'
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: The updated configuration
+          schema:
+            $ref: '#/definitions/OrderInjectionConfigurationResponse'
+          headers: {}
+        '400':
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: invalid_request
+              messages:
+              - Wrong datetime format
+          headers: {}
+        '404':
+          description: Tenant or service not found
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: not_found
+              messages:
+              - tenant not found
+          headers: {}
+        '409':
+          description: The version key is out of date, configuration was updated
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: conflict_version
+              messages:
+              - The version is out of date
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: An internal error occurred
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    post:
+      description: 'Use this method to create a new order injection configuration or completely replace the current
+
+        configuration for your business. The version value in the query parameter must either be set to 1
+
+        or it must match the latest version returned by the GET endpoint.
+
+        '
+      summary: createOrderInjectionConfiguration
+      tags:
+      - order-injection-config
+      operationId: createOrderInjectionConfiguration
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: version
+        in: query
+        required: true
+        type: string
+        description: ''
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: false
+        description: The updated config value
+        schema:
+          $ref: '#/definitions/OrderInjectionTenantConfiguration'
+      responses:
+        default:
+          description: Default response
+          headers: {}
+        '200':
+          description: The updated configuration
+          schema:
+            $ref: '#/definitions/OrderInjectionConfigurationResponse'
+          headers: {}
+        '400':
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: invalid_request
+              messages:
+              - Wrong datetime format
+          headers: {}
+        '404':
+          description: Tenant or service not found
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: not_found
+              messages:
+              - tenant not found
+          headers: {}
+        '409':
+          description: The version key is out of date, configuration was updated
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: conflict_version
+              messages:
+              - The version is out of date
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: An internal error occurred
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+definitions:
+  OrderInjectionTenantConfiguration:
+    title: OrderInjectionTenantConfiguration
+    description: Tenant configuration object.
+    type: object
+    properties:
+      big_sales_order:
+        type: object
+        allOf:
+        - $ref: '#/definitions/OrderInjectionConfigurationBigSalesOrder'
+        - description: The order item limits that determine if the order is routed or is considered a big order and placed on hold.
+      skip_soft_routing_on_injection:
+        description: When set to true, do not do the soft routing for injected orders with a service level identifier.
+        type: boolean
+  OrderInjectionConfigurationResponse:
+    title: OrderInjectionConfigurationResponse
+    description: Update configuration response
+    type: object
+    properties:
+      updated_at:
+        type: string
+        format: date-time
+      updated_by:
+        description: Internal User ID
+        type: string
+      value:
+        type: object
+        allOf:
+        - $ref: '#/definitions/OrderInjectionTenantConfiguration'
+        - description: Tenant configuration object.
+      version:
+        description: Current Configuration version
+        type: string
+  Problem:
+    title: Problem
+    type: object
+    properties:
+      detail:
+        description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some description for the error situation
+        type: string
+      error_code:
+        type: string
+      instance:
+        description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+        example: /some/uri-reference#specific-occurrence-context
+        type: string
+      message:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      request_id:
+        type: string
+      status:
+        description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        type: integer
+        minimum: 100.0
+        maximum: 600.0
+        exclusiveMaximum: true
+        format: int32
+      title:
+        description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some title for the error situation
+        type: string
+      type:
+        description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+        example: /some/uri-reference
+        type: string
+        default: about:blank
+  OrderInjectionConfigurationBigSalesOrder:
+    title: OrderInjectionConfigurationBigSalesOrder
+    description: The order item limits that determine if the order is routed or is considered a big order and placed on hold.
+    type: object
+    properties:
+      hard_limit_for_big_orders:
+        description: The maximum number of items an injected or external order can contain for it to be placed on hold and not be canceled. For example, if this is ``800`` and ``soft_limit_for_big_orders`` is ``300``, external orders with items between ``301`` and ``800`` are placed on hold, and an external order with ``801`` items is canceled.
+        type: number
+        format: double
+    required:
+    - hard_limit_for_big_orders
+securityDefinitions:
+  oauth:
+    type: oauth2
+    flow: application
+    tokenUrl: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+    scopes:
+      catalog:import-schemas:read: Grants privileges to read import schema
+      catalog:import-schemas:write: Grants privileges to write import schema
+      catalog:pricebook-export:read: Grants privileges to export pricebook data
+      catalog:product-export:read: Grants privileges to export product data
+      checkout:carts:read: Grants privileges to read cart data
+      checkout:carts:write: Grants privileges to write cart data
+      clienteling:profile:read: Grants privileges to read clienteling profiles
+      customer:profile:read: Grants privileges to read API customer data
+      customer:profile:write: Grants privileges to modify API customer data
+      newstore:configuration:read: Grants privileges to read configuration
+      newstore:configuration:write: Grants privileges to write configuration
+      fiscalization:orders:read: View orders with fiscal transactions and signatures
+      fiscalization:orders:write: Create orders with fiscal transactions and signatures
+      shipments:read: Read Shipping Options and Audits
+      iam:providers:read: ' Grants read privileges to provider resources'
+      iam:providers:write: ' Grants write privileges to provider resources'
+      iam:roles:read: ' Grants privileges to read roles data'
+      iam:roles:write: ' Grants privileges to write roles data'
+      iam:users:read: ' Grants privileges to read user data'
+      iam:users:write: ' Grants privileges to write user data'
+      inventory:reservations:read: Allows access to retrieve reservations
+      inventory:reservations:write: Allows access to create and update reservations
+      promotions:config:read: Grants privileges to read configuration
+      promotions:config:write: Grants privileges to write into configuration
+      promotions:reason-codes:read: Grants privileges to list reason codes
+      promotions:reason-codes:write: Grants privileges to create and update reason codes
+      audit-events:read: Grants read access to the tenant's audit events.
+      taxes:preview-transactions:write: Preview tax transactions
+      taxes:transactions:read: Read tax transactions

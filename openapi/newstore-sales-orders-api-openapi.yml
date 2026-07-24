@@ -1,0 +1,1994 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: NewStore address sales-orders API
+  description: NewStore public APIs
+  contact:
+    email: support@newstore.com
+    name: NewStore API Support
+    url: https://developer.newstore.com
+host: dodici-demo.p.newstore.net
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security: []
+tags:
+- name: sales-orders
+  description: Operations related to sales order management.
+paths:
+  /v0/orders:
+    get:
+      description: "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 30 requests per second.\n</div>\n\n"
+      summary: showOrderHistoryForCustomer
+      tags:
+      - sales-orders
+      operationId: showOrderHistoryForCustomer
+      deprecated: false
+      produces:
+      - application/json
+      - application/x.newstore.orders+json;version=2
+      - application/problem+json
+      parameters:
+      - name: customer_id
+        in: query
+        required: true
+        type: string
+        description: NewStore's unique UUID for the customer
+      - name: offset
+        in: query
+        required: false
+        default: 0
+        type: integer
+        format: int32
+        minimum: 0.0
+        exclusiveMinimum: false
+        description: The offset to be used for the resulting order list. Will only be accepted when using the ``Accept`` header with ``application/x.newstore.orders+json;version=2``.
+      - name: count
+        in: query
+        required: false
+        default: 10
+        type: integer
+        format: int32
+        minimum: 1.0
+        maximum: 50.0
+        exclusiveMaximum: false
+        exclusiveMinimum: false
+        description: The number of requested orders. Will only be accepted when using the ``Accept`` header with ``application/x.newstore.orders+json;version=2``.
+      responses:
+        default:
+          description: Unexpected Error
+          headers: {}
+        '200':
+          description: 'Returns the list of orders. If the ``Accept`` headers with ``application/x.newstore.orders+json;version=2`` is used,
+
+            it returns a paginated list as specified by the ``offset`` and ``count`` parameters.'
+          schema:
+            $ref: '#/definitions/SalesOrderListResponse'
+          examples:
+            application/json:
+              orders: []
+          headers: {}
+        '400':
+          description: Bad Request Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: bad_request
+              message: Query param 'customer_id' is required.
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '404':
+          description: Customer not found. Only applicable when ``Accept`` header is ``application/json``.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: customer_not_found
+              message: customer with given customer_id not found
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '409':
+          description: External webhook payload validation failed. Only applicable when ``Accept`` header is ``application/json``.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: conflict
+              message: 'Failed JSON schema validation with schema /opt/schema.json. Error: "orders" is a required attribute.'
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '412':
+          description: Webhook configuration error. Only applicable when ``Accept`` header is ``application/json``.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: precondition_error
+              message: API Key is required to access external OMS
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: internal_server_error
+              message: Couldn't process request due to an internal error.
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: External Server Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: external_server_error
+              message: API Key to the webhook is expired
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+      security:
+      - oauth: []
+  /v0/orders/{id}:
+    get:
+      description: "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 100 requests per second.\n</div>\n\nRetrieves the specified order by order ID and ID type for the order.\n\nThis method allows you to retrieve information about orders that were placed in the platform,\nas well as outside of the NewStore platform.\n\n**Note**: In case of ``internal`` id type the API will only return orders that exists in the NewStore database and will **NOT** call the external OMS webhook. Furthermore, the `payment_history` field will be empty in this case.\nIn case of ``external`` id type this API will check if the external OMS webhook is configured. In this case the API will fetch the order data from the configured webhook. If no external OMS is configured then the order will be fetched from the NewStore database.\n"
+      summary: showSalesOrderByIdAndIdType
+      tags:
+      - sales-orders
+      operationId: showSalesOrderByIdAndIdType
+      deprecated: false
+      produces:
+      - application/json
+      - application/x.newstore.orders+json;version=2
+      - application/problem+json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: ID of the order.
+      - name: id_type
+        in: query
+        required: true
+        type: string
+        description: ID type on which order should be fetched. Example "external" in case of human-readable identifier of the order, else "internal" in case of system-generated UUID (by NewStore).
+      - name: Accept
+        in: header
+        required: false
+        type: string
+        description: Accepted values are ``application/json`` and ``application/x.newstore.orders+json;version=2``. When ``application/x.newstore.orders+json;version=2`` is provided, the ``placed_at`` timestamp is returned with UTC+0.
+      responses:
+        default:
+          description: Unexpected Error
+          headers: {}
+        '200':
+          description: Successfully fetch order by ID and ID type
+          schema:
+            $ref: '#/definitions/SalesOrderDetailResponse'
+          headers: {}
+        '400':
+          description: Validation for the request failed
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: Order with provided ID and ID type was not found
+          headers: {}
+        '409':
+          description: External webhook payload validation failed.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: conflict
+              message: 'Failed JSON schema validation with schema /opt/schema.json. Error: "orders" is a required attribute.'
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '412':
+          description: Webhook configuration error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: precondition_error
+              message: API Key is required to access external OMS
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: External Server Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: external_server_error
+              message: API Key to the webhook is expired
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+      security:
+      - oauth: []
+  /v0/orders/{id}/_extend_grace_period:
+    post:
+      description: 'Use this method to extend the [grace period](https://docs.newstore.com/docs/glossary#remorse-period) timer
+
+        for the specified order by **15 minutes**, if the grace period of the order has not yet expired.
+
+        '
+      summary: createGracePeriod
+      tags:
+      - sales-orders
+      operationId: createGracePeriod
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: ID of the order.
+      - name: id_type
+        in: query
+        required: true
+        type: string
+        description: Type of the order id which should be used to extend the order grace period. Example "external" for human-readable identifiers, and "internal" for system-generated UUIDs (by NewStore).
+      responses:
+        default:
+          description: Unexpected Error
+          headers: {}
+        '200':
+          description: The grace period got extended by 15 minutes.
+          schema:
+            $ref: '#/definitions/Extendorder%27sgraceperiodtimer'
+          headers: {}
+        '404':
+          description: Order with id and id type not found.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '409':
+          description: A concurrent request extended the grace period already.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '412':
+          description: The order is not in the grace period.
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: internal_server_error
+              message: Couldn't process request due to an internal error.
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+  /v0/orders/{id}/cancel:
+    get:
+      description: API to get cancellation status by order ID
+      summary: showCancellationStatus
+      tags:
+      - sales-orders
+      operationId: showCancellationStatus
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: ID of the order.
+      - name: id_type
+        in: query
+        required: true
+        type: string
+        description: ID type on which order should be fetched. Example "external".
+      responses:
+        default:
+          description: Unexpected Error
+          headers: {}
+        '200':
+          description: Successfully fetched cancellation status for the order.
+          schema:
+            $ref: '#/definitions/SalesOrderCancellationResponse'
+          examples:
+            application/json:
+              cancelable: true
+              canceled: false
+              is_safe: true
+          headers: {}
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '404':
+          description: Order with given order ID does not exist
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: internal_server_error
+              message: Couldn't process request due to an internal error.
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    post:
+      description: 'Initiates the cancellation of the specified order.
+
+
+        When using this method to cancel an order, you must specify a reason for cancellation,
+
+        such as ``Item was damaged during shipping``. You can also include a note to provide a
+
+        longer explanation for the cancellation of the order.
+
+        '
+      summary: createCancellation
+      tags:
+      - sales-orders
+      operationId: createCancellation
+      deprecated: false
+      produces:
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: ID of the order.
+      - name: id_type
+        in: query
+        required: true
+        type: string
+        description: Type of order id which should be used for cancellation. Example "external".
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: false
+        description: ''
+        schema:
+          $ref: '#/definitions/SalesOrderCancellationRequest'
+      responses:
+        default:
+          description: Unexpected Error
+          headers: {}
+        '200':
+          description: Successfully cancelled order by ID and ID type
+          headers: {}
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: bad_request
+              message: 'Validation of cancel order request failed with error: ''reason'' is a required property.'
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '404':
+          description: Order with provided ID and ID type was not found.
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: internal_server_error
+              message: Couldn't process request due to an internal error.
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+  /v0/orders/{id}/items/{item_uuid}/cancel:
+    post:
+      description: 'Use this resource to cancel line items.
+
+
+        **Note:**
+
+        1. This API currently only supports pre-ordered line items and will throw an error for other line items.
+
+        2. The line item can only be cancelled for non-terminal item statuses.
+
+        '
+      summary: createLineItemCancellation
+      tags:
+      - sales-orders
+      operationId: createLineItemCancellation
+      deprecated: false
+      produces:
+      - application/problem+json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: UUID of the order.
+      - name: item_uuid
+        in: path
+        required: true
+        type: string
+        description: UUID of the order item.
+      - name: id_type
+        in: query
+        required: true
+        type: string
+        description: Type of order id which should be used for cancellation of line items. Example "external" for human-readable identifiers, and "internal" for system-generated UUIDs (by NewStore).
+      responses:
+        default:
+          description: Unexpected Error
+          headers: {}
+        '200':
+          description: Successfully cancelled order item by UUID.
+          headers: {}
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: bad_request
+              message: 'Validation of cancel order request failed with error: ''reason'' is a required property.'
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '404':
+          description: Order item with provided UUID was not found.
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: internal_server_error
+              message: Couldn't process request due to an internal error.
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+  /v0/orders/{id}/prices:
+    post:
+      description: 'Use this method to retrieve price information for products or shipping options, defined
+
+        in ``items`` in the request payload. The price information includes the gross price of the item,
+
+        the net price, and the tax levied on the item.
+
+
+        If the prices you requested are for products, the response payload also contains the status
+
+        of the product. For example, ``cancelled`` or ``pending``, or ``in_fulfillment``, and so on.
+
+
+        **Important**: You can only request for the pricing information of a maximum of **500**
+
+        items, exceeding which the method returns a ``400`` error.
+
+        '
+      summary: createPriceInformationForItems
+      tags:
+      - sales-orders
+      operationId: createPriceInformationForItems
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: The identifier of the order.
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/SalesOrderPricesRequest'
+      responses:
+        default:
+          description: Unexpected Error
+          headers: {}
+        '200':
+          description: Price information for the provided items.
+          schema:
+            $ref: '#/definitions/SalesOrderPricesResponse'
+          headers: {}
+        '400':
+          description: Bad Request Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: bad_request
+              message: The number of products can't exceed 500.
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '404':
+          description: Not found Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: not_found
+              message: The order '57787cdb-3474-47b5-b3ec-7b776731309e' couldn't be found.
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: internal_server_error
+              message: Couldn't process request due to an internal error.
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+  /v0/orders/{id}/serial_numbers:
+    patch:
+      description: 'Use this method to add serial numbers to specified items of the order. Serial numbers will be overwritten in case
+
+        some or all of the items have already serial numbers attached.
+
+
+        The maximum number of items in this request cannot exceed **500**, otherwise this method will return a ``400`` error.
+
+        '
+      summary: updateSalesOrderSerialNumbers
+      tags:
+      - sales-orders
+      operationId: updateSalesOrderSerialNumbers
+      deprecated: false
+      produces:
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: The internal identifier of the order, for example, ``b604ffda-7e31-4338-beab-7f939a8c2322``.
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/SalesOrderSerialNumbersRequest'
+      responses:
+        default:
+          description: Unexpected Error
+          headers: {}
+        '204':
+          description: Serial numbers added.
+          headers: {}
+        '400':
+          description: Bad request Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: bad_request
+              message: The number of products can't exceed 500.
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '404':
+          description: Not found Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: not_found
+              message: The order '57787cdb-3474-47b5-b3ec-7b776731309e' couldn't be found.
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal Server Error.
+          schema:
+            $ref: '#/definitions/Problem'
+          examples:
+            application/problem+json:
+              error_code: internal_server_error
+              message: Couldn't process request due to an internal error.
+              request_id: ec2f3c9bb016ba971bf6074098363
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+definitions:
+  CountryCode:
+    title: CountryCode
+    description: Country code for this address. Must be <a href='https://www.iso.org/iso/country_codes.htm'>ISO-3166 reference</a>
+    type: string
+    enum:
+    - AD
+    - AE
+    - AF
+    - AG
+    - AI
+    - AL
+    - AM
+    - AO
+    - AQ
+    - AR
+    - AS
+    - AT
+    - AU
+    - AW
+    - AX
+    - AZ
+    - BA
+    - BB
+    - BD
+    - BE
+    - BF
+    - BG
+    - BH
+    - BI
+    - BJ
+    - BL
+    - BM
+    - BN
+    - BO
+    - BQ
+    - BR
+    - BS
+    - BT
+    - BV
+    - BW
+    - BY
+    - BZ
+    - CA
+    - CC
+    - CD
+    - CF
+    - CG
+    - CH
+    - CI
+    - CK
+    - CL
+    - CM
+    - CN
+    - CO
+    - CR
+    - CU
+    - CV
+    - CW
+    - CX
+    - CY
+    - CZ
+    - DE
+    - DJ
+    - DK
+    - DM
+    - DO
+    - DZ
+    - EC
+    - EE
+    - EG
+    - EH
+    - ER
+    - ES
+    - ET
+    - FI
+    - FJ
+    - FK
+    - FM
+    - FO
+    - FR
+    - GA
+    - GB
+    - GD
+    - GE
+    - GF
+    - GG
+    - GH
+    - GI
+    - GL
+    - GM
+    - GN
+    - GP
+    - GQ
+    - GR
+    - GS
+    - GT
+    - GU
+    - GW
+    - GY
+    - HK
+    - HM
+    - HN
+    - HR
+    - HT
+    - HU
+    - ID
+    - IE
+    - IL
+    - IM
+    - IN
+    - IO
+    - IQ
+    - IR
+    - IS
+    - IT
+    - JE
+    - JM
+    - JO
+    - JP
+    - KE
+    - KG
+    - KH
+    - KI
+    - KM
+    - KN
+    - KP
+    - KR
+    - KW
+    - KY
+    - KZ
+    - LA
+    - LB
+    - LC
+    - LI
+    - LK
+    - LR
+    - LS
+    - LT
+    - LU
+    - LV
+    - LY
+    - MA
+    - MC
+    - MD
+    - ME
+    - MF
+    - MG
+    - MH
+    - MK
+    - ML
+    - MM
+    - MN
+    - MO
+    - MP
+    - MQ
+    - MR
+    - MS
+    - MT
+    - MU
+    - MV
+    - MW
+    - MX
+    - MY
+    - MZ
+    - NA
+    - NC
+    - NE
+    - NF
+    - NG
+    - NI
+    - NL
+    - 'NO'
+    - NP
+    - NR
+    - NU
+    - NZ
+    - OM
+    - PA
+    - PE
+    - PF
+    - PG
+    - PH
+    - PK
+    - PL
+    - PM
+    - PN
+    - PR
+    - PS
+    - PT
+    - PW
+    - PY
+    - QA
+    - RE
+    - RO
+    - RS
+    - RU
+    - RW
+    - SA
+    - SB
+    - SC
+    - SD
+    - SE
+    - SG
+    - SH
+    - SI
+    - SJ
+    - SK
+    - SL
+    - SM
+    - SN
+    - SO
+    - SR
+    - SS
+    - ST
+    - SV
+    - SX
+    - SY
+    - SZ
+    - TC
+    - TD
+    - TF
+    - TG
+    - TH
+    - TJ
+    - TK
+    - TL
+    - TM
+    - TN
+    - TO
+    - TR
+    - TT
+    - TV
+    - TW
+    - TZ
+    - UA
+    - UG
+    - UM
+    - US
+    - UY
+    - UZ
+    - VA
+    - VC
+    - VE
+    - VG
+    - VI
+    - VN
+    - VU
+    - WF
+    - WS
+    - YE
+    - YT
+    - ZA
+    - ZM
+    - ZW
+  SalesOrderSerialNumbersRequestItemEpc:
+    title: SalesOrderSerialNumbersRequestItemEpc
+    description: The epc which should be assigned to the specified order line item.
+    type: object
+    properties:
+      code:
+        description: The epc code.
+        type: string
+      external_id:
+        description: The external identifier for the epc.
+        type: string
+      serial_number:
+        description: The serial number associated with the epc.
+        type: string
+    required:
+    - code
+    - external_id
+    - serial_number
+  SalesOrderItemPaymentHistory:
+    title: SalesOrderItemPaymentHistory
+    description: Contains the payments/refunds history for the order. Can also include multiple payments against multiple credit sources (i.e. gift card + credit card)
+    type: object
+    properties:
+      amount:
+        description: The monetary value of the payment/refund.
+        type: number
+        minimum: 0.0
+        format: double
+      category:
+        type: object
+        allOf:
+        - $ref: '#/definitions/Category'
+        - description: Describes if it is a Payment (authorization or capture) or Refund.
+      currency:
+        description: The currency of the amount as 3 character ISO-4217 code. Example USD, EUR.
+        type: string
+        minLength: 3
+        maxLength: 3
+      method:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderPaymentMethod'
+        - description: The method customer paid for the order.
+      payment_information:
+        description: Any payment information related to the payment method used. For example, it can contain the card type along with the last 4 digits of the credit card number.
+        example: Visa (**** 1111)
+        type: string
+    required:
+    - amount
+    - category
+    - currency
+    - method
+  SalesOrderExternalIdentifier:
+    title: SalesOrderExternalIdentifier
+    description: External identifier for the order item
+    type: object
+    properties:
+      epc:
+        description: EPC (Electronic Product Code) for order item
+        type: string
+      serial_number:
+        description: Serial number of order item
+        type: string
+  SalesOrderPricesResponse:
+    title: SalesOrderPricesResponse
+    description: The response for retrieving price information.
+    type: object
+    properties:
+      currency:
+        description: The currency that was used to buy the order, ISO 4217.
+        type: string
+        minLength: 3
+        maxLength: 3
+      items:
+        type: array
+        items: {}
+    required:
+    - currency
+    - items
+  SalesOrderFulfillment:
+    title: SalesOrderFulfillment
+    type: object
+    properties:
+      item_ids:
+        description: The order item UUIDs belonging to this fulfillment group.
+        type: array
+        items:
+          type: string
+      origin:
+        type: object
+        allOf:
+        - $ref: '#/definitions/Origin'
+        - description: The ship-from origin for this fulfillment group. Omitted when neither zip code nor country code is known.
+    required:
+    - item_ids
+  SalesOrderDiscount:
+    title: SalesOrderDiscount
+    type: object
+    properties:
+      coupon_code:
+        description: The coupon code used for this discount.
+        type: string
+      level:
+        type: object
+        allOf:
+        - $ref: '#/definitions/Level'
+        - description: On which level the discount was applied, either on the entire order or only on this item.
+      price_adjustment:
+        description: The applied discount.
+        type: number
+        minimum: 0.0
+        format: double
+      promotion_uuid:
+        description: The UUID of the the discount.
+        type: string
+      reason:
+        description: The reason of the discount.
+        type: string
+      type:
+        type: object
+        allOf:
+        - $ref: '#/definitions/Type1'
+        - description: The type of the discount, either 'fixed' or 'percentage'.
+      value:
+        description: If the discount is of type 'fixed', this is equal to the adjusted price amount. If the discount is of type 'percentage', this is the percentage, e.g. 20%.
+        type: number
+        minimum: 0.0
+        format: double
+    required:
+    - level
+    - price_adjustment
+    - type
+    - value
+  SalesOrderTotals:
+    title: SalesOrderTotals
+    type: object
+    properties:
+      discount:
+        description: The applied discount to the entire order.
+        type: number
+        minimum: 0.0
+        format: double
+      gift_wrapping:
+        description: The amount paid for gift wrapping.
+        type: number
+        minimum: 0.0
+        format: double
+      gross:
+        description: The gross price of the order, is the sum of all product item gross prices.
+        type: number
+        minimum: 0.0
+        format: double
+      net:
+        description: The net price of the order, is the sum of all product item net prices.
+        type: number
+        minimum: 0.0
+        format: double
+      shipping:
+        description: The shipping amount.
+        type: number
+        minimum: 0.0
+        format: double
+      tax:
+        description: The taxes of the order, is the sum of all product item taxes.
+        type: number
+        minimum: 0.0
+        format: double
+      total:
+        description: The total amount that the customer paid including shipping costs, taxes, gift_wrapping and any discounts.
+        type: number
+        minimum: 0.0
+        format: double
+  SalesOrderTaxLine:
+    title: SalesOrderTaxLine
+    type: object
+    properties:
+      amount:
+        description: Monetary tax amount for this line.
+        type: number
+        minimum: 0.0
+        format: double
+      country_code:
+        description: The code of the country of the tax in the ISO 3166 ALPHA-2 format. For example, GB, DE or US.
+        type: string
+        maxLength: 2
+      name:
+        description: Name of the tax line, e.g. MA Sales Tax.
+        type: string
+      rate:
+        description: Decimal representation of the tax rate for this line, e.g. 6.25
+        type: number
+        minimum: 0.0
+        format: double
+    required:
+    - amount
+    - rate
+  SalesOrderSerialNumbersRequest:
+    title: SalesOrderSerialNumbersRequest
+    description: The response for adding serial number information.
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/SalesOrderSerialNumbersRequestItem'
+        minItems: 1
+        maxItems: 500
+    required:
+    - items
+  SalesOrderPrice1:
+    title: SalesOrderPrice1
+    description: The response for retrieving price information.
+    type: object
+    properties:
+      base:
+        description: Price of the item that contains the catalog price or the overridden price.
+        type: number
+        format: double
+      discount:
+        description: The applied discount to the item.
+        type: number
+        format: double
+      gross:
+        description: The gross price of the item.
+        type: number
+        format: double
+      net:
+        description: The net price of the item.
+        type: number
+        format: double
+      tax:
+        description: The taxes of the item.
+        type: number
+        format: double
+    required:
+    - base
+    - discount
+    - gross
+    - net
+    - tax
+  SalesOrderOrigin:
+    title: SalesOrderOrigin
+    description: Describes in which Order Management System the order originated from.
+    type: string
+    enum:
+    - newstore
+    - external
+  SalesOrderChannelType:
+    title: SalesOrderChannelType
+    description: The channel through which the order was placed.
+    type: string
+    enum:
+    - store
+    - web
+  SalesOrder:
+    title: SalesOrder
+    type: object
+    properties:
+      catalog:
+        description: The catalog identifier (shop) associated with the order.
+        type: string
+      channel_type:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderChannelType'
+        - description: The channel through which the order was placed.
+      currency:
+        description: Currency code (ISO 4217) used in internal accounting
+        type: string
+        minLength: 3
+        maxLength: 3
+      fulfillment_type:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderFulfillmentType'
+        - description: The fulfillment type of the order. In case of mixed cart orders, fulfillment type is always 'multiple'
+          minLength: 1
+      id:
+        description: External ID of the order
+        type: string
+      items:
+        description: A list of line items which were ordered
+        type: array
+        items:
+          $ref: '#/definitions/SalesOrderItem'
+      origin:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderOrigin'
+        - description: Describes in which Order Management System the order originated from.
+      origin_id:
+        description: The identifier of the order from the Order Management System where it originated from. If it originated in Newstore, it must be the identifier assigned to the order during the order creation process.
+        type: string
+        minLength: 1
+      placed_at:
+        description: The time when the order was placed. It should follow https://tools.ietf.org/html/rfc3339 in UTC.
+        type: string
+        format: date-time
+      status:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderStatus'
+        - description: Current status of the sales order
+    required:
+    - channel_type
+    - currency
+    - fulfillment_type
+    - id
+    - items
+    - origin
+    - origin_id
+    - placed_at
+    - status
+  SalesOrderDetail:
+    title: SalesOrderDetail
+    type: object
+    properties:
+      addon_parent_item_id:
+        description: Represents the ID of this addon item parent.
+        type: string
+      discounts:
+        description: A list of applied discounts
+        type: array
+        items:
+          $ref: '#/definitions/SalesOrderDiscount'
+      extended_attributes:
+        description: Extended attributes of the sales order item.
+        type: array
+        items:
+          $ref: '#/definitions/SalesOrderExtendedAttribute'
+          maxProperties: 2
+        maxItems: 100
+        maxProperties: 2
+      external_identifier:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderExternalIdentifier'
+        - description: External identifier for the order item
+      fulfillment_group_type:
+        type: object
+        allOf:
+        - $ref: '#/definitions/Fulfillment'
+        - description: The method by which the item was or will be fulfilled. This field is optional and is only populated when the capture path supplies it. For orders captured while the POS is offline (offline order sync), the value is null and the field is omitted from the response. To reliably identify cash-and-carry (in-store handover) orders, use the order-level `fulfillment_type` field (value `in_store_purchase`) rather than relying on this item-level field.
+      id:
+        description: Order item UUID
+        type: string
+      origin_id:
+        description: If the origin of the order is 'newstore', this should be the order item identifier. If the order originated in an external system, it should be the identifier from the external system.
+        type: string
+        minLength: 1
+      price:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderPrice1'
+        - description: The response for retrieving price information.
+      price_catalog:
+        description: The catalog price of the item.
+        type: number
+        format: double
+      product_attributes:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderProductAttributes'
+        - description: Additional product-related information.
+      product_id:
+        description: Product ID for order item.
+        type: string
+      shipping_method:
+        description: The shipping method, if applicable
+        type: string
+      status:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderItemStatus'
+        - description: Current status of the order item. 'pending' means the item is in the grace period, 'on_hold' means the item couldn't be fulfilled and is in a conflict status.
+          minLength: 1
+      tax_class:
+        description: The tax classification code of the item.
+        type: string
+      tax_lines:
+        description: Detailed tax information.
+        type: array
+        items:
+          $ref: '#/definitions/SalesOrderTaxLine'
+        maxItems: 100
+    required:
+    - id
+    - origin_id
+    - price
+    - product_attributes
+    - status
+  Level:
+    title: Level
+    description: On which level the discount was applied, either on the entire order or only on this item.
+    example: item
+    type: string
+    enum:
+    - item
+    - order
+  SalesOrderCustomer:
+    title: SalesOrderCustomer
+    type: object
+    properties:
+      email:
+        description: The email address of the customer.
+        type: string
+        minLength: 1
+      id:
+        description: The identifier of the customer.
+        type: string
+        minLength: 1
+      language:
+        description: The code of the language to be used in communicating with the customer in ISO 639-1 format, e.g. fr, de or en.
+        type: string
+        maxLength: 2
+      name:
+        description: The full name of the customer.
+        type: string
+        minLength: 1
+  SalesOrderPricesRequest:
+    title: SalesOrderPricesRequest
+    description: The request for retrieving price information.
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          type: object
+        minItems: 1
+    required:
+    - items
+  SalesOrderPaymentMethod:
+    title: SalesOrderPaymentMethod
+    description: The method customer paid for the order.
+    type: string
+    enum:
+    - gift_card
+    - credit_card
+    - cash
+  SalesOrderTaxMethod:
+    title: SalesOrderTaxMethod
+    description: Method of calculation of the taxes, can be vat_included or vat_excluded.
+    example: vat_excluded
+    type: string
+    enum:
+    - vat_included
+    - vat_excluded
+  Type1:
+    title: Type1
+    description: The type of the discount, either 'fixed' or 'percentage'.
+    type: string
+    enum:
+    - fixed
+    - percentage
+  SalesOrderItemStatus:
+    title: SalesOrderItemStatus
+    description: Current status of the order item. 'pending' means the item is in the grace period, 'on_hold' means the item couldn't be fulfilled and is in a conflict status.
+    type: string
+    enum:
+    - pending
+    - in_fulfillment
+    - on_hold
+    - complete
+    - cancelled
+    - returned
+  Price1:
+    title: Price1
+    type: object
+    properties:
+      gross:
+        description: Gross price for the gift wrapping.
+        type: number
+        format: double
+      net:
+        description: Net price for gift wrapping.
+        type: number
+        format: double
+      tax:
+        description: Tax amount for the gift wrapping
+        type: number
+        format: double
+      tax_code:
+        description: Tax code (also known as tax class) for gift wrapping.
+        type: string
+    required:
+    - gross
+    - net
+    - tax
+  SalesOrderCancellationRequest:
+    title: SalesOrderCancellationRequest
+    description: Request schema for order cancellation.
+    type: object
+    properties:
+      note:
+        description: An optional note.
+        type: string
+      reason:
+        description: The reason why the order was cancelled.
+        type: string
+        minLength: 1
+    required:
+    - reason
+  SalesOrderListResponse:
+    title: SalesOrderListResponse
+    description: Order history for a customer retrieved from external OMS
+    type: object
+    properties:
+      orders:
+        description: Customer's order history
+        type: array
+        items:
+          $ref: '#/definitions/SalesOrder'
+    required:
+    - orders
+  Category:
+    title: Category
+    description: Describes if it is a Payment (authorization or capture) or Refund.
+    type: string
+    enum:
+    - payment
+    - refund
+  SalesOrderGiftWrapping:
+    title: SalesOrderGiftWrapping
+    description: Gift wrapping information. This field is not required and will not be present if gift wrapping is not applicable for the order
+    type: object
+    properties:
+      message:
+        description: Personalised message to be printing on the gift wrapper.
+        type: string
+      price:
+        $ref: '#/definitions/Price1'
+      tax_lines:
+        description: Detailed tax information.
+        type: array
+        items:
+          $ref: '#/definitions/SalesOrderTaxLine'
+        maxItems: 100
+    required:
+    - price
+  SalesOrderItemShipment:
+    title: SalesOrderItemShipment
+    type: object
+    properties:
+      discounts:
+        description: A list of applied discounts
+        type: array
+        items:
+          $ref: '#/definitions/SalesOrderDiscount'
+      id:
+        description: Order item UUID of the shipment
+        type: string
+      price:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderPrice1'
+        - description: The response for retrieving price information.
+      tax_lines:
+        description: Detailed tax information.
+        type: array
+        items:
+          $ref: '#/definitions/SalesOrderTaxLine'
+        maxItems: 100
+    required:
+    - id
+    - price
+  SalesOrderFulfillmentType:
+    title: SalesOrderFulfillmentType
+    description: The fulfillment type of the order. In case of mixed cart orders, fulfillment type is always 'multiple'
+    type: string
+    enum:
+    - traditional
+    - same_day_delivery
+    - in_store_pickup
+    - in_store_purchase
+    - multiple
+  Problem:
+    title: Problem
+    type: object
+    properties:
+      detail:
+        description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some description for the error situation
+        type: string
+      error_code:
+        type: string
+      instance:
+        description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+        example: /some/uri-reference#specific-occurrence-context
+        type: string
+      message:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      request_id:
+        type: string
+      status:
+        description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        type: integer
+        minimum: 100.0
+        maximum: 600.0
+        exclusiveMaximum: true
+        format: int32
+      title:
+        description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some title for the error situation
+        type: string
+      type:
+        description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+        example: /some/uri-reference
+        type: string
+        default: about:blank
+  SalesOrderStatus:
+    title: SalesOrderStatus
+    description: Current status of the sales order
+    type: string
+    enum:
+    - on_hold
+    - open
+    - closed
+    - created_for_blind_return
+    - failed
+  SalesOrderDetailResponse:
+    title: SalesOrderDetailResponse
+    description: Schema for fetching sales order using external ID
+    type: object
+    properties:
+      billing_address:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderAddress'
+        - description: Address
+      catalog:
+        description: The catalog identifier (shop) associated with the order.
+        type: string
+      channel_type:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderChannelType'
+        - description: The channel through which the order was placed.
+      currency:
+        description: Currency code (ISO 4217) used in internal accounting
+        type: string
+        minLength: 3
+        maxLength: 3
+      customer:
+        $ref: '#/definitions/SalesOrderCustomer'
+      exemption_class:
+        description: The tax exemption class for the order (e.g. CHARITY_ORGANIZATION). Only present when the order carries a tax exemption.
+        type: string
+      exemption_number:
+        description: The tax exemption certificate number for the order. Only present when the order carries a tax exemption.
+        type: string
+      extended_attributes:
+        description: Extended attributes of the sales order item.
+        type: array
+        items:
+          $ref: '#/definitions/SalesOrderExtendedAttribute'
+        maxItems: 100
+      fulfillment_type:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderFulfillmentType'
+        - description: The fulfillment type of the order. In case of mixed cart orders, fulfillment type is always 'multiple'
+          minLength: 1
+      fulfillments:
+        description: Fulfillment groups for the order. Each group references its order items and carries the ship-from origin for those items.
+        type: array
+        items:
+          $ref: '#/definitions/SalesOrderFulfillment'
+      gift_wrapping:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderGiftWrapping'
+        - description: Gift wrapping information. This field is not required and will not be present if gift wrapping is not applicable for the order
+      id:
+        description: External ID of an order
+        type: string
+      is_offline:
+        description: Set to true if sales order item was created in offline mode.
+        type: boolean
+      items:
+        description: Contains a list of order items
+        type: array
+        items:
+          $ref: '#/definitions/SalesOrderDetail'
+      notification_blacklist:
+        description: Excludes the specified notifications from being sent to the customer.
+        type: array
+        items:
+          type: string
+      origin:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderOrigin'
+        - description: Describes in which Order Management System the order originated from.
+      origin_id:
+        description: The identifier of the order from the Order Management System where it originated from. If it originated in Newstore, it is the system-generated UUID assigned to the order during the order creation process. If it originated in an external OMS, it is the human-readable identifier.
+        type: string
+        minLength: 1
+      payment_history:
+        description: 'Note: This field will be empty if a NewStore internal order is requested. This field is only set when the order is fetched from an external source.'
+        type: array
+        items:
+          $ref: '#/definitions/SalesOrderItemPaymentHistory'
+      placed_at:
+        description: The time when the order was placed. It should follow https://tools.ietf.org/html/rfc3339 in UTC.
+        type: string
+        format: date-time
+      shipments:
+        type: array
+        items:
+          $ref: '#/definitions/SalesOrderItemShipment'
+      shipping_address:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderAddress'
+        - description: Address
+      shop_locale:
+        description: The locale used for the shop, in RFC 5646.
+        type: string
+      status:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderStatus'
+        - description: Current status of the sales order
+      store_id:
+        description: The store id where the order was placed.
+        type: string
+        minLength: 1
+      tax_exempt:
+        description: If the tax was exempted for this order. In case of external orders, the flag will always return false.
+        type: boolean
+      tax_method:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderTaxMethod'
+        - description: Method of calculation of the taxes, can be vat_included or vat_excluded.
+      totals:
+        $ref: '#/definitions/SalesOrderTotals'
+    required:
+    - channel_type
+    - currency
+    - fulfillment_type
+    - id
+    - items
+    - origin
+    - origin_id
+    - placed_at
+    - status
+    - totals
+  SalesOrderProductAttributes:
+    title: SalesOrderProductAttributes
+    description: Additional product-related information.
+    type: object
+    properties:
+      additional_variant_1:
+        description: A free form field for additional product attributes.
+        type: string
+        minLength: 1
+      additional_variant_2:
+        description: A free form field for additional product attributes.
+        type: string
+        minLength: 1
+      color:
+        description: The color of the product.
+        type: string
+        minLength: 1
+      image_url:
+        description: The URL to a product image.
+        type: string
+        minLength: 1
+      name:
+        description: The name of the product.
+        type: string
+        minLength: 1
+      size:
+        description: The size of the product.
+        type: string
+        minLength: 1
+    required:
+    - name
+  SalesOrderAddress:
+    title: SalesOrderAddress
+    description: Address
+    type: object
+    properties:
+      address_line_1:
+        type: string
+      address_line_2:
+        type: string
+      city:
+        type: string
+      country_code:
+        type: object
+        allOf:
+        - $ref: '#/definitions/CountryCode'
+        - description: Country code for this address. Must be <a href='https://www.iso.org/iso/country_codes.htm'>ISO-3166 reference</a>
+      first_name:
+        type: string
+      last_name:
+        type: string
+      note:
+        description: A note to leave remarks on address change.
+        type: string
+      phone:
+        type: string
+      province:
+        type: string
+      salutation:
+        description: e.g. Mr., Ms., Mrs., ...
+        type: string
+      second_name:
+        type: string
+      state:
+        type: string
+      suffix:
+        description: e.g. Jr., Sr., III, ...
+        type: string
+      title:
+        description: e.g. Dr., Prof., Pres., ...
+        type: string
+      zip_code:
+        type: string
+        maxLength: 32
+  SalesOrderSerialNumbersRequestItem:
+    title: SalesOrderSerialNumbersRequestItem
+    type: object
+    properties:
+      epc:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderSerialNumbersRequestItemEpc'
+        - description: The epc which should be assigned to the specified order line item.
+      id:
+        description: The identifier of the order line item.
+        type: string
+        minLength: 36
+        maxLength: 36
+      serial_number:
+        description: The serial number which should be assigned to the specified order line item.
+        type: string
+    required:
+    - id
+    - serial_number
+  Origin:
+    title: Origin
+    description: The ship-from origin for this fulfillment group. Omitted when neither zip code nor country code is known.
+    type: object
+    properties:
+      country_code:
+        description: The ship-from country code (ISO 3166-1 alpha-2).
+        type: string
+      zip_code:
+        description: The ship-from postal code.
+        type: string
+  Fulfillment:
+    title: Fulfillment
+    description: Fulfillment type
+    type: string
+    enum:
+    - SHIPPING
+    - IN_STORE_HANDOVER
+  SalesOrderItem:
+    title: SalesOrderItem
+    type: object
+    properties:
+      external_identifier:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderExternalIdentifier'
+        - description: External identifier for the order item
+      id:
+        description: External ID of the item
+        type: string
+      origin_id:
+        description: If the origin of the order is 'newstore', this should be the order item identifier. If the order originated in an external system, it should be the identifier from the external system.
+        type: string
+        minLength: 1
+      price:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderPrice1'
+        - description: The response for retrieving price information.
+      product_attributes:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderProductAttributes'
+        - description: Additional product-related information.
+      status:
+        type: object
+        allOf:
+        - $ref: '#/definitions/SalesOrderItemStatus'
+        - description: Current status of the order item. 'pending' means the item is in the grace period, 'on_hold' means the item couldn't be fulfilled and is in a conflict status.
+          minLength: 1
+    required:
+    - external_identifier
+    - id
+    - origin_id
+    - price
+    - product_attributes
+    - status
+  SalesOrderExtendedAttribute:
+    title: SalesOrderExtendedAttribute
+    type: object
+    properties:
+      name:
+        type: string
+        maxLength: 100
+      value:
+        type: string
+        maxLength: 8192
+    required:
+    - name
+    - value
+    maxProperties: 2
+  SalesOrderCancellationResponse:
+    title: SalesOrderCancellationResponse
+    description: Request schema for order cancellation status.
+    type: object
+    properties:
+      cancelable:
+        description: Describes if the order is cancelable in the current state.
+        type: boolean
+      canceled:
+        description: Describes if the order has been canceled.
+        type: boolean
+      is_safe:
+        description: Describes if it is safe to cancel the order in the current state.
+        type: boolean
+    required:
+    - cancelable
+    - canceled
+    - is_safe
+securityDefinitions:
+  oauth:
+    type: oauth2
+    flow: application
+    tokenUrl: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+    scopes:
+      catalog:import-schemas:read: Grants privileges to read import schema
+      catalog:import-schemas:write: Grants privileges to write import schema
+      catalog:pricebook-export:read: Grants privileges to export pricebook data
+      catalog:product-export:read: Grants privileges to export product data
+      checkout:carts:read: Grants privileges to read cart data
+      checkout:carts:write: Grants privileges to write cart data
+      clienteling:profile:read: Grants privileges to read clienteling profiles
+      customer:profile:read: Grants privileges to read API customer data
+      customer:profile:write: Grants privileges to modify API customer data
+      newstore:configuration:read: Grants privileges to read configuration
+      newstore:configuration:write: Grants privileges to write configuration
+      fiscalization:orders:read: View orders with fiscal transactions and signatures
+      fiscalization:orders:write: Create orders with fiscal transactions and signatures
+      shipments:read: Read Shipping Options and Audits
+      iam:providers:read: ' Grants read privileges to provider resources'
+      iam:providers:write: ' Grants write privileges to provider resources'
+      iam:roles:read: ' Grants privileges to read roles data'
+      iam:roles:write: ' Grants privileges to write roles data'
+      iam:users:read: ' Grants privileges to read user data'
+      iam:users:write: ' Grants privileges to write user data'
+      inventory:reservations:read: Allows access to retrieve reservations
+      inventory:reservations:write: Allows access to create and update reservations
+      promotions:config:read: Grants privileges to read configuration
+      promotions:config:write: Grants privileges to write into configuration
+      promotions:reason-codes:read: Grants privileges to list reason codes
+      promotions:reason-codes:write: Grants privileges to create and update reason codes
+      audit-events:read: Grants read access to the tenant's audit events.
+      taxes:preview-transactions:write: Preview tax transactions
+      taxes:transactions:read: Read tax transactions

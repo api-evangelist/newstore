@@ -1,0 +1,636 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: NewStore address routing-ruleset API
+  description: NewStore public APIs
+  contact:
+    email: support@newstore.com
+    name: NewStore API Support
+    url: https://developer.newstore.com
+host: dodici-demo.p.newstore.net
+basePath: /
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security: []
+tags:
+- name: routing-ruleset
+  description: Routing Ruleset
+paths:
+  /v0/routing/ruleset:
+    get:
+      description: 'Retrieves the current ''Routing Rule V2''. If customer using V1, this endpoint
+
+        maps the V1 configuration to V2 and returns a 200 OK.
+
+        '
+      summary: showRoutingRuleset
+      tags:
+      - routing-ruleset
+      operationId: showRoutingRuleset
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters: []
+      responses:
+        default:
+          description: Default
+          headers: {}
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Routingruleset1'
+          examples:
+            application/json:
+              location_groups:
+                2_DAY::WEST:
+                - DC01
+                - US15
+                - US16
+                GROUND::WEST:
+                - US01
+                - US02
+                - US03
+              preferred_locations:
+                2_DAY::WEST:
+                - DC01
+                GROUND::WEST:
+                - US01
+              routes:
+              - destination_region:
+                  country: US
+                  zip_code_region: WEST
+                fulfilled_by:
+                  2_DAY:
+                  - 2_DAY::WEST
+                  GROUND:
+                  - GROUND::WEST
+              sl_levels_priority:
+              - GROUND
+              - 2_DAY
+              zip_code_regions:
+                WEST:
+                - '*'
+          headers:
+            ETag:
+              description: 'Entity tag for the current routing ruleset. Use this value in the `If-Match`
+
+                header of a subsequent PATCH request to perform an optimistic-concurrency update.
+
+                '
+              type: string
+            X-Fulfillment-Config-Version:
+              description: 'The routing ruleset version natively stored for this tenant (`1` or `2`), regardless
+
+                of whether the response body below was auto-converted from V1 to the V2 shape.
+
+                '
+              type: string
+        '404':
+          description: There is no fulfillment configuration set yet.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    patch:
+      description: 'A convenience endpoint is where you use JSON patch to change parts of routing rules.
+
+
+        **Note:**
+
+        - You have the option of defining route entries with a single `country` or multiple `countries` by
+
+        providing the optional `Content-Type` header with your desired payload version.
+
+        - If you''d like to define multiple countries set the Content-Type header to application/json; version=1.
+
+        Select the appropriate Content-Type in the the request schema drop-down to see the schema for supporting
+
+        multiple countries.
+
+        - To use payload version 1 via the PATCH operation you need to update the route entries from `country`
+
+        to `countries` via PUT endpoint for compatibility.
+
+        '
+      summary: updateRoutingRuleset
+      tags:
+      - routing-ruleset
+      operationId: updateRoutingRuleset
+      deprecated: false
+      produces:
+      - application/json
+      - application/json; version=1
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: If-Match
+        in: header
+        required: false
+        type: string
+        description: 'Entity tag of the routing ruleset the client expects to update, as returned in the
+
+          `ETag` header of a previous GET response. When provided, the update is applied only
+
+          if the current ruleset''s entity tag matches, enabling optimistic-concurrency control.'
+      - name: body
+        in: body
+        required: false
+        description: ''
+        schema:
+          example:
+          - op: add
+            path: /location_groups/2_DAY::WEST/-
+            value: US10
+          type: array
+          items: {}
+      responses:
+        default:
+          description: Default
+          headers: {}
+        '200':
+          description: Routing rules updated successfully
+          schema:
+            $ref: '#/definitions/Putroutingrulesetresponse'
+          examples:
+            application/json:
+              fulfillment_config_uri: v0/fulfillment_configuration/revision/13
+              routing_ruleset:
+                location_groups:
+                  NJ:
+                  - US_NJ
+                routes:
+                - destination_region:
+                    country: PR
+                    zip_code_region: All
+                  fulfilled_by:
+                    2_DAY_PR:
+                    - NJ
+                sl_levels_priority:
+                - 2_DAY_PR
+                zip_code_regions:
+                  All:
+                  - '*'
+            application/json; version=1:
+              fulfillment_config_uri: v0/fulfillment_configuration/revision/13
+              routing_ruleset:
+                location_groups:
+                  NJ:
+                  - US_NJ
+                routes:
+                - destination_region:
+                    countries:
+                    - PR
+                    zip_code_region: All
+                  fulfilled_by:
+                    2_DAY_PR:
+                    - NJ
+                sl_levels_priority:
+                - 2_DAY_PR
+                zip_code_regions:
+                  All:
+                  - '*'
+          headers: {}
+        '400':
+          description: Bad request.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '412':
+          description: 'Precondition failed. The `If-Match` header does not match the current routing
+
+            ruleset, which means it was modified by another request. Re-fetch the ruleset to
+
+            obtain the latest `ETag` and retry.'
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+    put:
+      description: 'This endpoint is used to initially seed the routing rules or to replace it completely
+
+
+        **Note:**
+
+        - You have the option of defining route entries with a single `country` or multiple `countries` by
+
+        providing the optional `Content-Type` header with your desired payload version.
+
+        - If you''d like to define multiple countries set the Content-Type header to application/json; version=1.
+
+        Select the appropriate Content-Type in the the request schema drop-down to see the schema for supporting
+
+        multiple countries.
+
+        '
+      summary: replaceRoutingRuleset
+      tags:
+      - routing-ruleset
+      operationId: replaceRoutingRuleset
+      deprecated: false
+      produces:
+      - application/json
+      - application/json; version=1
+      - application/problem+json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/Routingruleset1'
+      - name: If-Match
+        in: header
+        required: false
+        type: string
+        description: 'Entity tag of the routing ruleset the client expects to replace, as returned in the
+
+          `ETag` header of a previous GET response. When provided, the replacement is applied
+
+          only if the current ruleset''s entity tag matches, enabling optimistic-concurrency
+
+          control. The header is ignored when no ruleset exists yet (initial seeding).'
+      responses:
+        default:
+          description: Default
+          headers: {}
+        '201':
+          description: Routing rules updated successfully
+          schema:
+            $ref: '#/definitions/Putroutingrulesetresponse'
+          examples:
+            application/json:
+              fulfillment_config_uri: v0/fulfillment_configuration/revision/13
+              routing_ruleset:
+                location_groups:
+                  NJ:
+                  - US_NJ
+                routes:
+                - destination_region:
+                    country: PR
+                    zip_code_region: All
+                  fulfilled_by:
+                    2_DAY_PR:
+                    - NJ
+                sl_levels_priority:
+                - 2_DAY_PR
+                zip_code_regions:
+                  All:
+                  - '*'
+            application/json; version=1:
+              fulfillment_config_uri: v0/fulfillment_configuration/revision/13
+              routing_ruleset:
+                location_groups:
+                  NJ:
+                  - US_NJ
+                routes:
+                - destination_region:
+                    countries:
+                    - PR
+                    zip_code_region: All
+                  fulfilled_by:
+                    2_DAY_PR:
+                    - NJ
+                sl_levels_priority:
+                - 2_DAY_PR
+                zip_code_regions:
+                  All:
+                  - '*'
+          headers: {}
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '412':
+          description: 'Precondition failed. The `If-Match` header does not match the current routing
+
+            ruleset, which means it was modified by another request. Re-fetch the ruleset to
+
+            obtain the latest `ETag` and retry.'
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+  /v0/routing/ruleset/{section}:
+    get:
+      description: 'Retrieves a section of the current ''Routing Rule V2''. If customer using V1, this endpoint
+
+        is of no use, and will return the error.
+
+        '
+      summary: showRoutingRulesetSection
+      tags:
+      - routing-ruleset
+      operationId: showRoutingRulesetSection
+      deprecated: false
+      produces:
+      - application/json
+      - application/problem+json
+      parameters:
+      - name: section
+        in: path
+        required: true
+        enum:
+        - routes
+        - sl_levels_priority
+        - location_groups
+        - zip_code_regions
+        type: string
+        description: name of the section to retrieve
+      responses:
+        default:
+          description: Default
+          headers: {}
+        '200':
+          description: OK
+          schema:
+            type: object
+          examples:
+            application/json:
+              zip_code_regions:
+                East:
+                - '10001'
+                - '10002'
+                - '10003'
+                - '10004'
+                - '10005'
+                South:
+                - '33101'
+                - '33102'
+                - '33103'
+                - '33104'
+                - '33105'
+                - '33106'
+                West:
+                - '90210'
+                - '90211'
+                - '90212'
+                - '90213'
+          headers:
+            ETag:
+              description: 'Entity tag for the current routing ruleset. Use this value in the `If-Match`
+
+                header of a subsequent PATCH request to perform an optimistic-concurrency update.
+
+                '
+              type: string
+        '400':
+          description: Bad request.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '409':
+          description: Incorrect fulfillment configuration version. The config is stored as V1 but V2 is required.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '429':
+          description: Too Many Requests
+          schema:
+            $ref: '#/definitions/Problem'
+          headers:
+            Retry-After:
+              type: string
+        '500':
+          description: Internal server error.
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '502':
+          description: Bad Gateway
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+        '503':
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/Problem'
+          headers: {}
+      security:
+      - oauth: []
+definitions:
+  Problem:
+    title: Problem
+    type: object
+    properties:
+      detail:
+        description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some description for the error situation
+        type: string
+      error_code:
+        type: string
+      instance:
+        description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+        example: /some/uri-reference#specific-occurrence-context
+        type: string
+      message:
+        type: string
+      messages:
+        type: array
+        items:
+          type: string
+      request_id:
+        type: string
+      status:
+        description: The HTTP status code generated by the origin server for this occurrence of the problem.
+        type: integer
+        minimum: 100.0
+        maximum: 600.0
+        exclusiveMaximum: true
+        format: int32
+      title:
+        description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+        example: some title for the error situation
+        type: string
+      type:
+        description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+        example: /some/uri-reference
+        type: string
+        default: about:blank
+  Routingruleset1:
+    title: Routingruleset1
+    type: object
+    properties:
+      location_groups:
+        description: Location groups identifiers
+        type: object
+        additionalProperties: {}
+      preferred_locations:
+        description: Specifies which locations within each group the routing engine should try first before falling back to the remaining locations in that group. The key is the location group identifier, the value is an ordered list of location IDs to prefer within this group.
+        type: object
+        additionalProperties: {}
+      routes:
+        description: Routing rules specification
+        type: array
+        items:
+          $ref: '#/definitions/Routes'
+      sl_levels_priority:
+        description: Service levels priority. This is ordered according to which service level will be taken first
+        type: array
+        items:
+          type: string
+          minLength: 1
+        minLength: 1
+        minItems: 1
+      zip_code_regions:
+        description: Zip code groups, in order to facilitate the identification routes per regions
+        type: object
+        additionalProperties: {}
+  Putroutingrulesetresponse:
+    title: Putroutingrulesetresponse
+    type: object
+    properties:
+      fulfillment_config_uri:
+        description: Fulfillment Configuration Revision URI
+        type: string
+      routing_ruleset:
+        $ref: '#/definitions/Routingruleset1'
+  DestinationRegion1:
+    title: DestinationRegion1
+    type: object
+    properties:
+      country:
+        description: Country in 2 chars (ISO 3166-1 alpha-2) definition
+        type: string
+        minLength: 2
+        maxLength: 2
+        pattern: ([A-Z]){2}
+      zip_code_region:
+        description: Region identification that will cover that routing. Zip code region groups is defined in `zip_code_regions`.
+        type: string
+  Routes:
+    title: Routes
+    type: object
+    properties:
+      destination_region:
+        $ref: '#/definitions/DestinationRegion1'
+      fulfilled_by:
+        description: This configuration mentions the service levels identifications and which location group will serve this region
+        type: object
+        additionalProperties: {}
+securityDefinitions:
+  oauth:
+    type: oauth2
+    flow: application
+    tokenUrl: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+    scopes:
+      catalog:import-schemas:read: Grants privileges to read import schema
+      catalog:import-schemas:write: Grants privileges to write import schema
+      catalog:pricebook-export:read: Grants privileges to export pricebook data
+      catalog:product-export:read: Grants privileges to export product data
+      checkout:carts:read: Grants privileges to read cart data
+      checkout:carts:write: Grants privileges to write cart data
+      clienteling:profile:read: Grants privileges to read clienteling profiles
+      customer:profile:read: Grants privileges to read API customer data
+      customer:profile:write: Grants privileges to modify API customer data
+      newstore:configuration:read: Grants privileges to read configuration
+      newstore:configuration:write: Grants privileges to write configuration
+      fiscalization:orders:read: View orders with fiscal transactions and signatures
+      fiscalization:orders:write: Create orders with fiscal transactions and signatures
+      shipments:read: Read Shipping Options and Audits
+      iam:providers:read: ' Grants read privileges to provider resources'
+      iam:providers:write: ' Grants write privileges to provider resources'
+      iam:roles:read: ' Grants privileges to read roles data'
+      iam:roles:write: ' Grants privileges to write roles data'
+      iam:users:read: ' Grants privileges to read user data'
+      iam:users:write: ' Grants privileges to write user data'
+      inventory:reservations:read: Allows access to retrieve reservations
+      inventory:reservations:write: Allows access to create and update reservations
+      promotions:config:read: Grants privileges to read configuration
+      promotions:config:write: Grants privileges to write into configuration
+      promotions:reason-codes:read: Grants privileges to list reason codes
+      promotions:reason-codes:write: Grants privileges to create and update reason codes
+      audit-events:read: Grants read access to the tenant's audit events.
+      taxes:preview-transactions:write: Preview tax transactions
+      taxes:transactions:read: Read tax transactions
