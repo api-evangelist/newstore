@@ -1,0 +1,33 @@
+generated: '2026-07-20'
+method: searched
+source:
+- https://docs.newstore.net/release-notes/
+- https://status.newstore.net/
+- openapi/newstore-api-openapi-original.json
+api: NewStore Omnichannel API
+versioning:
+  scheme: uri-path + vendor-media-type
+  current: mixed (unversioned + /v0/ + /v1/ paths)
+  detail: >-
+    Newer resource families are namespaced under /v0/ and /v1/ path prefixes;
+    a few resources negotiate versions via vendor media types
+    (application/vnd.com.newstore.*+json; version=N).
+deprecation:
+  policy_url: https://docs.newstore.net/release-notes/
+  detail: >-
+    NewStore publishes a dedicated "Deprecation notices" category within its
+    release notes, alongside API updates and platform updates, so integrators
+    can track what has been deprecated. No RFC 8594 Sunset/Deprecation response
+    headers are declared in the OpenAPI, and no operation is flagged
+    deprecated: true in the current spec.
+  sunset_header: false
+status_page: https://status.newstore.net/
+release_notes:
+  url: https://docs.newstore.net/release-notes/
+  categories:
+  - API updates
+  - Platform updates
+  - Omnichannel Manager updates
+  - Deprecation notices
+  cadence: rolling (recent entries observed 2026-07)
+deprecated_operations: []

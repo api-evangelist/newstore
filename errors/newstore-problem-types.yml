@@ -1,0 +1,91 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/newstore-api-openapi-original.json
+format: rfc9457
+envelope:
+  media_type: application/problem+json
+  schema: Problem
+  fields:
+  - name: type
+    description: A URI reference identifying the problem type.
+  - name: title
+    description: A short, human-readable summary of the problem type.
+  - name: status
+    description: The HTTP status code.
+  - name: detail
+    description: >-
+      Human-readable explanation specific to this occurrence, written for
+      engineers (not localized, not for non-technical stakeholders).
+  - name: instance
+    description: A URI reference identifying the specific occurrence of the problem.
+  - name: error_code
+    description: A machine-readable NewStore error code string.
+notes: >-
+  Derived from the OpenAPI: all 150 operations advertise
+  application/problem+json responses conforming to the Problem schema (RFC
+  9457 / RFC 7807 shape). Occurrence counts below are the number of operations
+  declaring each status.
+problems:
+- status: 400
+  title: Bad Request
+  occurrences: 106
+- status: 401
+  title: Unauthorized
+  occurrences: 54
+  detail: Missing, invalid, or expired OAuth bearer token.
+- status: 403
+  title: Forbidden
+  occurrences: 70
+  detail: Token lacks the required OAuth scope for the operation.
+- status: 404
+  title: Not Found
+  occurrences: 69
+- status: 409
+  title: Conflict
+  occurrences: 27
+- status: 412
+  title: Precondition Failed
+  occurrences: 9
+  detail: >-
+    Includes webhook/provider configuration errors surfaced when an integration
+    adapter is not configured for the requested media type.
+- status: 422
+  title: Unprocessable Entity
+  occurrences: 12
+- status: 423
+  title: Locked
+  occurrences: 2
+- status: 429
+  title: Too Many Requests
+  occurrences: 150
+  detail: Rate limit exceeded.
+- status: 500
+  title: Internal Server Error
+  occurrences: 150
+- status: 502
+  title: Bad Gateway
+  occurrences: 150
+- status: 503
+  title: Service Unavailable
+  occurrences: 150
+- status: 504
+  title: Gateway Timeout
+  occurrences: 1
+domain_error_codes:
+  note: >-
+    Some subsystems return typed error-code enums inside the problem/error
+    body. Captured from the OpenAPI definitions.
+  catalogs:
+  - name: TaxServiceErrorCode
+    field: error_code
+    examples:
+    - taxes_unexpected_error
+    - taxes_tenant_missing
+    - taxes_config_already_exists
+    - taxes_address_validation_failed
+  - name: FiscalPrinterErrorState
+    field: error_code
+    examples:
+    - f11n_fiscal_printer_unexpected_error
+    - f11n_fiscal_printer_connection_timeout
+    - f11n_fiscal_printer_remote_execution_error

@@ -1,0 +1,54 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.newstore.net/api/webhooks/
+spec_type: Webhooks
+api: NewStore Omnichannel API
+summary: >-
+  NewStore integrations are delivered through a documented catalog of outbound
+  webhooks (provider/adapter callbacks) and an event stream. NewStore calls
+  these endpoints on your infrastructure to request data or notify your systems
+  of events. No standalone AsyncAPI document is published; this catalog captures
+  the webhook surface verbatim from the API documentation.
+webhooks:
+- name: External Availability
+  slug: availability_hook
+  url: https://docs.newstore.net/api/webhooks/availability_hook
+  description: Requests availability information for a list of products across fulfillment locations.
+- name: Custom Tax Provider
+  slug: custom_v1_tax_provider
+  url: https://docs.newstore.net/api/webhooks/custom_v1_tax_provider
+  description: Creates a tax quotation for a given transaction.
+- name: Fulfillment Provider
+  slug: dc_fulfillment_node_hook
+  url: https://docs.newstore.net/api/webhooks/dc_fulfillment_node_hook
+  description: Creates a new fulfillment request for your fulfillment provider to handle.
+- name: Shipping Provider
+  slug: delivery_hook
+  url: https://docs.newstore.net/api/webhooks/delivery_hook
+  description: Books new shipments, cancels shipments, and requests shipping offers.
+- name: Shipping Options
+  slug: delivery_options_hook
+  url: https://docs.newstore.net/api/webhooks/delivery_options_hook
+  description: Requests provider rate configuration (service level, provider name, shipping offer price).
+- name: Payment Provider
+  slug: fat_psp_hook
+  url: https://docs.newstore.net/api/webhooks/fat_psp_hook
+  description: Creates, captures, and manages payments.
+- name: Gift Card Provider
+  slug: gift_card_hook
+  url: https://docs.newstore.net/api/webhooks/gift_card_hook
+  description: Issues, activates, and manages gift cards.
+- name: External Order
+  slug: sales_order_hook
+  url: https://docs.newstore.net/api/webhooks/sales_order_hook
+  description: Requests purchase history and order details from an external system.
+- name: Event-Stream
+  slug: stream_webhook_sink_hook
+  url: https://docs.newstore.net/api/webhooks/stream_webhook_sink_hook
+  description: Retrieves information from NewStore that contains an event (event-stream sink).
+- name: Third-party promotions engine
+  description: Retrieves promotions and coupons from a third-party promotion engine to apply to an order or cart.
+- name: Shipment customization adapter
+  description: Customizes default shipping estimation and booking between the EasyPost adapter and EasyPost.
+- name: Custom address completion
+  description: Retrieves address information for custom address completion in the Associate App via a configured lambda.

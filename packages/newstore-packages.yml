@@ -1,0 +1,20 @@
+generated: '2026-07-20'
+method: searched
+source:
+- https://github.com/NewStore
+- https://www.npmjs.com
+- https://pypi.org
+- https://developer.newstore.com
+api: NewStore Omnichannel API
+summary: >-
+  No official first-party NewStore API client SDK was found on the public
+  registries (npm, PyPI, Maven Central, NuGet, RubyGems, crates.io) or in the
+  NewStore GitHub org as of 2026-07. The public GitHub org (github.com/NewStore)
+  is mostly forks/mirrors plus a few app-specific repos (loyalty webviews, a
+  commercetools connector, tenant-config automation), not a general API SDK.
+  The developer portal (APIMatic) generates per-language HTTP code samples
+  (curl and others) rather than shipping a published SDK.
+packages: []
+code_samples:
+  source: https://developer.newstore.com
+  note: APIMatic-generated request snippets are available in the API reference.

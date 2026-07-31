@@ -1,0 +1,25 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.newstore.net/release-notes/
+api: NewStore Omnichannel API
+scheme: dated release notes (categorized)
+url: https://docs.newstore.net/release-notes/
+categories:
+- name: API updates
+  description: Latest API and webhook updates.
+- name: Platform updates
+  description: Latest changes made to the NewStore platform.
+- name: Omnichannel Manager updates
+  description: Recent changes to the Omnichannel Manager (back-office) app.
+- name: Deprecation notices
+  description: What has recently been deprecated.
+notes: >-
+  NewStore maintains a rolling, categorized release-notes hub on its
+  documentation site (Docusaurus). Entries are dated; activity observed as
+  recent as 2026-07. The site is client-rendered, so individual dated entries
+  are not enumerated verbatim here — the hub URL is the source of truth.
+recent_window:
+- date: '2026-07'
+  note: API and platform updates published (see release-notes hub).
+- date: '2026-02'
+  note: Prior release-notes activity observed.

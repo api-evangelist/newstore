@@ -1,0 +1,75 @@
+generated: '2026-07-20'
+method: derived
+status: candidate
+source: openapi/newstore-api-openapi-original.json
+notes: >-
+  No official NewStore-hosted MCP server was found (no public listing in the
+  MCP registry, npm @modelcontextprotocol, or NewStore docs as of 2026-07).
+  This is a DERIVED candidate tool list mapping marquee NewStore Omnichannel
+  API operations to MCP tools, one per operationId. Not an authoritative
+  provider manifest.
+server:
+  name: newstore
+  transport: http
+  url: null
+tools:
+- name: list_stores
+  description: List stores for the tenant.
+  source_operation: openapi/newstore-api-openapi-original.json#listStores
+- name: show_store
+  description: Get a store by id.
+  source_operation: openapi/newstore-api-openapi-original.json#showStore
+- name: create_cart
+  description: Create a checkout cart.
+  source_operation: openapi/newstore-api-openapi-original.json#createCart
+- name: create_line_item
+  description: Add a line item to a cart.
+  source_operation: openapi/newstore-api-openapi-original.json#createLineItem
+- name: create_or_show_profile
+  description: Create or look up a customer profile.
+  source_operation: openapi/newstore-api-openapi-original.json#createOrShowProfile
+- name: show_profile
+  description: Get a customer profile by id.
+  source_operation: openapi/newstore-api-openapi-original.json#GetshowProfile
+- name: list_addresses
+  description: List addresses for a customer profile.
+  source_operation: openapi/newstore-api-openapi-original.json#listAddresses
+- name: show_order
+  description: Get an order by id.
+  source_operation: openapi/newstore-api-openapi-original.json#showOrder
+- name: show_sales_order
+  description: Get a sales order by id and id type.
+  source_operation: openapi/newstore-api-openapi-original.json#showSalesOrderByIdAndIdType
+- name: show_order_history_for_customer
+  description: Get order history for a customer.
+  source_operation: openapi/newstore-api-openapi-original.json#showOrderHistoryForCustomer
+- name: create_cancellation
+  description: Cancel a sales order.
+  source_operation: openapi/newstore-api-openapi-original.json#createCancellation
+- name: create_reservation
+  description: Create an inventory reservation (requires Idempotency-Key).
+  source_operation: openapi/newstore-api-openapi-original.json#createReservation
+- name: list_reservations
+  description: List inventory reservations.
+  source_operation: openapi/newstore-api-openapi-original.json#listReservations
+- name: list_atp_insights
+  description: List available-to-promise stock insights.
+  source_operation: openapi/newstore-api-openapi-original.json#listAtpInsights
+- name: list_fulfillment_requests_for_order
+  description: List fulfillment requests for an order.
+  source_operation: openapi/newstore-api-openapi-original.json#listFulfillmentRequestsForOrder
+- name: list_order_routing_insights
+  description: Get order routing insights.
+  source_operation: openapi/newstore-api-openapi-original.json#listOrderRoutingInsights
+- name: create_tax_transaction_preview
+  description: Preview a tax transaction.
+  source_operation: openapi/newstore-api-openapi-original.json#createTaxTransactionPreview
+- name: list_users
+  description: List IAM users.
+  source_operation: openapi/newstore-api-openapi-original.json#listUsers
+- name: list_roles
+  description: List IAM roles.
+  source_operation: openapi/newstore-api-openapi-original.json#listRoles
+- name: list_audit_events
+  description: List audit events.
+  source_operation: openapi/newstore-api-openapi-original.json#listAuditEvents

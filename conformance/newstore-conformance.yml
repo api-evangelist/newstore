@@ -1,0 +1,42 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/newstore-api-openapi-original.json
+api: NewStore Omnichannel API
+standards:
+- id: oauth2
+  conforms: true
+  evidence: securityDefinitions declares an oauth2 client-credentials scheme with ~29 scopes.
+- id: oauth2-client-credentials
+  conforms: true
+  evidence: OAuth flow "application" (two-legged client credentials).
+- id: oidc
+  conforms: true
+  evidence: Token server is a Keycloak realm publishing OpenID Connect discovery.
+- id: rfc9457-problem-details
+  conforms: true
+  evidence: All operations produce application/problem+json with a Problem (type/title/status/detail/instance) schema.
+- id: rfc7807-problem-details
+  conforms: true
+  evidence: Problem schema predates and is compatible with RFC 9457.
+- id: idempotency
+  conforms: true
+  evidence: Idempotency-Key header required on createReservation; several creates idempotent on a natural key.
+- id: pagination
+  conforms: true
+  evidence: Collection endpoints expose offset/count/page_size/limit/sort/q parameters.
+- id: content-negotiation-versioning
+  conforms: true
+  evidence: Vendor media types with explicit version parameters on reservations and orders.
+- id: rest
+  conforms: true
+  evidence: Resource-oriented HTTP with standard verbs and status codes.
+- id: json-schema
+  conforms: partial
+  evidence: Import-schema endpoints consume/produce application/schema+json.
+- id: fhir-r4
+  conforms: false
+- id: scim2
+  conforms: false
+  note: NewStore has its own IAM users/roles/providers model rather than SCIM 2.0.
+- id: fapi
+  conforms: false

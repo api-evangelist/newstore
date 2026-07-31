@@ -1,0 +1,27 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for NewStore Omnichannel API
+  version: 1.0.0
+extends: openapi/newstore-api-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-20'
+    x-api-provider: NewStore
+    x-api-category: omnichannel-order-management
+    x-auth-model: oauth2-client-credentials
+    x-error-format: rfc9457
+    x-idempotency: Idempotency-Key
+    x-webhooks-catalog: https://docs.newstore.net/api/webhooks/
+    x-status-page: https://status.newstore.net/
+    x-release-notes: https://docs.newstore.net/release-notes/
+- target: $.info
+  update:
+    description: >-
+      The NewStore Omnichannel REST API. Errors are returned as RFC 9457
+      application/problem+json. Authentication is OAuth 2.0 client credentials
+      against a per-tenant Keycloak realm
+      (https://id.p.newstore.net/auth/realms/{tenant}). The production server is
+      https://{tenant}.p.newstore.net. Integrations are delivered through a
+      documented webhook/adapter catalog (payment, tax, shipping, fulfillment,
+      gift card, availability, and event stream).

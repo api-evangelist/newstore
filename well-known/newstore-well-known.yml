@@ -1,0 +1,35 @@
+generated: '2026-07-20'
+method: searched
+source: probed /.well-known/* on NewStore hosts
+notes: >-
+  developer.newstore.com and www.newstore.com expose no /.well-known discovery
+  documents (security.txt, oauth-authorization-server, api-catalog, ai-plugin
+  all 404/403). The per-tenant Keycloak identity server DOES publish OpenID
+  Connect discovery; the demo/try-it-out realm document is captured verbatim.
+hosts:
+- host: https://id.p.newstore.net
+  documents:
+  - path: /auth/realms/dodici-demo/.well-known/openid-configuration
+    status: 200
+    file: newstore-openid-configuration.json
+    note: >-
+      OIDC discovery for the demo tenant realm; every tenant has an equivalent
+      realm at /auth/realms/{tenant}/.well-known/openid-configuration
+- host: https://developer.newstore.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://www.newstore.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403

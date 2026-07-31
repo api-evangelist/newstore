@@ -1,0 +1,26 @@
+generated: '2026-07-20'
+method: searched
+source:
+- https://developer.newstore.com
+- openapi/newstore-api-openapi-original.json
+api: NewStore Omnichannel API
+model: per-tenant
+summary: >-
+  NewStore is provisioned per tenant. Each tenant has its own host
+  (https://{tenant}.p.newstore.net) and its own Keycloak realm
+  (https://id.p.newstore.net/auth/realms/{tenant}). Non-production (demo /
+  staging) tenants are used for integration testing; there is no single shared
+  public sandbox key. The developer portal's interactive API Explorer
+  (APIMatic) is wired to a demo tenant so operations can be tried out from the
+  docs.
+demo_tenant:
+  host: https://dodici-demo.p.newstore.net
+  token_endpoint: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+  note: >-
+    Demo tenant used as the default try-it-out server in the published API
+    reference. Access still requires tenant-issued OAuth client credentials;
+    NewStore does not publish shared test credentials.
+notes: >-
+  No public test cards, magic identifiers, or shared sandbox tokens are
+  published (test payment data flows through the tenant's configured payment
+  provider adapter, not through NewStore-published test values).

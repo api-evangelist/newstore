@@ -1,0 +1,34 @@
+# NewStore Omnichannel API
+
+> NewStore is a mobile-first omnichannel order management system (OMS) and point-of-service platform for retail brands. Its cloud platform unifies order management, mobile POS and checkout, clienteling, inventory and availability, fulfillment and order routing, returns, tax, fiscalization, and store operations, exposed through the NewStore Omnichannel REST API (150 operations). Authentication is OAuth 2.0 client-credentials against a per-tenant Keycloak realm; errors are RFC 9457 application/problem+json; integrations use a documented webhook/adapter catalog.
+
+## APIs
+- [NewStore Omnichannel API — reference](https://developer.newstore.com): 150 operations across carts/checkout, customer profiles, orders, sales orders, shipments, stock/reservations, fulfillment routing, catalog export, IAM, tax, and configuration.
+
+## Specs
+- [OpenAPI (Swagger 2.0)](https://raw.githubusercontent.com/api-evangelist/newstore/refs/heads/main/openapi/newstore-api-openapi-original.json)
+
+## Docs
+- [API Documentation](https://docs.newstore.net/api/)
+- [Integration APIs](https://docs.newstore.net/api/integration/)
+- [Configuration APIs](https://docs.newstore.net/api/configuration/)
+- [Webhooks catalog](https://docs.newstore.net/api/webhooks/)
+- [Release notes / changelog](https://docs.newstore.net/release-notes/)
+- [Status page](https://status.newstore.net/)
+
+## Authentication
+- OAuth 2.0 client-credentials. Token endpoint: https://id.p.newstore.net/auth/realms/{tenant}/protocol/openid-connect/token
+- Access is scope-gated (e.g. customer:profile:read, checkout:carts:write, newstore:configuration:read, iam:roles:write).
+
+## Conventions
+- Base server: https://{tenant}.p.newstore.net
+- Idempotency: Idempotency-Key header (required on createReservation).
+- Pagination: offset / count / page_size / limit / sort / q.
+- Errors: application/problem+json (type, title, status, detail, instance, error_code).
+- Rate limiting: HTTP 429 on all operations.
+
+## Company
+- [NewStore website](https://www.newstore.com/)
+- [Developer portal](https://developer.newstore.com)
+- [GitHub org](https://github.com/NewStore)
+- [Pricing](https://www.newstore.com/pricing/)

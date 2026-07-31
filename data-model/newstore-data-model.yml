@@ -1,0 +1,96 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/newstore-api-openapi-original.json
+api: NewStore Omnichannel API
+notes: >-
+  Entity-relationship graph derived from OpenAPI path nesting and id-reference
+  parameters (454 definitions, 89 paths). Relationships are inferred from
+  resource containment (e.g. /checkout/carts/{cartId}/items) and cross-resource
+  id fields.
+entities:
+- name: Cart
+  base_path: /checkout/carts
+  relationships:
+  - has_many: LineItem
+    via: cartId
+- name: LineItem
+  base_path: /checkout/carts/{cartId}/items
+  relationships:
+  - belongs_to: Cart
+    via: cartId
+  - has_many: AddOnLineItem
+    via: lineItemId
+- name: CustomerProfile
+  base_path: /customer/profiles
+  relationships:
+  - has_many: Address
+    via: profile_id
+- name: Address
+  base_path: /customer/profiles/{profile_id}/addresses
+  relationships:
+  - belongs_to: CustomerProfile
+    via: profile_id
+- name: Order
+  base_path: /orders
+  relationships:
+  - has_many: Return
+    via: orderId
+  - has_one: TaxTransaction
+    via: orderId
+- name: SalesOrder
+  base_path: /v0/orders
+  relationships:
+  - has_many: LineItem
+    via: item_uuid
+  - has_many: FulfillmentRequest
+    via: order_uuid
+- name: Return
+  base_path: /orders/{orderId}/returns
+  relationships:
+  - belongs_to: Order
+    via: orderId
+- name: Reservation
+  base_path: /inventory/reservations
+  relationships:
+  - has_many: ReservationItem
+    via: reservation_id
+- name: Store
+  base_path: /stores
+  relationships:
+  - has_many: Cashbox
+    via: storeId
+  - has_one: StoreTaxConfiguration
+    via: id
+- name: Cashbox
+  base_path: /stores/{storeId}/cashboxes
+  relationships:
+  - belongs_to: Store
+    via: storeId
+- name: FulfillmentRequest
+  base_path: /v0/fulfillment_requests
+  relationships:
+  - belongs_to: SalesOrder
+    via: order_uuid
+- name: Role
+  base_path: /iam/roles
+  relationships:
+  - has_many: User
+    via: id
+  - has_many: Permission
+- name: User
+  base_path: /iam/users
+- name: IdentityProvider
+  base_path: /iam/providers
+- name: ProviderRate
+  base_path: /fulfillment/provider-rates
+- name: PackageType
+  base_path: /fulfillment/package-types
+- name: RoutingRuleset
+  base_path: /v0/routing/ruleset
+- name: TaxTransaction
+  base_path: /taxes/transactions
+  relationships:
+  - belongs_to: Order
+    via: orderId
+- name: ImportSchema
+  base_path: /catalog/import-schemas

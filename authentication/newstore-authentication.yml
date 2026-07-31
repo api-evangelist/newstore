@@ -1,0 +1,17 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/newstore-api-openapi-original.json
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: oauth
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+    scopes: 29
+  sources:
+  - openapi/newstore-api-openapi-original.json

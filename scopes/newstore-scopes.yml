@@ -1,0 +1,184 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/newstore-api-openapi-original.json
+schemes:
+- name: oauth
+  source: openapi/newstore-api-openapi-original.json
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token
+scopes:
+- scope: audit-events:read
+  description: Grants read access to the tenant's audit events.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: catalog:import-schemas:read
+  description: Grants privileges to read import schema
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: catalog:import-schemas:write
+  description: Grants privileges to write import schema
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: catalog:pricebook-export:read
+  description: Grants privileges to export pricebook data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: catalog:product-export:read
+  description: Grants privileges to export product data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: checkout:carts:read
+  description: Grants privileges to read cart data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: checkout:carts:write
+  description: Grants privileges to write cart data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: clienteling:profile:read
+  description: Grants privileges to read clienteling profiles
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: customer:profile:read
+  description: Grants privileges to read API customer data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: customer:profile:write
+  description: Grants privileges to modify API customer data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: fiscalization:orders:read
+  description: View orders with fiscal transactions and signatures
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: fiscalization:orders:write
+  description: Create orders with fiscal transactions and signatures
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: iam:providers:read
+  description: Grants read privileges to provider resources
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: iam:providers:write
+  description: Grants write privileges to provider resources
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: iam:roles:read
+  description: Grants privileges to read roles data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: iam:roles:write
+  description: Grants privileges to write roles data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: iam:users:read
+  description: Grants privileges to read user data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: iam:users:write
+  description: Grants privileges to write user data
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: inventory:reservations:read
+  description: Allows access to retrieve reservations
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: inventory:reservations:write
+  description: Allows access to create and update reservations
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: newstore:configuration:read
+  description: Grants privileges to read configuration
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: newstore:configuration:write
+  description: Grants privileges to write configuration
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: promotions:config:read
+  description: Grants privileges to read configuration
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: promotions:config:write
+  description: Grants privileges to write into configuration
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: promotions:reason-codes:read
+  description: Grants privileges to list reason codes
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: promotions:reason-codes:write
+  description: Grants privileges to create and update reason codes
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: shipments:read
+  description: Read Shipping Options and Audits
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: taxes:preview-transactions:write
+  description: Preview tax transactions
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json
+- scope: taxes:transactions:read
+  description: Read tax transactions
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/newstore-api-openapi-original.json

@@ -1,0 +1,72 @@
+generated: '2026-07-20'
+method: searched
+source:
+- openapi/newstore-api-openapi-original.json
+- https://developer.newstore.com
+- https://docs.newstore.net/api/
+api: NewStore Omnichannel API
+authentication:
+  style: oauth2
+  flow: clientCredentials
+  detail: >-
+    OAuth 2.0 two-legged client-credentials. A machine token is obtained from
+    the per-tenant Keycloak realm token endpoint
+    (https://id.p.newstore.net/auth/realms/{tenant}/protocol/openid-connect/token)
+    and presented as a Bearer token. Access is scope-gated (see scopes/).
+  token_endpoint: https://id.p.newstore.net/auth/realms/{tenant}/protocol/openid-connect/token
+idempotency:
+  supported: true
+  mechanism: header
+  header: Idempotency-Key
+  scope: >-
+    Documented on resource-creation endpoints. The reservations create
+    operation (POST /inventory/reservations, createReservation) requires an
+    Idempotency-Key header: if a request has previously been received with the
+    same key, the existing reservation is returned instead of creating a new
+    one. Several other create operations are idempotent with respect to a
+    natural key (e.g. in-store pickup fulfillment is idempotent on external_id).
+  evidence: openapi Idempotency-Key header parameter (required) on createReservation
+pagination:
+  styles:
+  - offset-based
+  - cursor-based
+  params:
+  - offset
+  - count
+  - page_size
+  - limit
+  - sort
+  - q
+  note: >-
+    Collection endpoints use offset/count or page_size paging; some newer
+    endpoints expose cursor tokens. Filtering via q and ordering via sort.
+versioning:
+  scheme: uri-path + media-type
+  detail: >-
+    The platform mixes unversioned paths (e.g. /checkout/carts, /orders) with
+    explicitly versioned prefixes (/v0/*, /v1/*) for sales-orders, routing,
+    fulfillment, and order-injection. Some resources also negotiate versions via
+    vendor media types
+    (e.g. application/vnd.com.newstore.reservations+json; version=2,
+    application/x.newstore.orders+json;version=2).
+  current: mixed (v0/v1 paths)
+localization:
+  header: Accept-Language
+  note: Several endpoints honor Accept-Language for localized content.
+error_envelope:
+  format: rfc9457
+  media_type: application/problem+json
+  fields: [type, title, status, detail, instance, error_code]
+  note: All 150 operations advertise application/problem+json error responses.
+  cross_ref: errors/newstore-problem-types.yml
+rate_limiting:
+  signaled: true
+  status_code: 429
+  note: >-
+    Every operation documents a 429 Too Many Requests response. Discrete
+    X-RateLimit-* response headers are not declared in the spec.
+cross_references:
+  authentication: authentication/newstore-authentication.yml
+  scopes: scopes/newstore-scopes.yml
+  errors: errors/newstore-problem-types.yml
+  lifecycle: lifecycle/newstore-lifecycle.yml

@@ -1,0 +1,16 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/newstore-api-openapi-original.json
+skills:
+- file: newstore-cart-to-checkout.md
+  name: Build a cart and identify the customer
+  api: openapi/newstore-api-openapi-original.json
+  operations: [createCart, showCart, createLineItem, updateLineItem, createOrShowProfile]
+- file: newstore-reserve-inventory.md
+  name: Reserve inventory idempotently
+  api: openapi/newstore-api-openapi-original.json
+  operations: [listAtpInsights, createReservation, showReservation, listReservations]
+- file: newstore-order-lookup-and-cancel.md
+  name: Look up an order and process a cancellation
+  api: openapi/newstore-api-openapi-original.json
+  operations: [showOrderHistoryForCustomer, showSalesOrderByIdAndIdType, showCancellationStatus, createCancellation, createLineItemCancellation]

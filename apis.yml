@@ -1,7 +1,19 @@
 aid: newstore
 name: Newstore
-description: Newstore is a company surfaced as a portfolio company of general-catalyst and added to the
-  API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  NewStore is a mobile-first omnichannel order management system (OMS) and
+  point-of-service platform for retail brands. Its cloud platform unifies order
+  management, mobile POS and checkout, clienteling, inventory and availability,
+  fulfillment and order routing, returns, tax, fiscalization, and store
+  operations into a single system, exposed through the NewStore Omnichannel
+  REST API. The public API covers carts and checkout, customer profiles, orders
+  and sales orders, in-store pickup and shipments, stock and reservations,
+  fulfillment routing, catalog/pricebook/product export, identity and access
+  management (users, roles, providers), and tenant/store configuration.
+  Integrations are delivered through a documented webhook/adapter surface
+  (payment, tax, shipping, fulfillment, gift card, availability, and an event
+  stream). Authentication is OAuth 2.0 client-credentials against a per-tenant
+  Keycloak identity server. NewStore was founded by Stephan Schambach.
 url: https://raw.githubusercontent.com/api-evangelist/newstore/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -9,14 +21,774 @@ x-backed-by:
 - general-catalyst
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-20'
+image: https://developer.newstore.com/static/images/logo.png
 tags:
 - Company
-apis: []
+- Retail
+- Omnichannel
+- Order Management
+- Point of Sale
+- Ecommerce
+- Fulfillment
+- Inventory
+- Store Operations
+- REST
+apis:
+- aid: newstore:newstore-address-api
+  name: Newstore address API
+  description: Customer Profile Addresses
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - address
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-address-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-audit-events-api
+  name: Newstore audit-events API
+  description: Audit event operations.
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - audit-events
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-audit-events-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-cart-api
+  name: Newstore cart API
+  description: Operations on carts
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - cart
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-cart-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-cashboxes-api
+  name: Newstore cashboxes API
+  description: Fiscal cashboxes
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - cashboxes
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-cashboxes-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-customer-configuration-api
+  name: Newstore customer-configuration API
+  description: Customer API Configurations
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - customer-configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-customer-configuration-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-customer-profile-api
+  name: Newstore customer-profile API
+  description: Customer Profiles
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - customer-profile
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-customer-profile-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-customerprofile-api
+  name: Newstore customerProfile API
+  description: Customer Profiles
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - customerProfile
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-customerprofile-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-data-api
+  name: Newstore data API
+  description: PII Data
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - data
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-data-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-easypostadapterconfig-api
+  name: Newstore EasypostAdapterConfig API
+  description: Easypost Adapter Configuration
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - EasypostAdapterConfig
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-easypostadapterconfig-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-external-public-api
+  name: Newstore external-public API
+  description: The external-public API from Newstore — 89 operation(s) for external-public.
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - external-public
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-external-public-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-fulfillment-requests-api
+  name: Newstore fulfillment-requests API
+  description: Fulfillment Requests
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - fulfillment-requests
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-fulfillment-requests-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-identity-providers-api
+  name: Newstore identity-providers API
+  description: Identity Providers
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - identity-providers
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-identity-providers-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-import-schemas-api
+  name: Newstore Import Schemas API
+  description: Import Schemas
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - Import Schemas
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-import-schemas-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-inventory-configuration-api
+  name: Newstore Inventory Configuration API
+  description: Inventory Configuration
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - Inventory Configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-inventory-configuration-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-order-injection-api
+  name: Newstore order-injection API
+  description: Order Injection
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - order-injection
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-order-injection-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-order-injection-config-api
+  name: Newstore order-injection-config API
+  description: Order Injection Configuration
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - order-injection-config
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-order-injection-config-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-orders-api
+  name: Newstore orders API
+  description: Fiscal orders
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - orders
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-orders-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-package-types-api
+  name: Newstore package-types API
+  description: Package Types
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - package-types
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-package-types-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-pricebook-export-api
+  name: Newstore Pricebook export API
+  description: Pricebook Export
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - Pricebook export
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-pricebook-export-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-product-export-api
+  name: Newstore Product export API
+  description: Product Export
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - Product export
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-product-export-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-profiles-api
+  name: Newstore profiles API
+  description: Clienteling Profiles
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-profiles-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-provider-rates-api
+  name: Newstore provider-rates API
+  description: Provider Rates
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - provider-rates
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-provider-rates-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-providers-api
+  name: Newstore providers API
+  description: Payment provider operations
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - providers
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-providers-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-reason-codes-api
+  name: Newstore Reason Codes API
+  description: Reason Codes API.
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - Reason Codes
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-reason-codes-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-reservations-api
+  name: Newstore reservations API
+  description: Reservations
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - reservations
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-reservations-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-roles-api
+  name: Newstore roles API
+  description: Roles
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - roles
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-roles-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-routing-api
+  name: Newstore routing API
+  description: Routing
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - routing
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-routing-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-routing-config-api
+  name: Newstore routing-config API
+  description: Routing Configuration
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - routing-config
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-routing-config-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-routing-ruleset-api
+  name: Newstore routing-ruleset API
+  description: Routing Ruleset
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - routing-ruleset
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-routing-ruleset-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-sales-orders-api
+  name: Newstore sales-orders API
+  description: Operations related to sales order management.
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - sales-orders
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-sales-orders-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-shipment-configurations-api
+  name: Newstore shipment-configurations API
+  description: Shipment Configurations
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - shipment-configurations
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-shipment-configurations-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-shipping-labels-api
+  name: Newstore shipping-labels API
+  description: Shipping Labels
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - shipping-labels
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-shipping-labels-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-shipping-option-audits-api
+  name: Newstore shipping-option-audits API
+  description: Shipping Option Audits
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - shipping-option-audits
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-shipping-option-audits-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-stock-api
+  name: Newstore stock API
+  description: Stock Operations
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - stock
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-stock-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-store-tax-configuration-api
+  name: Newstore store-tax-configuration API
+  description: Tax configuration - Store
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - store-tax-configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-store-tax-configuration-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-stores-api
+  name: Newstore stores API
+  description: Fiscal stores
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - stores
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-stores-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-tax-transactions-api
+  name: Newstore tax-transactions API
+  description: Tax transactions
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - tax-transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-tax-transactions-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-tenant-config-api
+  name: Newstore tenant-config API
+  description: Tenant configuration
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - tenant-config
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-tenant-config-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-tenant-tax-configuration-api
+  name: Newstore tenant-tax-configuration API
+  description: Tax configuration - Tenant
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - tenant-tax-configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-tenant-tax-configuration-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-token-operations-api
+  name: Newstore token-operations API
+  description: Tokens
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - token-operations
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-token-operations-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-tppe-api
+  name: Newstore tppe API
+  description: Third Party Promotions Engine
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - tppe
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-tppe-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
+- aid: newstore:newstore-users-api
+  name: Newstore users API
+  description: Users
+  humanURL: https://developer.newstore.com
+  baseURL: https://dodici-demo.p.newstore.net
+  tags:
+  - users
+  properties:
+  - type: OpenAPI
+    url: openapi/newstore-users-api-openapi.yml
+  - type: APIReference
+    url: https://developer.newstore.com
+  - type: Documentation
+    url: https://docs.newstore.net/api/
+  - type: Webhooks
+    url: https://docs.newstore.net/api/webhooks/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: DomainSecurity
+  url: security/newstore-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/newstore-agentic-access.yml
+- type: OAuthScopes
+  url: scopes/newstore-scopes.yml
+- type: Authentication
+  url: authentication/newstore-authentication.yml
+- type: DeveloperPortal
+  url: https://developer.newstore.com
+- type: Documentation
+  url: https://docs.newstore.net/api/
+- type: APIReference
+  url: https://developer.newstore.com
+- type: Webhooks
+  url: https://docs.newstore.net/api/webhooks/
+- type: GitHubOrganization
+  url: https://github.com/NewStore
+- type: StatusPage
+  url: https://status.newstore.net/
+- type: ChangeLog
+  url: https://docs.newstore.net/release-notes/
+- type: Deprecation
+  url: https://docs.newstore.net/release-notes/
+- type: Roadmap
+  url: https://www.newstore.com/company/roadmap/
+- type: Pricing
+  url: https://www.newstore.com/pricing/
+- type: TermsOfService
+  url: https://www.newstore.com/legal/terms-of-service/
+- type: PrivacyPolicy
+  url: https://www.newstore.com/legal/privacy-policy/
+- type: Support
+  url: mailto:support@newstore.com
+- type: WellKnown
+  url: well-known/newstore-well-known.yml
+- type: MCPServer
+  url: mcp/newstore-mcp.yml
+- type: LLMsTxt
+  url: llms/newstore-llms.txt
+- type: Overlay
+  url: overlays/newstore-api-overlay.yaml
+- type: Conformance
+  url: conformance/newstore-conformance.yml
+- type: ErrorCatalog
+  url: errors/newstore-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/newstore-lifecycle.yml
+- type: Conventions
+  url: conventions/newstore-conventions.yml
+- type: Idempotency
+  url: conventions/newstore-conventions.yml
+- type: DataModel
+  url: data-model/newstore-data-model.yml
+- type: Sandbox
+  url: sandbox/newstore-sandbox.yml
+- type: Packages
+  url: packages/newstore-packages.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-20'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1
