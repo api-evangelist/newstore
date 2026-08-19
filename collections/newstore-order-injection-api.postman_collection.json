@@ -1,0 +1,568 @@
+{
+  "item": [
+    {
+      "id": "b79afac6-38ae-4bde-83d5-3d6808851e91",
+      "name": "order-injection",
+      "description": {
+        "content": "Order Injection",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d426f637-05ce-4bce-8e16-6a03c07cbf04",
+          "name": "createInjectedOrder",
+          "request": {
+            "name": "createInjectedOrder",
+            "description": {
+              "content": "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 20 requests per second.\n</div>\n\nCreates an order in NewStore by importing an order placed via an external system.\nThis is also referred as *injecting an order*.\n\nEach request creates a single order in NewStore.\n\nThe request payload depends on the order you are creating. For example:\n\n- A pre-routed order relies on a `routing strategy` defined with the\n[fulfillment configuration](/newstore-cloud/newstore.html#fulfillment-configuration).\n- An in-store pickup order relies on the `in-store configuration` defined\nwith the [in-store pickup config resource](/newstore-cloud/store_operations/in_store_pickup.html).\n\nThis method is idempotent, with regards to the `external_id` property. You can use the\nmethod multiple times to create the same order in the platform. The order itself is created\nonly once, with the same response payload returned every time.\n\nThere can be transient errors (`500`) when creating an order, such as a timeout when communicating\nwith the shipping provider. To fix these errors, retry the method again with the same payload.\n\n**Important**:\n- Ensure that the request payload is same when creating an order with several\ntries. A retry with the same `external_id` but a different payload will fail.\n- Ensure that there is a small delay between each retry.\n- Only the `200` response implies that the order has been created correctly. Therefore,\nensure that your integration has a retry logic set up.\n\nFor more information, see the request examples and\n[Importing orders](https://docs.newstore.com/docs/importing-orders).\n\n**Add-ons**\nAn item can be declared as an add-on of another item by setting\n`shipments[].items[].addon_parent_external_item_id` to the `external_item_id`\nof the parent item. The add-on is created as a separate line item linked to\nthat parent and carries its own price. The parent must be a non-add-on item in\nthe **same shipment**; add-ons cannot be nested (the parent must not itself be\nan add-on) and an item cannot reference itself. A reference that breaks these\nrules is rejected with `400` (error code `addon_invalid_parent_item`).\nAn add-on's own and its parent's `external_item_id` must be unique across the\nwhole order; a duplicate makes the linkage ambiguous and is rejected with `400`\n(error code `addon_duplicate_external_item_id`).\n\n**Configuration**\nThere are two configuration settings that impact injection flow: `big_sales_order`\nand `skip_soft_routing_on_injection`. For more information, see the page with all\n[order_injection configuration](https://docs.newstore.net/api/configuration/order-management/order_injection_admin/#tag/Injection-configuration/operation/updateConfig).\n\n**Notes:**\n- Ensure that you specify the correct number of decimal places for monetary values of\nprices, according to the specified currency. For example, if the currency is specified as\n``USD`` and the price has more than 2 decimal places, it is considered as invalid by the\nplatform. For more information, see\n[pricing dependencies on currency](https://docs.newstore.com/v1/docs/set-up-payments#managing-product-pricing-dependencies-on-currency).\n- To send payment-related metadata with the order, use the\n[Create financial instrument](https://docs.newstore.net/api/webhooks/fat_psp_hook/#operation/createFinancialInstrument)\nmethod in the Payment Provider webhooks.\n- The validity of a shipping offer token can vary based on the shipping\nprovider and shipping offer. For `in-store pickup` orders, a shipping offer\ntoken does not expire.\n- If you set `shipments[].shipment_option.routing_strategy` as \"external\" and the routing failed to communicate\nwith shipping provider, the order will be cancelled. Check shipping provider integration, if you have customer\nintegration, otherwise contact team delivery for support.\n- If the customer's phone number does not have a country calling code, the platform will attempt to use the\nbilling address country code to derive the calling code while formatting the phone number to the E.164\nstandard. If the phone number cannot be formatted, it will be placed in the extended attribute\n`injected-invalid-phone-number` on customer profile. It can be updated later, if needed.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "d",
+                "fulfill_order"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel_name\": \"<string>\",\n  \"channel_type\": \"<string>\",\n  \"currency\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"external_id\": \"<string>\",\n  \"shipments\": [],\n  \"shop\": \"<string>\",\n  \"shop_locale\": \"<string>\",\n  \"associate_id\": \"<string>\",\n  \"billing_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"customer_email\": \"<string>\",\n  \"customer_language\": \"<string>\",\n  \"customer_name\": \"<string>\",\n  \"extended_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"external_customer_id\": \"<string>\",\n  \"ip_address\": \"\",\n  \"is_fulfilled\": false,\n  \"is_historical\": false,\n  \"is_offline\": false,\n  \"is_preconfirmed\": false,\n  \"notification_blacklist\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payments\": [\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    },\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    }\n  ],\n  \"placed_at\": \"<dateTime>\",\n  \"price_method\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"shipping_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"store_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "941198a4-2aa0-4932-8a73-d917a7c04caf",
+              "name": "- If the same order is sent twice, the same response is returned each time.\n- If a different order with the same `external_id` is sent, a response identical to the response for the first order is returned.\n- No modifications are made to the order after it is created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "d",
+                    "fulfill_order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_name\": \"<string>\",\n  \"channel_type\": \"<string>\",\n  \"currency\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"external_id\": \"<string>\",\n  \"shipments\": [],\n  \"shop\": \"<string>\",\n  \"shop_locale\": \"<string>\",\n  \"associate_id\": \"<string>\",\n  \"billing_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"customer_email\": \"<string>\",\n  \"customer_language\": \"<string>\",\n  \"customer_name\": \"<string>\",\n  \"extended_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"external_customer_id\": \"<string>\",\n  \"ip_address\": \"\",\n  \"is_fulfilled\": false,\n  \"is_historical\": false,\n  \"is_offline\": false,\n  \"is_preconfirmed\": false,\n  \"notification_blacklist\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payments\": [\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    },\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    }\n  ],\n  \"placed_at\": \"<dateTime>\",\n  \"price_method\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"shipping_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"store_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"external_id\": \"INJECTED_6fa1c9c1-daf7-4aac-96bd-1a1436affb5d\",\n  \"id\": \"c93e1a37-b5d2-41a5-a3d0-4c3756b5fa3e\",\n  \"items\": [\n    {\n      \"external_item_id\": \"EXT1000761\",\n      \"id\": \"03a06f1c-4797-441e-ac15-a07a3df23a92\",\n      \"product_id\": \"1000761\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23532d4e-76b9-44b2-a346-e468d056ae4d",
+              "name": "- The input data is invalid.\n- Multiple shipping options are provided that are identified by service level identifiers.\n- Order exceeds the maximum number of items allowed (error code `maximum_allowed_number_of_items_exceeded`).\n   This means the order was cancelled as the maximum number of items was exceeded, and will need to be retried once limits are updated.\n   For more information on updating the max limit, refer to `big_sales_order` in the [order_injection configuration](https://docs.newstore.net/api/configuration/order-management/order_injection_admin/#tag/Injection-configuration/operation/updateConfig).\n- Mixed shipping option types are provided that are identified by service level identifiers and\n   shipping offer tokens.\n- Price is specified with invalid number of decimal places according to the specified currency.\n   For example, if the currency is specified as ``USD`` and the product price has more than 2 decimal places, it is considered as invalid by the platform.\n   For more information, see [pricing dependencies on currency](https://docs.newstore.com/v1/docs/set-up-payments#managing-product-pricing-dependencies-on-currency).\n- The order's total payment amount is different from the sum of each item and shipping amount.\n   For example, if the incorrect `price_method` is sent or if the `item_discount_info` or `item_order_discount_info` are missing.\n- An item's `addon_parent_external_item_id` does not reference another item in the same shipment,\n   references the item itself, or references an item that is itself an add-on (error code `addon_invalid_parent_item`).\n- An add-on's or its parent's `external_item_id` is not unique across the order (error code `addon_duplicate_external_item_id`).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "d",
+                    "fulfill_order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_name\": \"<string>\",\n  \"channel_type\": \"<string>\",\n  \"currency\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"external_id\": \"<string>\",\n  \"shipments\": [],\n  \"shop\": \"<string>\",\n  \"shop_locale\": \"<string>\",\n  \"associate_id\": \"<string>\",\n  \"billing_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"customer_email\": \"<string>\",\n  \"customer_language\": \"<string>\",\n  \"customer_name\": \"<string>\",\n  \"extended_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"external_customer_id\": \"<string>\",\n  \"ip_address\": \"\",\n  \"is_fulfilled\": false,\n  \"is_historical\": false,\n  \"is_offline\": false,\n  \"is_preconfirmed\": false,\n  \"notification_blacklist\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payments\": [\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    },\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    }\n  ],\n  \"placed_at\": \"<dateTime>\",\n  \"price_method\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"shipping_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"store_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 158,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "861e3771-12d5-4af8-af95-0c1646832bdd",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "d",
+                    "fulfill_order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_name\": \"<string>\",\n  \"channel_type\": \"<string>\",\n  \"currency\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"external_id\": \"<string>\",\n  \"shipments\": [],\n  \"shop\": \"<string>\",\n  \"shop_locale\": \"<string>\",\n  \"associate_id\": \"<string>\",\n  \"billing_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"customer_email\": \"<string>\",\n  \"customer_language\": \"<string>\",\n  \"customer_name\": \"<string>\",\n  \"extended_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"external_customer_id\": \"<string>\",\n  \"ip_address\": \"\",\n  \"is_fulfilled\": false,\n  \"is_historical\": false,\n  \"is_offline\": false,\n  \"is_preconfirmed\": false,\n  \"notification_blacklist\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payments\": [\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    },\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    }\n  ],\n  \"placed_at\": \"<dateTime>\",\n  \"price_method\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"shipping_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"store_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 458,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23231763-2fab-411d-8948-a68c65cf4ea6",
+              "name": "An internal error occurred. In most cases the error is transient and the request should be retried with the same payload.\n - shipping_provider_communication_error: There was a transient error getting shipping options from the shipping providers. A retry with the same payload will likely fix the issue. If not, check your integration with the shipping providers.\n - grpc_unavailable: Some part of the Newstore platform was temporarily unavailable. A retry with the same payload will likely fix the issue.\n - rpc_timeout: An internal call timed out. A retry with the same payload will likely fix the issue.\n - rpc_timeout for sales_order: An internal call timed out. WARNING: The order may have been partially created. The request needs to be retried with the same payload to complete the order creation in the platform.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "d",
+                    "fulfill_order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_name\": \"<string>\",\n  \"channel_type\": \"<string>\",\n  \"currency\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"external_id\": \"<string>\",\n  \"shipments\": [],\n  \"shop\": \"<string>\",\n  \"shop_locale\": \"<string>\",\n  \"associate_id\": \"<string>\",\n  \"billing_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"customer_email\": \"<string>\",\n  \"customer_language\": \"<string>\",\n  \"customer_name\": \"<string>\",\n  \"extended_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"external_customer_id\": \"<string>\",\n  \"ip_address\": \"\",\n  \"is_fulfilled\": false,\n  \"is_historical\": false,\n  \"is_offline\": false,\n  \"is_preconfirmed\": false,\n  \"notification_blacklist\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payments\": [\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    },\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    }\n  ],\n  \"placed_at\": \"<dateTime>\",\n  \"price_method\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"shipping_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"store_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 458,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15cfe7de-6750-47a5-938a-c63b02bb0c2e",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "d",
+                    "fulfill_order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_name\": \"<string>\",\n  \"channel_type\": \"<string>\",\n  \"currency\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"external_id\": \"<string>\",\n  \"shipments\": [],\n  \"shop\": \"<string>\",\n  \"shop_locale\": \"<string>\",\n  \"associate_id\": \"<string>\",\n  \"billing_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"customer_email\": \"<string>\",\n  \"customer_language\": \"<string>\",\n  \"customer_name\": \"<string>\",\n  \"extended_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"external_customer_id\": \"<string>\",\n  \"ip_address\": \"\",\n  \"is_fulfilled\": false,\n  \"is_historical\": false,\n  \"is_offline\": false,\n  \"is_preconfirmed\": false,\n  \"notification_blacklist\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payments\": [\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    },\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    }\n  ],\n  \"placed_at\": \"<dateTime>\",\n  \"price_method\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"shipping_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"store_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 458,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16626f32-89d6-4d48-bde2-6c680ba0dd78",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "d",
+                    "fulfill_order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_name\": \"<string>\",\n  \"channel_type\": \"<string>\",\n  \"currency\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"external_id\": \"<string>\",\n  \"shipments\": [],\n  \"shop\": \"<string>\",\n  \"shop_locale\": \"<string>\",\n  \"associate_id\": \"<string>\",\n  \"billing_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"customer_email\": \"<string>\",\n  \"customer_language\": \"<string>\",\n  \"customer_name\": \"<string>\",\n  \"extended_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"external_customer_id\": \"<string>\",\n  \"ip_address\": \"\",\n  \"is_fulfilled\": false,\n  \"is_historical\": false,\n  \"is_offline\": false,\n  \"is_preconfirmed\": false,\n  \"notification_blacklist\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payments\": [\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    },\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    }\n  ],\n  \"placed_at\": \"<dateTime>\",\n  \"price_method\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"shipping_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"store_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 458,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87784a39-0b11-4d06-b343-a6c5b29a7a47",
+              "name": "Your order injection request is experiencing delays, possibly due to high system load or slow responses from your configured shipping providers. Even though this specific call failed, we are continuing to process your order injection in the background. If the order data is valid, an order will be automatically created, without requiring additional calls to this endpoint. To check the status of your order injection, simply retry this call. If the process is complete, you'll receive an immediate response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "d",
+                    "fulfill_order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_name\": \"<string>\",\n  \"channel_type\": \"<string>\",\n  \"currency\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"external_id\": \"<string>\",\n  \"shipments\": [],\n  \"shop\": \"<string>\",\n  \"shop_locale\": \"<string>\",\n  \"associate_id\": \"<string>\",\n  \"billing_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"customer_email\": \"<string>\",\n  \"customer_language\": \"<string>\",\n  \"customer_name\": \"<string>\",\n  \"extended_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"external_customer_id\": \"<string>\",\n  \"ip_address\": \"\",\n  \"is_fulfilled\": false,\n  \"is_historical\": false,\n  \"is_offline\": false,\n  \"is_preconfirmed\": false,\n  \"notification_blacklist\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payments\": [\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    },\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    }\n  ],\n  \"placed_at\": \"<dateTime>\",\n  \"price_method\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"shipping_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"store_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6676d9c2-0b4d-425b-884e-7da212863bdd",
+              "name": "Default response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "d",
+                    "fulfill_order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel_name\": \"<string>\",\n  \"channel_type\": \"<string>\",\n  \"currency\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"external_id\": \"<string>\",\n  \"shipments\": [],\n  \"shop\": \"<string>\",\n  \"shop_locale\": \"<string>\",\n  \"associate_id\": \"<string>\",\n  \"billing_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"customer_email\": \"<string>\",\n  \"customer_language\": \"<string>\",\n  \"customer_name\": \"<string>\",\n  \"extended_attributes\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"external_customer_id\": \"<string>\",\n  \"ip_address\": \"\",\n  \"is_fulfilled\": false,\n  \"is_historical\": false,\n  \"is_offline\": false,\n  \"is_preconfirmed\": false,\n  \"notification_blacklist\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"payments\": [\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    },\n    {\n      \"amount\": \"<double>\",\n      \"correlation_ref\": \"<string>\",\n      \"method\": \"<string>\",\n      \"processed_at\": \"<dateTime>\",\n      \"processor\": \"<string>\",\n      \"type\": {\n        \"value\": \"<Error: Could not resolve allOf schema\"\n      },\n      \"metadata\": \"<object>\",\n      \"wallet\": \"<string>\"\n    }\n  ],\n  \"placed_at\": \"<dateTime>\",\n  \"price_method\": {\n    \"value\": \"<Error: Could not resolve allOf schema\"\n  },\n  \"shipping_address\": {\n    \"address_line_1\": \"<string>\",\n    \"country\": \"<string>\",\n    \"address_line_2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"first_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"phone\": \"<string>\",\n    \"salutation\": \"<string>\",\n    \"state\": \"<string>\",\n    \"suffix\": \"<string>\",\n    \"title\": \"<string>\",\n    \"zip_code\": \"<string>\"\n  },\n  \"store_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dodici-demo.p.newstore.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "58d49a53-3f5a-4242-af8a-65ebade3362f",
+    "name": "NewStore address order-injection API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "NewStore public APIs\n\nContact Support:\n Name: NewStore API Support\n Email: support@newstore.com",
+      "type": "text/plain"
+    }
+  }
+}

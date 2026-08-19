@@ -1,0 +1,120 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address identity-providers API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "identity-providers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listProviders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/providers"
+          },
+          "docs": "Returns a list of configured identity providers for the tenant"
+        },
+        {
+          "info": {
+            "name": "createProvider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/iam/providers",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates and configures a new identity provider for the vendor / protocol combination."
+        },
+        {
+          "info": {
+            "name": "showProvider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/providers/:alias",
+            "params": [
+              {
+                "name": "alias",
+                "value": "",
+                "type": "path",
+                "description": "identity provider alias"
+              }
+            ]
+          },
+          "docs": "Returns the identity provider identified by its alias"
+        },
+        {
+          "info": {
+            "name": "updateProvider",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/iam/providers/:alias",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "alias",
+                "value": "",
+                "type": "path",
+                "description": "identity provider alias"
+              }
+            ]
+          },
+          "docs": "Change the configuration of the identity provider identified by its alias"
+        },
+        {
+          "info": {
+            "name": "destroyProvider",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/iam/providers/:alias",
+            "params": [
+              {
+                "name": "alias",
+                "value": "",
+                "type": "path",
+                "description": "identity provider alias"
+              }
+            ]
+          },
+          "docs": "Deletes the identity provider identified by its alias"
+        },
+        {
+          "info": {
+            "name": "listSupportedProviders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/supported-providers"
+          },
+          "docs": "Returns a list of supported identity providers and protocols"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

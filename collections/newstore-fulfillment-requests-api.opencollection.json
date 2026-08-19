@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address fulfillment-requests API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "fulfillment-requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "updateFulfillmentRequestItemStates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/fulfillment_request/:ffr_uuid/set_items_states",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "ffr_uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update the shipment status for items in the specified fulfillment request.\n\n**Important:** Do not confuse this API with\n[Fulfillment Provider API](/newstore-cloud/order_management/dc_fulfillment_node_api.html). For\nDC orders please use the Fulfillment Provider API.\n\nItems in a fulfillment request can be marked as shipped or rejected. When you use this API you can't mix\nshipment and rejection actions on the same call.\n\n**Important:** If you are doing a partial rejection of items in a fulfillment "
+        },
+        {
+          "info": {
+            "name": "listFulfillmentRequestsForOrder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/fulfillment_requests/:order_uuid",
+            "params": [
+              {
+                "name": "order_uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 70 requests per second.\n</div>\n\nReturns all fulfillment requests created for an order, sorted by creation date in the\nascending order (earliest first).\n\nIf order wasn't found, then the empty list of fulfillment requests will be returned.\n\nIf order "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

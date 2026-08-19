@@ -1,0 +1,933 @@
+{
+  "item": [
+    {
+      "id": "6f8fbfe6-f20f-4d80-9bca-59f7d804fe83",
+      "name": "customer-configuration",
+      "description": {
+        "content": "Customer API Configurations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7d738527-14e1-4b4f-9e9f-58e142d5d287",
+          "name": "showConfiguration",
+          "request": {
+            "name": "showConfiguration",
+            "description": {
+              "content": "Returns configuration settings for the tenant, including BYO CRM settings.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "customer",
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "064f26f6-4575-43a6-800f-b834e6f94bf3",
+              "name": "The configuration settings.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"byo_crm\": {\n    \"api_token\": \"some-api-token\",\n    \"enabled\": true,\n    \"url\": \"https://provider-url.com\"\n  },\n  \"first_and_last_name_enabled\": true,\n  \"nom_consumer_profiles_merge\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c8edc63-77aa-47a1-94b7-ca06b083aab9",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 216,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76b164b0-c3b2-48b1-b5e7-0616e363cb35",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 293,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56595de1-d513-4faf-a2ea-8b63ffdfabad",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 293,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07d8319e-d34b-4dde-9ecd-50faf4947c64",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 293,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfa00c52-0823-4af5-a301-2aafd143ca98",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 293,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ac5a754-2c9a-4c17-9b31-eec2bdd58b54",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 293,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2cadfc64-decd-4343-aac5-e0195f503e6a",
+          "name": "updateConfiguration",
+          "request": {
+            "name": "updateConfiguration",
+            "description": {
+              "content": "Updates configuration settings for the tenant, including BYO CRM settings.\n\nNote that the following restrictions exist:\n\n- BYO CRM and `nom_consumer_profiles_merge` can't be enabled at the same time.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "customer",
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"byo_crm\": \"<object>\",\n  \"first_and_last_name_enabled\": \"<boolean>\",\n  \"nom_consumer_profiles_merge\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eaec7f45-5d3d-4cd1-abb5-4e7d59f5443d",
+              "name": "The updated configuration settings.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"byo_crm\": {\n    \"api_token\": \"some-api-token\",\n    \"enabled\": true,\n    \"url\": \"https://provider-url.com\"\n  },\n  \"first_and_last_name_enabled\": true,\n  \"nom_consumer_profiles_merge\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"byo_crm\": {\n    \"api_token\": \"some-api-token\",\n    \"enabled\": true,\n    \"url\": \"https://provider-url.com\"\n  },\n  \"first_and_last_name_enabled\": true,\n  \"nom_consumer_profiles_merge\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b16ad73-45fd-4953-9788-612c1f9ad484",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"byo_crm\": {\n    \"api_token\": \"some-api-token\",\n    \"enabled\": true,\n    \"url\": \"https://provider-url.com\"\n  },\n  \"first_and_last_name_enabled\": true,\n  \"nom_consumer_profiles_merge\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 293,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b11f30e-b466-4a73-8ffd-5272c24b416b",
+              "name": "Incompatible configuration settings.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"byo_crm\": {\n    \"api_token\": \"some-api-token\",\n    \"enabled\": true,\n    \"url\": \"https://provider-url.com\"\n  },\n  \"first_and_last_name_enabled\": true,\n  \"nom_consumer_profiles_merge\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 293,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4860de97-6a15-4040-8f00-0c442a1adf62",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"byo_crm\": {\n    \"api_token\": \"some-api-token\",\n    \"enabled\": true,\n    \"url\": \"https://provider-url.com\"\n  },\n  \"first_and_last_name_enabled\": true,\n  \"nom_consumer_profiles_merge\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 293,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a74840ab-2790-4e21-b591-baf63986756e",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"byo_crm\": {\n    \"api_token\": \"some-api-token\",\n    \"enabled\": true,\n    \"url\": \"https://provider-url.com\"\n  },\n  \"first_and_last_name_enabled\": true,\n  \"nom_consumer_profiles_merge\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 293,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfa414ea-74dc-4cf1-862b-76df6154d323",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"byo_crm\": {\n    \"api_token\": \"some-api-token\",\n    \"enabled\": true,\n    \"url\": \"https://provider-url.com\"\n  },\n  \"first_and_last_name_enabled\": true,\n  \"nom_consumer_profiles_merge\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 293,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9bc62e53-5a6e-4bd5-b819-d513dfc00d4c",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"byo_crm\": {\n    \"api_token\": \"some-api-token\",\n    \"enabled\": true,\n    \"url\": \"https://provider-url.com\"\n  },\n  \"first_and_last_name_enabled\": true,\n  \"nom_consumer_profiles_merge\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 293,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "24c0df2f-a135-4d81-98b4-01a1b1ed6ed5",
+              "name": "Unexpected error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"byo_crm\": {\n    \"api_token\": \"some-api-token\",\n    \"enabled\": true,\n    \"url\": \"https://provider-url.com\"\n  },\n  \"first_and_last_name_enabled\": true,\n  \"nom_consumer_profiles_merge\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 293,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dodici-demo.p.newstore.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "592da9bd-c5d4-448c-8f9a-67fffefbd8f7",
+    "name": "NewStore address customer-configuration API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "NewStore public APIs\n\nContact Support:\n Name: NewStore API Support\n Email: support@newstore.com",
+      "type": "text/plain"
+    }
+  }
+}

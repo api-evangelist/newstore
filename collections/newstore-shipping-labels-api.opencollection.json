@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address shipping-labels API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "shipping-labels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showShippingLabel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/shipping-labels/:public_key",
+            "headers": [
+              {
+                "name": "x-newstore-tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "public_key",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "showShippingLabel"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

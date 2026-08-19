@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address customerProfile API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "customerProfile",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "createRetrievalBulkEmailProfiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/customer/profiles/lookup-bulk-emails",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "**Warning: This endpoint is currently only available for non-pii tenants.**\nRetrieves a mapping of existing customer profiles given a list of profile emails. \nAny emails provided that are not associated with a Customer Profile, will not be part of the mapping returned.\n\n**Notes:**   \nFor profiles created before Jan 6th 2022 there is no uniqueness guarantee for the email. This means that for some tenants the mapping returned\nfrom this endpoint may be a bigger set than the emails requested.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

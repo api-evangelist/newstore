@@ -1,0 +1,806 @@
+{
+  "item": [
+    {
+      "id": "a5fc70fe-0b66-4956-a094-b31029c50b64",
+      "name": "Inventory Configuration",
+      "description": {
+        "content": "Inventory Configuration",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9617b704-efba-4672-8b52-257f319a873b",
+          "name": "showInventoryConfig",
+          "request": {
+            "name": "showInventoryConfig",
+            "description": {
+              "content": "Returns the current inventory configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "inventory",
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "store_id",
+                  "value": "<string>",
+                  "description": "Store Identifier for store configuration at store level."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8e4f20e0-43a2-4c49-bdab-4bf621029a56",
+              "name": "Current inventory configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "store_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"allow_adjustments_manual_quantity_editing\": false,\n  \"allow_counts_manual_quantity_editing\": true,\n  \"allow_full_counts_manual_quantity_editing\": true,\n  \"allow_receiving_manual_quantity_editing\": true,\n  \"allow_transfers_manual_quantity_editing\": false,\n  \"enabled_adjustments_stores\": [\n    \"string\",\n    \"string\"\n  ],\n  \"enabled_carton_receiving_stores\": [\n    \"string\",\n    \"string\"\n  ],\n  \"enabled_counts_stores\": [\n    \"string\",\n    \"string\"\n  ],\n  \"enabled_full_counts_stores\": [\n    \"string\",\n    \"string\"\n  ],\n  \"enabled_receiving_stores\": [\n    \"string\",\n    \"string\"\n  ],\n  \"enabled_receiving_without_asn_stores\": [\n    \"string\",\n    \"string\"\n  ],\n  \"enabled_reservations_stores\": [\n    \"string\",\n    \"string\"\n  ],\n  \"enabled_store_initiated_transfers_stores\": [\n    \"string\",\n    \"string\"\n  ],\n  \"enabled_transfers_stores\": [\n    \"string\",\n    \"string\"\n  ],\n  \"require_confirmation_on_scanning\": true,\n  \"enabled\": true,\n  \"store_config\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8f5439e-4093-4d48-9fd1-11a12f282a40",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "store_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 295,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b21758e-8da0-4ef8-b275-0e558b541e6b",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "store_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 243,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a87b64e-bcfb-4280-820f-5c9a54decfdd",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "store_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 243,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7544d3d1-3d42-4763-9581-4a031d106b4a",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "store_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 243,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2db85d8b-f967-42c9-8ee3-7f94601c1a96",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "store_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 243,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e07a08ed-95e7-4d97-b209-fa391860f020",
+          "name": "replaceInventoryConfig",
+          "request": {
+            "name": "replaceInventoryConfig",
+            "description": {
+              "content": "Sets the configuration. Note: you can pass an * to enable store-dependent features.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "inventory",
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"allow_adjustments_manual_quantity_editing\": \"<boolean>\",\n  \"allow_counts_manual_quantity_editing\": \"<boolean>\",\n  \"allow_full_counts_manual_quantity_editing\": \"<boolean>\",\n  \"allow_receiving_manual_quantity_editing\": \"<boolean>\",\n  \"allow_transfers_manual_quantity_editing\": \"<boolean>\",\n  \"enabled_adjustments_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_carton_receiving_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_counts_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_full_counts_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_receiving_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_receiving_without_asn_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_reservations_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_store_initiated_transfers_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_transfers_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"require_confirmation_on_scanning\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ed7b5dd7-1017-4aef-929c-7a9156d91950",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"allow_adjustments_manual_quantity_editing\": \"<boolean>\",\n  \"allow_counts_manual_quantity_editing\": \"<boolean>\",\n  \"allow_full_counts_manual_quantity_editing\": \"<boolean>\",\n  \"allow_receiving_manual_quantity_editing\": \"<boolean>\",\n  \"allow_transfers_manual_quantity_editing\": \"<boolean>\",\n  \"enabled_adjustments_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_carton_receiving_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_counts_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_full_counts_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_receiving_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_receiving_without_asn_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_reservations_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_store_initiated_transfers_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_transfers_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"require_confirmation_on_scanning\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "50f9653c-155c-4703-b2b8-5f4fcafdaec1",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"allow_adjustments_manual_quantity_editing\": \"<boolean>\",\n  \"allow_counts_manual_quantity_editing\": \"<boolean>\",\n  \"allow_full_counts_manual_quantity_editing\": \"<boolean>\",\n  \"allow_receiving_manual_quantity_editing\": \"<boolean>\",\n  \"allow_transfers_manual_quantity_editing\": \"<boolean>\",\n  \"enabled_adjustments_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_carton_receiving_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_counts_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_full_counts_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_receiving_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_receiving_without_asn_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_reservations_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_store_initiated_transfers_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_transfers_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"require_confirmation_on_scanning\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 243,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b25cbaf-62ca-427c-9a1e-2ea8412fa338",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"allow_adjustments_manual_quantity_editing\": \"<boolean>\",\n  \"allow_counts_manual_quantity_editing\": \"<boolean>\",\n  \"allow_full_counts_manual_quantity_editing\": \"<boolean>\",\n  \"allow_receiving_manual_quantity_editing\": \"<boolean>\",\n  \"allow_transfers_manual_quantity_editing\": \"<boolean>\",\n  \"enabled_adjustments_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_carton_receiving_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_counts_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_full_counts_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_receiving_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_receiving_without_asn_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_reservations_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_store_initiated_transfers_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_transfers_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"require_confirmation_on_scanning\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 243,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d91859c4-e378-4ac7-be03-89404eecf7b1",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"allow_adjustments_manual_quantity_editing\": \"<boolean>\",\n  \"allow_counts_manual_quantity_editing\": \"<boolean>\",\n  \"allow_full_counts_manual_quantity_editing\": \"<boolean>\",\n  \"allow_receiving_manual_quantity_editing\": \"<boolean>\",\n  \"allow_transfers_manual_quantity_editing\": \"<boolean>\",\n  \"enabled_adjustments_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_carton_receiving_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_counts_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_full_counts_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_receiving_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_receiving_without_asn_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_reservations_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_store_initiated_transfers_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_transfers_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"require_confirmation_on_scanning\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 243,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efe06770-dd97-4e52-891b-071136b61ab1",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"allow_adjustments_manual_quantity_editing\": \"<boolean>\",\n  \"allow_counts_manual_quantity_editing\": \"<boolean>\",\n  \"allow_full_counts_manual_quantity_editing\": \"<boolean>\",\n  \"allow_receiving_manual_quantity_editing\": \"<boolean>\",\n  \"allow_transfers_manual_quantity_editing\": \"<boolean>\",\n  \"enabled_adjustments_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_carton_receiving_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_counts_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_full_counts_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_receiving_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_receiving_without_asn_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_reservations_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_store_initiated_transfers_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_transfers_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"require_confirmation_on_scanning\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 243,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "494c8c67-ce43-4816-a833-6799d32ff7f0",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inventory",
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"allow_adjustments_manual_quantity_editing\": \"<boolean>\",\n  \"allow_counts_manual_quantity_editing\": \"<boolean>\",\n  \"allow_full_counts_manual_quantity_editing\": \"<boolean>\",\n  \"allow_receiving_manual_quantity_editing\": \"<boolean>\",\n  \"allow_transfers_manual_quantity_editing\": \"<boolean>\",\n  \"enabled_adjustments_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_carton_receiving_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_counts_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_full_counts_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_receiving_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_receiving_without_asn_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_reservations_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_store_initiated_transfers_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"enabled_transfers_stores\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"require_confirmation_on_scanning\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 243,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dodici-demo.p.newstore.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "436a678c-d216-45f5-b47d-644490c9a024",
+    "name": "NewStore address Inventory Configuration API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "NewStore public APIs\n\nContact Support:\n Name: NewStore API Support\n Email: support@newstore.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,1376 @@
+{
+  "item": [
+    {
+      "id": "aa166e14-de59-4e3e-99f6-a2efa0d4819a",
+      "name": "orders",
+      "description": {
+        "content": "Fiscal orders",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "22245086-afcb-4625-b04a-51425d0e7460",
+          "name": "showOrder",
+          "request": {
+            "name": "showOrder",
+            "description": {
+              "content": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nGet fiscal transactions and signatures for an order (sale or exchange). \n  This API should be used to get the fiscal transaction for returned items that were part of an exchange.\n  Based on the country, the transactions array in the response for exchanges will contain one of the following:\n  * 1 `exchange` transaction that represents both the returned and the sold part of the exchanged items.\n  * 2 transactions, 1 `sale` transactions and `return` transaction each representing their respective parts of the exchanged items.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Order state."
+                },
+                {
+                  "disabled": false,
+                  "key": "transaction_state",
+                  "value": "<string>",
+                  "description": "Fiscal transaction state."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3e1273b5-4e0e-410c-8a88-3ad259350aac",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"context\": {\n    \"associate_id\": \"012345678-abcd-0123-abcd-0123456789ab\",\n    \"store_id\": \"494362b0-5240-4a94-ad1c-74407b005310\",\n    \"associate_created_at\": \"2021-01-19T09:57:01.112Z\",\n    \"associate_name\": \"Peter Smith\",\n    \"cashbox_id\": \"012345678-abcd-0123-abcd-0123456789ab\"\n  },\n  \"country_code\": \"string\",\n  \"created_at\": \"1987-07-21T18:19:12.244Z\",\n  \"id\": \"012345678-abcd-0123-abcd-0123456789ab\",\n  \"state\": \"OK\",\n  \"transactions\": [\n    {\n      \"country_code\": \"string\",\n      \"id\": \"string\",\n      \"state\": \"OK\",\n      \"temporary_signature\": {},\n      \"transaction_number\": 1725,\n      \"type\": \"sale\",\n      \"signature\": {},\n      \"transaction_series\": \"string\"\n    },\n    {\n      \"country_code\": \"string\",\n      \"id\": \"string\",\n      \"state\": \"OK\",\n      \"temporary_signature\": {},\n      \"transaction_number\": 862,\n      \"type\": \"sale\",\n      \"signature\": {},\n      \"transaction_series\": \"string\"\n    }\n  ],\n  \"updated_at\": \"2004-03-14T02:58:07.453Z\",\n  \"external_order_id\": \"GD000225827\",\n  \"fiscal_mode\": \"standard\",\n  \"original_created_at\": \"2022-05-25T12:00:00.000Z\",\n  \"reference_order_id\": \"012345678-abcd-0123-abcd-0123456789ab\",\n  \"signature_strategy_override\": \"no-signing\",\n  \"tax_method\": \"tax_included\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbf2ca91-cc04-4f7d-8029-1d8ab73693d6",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 381,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e806668-0323-4418-b452-d0fdedd588d7",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e39c6aaa-7761-4805-afc3-f7fb82ad1422",
+              "name": "Not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff6e95b7-c69e-4bbf-8419-944e81acc28a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b296503-778f-4118-aff6-4d91176d1d12",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d22b17c-2b32-4850-a7eb-b1cfa12fc318",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f9d26d2-088d-4817-94b2-7ad47bce9ec4",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81382d3c-d4e3-4f1c-8024-0a7fdbe0d379",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "19ddce3a-3490-45f9-92f0-333591eb0449",
+          "name": "showReturn",
+          "request": {
+            "name": "showReturn",
+            "description": {
+              "content": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nGet fiscal transactions and signatures for an item return. \n    This API covers returns that are not part of an exchange. For getting the return part of the exchange use the GET `/orders/{orderId}` API",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                ":orderId",
+                "returns",
+                ":returnId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Order state."
+                },
+                {
+                  "disabled": false,
+                  "key": "transaction_state",
+                  "value": "<string>",
+                  "description": "Fiscal transaction state."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "returnId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "56d4e3e3-44b2-4f1c-942b-ed9c338c677f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"context\": {\n    \"associate_id\": \"012345678-abcd-0123-abcd-0123456789ab\",\n    \"store_id\": \"494362b0-5240-4a94-ad1c-74407b005310\",\n    \"associate_created_at\": \"2021-01-19T09:57:01.112Z\",\n    \"associate_name\": \"Peter Smith\",\n    \"cashbox_id\": \"012345678-abcd-0123-abcd-0123456789ab\"\n  },\n  \"country_code\": \"string\",\n  \"created_at\": \"1961-06-15T02:47:25.521Z\",\n  \"id\": \"012345678-abcd-0123-abcd-0123456789ab\",\n  \"state\": \"OK\",\n  \"transactions\": [\n    {\n      \"country_code\": \"string\",\n      \"id\": \"string\",\n      \"state\": \"OK\",\n      \"temporary_signature\": {},\n      \"transaction_number\": 4429,\n      \"type\": \"sale\",\n      \"signature\": {},\n      \"transaction_series\": \"string\"\n    },\n    {\n      \"country_code\": \"string\",\n      \"id\": \"string\",\n      \"state\": \"OK\",\n      \"temporary_signature\": {},\n      \"transaction_number\": 1819,\n      \"type\": \"sale\",\n      \"signature\": {},\n      \"transaction_series\": \"string\"\n    }\n  ],\n  \"updated_at\": \"1968-12-25T12:10:16.328Z\",\n  \"external_order_id\": \"GD000225827\",\n  \"fiscal_mode\": \"standard\",\n  \"original_created_at\": \"2022-05-25T12:00:00.000Z\",\n  \"reference_order_id\": \"012345678-abcd-0123-abcd-0123456789ab\",\n  \"signature_strategy_override\": \"no-signing\",\n  \"tax_method\": \"tax_included\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "439853bb-2fad-4b0c-b2d7-e52bec2f6427",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b2f0aa9-b475-4e73-a78c-ea51cde10edd",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d96cc02a-9315-4248-8239-e9aa81dede9d",
+              "name": "Not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10352cf9-b858-44f4-81e2-0ac42fe43e68",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e35d7db-de59-42e9-8227-fcf9a482309e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6305e52-1728-49b8-9c4e-b21bef919a28",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b593afa-34d7-47c2-9aed-6fa3e093f373",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6e9875b-53bf-4677-8e4e-364b97e17226",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "transaction_state",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 273,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dodici-demo.p.newstore.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0c30ecc3-2bc0-44b7-ae16-818c25fe77e7",
+    "name": "NewStore address orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "NewStore public APIs\n\nContact Support:\n Name: NewStore API Support\n Email: support@newstore.com",
+      "type": "text/plain"
+    }
+  }
+}

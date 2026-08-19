@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address tppe API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "tppe",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/promotions/configurations/:section-id",
+            "params": [
+              {
+                "name": "section-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves configuration."
+        },
+        {
+          "info": {
+            "name": "updateConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/promotions/configurations/:section-id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "section-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Updates configuration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

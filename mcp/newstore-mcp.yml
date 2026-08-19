@@ -2,12 +2,9 @@ generated: '2026-07-20'
 method: derived
 status: candidate
 source: openapi/newstore-api-openapi-original.json
-notes: >-
-  No official NewStore-hosted MCP server was found (no public listing in the
-  MCP registry, npm @modelcontextprotocol, or NewStore docs as of 2026-07).
-  This is a DERIVED candidate tool list mapping marquee NewStore Omnichannel
-  API operations to MCP tools, one per operationId. Not an authoritative
-  provider manifest.
+notes: No official NewStore-hosted MCP server was found (no public listing in the MCP registry, npm @modelcontextprotocol,
+  or NewStore docs as of 2026-07). This is a DERIVED candidate tool list mapping marquee NewStore Omnichannel
+  API operations to MCP tools, one per operationId. Not an authoritative provider manifest.
 server:
   name: newstore
   transport: http
@@ -73,3 +70,9 @@ tools:
 - name: list_audit_events
   description: List audit events.
   source_operation: openapi/newstore-api-openapi-original.json#listAuditEvents
+deployment:
+  mode: none
+  verified: derived
+  tools: 20
+  checked: '2026-08-12'
+  source: catalog MCP census

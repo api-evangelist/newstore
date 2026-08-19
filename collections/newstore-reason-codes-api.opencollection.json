@@ -1,0 +1,163 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address Reason Codes API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reason Codes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listReasonCodes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/promotions/reason-codes",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "feature",
+                "value": "",
+                "type": "query",
+                "description": "Indicates the feature of the reason code."
+              }
+            ]
+          },
+          "docs": "Retrieves reason codes per locale"
+        },
+        {
+          "info": {
+            "name": "createReasonCode",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/promotions/reason-codes",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "feature",
+                "value": "",
+                "type": "query",
+                "description": "Indicates the feature of the reason code."
+              }
+            ]
+          },
+          "docs": "Creates a new reason code"
+        },
+        {
+          "info": {
+            "name": "showReasonCode",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/promotions/reason-codes/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path",
+                "description": "An identifier of a reason code."
+              },
+              {
+                "name": "feature",
+                "value": "",
+                "type": "query",
+                "description": "Indicates the feature of the reason code."
+              }
+            ]
+          },
+          "docs": "Retrieves a reason code with all localisations"
+        },
+        {
+          "info": {
+            "name": "updateReasonCode",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/promotions/reason-codes/:code",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path",
+                "description": "An identifier of a reason code."
+              },
+              {
+                "name": "feature",
+                "value": "",
+                "type": "query",
+                "description": "Indicates the feature of the reason code."
+              }
+            ]
+          },
+          "docs": "Update the name of the reason code."
+        },
+        {
+          "info": {
+            "name": "destroyReasonCode",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/promotions/reason-codes/:code",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path",
+                "description": "An identifier of a reason code."
+              },
+              {
+                "name": "feature",
+                "value": "",
+                "type": "query",
+                "description": "Indicates the feature of the reason code."
+              }
+            ]
+          },
+          "docs": "Delete a reason code"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

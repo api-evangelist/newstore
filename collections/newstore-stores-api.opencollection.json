@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address stores API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "stores",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listStores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stores",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit for the number of results."
+              },
+              {
+                "name": "start_at",
+                "value": "",
+                "type": "query",
+                "description": "Key for retrieving the next page.\n* The value of `next_page_key` field from the response payload can be used for retrieving the next page."
+              },
+              {
+                "name": "include_cashboxes",
+                "value": "",
+                "type": "query",
+                "description": "Include cashboxes belonging to the store in the result."
+              },
+              {
+                "name": "country_codes",
+                "value": "",
+                "type": "query",
+                "description": "Country codes to filter by."
+              }
+            ]
+          },
+          "docs": "List stores for the given query."
+        },
+        {
+          "info": {
+            "name": "showStore",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stores/:storeId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get store for the given store identifier."
+        },
+        {
+          "info": {
+            "name": "updateStore",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/stores/:storeId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Updates a store for the given store identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

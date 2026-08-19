@@ -1,0 +1,1927 @@
+{
+  "item": [
+    {
+      "id": "ce22c716-6e57-46f1-8410-18496ab7eba0",
+      "name": "stores",
+      "description": {
+        "content": "Fiscal stores",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0bc48042-c97d-469d-a3d0-912a6ce0abcc",
+          "name": "listStores",
+          "request": {
+            "name": "listStores",
+            "description": {
+              "content": "List stores for the given query.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stores"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "(Required) Limit for the number of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "start_at",
+                  "value": "<string>",
+                  "description": "Key for retrieving the next page.\n* The value of `next_page_key` field from the response payload can be used for retrieving the next page."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_cashboxes",
+                  "value": "false",
+                  "description": "Include cashboxes belonging to the store in the result."
+                },
+                {
+                  "disabled": false,
+                  "key": "country_codes",
+                  "value": "<string>,<string>",
+                  "description": "Country codes to filter by."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5891c1ee-588c-4e18-8446-a2d62e29ee7f",
+              "name": "List of stores.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_cashboxes",
+                      "value": "false"
+                    },
+                    {
+                      "key": "country_codes",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"config\": {\n        \"auto_report_types\": [\n          \"month-report\",\n          \"year-report\"\n        ],\n        \"report_types\": [\n          \"month-report\",\n          \"year-report\"\n        ],\n        \"timezone\": \"Europe/Vienna\"\n      },\n      \"country_code\": \"string\",\n      \"id\": \"f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a\",\n      \"multi_cashbox\": false,\n      \"tenant\": \"dodici\",\n      \"cashboxes\": [\n        {\n          \"activated_at\": \"1948-02-18T22:56:20.654Z\",\n          \"config\": {},\n          \"fiscal_provider_id\": \"axena-se\",\n          \"id\": \"dodici-f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a-1\",\n          \"state\": \"activated\",\n          \"store_id\": \"f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a\",\n          \"tenant\": \"dodici\",\n          \"deactivated_at\": \"1984-05-12T20:25:21.468Z\"\n        },\n        {\n          \"activated_at\": \"1949-12-03T22:32:21.122Z\",\n          \"config\": {},\n          \"fiscal_provider_id\": \"axena-se\",\n          \"id\": \"dodici-f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a-1\",\n          \"state\": \"activated\",\n          \"store_id\": \"f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a\",\n          \"tenant\": \"dodici\",\n          \"deactivated_at\": \"1977-03-31T08:55:00.660Z\"\n        }\n      ],\n      \"description\": \"Dodici Paris Store\"\n    },\n    {\n      \"config\": {\n        \"auto_report_types\": [\n          \"month-report\",\n          \"year-report\"\n        ],\n        \"report_types\": [\n          \"month-report\",\n          \"year-report\"\n        ],\n        \"timezone\": \"Europe/Vienna\"\n      },\n      \"country_code\": \"string\",\n      \"id\": \"f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a\",\n      \"multi_cashbox\": false,\n      \"tenant\": \"dodici\",\n      \"cashboxes\": [\n        {\n          \"activated_at\": \"2023-06-01T15:48:13.487Z\",\n          \"config\": {},\n          \"fiscal_provider_id\": \"axena-se\",\n          \"id\": \"dodici-f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a-1\",\n          \"state\": \"activated\",\n          \"store_id\": \"f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a\",\n          \"tenant\": \"dodici\",\n          \"deactivated_at\": \"1967-07-24T07:38:11.750Z\"\n        },\n        {\n          \"activated_at\": \"1959-09-30T22:14:30.817Z\",\n          \"config\": {},\n          \"fiscal_provider_id\": \"axena-se\",\n          \"id\": \"dodici-f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a-1\",\n          \"state\": \"activated\",\n          \"store_id\": \"f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a\",\n          \"tenant\": \"dodici\",\n          \"deactivated_at\": \"1954-10-03T06:15:05.784Z\"\n        }\n      ],\n      \"description\": \"Dodici Paris Store\"\n    }\n  ],\n  \"next_page_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2bba83d-560c-4b5a-8854-71ba238b6b8b",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_cashboxes",
+                      "value": "false"
+                    },
+                    {
+                      "key": "country_codes",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 513,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3036d4b-6682-4351-9d1f-96d49eaaa9b1",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_cashboxes",
+                      "value": "false"
+                    },
+                    {
+                      "key": "country_codes",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffcf1934-6e90-4d00-8e54-542456617063",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_cashboxes",
+                      "value": "false"
+                    },
+                    {
+                      "key": "country_codes",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72966986-a4ca-4a5a-9ca9-c79f1f1952b7",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_cashboxes",
+                      "value": "false"
+                    },
+                    {
+                      "key": "country_codes",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9ffc5e9-3eb5-4b81-8fbc-7354d65b1647",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_cashboxes",
+                      "value": "false"
+                    },
+                    {
+                      "key": "country_codes",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e89f22d-0ccd-4ea5-beb9-0703d61018b8",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_cashboxes",
+                      "value": "false"
+                    },
+                    {
+                      "key": "country_codes",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5acb0825-ec09-4022-8f69-ad4307ab7ea3",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_cashboxes",
+                      "value": "false"
+                    },
+                    {
+                      "key": "country_codes",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "254f8330-8860-4f20-9019-8d2ac8847803",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_cashboxes",
+                      "value": "false"
+                    },
+                    {
+                      "key": "country_codes",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da56f038-7578-4ecc-ada1-332580ca70d9",
+          "name": "showStore",
+          "request": {
+            "name": "showStore",
+            "description": {
+              "content": "Get store for the given store identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stores",
+                ":storeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "76b1a2e8-3aa9-4d06-a37d-21cc134c9f18",
+              "name": "Store.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"config\": {\n    \"auto_report_types\": [\n      \"month-report\",\n      \"year-report\"\n    ],\n    \"report_types\": [\n      \"month-report\",\n      \"year-report\"\n    ],\n    \"timezone\": \"Europe/Vienna\"\n  },\n  \"country_code\": \"string\",\n  \"id\": \"f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a\",\n  \"multi_cashbox\": false,\n  \"tenant\": \"dodici\",\n  \"cashboxes\": [\n    {\n      \"activated_at\": \"2002-09-24T01:51:26.964Z\",\n      \"config\": {},\n      \"fiscal_provider_id\": \"axena-se\",\n      \"id\": \"dodici-f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a-1\",\n      \"state\": \"activated\",\n      \"store_id\": \"f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a\",\n      \"tenant\": \"dodici\",\n      \"deactivated_at\": \"2005-06-07T02:46:09.256Z\"\n    },\n    {\n      \"activated_at\": \"1969-01-23T16:07:16.768Z\",\n      \"config\": {},\n      \"fiscal_provider_id\": \"axena-se\",\n      \"id\": \"dodici-f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a-1\",\n      \"state\": \"activated\",\n      \"store_id\": \"f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a\",\n      \"tenant\": \"dodici\",\n      \"deactivated_at\": \"1999-01-07T12:05:48.348Z\"\n    }\n  ],\n  \"description\": \"Dodici Paris Store\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4cb15625-01c0-4155-84ae-81c7174765a8",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa11c61b-7fad-4b39-aec8-5e4e9b7b4688",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "754c0e96-1125-4c65-aeb6-c593580ebdba",
+              "name": "Store not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d4b015b-f501-46c0-9c3c-62c8fb156e80",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "949d1755-4ac5-491a-a11b-41138c48e431",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6b60f7c-4fc3-4534-a176-a987a3cf40c5",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7d31e57-b62d-4c93-bce7-187a42b31906",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "276806b2-6487-4a3a-bb14-4f5151081546",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e1124951-f24e-425e-a933-4057969d6a6e",
+          "name": "updateStore",
+          "request": {
+            "name": "updateStore",
+            "description": {
+              "content": "Updates a store for the given store identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stores",
+                ":storeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "storeId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"country_code\": \"<string>\",\n  \"config\": {},\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "04d82629-884f-4182-90ef-c113c15f6e16",
+              "name": "Store that was updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"config\": {},\n  \"description\": \"Dodici Paris Store\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"config\": {\n    \"auto_report_types\": [\n      \"month-report\",\n      \"year-report\"\n    ],\n    \"report_types\": [\n      \"month-report\",\n      \"year-report\"\n    ],\n    \"timezone\": \"Europe/Vienna\"\n  },\n  \"country_code\": \"string\",\n  \"id\": \"f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a\",\n  \"multi_cashbox\": false,\n  \"tenant\": \"dodici\",\n  \"cashboxes\": [\n    {\n      \"activated_at\": \"2002-09-24T01:51:26.964Z\",\n      \"config\": {},\n      \"fiscal_provider_id\": \"axena-se\",\n      \"id\": \"dodici-f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a-1\",\n      \"state\": \"activated\",\n      \"store_id\": \"f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a\",\n      \"tenant\": \"dodici\",\n      \"deactivated_at\": \"2005-06-07T02:46:09.256Z\"\n    },\n    {\n      \"activated_at\": \"1969-01-23T16:07:16.768Z\",\n      \"config\": {},\n      \"fiscal_provider_id\": \"axena-se\",\n      \"id\": \"dodici-f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a-1\",\n      \"state\": \"activated\",\n      \"store_id\": \"f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a\",\n      \"tenant\": \"dodici\",\n      \"deactivated_at\": \"1999-01-07T12:05:48.348Z\"\n    }\n  ],\n  \"description\": \"Dodici Paris Store\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5489c28b-a676-42ed-9b11-336a14596d2d",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"config\": {},\n  \"description\": \"Dodici Paris Store\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7392700b-720b-4f5f-b263-cea930909ee4",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"config\": {},\n  \"description\": \"Dodici Paris Store\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a0bd1a2-5511-4863-9341-2e09cd2640e2",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"config\": {},\n  \"description\": \"Dodici Paris Store\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc5f8659-42cc-4af7-b1a9-e79c9c00d3ac",
+              "name": "Store not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"config\": {},\n  \"description\": \"Dodici Paris Store\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84967951-f1c2-41af-b6fb-6240b3b44a91",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"config\": {},\n  \"description\": \"Dodici Paris Store\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2a3c241-a089-40a8-bf9f-f713857764d3",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"config\": {},\n  \"description\": \"Dodici Paris Store\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1e8b1cb-5b3c-4f3e-b5fd-f54f12e1325e",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"config\": {},\n  \"description\": \"Dodici Paris Store\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1815db0a-3b2e-467e-9339-6b3b4d21bfab",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"config\": {},\n  \"description\": \"Dodici Paris Store\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4a0c11a-327a-49b1-8ae5-dad4aa0fc5df",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stores",
+                    ":storeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "storeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"config\": {},\n  \"description\": \"Dodici Paris Store\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 123,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dodici-demo.p.newstore.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c2c42f00-06a5-47eb-b8cf-ba321c306b1b",
+    "name": "NewStore address stores API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "NewStore public APIs\n\nContact Support:\n Name: NewStore API Support\n Email: support@newstore.com",
+      "type": "text/plain"
+    }
+  }
+}

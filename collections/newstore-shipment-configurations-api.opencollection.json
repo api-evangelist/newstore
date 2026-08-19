@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address shipment-configurations API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "shipment-configurations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showConfigurationByName",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/configurations/shipments/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "showConfigurationByName"
+        },
+        {
+          "info": {
+            "name": "createConfigurationByName",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/fulfillment/configurations/shipments/:name",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "createConfigurationByName"
+        },
+        {
+          "info": {
+            "name": "showConfigurationsChecks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/configurations/shipments/checks"
+          },
+          "docs": "Designed for humans only: check Provider Rates, Service Levels, PRP and Carriers configurations"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

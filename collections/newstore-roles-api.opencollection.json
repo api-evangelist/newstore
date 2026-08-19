@@ -1,0 +1,159 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address roles API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listPermissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/permissions"
+          },
+          "docs": "Lists all the user permissions available for the retailer."
+        },
+        {
+          "info": {
+            "name": "listRoles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/roles",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Query the resulting list by name."
+              }
+            ]
+          },
+          "docs": "Lists all available user roles for the retailer. Search if the query parameter is used."
+        },
+        {
+          "info": {
+            "name": "createRole",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/iam/roles",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates a new role."
+        },
+        {
+          "info": {
+            "name": "showRole",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/roles/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "role id"
+              }
+            ]
+          },
+          "docs": "Retrieves the user role with the specified ID."
+        },
+        {
+          "info": {
+            "name": "replaceRole",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/iam/roles/:id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "role id"
+              }
+            ]
+          },
+          "docs": "Updates the user role with the specified ID."
+        },
+        {
+          "info": {
+            "name": "destroyRole",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/iam/roles/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "role id"
+              }
+            ]
+          },
+          "docs": "Deletes the user role with the specified ID.\n\nOnce deleted, the user role is unassigned from all associated user accounts.\n"
+        },
+        {
+          "info": {
+            "name": "listUsersByRole",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/roles/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "role id"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset to be used for the resulting user account list."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "The number of requested user accounts."
+              }
+            ]
+          },
+          "docs": "Retrieves all user accounts that have been assigned the specified user role."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

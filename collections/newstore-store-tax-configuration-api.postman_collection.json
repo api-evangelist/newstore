@@ -1,0 +1,3248 @@
+{
+  "item": [
+    {
+      "id": "d1817766-f2df-4fb8-b6cf-687365cd9519",
+      "name": "store-tax-configuration",
+      "description": {
+        "content": "Tax configuration - Store",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f14b5060-cb59-410e-979d-22f7ff91cdb7",
+          "name": "listStoreConfigs",
+          "request": {
+            "name": "listStoreConfigs",
+            "description": {
+              "content": "List store tax calculation configurations with the given query.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "taxes",
+                "config",
+                "stores"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "(Required) Limit number of results to this value."
+                },
+                {
+                  "disabled": false,
+                  "key": "tax_calculation_strategy",
+                  "value": "<string>",
+                  "description": "Tax calculation strategy to filter by."
+                },
+                {
+                  "disabled": false,
+                  "key": "next_page_key",
+                  "value": "<string>",
+                  "description": "Key to be used to get the next page of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "539fe889-b53f-4c31-8a43-e3fa18bb1d20",
+              "name": "List of tax configurations of stores.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tax_calculation_strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "next_page_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"country_code\": \"string\",\n      \"created_at\": \"2023-02-28T16:58:46.961Z\",\n      \"fixed_rate\": {\n        \"tax_name\": \"Standard VAT rate for Austria\",\n        \"tax_rate\": 0.2\n      },\n      \"store_id\": \"123\",\n      \"tax_calculation_strategy\": \"fixedrate\",\n      \"tenant\": \"dodici\",\n      \"updated_at\": \"2023-02-28T16:58:46.961Z\",\n      \"updated_by\": \"2136871599\",\n      \"version\": 1,\n      \"avalara\": {\n        \"account_number\": \"2000123456\",\n        \"company_code\": \"NEWSTOREINC\",\n        \"default_customer_code\": \"Anonymous customer\",\n        \"environment\": \"sandbox\",\n        \"license_key\": \"C1234567890ABCFE\"\n      },\n      \"custom\": {\n        \"api_version\": \"v1\",\n        \"base_url\": \"https://my-custom-tax-url.com\"\n      },\n      \"fixed_rate_per_country\": {\n        \"AT\": {\n          \"tax_name\": \"Standard VAT rate for Austria\",\n          \"tax_rate\": 0.2\n        },\n        \"DE\": {\n          \"tax_name\": \"Standard VAT rate for Germany\",\n          \"tax_rate\": 0.19\n        }\n      },\n      \"is_deleted\": false,\n      \"vertex\": {\n        \"administrative_origin\": {\n          \"city\": \"Berlin\",\n          \"country\": \"DE\",\n          \"currency_code\": \"EUR\",\n          \"currency_value\": 1.1,\n          \"main_division\": \"Berlin\",\n          \"postal_code\": \"10785\",\n          \"street_address_1\": \"Potsdamer Str. 7\",\n          \"street_address_2\": \"Potsdamer Platz\"\n        },\n        \"company_code\": \"1234\",\n        \"division_code\": \"1234\",\n        \"flexible_fields\": [\n          {\n            \"extended_attribute_name\": \"productClass\",\n            \"target_field_id\": 1,\n            \"target_field_type\": \"flexible_code_field\"\n          },\n          {\n            \"extended_attribute_name\": \"shoeSize\",\n            \"target_field_id\": 1,\n            \"target_field_type\": \"flexible_numeric_field\"\n          }\n        ],\n        \"login_type\": \"trusted_id\",\n        \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n        \"trusted_id\": \"9SDPdc9bo3\"\n      }\n    },\n    {\n      \"country_code\": \"string\",\n      \"created_at\": \"2023-02-28T16:58:46.961Z\",\n      \"fixed_rate\": {\n        \"tax_name\": \"Standard VAT rate for Austria\",\n        \"tax_rate\": 0.2\n      },\n      \"store_id\": \"123\",\n      \"tax_calculation_strategy\": \"fixedrate\",\n      \"tenant\": \"dodici\",\n      \"updated_at\": \"2023-02-28T16:58:46.961Z\",\n      \"updated_by\": \"2136871599\",\n      \"version\": 1,\n      \"avalara\": {\n        \"account_number\": \"2000123456\",\n        \"company_code\": \"NEWSTOREINC\",\n        \"default_customer_code\": \"Anonymous customer\",\n        \"environment\": \"sandbox\",\n        \"license_key\": \"C1234567890ABCFE\"\n      },\n      \"custom\": {\n        \"api_version\": \"v1\",\n        \"base_url\": \"https://my-custom-tax-url.com\"\n      },\n      \"fixed_rate_per_country\": {\n        \"AT\": {\n          \"tax_name\": \"Standard VAT rate for Austria\",\n          \"tax_rate\": 0.2\n        },\n        \"DE\": {\n          \"tax_name\": \"Standard VAT rate for Germany\",\n          \"tax_rate\": 0.19\n        }\n      },\n      \"is_deleted\": false,\n      \"vertex\": {\n        \"administrative_origin\": {\n          \"city\": \"Berlin\",\n          \"country\": \"DE\",\n          \"currency_code\": \"EUR\",\n          \"currency_value\": 1.1,\n          \"main_division\": \"Berlin\",\n          \"postal_code\": \"10785\",\n          \"street_address_1\": \"Potsdamer Str. 7\",\n          \"street_address_2\": \"Potsdamer Platz\"\n        },\n        \"company_code\": \"1234\",\n        \"division_code\": \"1234\",\n        \"flexible_fields\": [\n          {\n            \"extended_attribute_name\": \"productClass\",\n            \"target_field_id\": 1,\n            \"target_field_type\": \"flexible_code_field\"\n          },\n          {\n            \"extended_attribute_name\": \"shoeSize\",\n            \"target_field_id\": 1,\n            \"target_field_type\": \"flexible_numeric_field\"\n          }\n        ],\n        \"login_type\": \"trusted_id\",\n        \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n        \"trusted_id\": \"9SDPdc9bo3\"\n      }\n    }\n  ],\n  \"scan_count\": 1,\n  \"next_page_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6aa9131-af64-468d-b4a5-c6824e68b1cd",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tax_calculation_strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "next_page_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 454,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55351b86-93d9-4ac9-8373-79483dbcdedd",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tax_calculation_strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "next_page_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c136aacd-63c5-4031-8648-06495e240f05",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tax_calculation_strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "next_page_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe6a2480-bd84-464d-813b-700a535a9cf1",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tax_calculation_strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "next_page_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca170d3f-9933-4c36-abb8-ec1ddc2fac54",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tax_calculation_strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "next_page_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f10adb8-6afb-4831-87f2-6d5d94924d92",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tax_calculation_strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "next_page_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35a7c7c2-5660-42d1-b46f-6cdbb4cb9f47",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tax_calculation_strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "next_page_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3e2c384-22dc-42f3-af0c-9acf90d64ab7",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "tax_calculation_strategy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "next_page_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9376714-35d8-4a19-8f0d-187c39345bb1",
+          "name": "createStoreConfig",
+          "request": {
+            "name": "createStoreConfig",
+            "description": {
+              "content": "Create a tax calculation configuration for the specified store identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "taxes",
+                "config",
+                "stores"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"country_code\": \"<string>\",\n  \"store_id\": \"<string>\",\n  \"avalara\": \"<object>\",\n  \"custom\": \"<object>\",\n  \"fixed_rate\": \"<object>\",\n  \"fixed_rate_per_country\": {\n    \"key_0\": {\n      \"tax_rate\": \"<double>\",\n      \"exemption_classes\": [\n        {\n          \"exemption_class\": \"<string>\",\n          \"valid_countries\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"display_text\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          }\n        },\n        {\n          \"exemption_class\": \"<string>\",\n          \"valid_countries\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"display_text\": {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {}\n          }\n        }\n      ],\n      \"tax_name\": \"<string>\"\n    }\n  },\n  \"tax_calculation_strategy\": \"<string>\",\n  \"vertex\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e71a7063-cf4e-4a7a-ac90-c6dca73f1d83",
+              "name": "Tax configuration of the store.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"store_id\": \"123\",\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"country_code\": \"string\",\n  \"created_at\": \"2023-02-28T16:58:46.961Z\",\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"store_id\": \"123\",\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"tenant\": \"dodici\",\n  \"updated_at\": \"2023-02-28T16:58:46.961Z\",\n  \"updated_by\": \"2136871599\",\n  \"version\": 1,\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"is_deleted\": false,\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ee60f0e-5f85-4e63-a253-42ce44bd3849",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"store_id\": \"123\",\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ded9d52-d693-48f5-9783-b834fdc6bf83",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"store_id\": \"123\",\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8df51bad-98e4-4a24-b213-2443c8d2c60e",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"store_id\": \"123\",\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbbe7745-9c82-4f05-bc73-e802e05d543d",
+              "name": "Tax configuration for the given store was already created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"store_id\": \"123\",\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f801e462-df3b-4880-9148-8e45d549589f",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"store_id\": \"123\",\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef01b65d-c1a0-452c-93ff-caf083a65e79",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"store_id\": \"123\",\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33d81ceb-e11b-4371-8493-0a006e365b18",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"store_id\": \"123\",\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "926dd53f-3dc8-4987-87c5-f3e2fbd4c8ae",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"store_id\": \"123\",\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d32010c-3960-43be-9219-013acdb32f57",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"country_code\": \"<string>\",\n  \"store_id\": \"123\",\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0080ac64-e352-4858-85a7-152f5e1d09c0",
+          "name": "destroyStoreConfig",
+          "request": {
+            "name": "destroyStoreConfig",
+            "description": {
+              "content": "Delete tax configuration for the given store identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "taxes",
+                "config",
+                "stores",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Store identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2f34c498-4d38-4c79-9729-9de31ffd0757",
+              "name": "Tax configuration deleted for the given store identifier.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2636b775-0669-4079-9e75-63de829a42d7",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1d8b95a-8027-4468-bcff-d50327f3838b",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02124c9b-9006-43a8-bf7b-cfeab3baedf0",
+              "name": "Tax configuration not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adc130ff-496b-4d24-b002-3f6802eac7ed",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce37c7b1-6625-4a8b-855e-600f025516ef",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acd61af5-e503-4b9e-8c28-ab3922f7397d",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99fc5e8b-e490-480b-94ad-1a276d864de3",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c79e0175-96cc-4b2e-a93a-2d1e24bb1f2c",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "efe9a25d-7269-4fd9-9386-4edbccb6ad65",
+          "name": "showStoreConfig",
+          "request": {
+            "name": "showStoreConfig",
+            "description": {
+              "content": "Get tax configuration for the given store identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "taxes",
+                "config",
+                "stores",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<integer>",
+                  "description": "Specific configuration version number to fetch. If left empty, the latest version of the configuration will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "merged_tenant_fallback",
+                  "value": "true",
+                  "description": "Flag that indicates if the store configuration should be merged with the tenant configuration to provide tenant level fallbacks to the store. This flag defaults to true if it is not sent."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Store identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "66eaab07-7e3c-47f0-9542-fd98a593541a",
+              "name": "Tax configuration of the store.\n* If the `merged_tenant_fallback` is set to `false`, the response will contain a store configuration `StoreConfigDto`.\n* If the `merged_tenant_fallback` is set to `true` or not sent, the response will contain a merged store configuration and tenant configuration `ConfigDto`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "merged_tenant_fallback",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "059ac389-3708-4cd8-bf39-272c14c22657",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "merged_tenant_fallback",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5c6c557-fa56-414e-ae99-63731851844d",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "merged_tenant_fallback",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64fba97f-546c-4f9b-8ceb-5615c6d2e044",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "merged_tenant_fallback",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d831ad0f-1587-412a-8bd5-c3bc97094eda",
+              "name": "Tax configuration not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "merged_tenant_fallback",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55498067-a2c2-4b94-8987-d6a2bf390a0c",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "merged_tenant_fallback",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e20ad19b-3139-4723-a6cd-a3bfc494c7c5",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "merged_tenant_fallback",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "746eff41-4c86-404d-99af-375614a9bfa6",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "merged_tenant_fallback",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58088788-65e7-4b2b-ab59-7bd8291e236e",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "merged_tenant_fallback",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2bee70d0-8be6-405e-9092-73a67b5558e1",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "merged_tenant_fallback",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d8264d8b-18d8-4b8f-a17d-c64b3f440f68",
+          "name": "updateStoreConfig",
+          "request": {
+            "name": "updateStoreConfig",
+            "description": {
+              "content": "Partially update the tax configuration of a store by merging the given fields with the existing fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "taxes",
+                "config",
+                "stores",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Store identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"avalara\": \"<object>\",\n  \"country_code\": \"<string>\",\n  \"custom\": \"<object>\",\n  \"fixed_rate\": \"<object>\",\n  \"fixed_rate_per_country\": {\n    \"key_0\": {\n      \"tax_rate\": \"<double>\",\n      \"exemption_classes\": [\n        {\n          \"exemption_class\": \"<string>\",\n          \"valid_countries\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"display_text\": {\n            \"key_0\": {}\n          }\n        },\n        {\n          \"exemption_class\": \"<string>\",\n          \"valid_countries\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"display_text\": {\n            \"key_0\": {}\n          }\n        }\n      ],\n      \"tax_name\": \"<string>\"\n    },\n    \"key_1\": {\n      \"tax_rate\": \"<double>\",\n      \"exemption_classes\": [\n        {\n          \"exemption_class\": \"<string>\",\n          \"valid_countries\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"display_text\": {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {},\n            \"key_3\": {}\n          }\n        },\n        {\n          \"exemption_class\": \"<string>\",\n          \"valid_countries\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"display_text\": {\n            \"key_0\": {}\n          }\n        }\n      ],\n      \"tax_name\": \"<string>\"\n    },\n    \"key_2\": {\n      \"tax_rate\": \"<double>\",\n      \"exemption_classes\": [\n        {\n          \"exemption_class\": \"<string>\",\n          \"valid_countries\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"display_text\": {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {}\n          }\n        },\n        {\n          \"exemption_class\": \"<string>\",\n          \"valid_countries\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"display_text\": {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {}\n          }\n        }\n      ],\n      \"tax_name\": \"<string>\"\n    },\n    \"key_3\": {\n      \"tax_rate\": \"<double>\",\n      \"exemption_classes\": [\n        {\n          \"exemption_class\": \"<string>\",\n          \"valid_countries\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"display_text\": {\n            \"key_0\": {},\n            \"key_1\": {}\n          }\n        },\n        {\n          \"exemption_class\": \"<string>\",\n          \"valid_countries\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"display_text\": {\n            \"key_0\": {},\n            \"key_1\": {},\n            \"key_2\": {}\n          }\n        }\n      ],\n      \"tax_name\": \"<string>\"\n    }\n  },\n  \"tax_calculation_strategy\": \"<string>\",\n  \"vertex\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "80c73631-99ea-4e77-87ca-59f4bf7a773a",
+              "name": "Tax configuration of the store.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"country_code\": \"<string>\",\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"country_code\": \"string\",\n  \"created_at\": \"2023-02-28T16:58:46.961Z\",\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"store_id\": \"123\",\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"tenant\": \"dodici\",\n  \"updated_at\": \"2023-02-28T16:58:46.961Z\",\n  \"updated_by\": \"2136871599\",\n  \"version\": 1,\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"is_deleted\": false,\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "948e7d00-d6cc-4942-855a-def19868acf2",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"country_code\": \"<string>\",\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13fdbf35-c5d3-4966-84cf-f66f2b87428a",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"country_code\": \"<string>\",\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c01484e8-c891-437e-859c-792a876010c0",
+              "name": "Tax configuration not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"country_code\": \"<string>\",\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a989604-7180-4dc7-8352-ff9e2dc2280c",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"country_code\": \"<string>\",\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2e27893-438d-41e7-aba3-deb70bb36da6",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"country_code\": \"<string>\",\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b05caab7-db90-4277-ab89-07610d051a4b",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"country_code\": \"<string>\",\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b246bf2b-ece7-4d81-b3c4-923ee86381be",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"country_code\": \"<string>\",\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4cd90111-9307-46e2-a8aa-e78ea461f500",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "config",
+                    "stores",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Store identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"avalara\": {\n    \"account_number\": \"2000123456\",\n    \"company_code\": \"NEWSTOREINC\",\n    \"default_customer_code\": \"Anonymous customer\",\n    \"environment\": \"sandbox\",\n    \"license_key\": \"C1234567890ABCFE\"\n  },\n  \"country_code\": \"<string>\",\n  \"custom\": {\n    \"api_version\": \"v1\",\n    \"base_url\": \"https://my-custom-tax-url.com\"\n  },\n  \"fixed_rate\": {\n    \"tax_name\": \"Standard VAT rate for Austria\",\n    \"tax_rate\": 0.2\n  },\n  \"fixed_rate_per_country\": {\n    \"AT\": {\n      \"tax_name\": \"Standard VAT rate for Austria\",\n      \"tax_rate\": 0.2\n    },\n    \"DE\": {\n      \"tax_name\": \"Standard VAT rate for Germany\",\n      \"tax_rate\": 0.19\n    }\n  },\n  \"tax_calculation_strategy\": \"fixedrate\",\n  \"vertex\": {\n    \"administrative_origin\": {\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"currency_code\": \"EUR\",\n      \"currency_value\": 1.1,\n      \"main_division\": \"Berlin\",\n      \"postal_code\": \"10785\",\n      \"street_address_1\": \"Potsdamer Str. 7\",\n      \"street_address_2\": \"Potsdamer Platz\"\n    },\n    \"company_code\": \"1234\",\n    \"division_code\": \"1234\",\n    \"flexible_fields\": [\n      {\n        \"extended_attribute_name\": \"productClass\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_code_field\"\n      },\n      {\n        \"extended_attribute_name\": \"shoeSize\",\n        \"target_field_id\": 1,\n        \"target_field_type\": \"flexible_numeric_field\"\n      }\n    ],\n    \"login_type\": \"trusted_id\",\n    \"soap_url\": \"https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90\",\n    \"trusted_id\": \"9SDPdc9bo3\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 532,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dodici-demo.p.newstore.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e56dd721-5877-49e9-9684-4e2520223ac4",
+    "name": "NewStore address store-tax-configuration API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "NewStore public APIs\n\nContact Support:\n Name: NewStore API Support\n Email: support@newstore.com",
+      "type": "text/plain"
+    }
+  }
+}

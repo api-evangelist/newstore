@@ -1,0 +1,141 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address store-tax-configuration API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "store-tax-configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listStoreConfigs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/taxes/config/stores",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit number of results to this value."
+              },
+              {
+                "name": "tax_calculation_strategy",
+                "value": "",
+                "type": "query",
+                "description": "Tax calculation strategy to filter by."
+              },
+              {
+                "name": "next_page_key",
+                "value": "",
+                "type": "query",
+                "description": "Key to be used to get the next page of results."
+              }
+            ]
+          },
+          "docs": "List store tax calculation configurations with the given query."
+        },
+        {
+          "info": {
+            "name": "createStoreConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/taxes/config/stores",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create a tax calculation configuration for the specified store identifier."
+        },
+        {
+          "info": {
+            "name": "showStoreConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/taxes/config/stores/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Store identifier."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Specific configuration version number to fetch. If left empty, the latest version of the configuration will be returned."
+              },
+              {
+                "name": "merged_tenant_fallback",
+                "value": "",
+                "type": "query",
+                "description": "Flag that indicates if the store configuration should be merged with the tenant configuration to provide tenant level fallbacks to the store. This flag defaults to true if it is not sent."
+              }
+            ]
+          },
+          "docs": "Get tax configuration for the given store identifier."
+        },
+        {
+          "info": {
+            "name": "updateStoreConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/taxes/config/stores/:id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Store identifier."
+              }
+            ]
+          },
+          "docs": "Partially update the tax configuration of a store by merging the given fields with the existing fields."
+        },
+        {
+          "info": {
+            "name": "destroyStoreConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/taxes/config/stores/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Store identifier."
+              }
+            ]
+          },
+          "docs": "Delete tax configuration for the given store identifier."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

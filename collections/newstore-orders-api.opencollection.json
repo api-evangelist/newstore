@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address orders API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showOrder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/orders/:orderId",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Order state."
+              },
+              {
+                "name": "transaction_state",
+                "value": "",
+                "type": "query",
+                "description": "Fiscal transaction state."
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nGet fiscal transactions and signatures for an order (sa"
+        },
+        {
+          "info": {
+            "name": "showReturn",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/orders/:orderId/returns/:returnId",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "returnId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Order state."
+              },
+              {
+                "name": "transaction_state",
+                "value": "",
+                "type": "query",
+                "description": "Fiscal transaction state."
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nGet fiscal transactions and signatures for an item retu"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

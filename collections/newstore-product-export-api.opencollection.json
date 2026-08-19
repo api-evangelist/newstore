@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address Product export API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Product export",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listProducts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/catalog/catalogs/:catalog/offlineproducts",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "catalog",
+                "value": "",
+                "type": "path",
+                "description": "The catalog the product, the user wants to export, belongs to."
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "query",
+                "description": "The locale the user wants to export. Example en-us.csv"
+              },
+              {
+                "name": "redirect",
+                "value": "",
+                "type": "query",
+                "description": "if true api will return HTTP 302 redirect to resource, otherwise it will return json response with link to a file."
+              }
+            ]
+          },
+          "docs": "Use this resource to download products in a file. The export can be requested in CSV.\n\n- CSV delimiter is `\\t` (tab)\n- CSV line is ended with `\\n` (end line)\n- CSV cell is escaped when containing special characters `\\t` (tab) `\\n` (new line) `\\r` (carriage return) with `\\\\t` `\\\\n` `\\\\r`\n- CSV cell is escaped with `\"` (double quote) when contain double quote originally (relevant to json fields) [RFC 4180](https://www.ietf.org/rfc/rfc4180.txt)\n\nSchema:\n- product_id (string)\n- variant_group_id (str"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

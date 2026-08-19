@@ -1,0 +1,221 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address reservations API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "reservations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showReservationConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/inventory/config/reservations"
+          },
+          "docs": "Gets the reservation configuration of the retailer."
+        },
+        {
+          "info": {
+            "name": "updateReservationConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/inventory/config/reservations",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Updates the reservations configuration for the retailer."
+        },
+        {
+          "info": {
+            "name": "listReservations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/inventory/reservations",
+            "headers": [
+              {
+                "name": "accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "query",
+                "description": "ID of the fulfillment location in which the reservations are being listed."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Status(es) of the reservations to list. If omitted, all reservation statuses are listed."
+              },
+              {
+                "name": "external_id",
+                "value": "",
+                "type": "query",
+                "description": "If using V1 of the API, allows filtering on the user facing ID, and a partial match is also considered a match. If using V2, allows filtering on the external ID that was provided when the reservation was created, and only an exact match is considered a match."
+              },
+              {
+                "name": "display_id",
+                "value": "",
+                "type": "query",
+                "description": "Allows filtering the reservations by 'display_id'. A partial match is also considered a match. Only usable in V2 of the API."
+              },
+              {
+                "name": "customer_profile_id",
+                "value": "",
+                "type": "query",
+                "description": "Allows filtering the reservations by customer profile id"
+              },
+              {
+                "name": "associate_id",
+                "value": "",
+                "type": "query",
+                "description": "Allows filtering the reservations by associate id"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Page number to return"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return in each page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Field(s) to sort by. Supported values are 'created_at|asc' or 'status|asc' to list in ascending order and 'created_at|desc' or 'status|desc' to list in descending order."
+              },
+              {
+                "name": "expired",
+                "value": "",
+                "type": "query",
+                "description": "Filter for expired reservations"
+              }
+            ]
+          },
+          "docs": "Lists all reservations, supporting various filters."
+        },
+        {
+          "info": {
+            "name": "createReservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/inventory/reservations",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates a new reservation. For each of the items in the reservation, 1 unit of the corresponding product will be moved from the 'main' stock location to the '_customer_reservations' stock location at the specified fulfillment location.\n\nReservations are created in the 'RESERVED' status by default, with an expiry date of 24 hours from when they have been created. The default duration of a reservation can by configured using the [Update Reservation Config](#/http/inventory/reservations/update-rese"
+        },
+        {
+          "info": {
+            "name": "showReservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/inventory/reservations/:reservation_id",
+            "headers": [
+              {
+                "name": "accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "reservation_id",
+                "value": "",
+                "type": "path",
+                "description": "Reservation identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves a single reservation by ID.\n\nThe reservation status is derived from the status of its items as follows:\n- Any item is RESERVED => Reservation is RESERVED\n- Some items are CONVERTED to a sale or UNRESERVED => Reservation is CONVERTED\n- All items are UNRESERVED => Reservation is UNRESERVED, meaning the reservation has been cancelled"
+        },
+        {
+          "info": {
+            "name": "updateReservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/inventory/reservations/:reservation_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "reservation_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the reservation"
+              }
+            ]
+          },
+          "docs": "Updates the status of a 'PENDING' reservation to either 'REJECTED' or 'RESERVED'.\n\nIf the status is changed to 'RESERVED', stock for each item in the reservation will be moved from the 'main' stock location to the '_customer_reservations' stock location and the expiry date will be reset. An email will be sent to the customer using the 'reservation_accepted_email' template if the 'send_accepted_email' [config](#/http/inventory/reservations/update-reservation-config) is enabled.\n\nIf the status is "
+        },
+        {
+          "info": {
+            "name": "updateReservationItems",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/inventory/reservations/:reservation_id/items",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "reservation_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the reservation"
+              }
+            ]
+          },
+          "docs": "Updates the status of a reservation's items.\n\nItems start in the 'RESERVED' status, and can only be updated to 'CONVERTED' or 'UNRESERVED'. 'CONVERTED' and 'UNRESERVED' are both terminal states; You cannot change or update the status of items with these statuses.\n\nUpdating the status of a RESERVED item will cause 1 unit of the corresponding product to be moved from the '_customer_reservations' stock location to the 'main' stock location at the fulfillment location associated with the reservation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

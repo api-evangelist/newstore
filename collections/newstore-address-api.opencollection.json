@@ -1,0 +1,155 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "address",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listAddresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id/addresses",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The addresses page offset."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "The number of requested addresses."
+              }
+            ]
+          },
+          "docs": "Returns a list of addresses for given customer `profile_id`."
+        },
+        {
+          "info": {
+            "name": "createOrShowAddress",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id/addresses",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              }
+            ]
+          },
+          "docs": "Retrieves an existing address or creates a new address in case it has not been added yet.\n\n**Note:**\nA maximum of 1000 addresses can be stored per customer profile.\nWhen a new address is added after reaching the 1000 limit, the oldest address will be automatically replaced.\n"
+        },
+        {
+          "info": {
+            "name": "showAddress",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id/addresses/:address_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              },
+              {
+                "name": "address_id",
+                "value": "",
+                "type": "path",
+                "description": "Address ID"
+              }
+            ]
+          },
+          "docs": "Returns an address for the given customer `profile_id` and `address_id`."
+        },
+        {
+          "info": {
+            "name": "updateAddress",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id/addresses/:address_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              },
+              {
+                "name": "address_id",
+                "value": "",
+                "type": "path",
+                "description": "Address ID"
+              }
+            ]
+          },
+          "docs": "Updates address for the given customer `profile_id` and `address_id`."
+        },
+        {
+          "info": {
+            "name": "destroyAddress",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id/addresses/:address_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              },
+              {
+                "name": "address_id",
+                "value": "",
+                "type": "path",
+                "description": "Address ID"
+              }
+            ]
+          },
+          "docs": "Deletes address from the latest customer profile.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

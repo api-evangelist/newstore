@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address data API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "createData",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/customer/data",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Stores a new PII data entry in a residency compliant way.\n"
+        },
+        {
+          "info": {
+            "name": "showData",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/customer/data/:data_id",
+            "params": [
+              {
+                "name": "data_id",
+                "value": "",
+                "type": "path",
+                "description": "Data ID"
+              }
+            ]
+          },
+          "docs": "Returns data for the given `data_id`, depending on the defined content-type."
+        },
+        {
+          "info": {
+            "name": "destroyData",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/customer/data/:data_id",
+            "params": [
+              {
+                "name": "data_id",
+                "value": "",
+                "type": "path",
+                "description": "Data ID"
+              }
+            ]
+          },
+          "docs": "Deletes data entry for the given `data_id`.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

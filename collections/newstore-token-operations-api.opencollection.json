@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address token-operations API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "token-operations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "createTokensOperations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/customer/tokens",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "operation",
+                "value": "",
+                "type": "query",
+                "description": "The token operation that will be performed. By default it's **tokenize**."
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nThere are two possible operations:\n- **tokenize**\n  - T"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

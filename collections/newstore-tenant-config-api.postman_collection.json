@@ -1,0 +1,1521 @@
+{
+  "item": [
+    {
+      "id": "01e82cf4-76f6-41e4-9152-95c4d5111cc6",
+      "name": "tenant-config",
+      "description": {
+        "content": "Tenant configuration",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b8099fb1-58b3-47c1-8627-c86c552d94f4",
+          "name": "showTenantConfig",
+          "request": {
+            "name": "showTenantConfig",
+            "description": {
+              "content": "Get fiscal configuration of the tenant.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<double>",
+                  "description": "Configuration version number.\n* If left empty, the latest version of the configuration will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_metadata",
+                  "value": "false",
+                  "description": "Include metadata fields."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9c832531-0d90-4b66-ac0f-a48a1f618b9a",
+              "name": "Tenant configuration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "include_metadata",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"environment\": \"non-production\",\n  \"offline_countries\": {\n    \"AT\": {\n      \"enabled\": false,\n      \"strategy\": \"no-signing\",\n      \"allowed_strategies\": [\n        \"no-signing\",\n        \"no-signing\"\n      ],\n      \"editable\": false\n    },\n    \"DE\": {\n      \"enabled\": true,\n      \"strategy\": \"no-signing\",\n      \"allowed_strategies\": [\n        \"no-signing\",\n        \"no-signing\"\n      ],\n      \"editable\": false\n    },\n    \"ES\": {\n      \"enabled\": false,\n      \"strategy\": \"no-signing\",\n      \"allowed_strategies\": [\n        \"no-signing\",\n        \"no-signing\"\n      ],\n      \"editable\": true\n    },\n    \"FR\": {\n      \"enabled\": false,\n      \"strategy\": \"no-signing\",\n      \"allowed_strategies\": [\n        \"no-signing\",\n        \"no-signing\"\n      ],\n      \"editable\": true\n    },\n    \"IE\": {\n      \"enabled\": true,\n      \"strategy\": \"no-signing\",\n      \"allowed_strategies\": [\n        \"no-signing\",\n        \"no-signing\"\n      ],\n      \"editable\": true\n    },\n    \"IN\": {\n      \"enabled\": true,\n      \"strategy\": \"no-signing\",\n      \"allowed_strategies\": [\n        \"no-signing\",\n        \"no-signing\"\n      ],\n      \"editable\": true\n    },\n    \"IT\": {\n      \"enabled\": false,\n      \"strategy\": \"no-signing\",\n      \"allowed_strategies\": [\n        \"no-signing\",\n        \"no-signing\"\n      ],\n      \"editable\": false\n    },\n    \"MC\": {\n      \"enabled\": true,\n      \"strategy\": \"no-signing\",\n      \"allowed_strategies\": [\n        \"no-signing\",\n        \"no-signing\"\n      ],\n      \"editable\": false\n    },\n    \"NO\": {\n      \"enabled\": true,\n      \"strategy\": \"no-signing\",\n      \"allowed_strategies\": [\n        \"no-signing\",\n        \"no-signing\"\n      ],\n      \"editable\": true\n    },\n    \"PL\": {\n      \"enabled\": false,\n      \"strategy\": \"no-signing\",\n      \"allowed_strategies\": [\n        \"no-signing\",\n        \"no-signing\"\n      ],\n      \"editable\": false\n    },\n    \"PR\": {\n      \"enabled\": true,\n      \"strategy\": \"no-signing\",\n      \"allowed_strategies\": [\n        \"no-signing\",\n        \"no-signing\"\n      ],\n      \"editable\": true\n    },\n    \"SE\": {\n      \"enabled\": false,\n      \"strategy\": \"no-signing\",\n      \"allowed_strategies\": [\n        \"no-signing\",\n        \"no-signing\"\n      ],\n      \"editable\": true\n    },\n    \"TH\": {\n      \"enabled\": false,\n      \"strategy\": \"no-signing\",\n      \"allowed_strategies\": [\n        \"no-signing\",\n        \"no-signing\"\n      ],\n      \"editable\": false\n    }\n  },\n  \"version\": 1,\n  \"created_at\": \"2024-05-13T07:52:32.285Z\",\n  \"updated_at\": \"2024-05-13T07:52:32.285Z\",\n  \"updated_by\": \"2136871599\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c64bf8f8-08eb-45c8-a47c-e86a16b27b0d",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "include_metadata",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 300,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "149a7009-66a0-46f9-9534-7145e45fb436",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "include_metadata",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "237d5d7d-3219-4ffd-80e0-6762b66d6b1d",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "include_metadata",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "978c38c7-7577-488d-a81d-fee912b319f2",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "include_metadata",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "678a52cb-a3ca-49eb-ab82-6ba9cb441574",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "include_metadata",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "94d97390-1e9f-47d8-936d-68ca66aee75d",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "include_metadata",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eae737c7-fc7c-4af6-9891-5c84bb15454c",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<double>"
+                    },
+                    {
+                      "key": "include_metadata",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d163b655-349c-47e1-ad49-d461cb314a7d",
+          "name": "showTenantOfflineModeConfig",
+          "request": {
+            "name": "showTenantOfflineModeConfig",
+            "description": {
+              "content": "Get list of countries supporting offline-mode for the tenant.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "offline-mode"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9971bd9b-d641-4dbf-932b-d646a2e23620",
+              "name": "List of countries supporting offline-mode.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"offline_countries\": {\n    \"AT\": {\n      \"enabled\": true,\n      \"strategy\": \"no-signing\"\n    },\n    \"DE\": {\n      \"enabled\": false,\n      \"strategy\": \"no-signing\"\n    },\n    \"ES\": {\n      \"enabled\": true,\n      \"strategy\": \"no-signing\"\n    },\n    \"FR\": {\n      \"enabled\": true,\n      \"strategy\": \"no-signing\"\n    },\n    \"IE\": {\n      \"enabled\": true,\n      \"strategy\": \"no-signing\"\n    },\n    \"IN\": {\n      \"enabled\": false,\n      \"strategy\": \"no-signing\"\n    },\n    \"IT\": {\n      \"enabled\": true,\n      \"strategy\": \"no-signing\"\n    },\n    \"MC\": {\n      \"enabled\": false,\n      \"strategy\": \"no-signing\"\n    },\n    \"NO\": {\n      \"enabled\": false,\n      \"strategy\": \"no-signing\"\n    },\n    \"PL\": {\n      \"enabled\": false,\n      \"strategy\": \"no-signing\"\n    },\n    \"PR\": {\n      \"enabled\": false,\n      \"strategy\": \"no-signing\"\n    },\n    \"SE\": {\n      \"enabled\": false,\n      \"strategy\": \"no-signing\"\n    },\n    \"TH\": {\n      \"enabled\": true,\n      \"strategy\": \"no-signing\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "016d5d11-c283-4adf-b1b6-77593bc0a271",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2050656-1edb-460f-830d-de34770cb35f",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d2c6454-8dce-4aa8-89c9-e68ac79a1abf",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90998dc1-f14d-40a5-aea0-d5a492335872",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a928f96-8c88-4eb9-b197-749d6cd039a0",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07cc98f9-9a8e-4c6d-af3e-53a078006082",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a9f4e81-52d0-45af-8626-bdb38baa18a9",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "47930f0f-066a-437e-8066-657d664cde27",
+          "name": "updateTenantOfflineModeConfig",
+          "request": {
+            "name": "updateTenantOfflineModeConfig",
+            "description": {
+              "content": "Update list of countries supporting offline-mode for the tenant.\n* Only editable countries are allowed.\n* List of editable countries can be retireved through `GET /f11n/config`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "config",
+                "offline-mode"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"offline_countries\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "28026f60-e125-4690-93d1-c8e14346d244",
+              "name": "Offline config that was updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offline_countries\": {\n    \"AT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"DE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"ES\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"FR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IN\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"MC\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PL\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"TH\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"offline_countries\": {\n    \"AT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"DE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"ES\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"FR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IN\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"MC\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"NO\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PL\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"SE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"TH\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a7ef2649-4a33-44ba-99d2-9c766b016f48",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offline_countries\": {\n    \"AT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"DE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"ES\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"FR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IN\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"MC\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PL\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"TH\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce0ac242-5054-497e-8ff0-11c6d5c2a69a",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offline_countries\": {\n    \"AT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"DE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"ES\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"FR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IN\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"MC\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PL\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"TH\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1aa1a7c0-bc05-46e9-bb65-d869aa59847f",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offline_countries\": {\n    \"AT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"DE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"ES\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"FR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IN\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"MC\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PL\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"TH\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26c5f270-7145-4965-941f-aa9f00c9994e",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offline_countries\": {\n    \"AT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"DE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"ES\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"FR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IN\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"MC\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PL\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"TH\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "809fefec-d5f4-4fb7-9f3b-0e03c7d12d45",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offline_countries\": {\n    \"AT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"DE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"ES\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"FR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IN\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"MC\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PL\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"TH\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52b0306d-5cd0-45be-a762-8c6f9ef54da9",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offline_countries\": {\n    \"AT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"DE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"ES\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"FR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IN\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"MC\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PL\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"TH\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63784eba-e9f4-4246-80cd-bab5078419b4",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offline_countries\": {\n    \"AT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"DE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"ES\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"FR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IN\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"MC\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PL\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"TH\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3593f36d-0e68-4a3a-be6b-c12841069cea",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "config",
+                    "offline-mode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offline_countries\": {\n    \"AT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"DE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"ES\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"FR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IE\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IN\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"IT\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"MC\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PL\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"PR\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    },\n    \"TH\": {\n      \"enabled\": \"<boolean>\",\n      \"strategy\": \"no-signing\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 477,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dodici-demo.p.newstore.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2273fe0e-f3d7-4034-b7f7-5e021d101943",
+    "name": "NewStore address tenant-config API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "NewStore public APIs\n\nContact Support:\n Name: NewStore API Support\n Email: support@newstore.com",
+      "type": "text/plain"
+    }
+  }
+}

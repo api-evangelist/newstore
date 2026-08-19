@@ -1,0 +1,109 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address Import Schemas API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Import Schemas",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "createImportSchema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/catalog/import-schemas",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "default generated id is returned"
+              },
+              {
+                "name": "entity",
+                "value": "",
+                "type": "query",
+                "description": "default id PRODUCTS"
+              }
+            ]
+          },
+          "docs": "Create new schema object containing jsonschema of [version 7](https://json-schema.org/draft-07/json-schema-release-notes).\nThis schema is  used during import process to validate entity object before persisting it in catalog indexes.\nValid jsonschema file\n  * is validated against [meta schema](https://json-schema.org/draft-07/schema)\n  * references only properties mentioned in whitelist\n  * #ref points only to local resource, e.g. external resources are not allowed.\n\nHere is list of whitelisted f"
+        },
+        {
+          "info": {
+            "name": "showImportSchema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/catalog/import-schemas/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "showImportSchema"
+        },
+        {
+          "info": {
+            "name": "updateImportSchema",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/catalog/import-schemas/:id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "updateImportSchema"
+        },
+        {
+          "info": {
+            "name": "destroyImportSchema",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/catalog/import-schemas/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "destroyImportSchema"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

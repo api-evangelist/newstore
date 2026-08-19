@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address profiles API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "profiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listProfiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clienteling/profiles",
+            "params": [
+              {
+                "name": "next_page_token",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token that encodes the information required to retrieve the next page of profiles."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of profiles to be returned in a page."
+              }
+            ]
+          },
+          "docs": "List all clienteling profiles."
+        },
+        {
+          "info": {
+            "name": "showProfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clienteling/profiles/:customer_id",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the customer."
+              }
+            ]
+          },
+          "docs": "Get a single clienteling profile."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

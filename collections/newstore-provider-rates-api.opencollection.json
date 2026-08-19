@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address provider-rates API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "provider-rates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showProviderRatePriorities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/provider-rate-priorities"
+          },
+          "docs": "showProviderRatePriorities"
+        },
+        {
+          "info": {
+            "name": "replaceProviderRatePriorities",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/fulfillment/provider-rate-priorities",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "replaceProviderRatePriorities"
+        },
+        {
+          "info": {
+            "name": "listProviderRates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/provider-rates"
+          },
+          "docs": "listProviderRates"
+        },
+        {
+          "info": {
+            "name": "showProviderRate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/provider-rates/:provider_rate_id",
+            "params": [
+              {
+                "name": "provider_rate_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "showProviderRate"
+        },
+        {
+          "info": {
+            "name": "replaceProviderRate",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/fulfillment/provider-rates/:provider_rate_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "provider_rate_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "replaceProviderRate"
+        },
+        {
+          "info": {
+            "name": "destroyProviderRate",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/fulfillment/provider-rates/:provider_rate_id",
+            "params": [
+              {
+                "name": "provider_rate_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "destroyProviderRate"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

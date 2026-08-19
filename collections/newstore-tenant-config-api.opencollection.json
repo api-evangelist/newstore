@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address tenant-config API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "tenant-config",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showTenantConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/config",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Configuration version number.\n* If left empty, the latest version of the configuration will be returned."
+              },
+              {
+                "name": "include_metadata",
+                "value": "",
+                "type": "query",
+                "description": "Include metadata fields."
+              }
+            ]
+          },
+          "docs": "Get fiscal configuration of the tenant."
+        },
+        {
+          "info": {
+            "name": "showTenantOfflineModeConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/config/offline-mode"
+          },
+          "docs": "Get list of countries supporting offline-mode for the tenant."
+        },
+        {
+          "info": {
+            "name": "updateTenantOfflineModeConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/config/offline-mode",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Update list of countries supporting offline-mode for the tenant.\n* Only editable countries are allowed.\n* List of editable countries can be retireved through `GET /f11n/config`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

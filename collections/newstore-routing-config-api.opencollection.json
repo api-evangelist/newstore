@@ -1,0 +1,242 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address routing-config API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "routing-config",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showExternalFulfillmentSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/config/routing/can_update_ffr_processed_externally"
+          },
+          "docs": "Retrieves the current configuration to determine if you can update\nthe status for fulfillment requests that were processed outside of the NewStore platform,\nbecause of possible issues with fulfillment or shipping status updates.\n\nFor more information, see the\n[guide](https://docs.newstore.com/docs/monitoring-orders#updating-the-shipment-status-for-external-orders).\n"
+        },
+        {
+          "info": {
+            "name": "createExternalFulfillmentSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/config/routing/can_update_ffr_processed_externally",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Enables the configuration to allow you to update\nthe status for fulfillment requests that were processed outside of the NewStore platform,\nbecause of possible issues with fulfillment or shipping status updates.\n\nFor more information, see the\n[guide](https://docs.newstore.com/docs/monitoring-orders#updating-the-shipment-status-for-external-orders).\n"
+        },
+        {
+          "info": {
+            "name": "showCancellationPolicySettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/config/routing/cancel_on_conflict"
+          },
+          "docs": "Retrieves the configuration based on which it is determined if orders in your business are\ncanceled automatically in case of a conflict.\n\nThe configuration also contains the reasons for which orders can be canceled automatically.\nFor more information about the properties, see the [guide](/developers/configuration/config-insuff-inv).\n"
+        },
+        {
+          "info": {
+            "name": "createCancellationPolicySettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/config/routing/cancel_on_conflict",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sets the configuration based on which it is determined if orders in your business are\ncanceled automatically in case of a conflict.\n\nThe configuration also contains the reasons for which orders can be canceled automatically.\nFor more information about the properties, see the [guide](/developers/configuration/config-insuff-inv).\n"
+        },
+        {
+          "info": {
+            "name": "showAutomaticReroutingSetting",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/config/routing/enable_automatic_rerouting"
+          },
+          "docs": "Retrieves the current configuration that determines if on hold orders are routed to\nfulfillment locations automatically when stock becomes available in these locations.\n"
+        },
+        {
+          "info": {
+            "name": "createAutomaticReroutingSetting",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/config/routing/enable_automatic_rerouting",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sets the configuration that determines if on hold orders are routed to\nfulfillment locations automatically when stock becomes available in these locations.\n"
+        },
+        {
+          "info": {
+            "name": "showCapacityBasedRoutingSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/config/routing/enable_capacity_based_routing"
+          },
+          "docs": "Retrieves the current configuration that determines if orders are routed to fulfillment locations based on a capacity aware algorithm.\n"
+        },
+        {
+          "info": {
+            "name": "createCapacityBasedRoutingSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/config/routing/enable_capacity_based_routing",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sets the current configuration that determines if orders are routed to\nfulfillment locations based on a capacity aware algorithm.\n"
+        },
+        {
+          "info": {
+            "name": "showRejectedReroutingSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/config/routing/reroute_to_rejected_fulfillment_nodes"
+          },
+          "docs": "Retrieves the configuration that determines if orders will be automatically routed to\nfulfillment locations where stock has become available, even if these locations had\nrejected the order fulfillment request earlier, due to insufficient stock at\nthese locations.\n"
+        },
+        {
+          "info": {
+            "name": "createRejectedReroutingSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/config/routing/reroute_to_rejected_fulfillment_nodes",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sets the configuration that determines if orders will be automatically routed to\nfulfillment locations where stock has become available, even if these locations had\nrejected the order fulfillment request earlier, due to insufficient stock at\nthese locations.\n"
+        },
+        {
+          "info": {
+            "name": "showShippingOfferUpdateSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/config/routing/skip_shipping_offer_update_for_dc_orders"
+          },
+          "docs": "Retrieves the current configuration, which determines if NewStore skips updating shipping\noffers when orders are routed to a warehouse or DC for fulfillment. By default, this is set to `true`.\n\nWe recommend setting this configuration to ``true``.\n\nPlease be aware that having this value set to `true` can cause a fulfillment request routed to DC to have an empty shipping provider field if the tenant is also configured, skipping soft routing on an order injection.\n"
+        },
+        {
+          "info": {
+            "name": "createShippingOfferUpdateSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/config/routing/skip_shipping_offer_update_for_dc_orders",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sets the configuration that allows NewStore to skip updating shipping offers when orders\nare routed to a warehouse or DC for fulfillment.\n\nWe recommend setting this configuration to ``true``.\n"
+        },
+        {
+          "info": {
+            "name": "showExternalAtpSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/config/routing/uses_external_atp"
+          },
+          "docs": "Specifies if ATP is requested from an external source or from NewStore.\n\nIf set to ``true``, NewStore uses ATP from an external availability source such as\nan [external OMS](/product/processes/about-ffment/#external-oms-config).\nIf not set or set to ``false``, NewStore retrieves ATP based on\nthe stock on hand) for the products.\n"
+        },
+        {
+          "info": {
+            "name": "createExternalAtpSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/config/routing/uses_external_atp",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Specifies if ATP is requested from an external source or from NewStore.\n\nIf set to ``true``, NewStore uses ATP from an external availability source such as\nan [external OMS](/product/processes/about-ffment/#external-oms-config).\nIf not set or set to ``false``, NewStore retrieves ATP based on\nthe stock on hand for the products.\n"
+        },
+        {
+          "info": {
+            "name": "listShipmentLimits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/routing/shipments_limit"
+          },
+          "docs": "List all shipments limits. This method is limited to return a maximum of 10.000 shipments limits per tenant.\n"
+        },
+        {
+          "info": {
+            "name": "createShipmentLimits",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/routing/shipments_limit",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Upsert a shipment limit for a (`currency`,`service_level`) pair.\n\nAn order will be marked as a conflict if any limit on `limit_exceeded_when` is reached.\n\nIt is not allowed to have two limits with the same `shipment_count_gt` value.\n\nThe  `order_amount_lt` of a given limit should be greater than or equal to others limits with\nsmaller `shipment_count_gt`.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

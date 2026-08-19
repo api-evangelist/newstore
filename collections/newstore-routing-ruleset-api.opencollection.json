@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address routing-ruleset API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "routing-ruleset",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showRoutingRuleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/routing/ruleset"
+          },
+          "docs": "Retrieves the current 'Routing Rule V2'. If customer using V1, this endpoint\nmaps the V1 configuration to V2 and returns a 200 OK.\n"
+        },
+        {
+          "info": {
+            "name": "replaceRoutingRuleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v0/routing/ruleset",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "This endpoint is used to initially seed the routing rules or to replace it completely\n\n**Note:**\n- You have the option of defining route entries with a single `country` or multiple `countries` by\nproviding the optional `Content-Type` header with your desired payload version.\n- If you'd like to define multiple countries set the Content-Type header to application/json; version=1.\nSelect the appropriate Content-Type in the the request schema drop-down to see the schema for supporting\nmultiple count"
+        },
+        {
+          "info": {
+            "name": "updateRoutingRuleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v0/routing/ruleset",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "A convenience endpoint is where you use JSON patch to change parts of routing rules.\n\n**Note:**\n- You have the option of defining route entries with a single `country` or multiple `countries` by\nproviding the optional `Content-Type` header with your desired payload version.\n- If you'd like to define multiple countries set the Content-Type header to application/json; version=1.\nSelect the appropriate Content-Type in the the request schema drop-down to see the schema for supporting\nmultiple countr"
+        },
+        {
+          "info": {
+            "name": "showRoutingRulesetSection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/routing/ruleset/:section",
+            "params": [
+              {
+                "name": "section",
+                "value": "",
+                "type": "path",
+                "description": "name of the section to retrieve"
+              }
+            ]
+          },
+          "docs": "Retrieves a section of the current 'Routing Rule V2'. If customer using V1, this endpoint\nis of no use, and will return the error.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,141 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address users API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listUsers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/users",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Query the resulting list by first/last name or email address."
+              },
+              {
+                "name": "associate_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter to get user with the given associate_id."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset to be used for the resulting user account list."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "The number of requested user accounts."
+              },
+              {
+                "name": "role",
+                "value": "",
+                "type": "query",
+                "description": "The role of the users to filter by."
+              }
+            ]
+          },
+          "docs": "Retrieves all available user accounts for the retailer. Searches if the query parameter is used."
+        },
+        {
+          "info": {
+            "name": "createUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/iam/users",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates a new user account.\n\nTo assign roles to a new user account, provide the IDs of the relevant roles in the `roles` property.\nTo retrieve the role IDs, use the [List roles method](#operation/ListRoles).\n\nIf the `external_directory` property is set to `false`, the user account is created\nin Auth0 as well and an email with password setup instructions is sent. The user can then use these\ncredentials to log into NewStore.\n\n**Note:** If the user has no roles assigned, they will be able to log in"
+        },
+        {
+          "info": {
+            "name": "showUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "user id"
+              }
+            ]
+          },
+          "docs": "Retrieves the user account with the specified ID."
+        },
+        {
+          "info": {
+            "name": "replaceUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/iam/users/:id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "user id"
+              }
+            ]
+          },
+          "docs": "Updates the user account with the specified ID.\n\nIf the `external_directory` property is changed to `false`, the user account will be created in\nAuth0 as well and an email with password setup instructions will be send. The user can then use\nthese credentials to log into NewStore.\n\n**Note:** If the user has no roles assigned, they will be able to log in to NOM but will not be able to interact\nwith NOM until you assign roles to the user to allow them to interact with the various apps. See the\n[Cre"
+        },
+        {
+          "info": {
+            "name": "destroyUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/iam/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "user id"
+              }
+            ]
+          },
+          "docs": "Deletes the user account with the specified ID.\n\nIf the `external_directory` property is set to `false`, the user account will be deleted in Auth0 as well.\n\nIf the `external_directory` property is set to `true`, the user account will not be deleted from the\nrespective enterprise directory.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

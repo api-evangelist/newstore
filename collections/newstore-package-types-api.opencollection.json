@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address package-types API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "package-types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listPackageTypes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/package-types"
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nReturns all configured package types sorted by alphabet"
+        },
+        {
+          "info": {
+            "name": "createPackageType",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/fulfillment/package-types",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nCreates a new package type for the tenant. Once created"
+        },
+        {
+          "info": {
+            "name": "showPackageType",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/package-types/:package_type_id",
+            "params": [
+              {
+                "name": "package_type_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nReturns a single package type by its ID. Package types "
+        },
+        {
+          "info": {
+            "name": "updatePackageType",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/fulfillment/package-types/:package_type_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "package_type_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nPartially updates an existing package type. Only the pr"
+        },
+        {
+          "info": {
+            "name": "destroyPackageType",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/fulfillment/package-types/:package_type_id",
+            "params": [
+              {
+                "name": "package_type_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nDeletes an existing package type. Once deleted, the pac"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,3323 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address external-public API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "external-public",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "createImportSchema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/catalog/import-schemas",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "default generated id is returned"
+              },
+              {
+                "name": "entity",
+                "value": "",
+                "type": "query",
+                "description": "default id PRODUCTS"
+              }
+            ]
+          },
+          "docs": "Create new schema object containing jsonschema of [version 7](https://json-schema.org/draft-07/json-schema-release-notes).\nThis schema is  used during import process to validate entity object before persisting it in catalog indexes.\nValid jsonschema file\n  * is validated against [meta schema](https://json-schema.org/draft-07/schema)\n  * references only properties mentioned in whitelist\n  * #ref points only to local resource, e.g. external resources are not allowed.\n\nHere is list of whitelisted f"
+        },
+        {
+          "info": {
+            "name": "showImportSchema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/catalog/import-schemas/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "showImportSchema"
+        },
+        {
+          "info": {
+            "name": "updateImportSchema",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/catalog/import-schemas/:id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "updateImportSchema"
+        },
+        {
+          "info": {
+            "name": "destroyImportSchema",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/catalog/import-schemas/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "destroyImportSchema"
+        },
+        {
+          "info": {
+            "name": "showPricebookExport",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/catalog/exports/catalogs/:catalog/pricebooks/:pricebook",
+            "params": [
+              {
+                "name": "catalog",
+                "value": "",
+                "type": "path",
+                "description": "The catalog the pricebook, the user wants to export, belongs to."
+              },
+              {
+                "name": "pricebook",
+                "value": "",
+                "type": "path",
+                "description": "The pricebook the user wants to export."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "The desired response format, defaults to 'csv'."
+              }
+            ]
+          },
+          "docs": "Use this resource to export a specific price book. The export can be requested in CSV or SQLite format.\nThe export contains the following fields:\n\n| product_id (string) | price (float32) | currency_code (string) |\n|---|---|---|\n|  prod1 | 16.99  |  USD |\n\nExport API are not immediately scheduling new export.\nExports are automatically scheduled daily. Usually at 8:00 UTC. They are usually finished before 9:00 UTC.\nAPI can be used to retrieve max 1 day old snapshot of pricing data.\n\nResponse heade"
+        },
+        {
+          "info": {
+            "name": "listProducts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/catalog/catalogs/:catalog/offlineproducts",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "catalog",
+                "value": "",
+                "type": "path",
+                "description": "The catalog the product, the user wants to export, belongs to."
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "query",
+                "description": "The locale the user wants to export. Example en-us.csv"
+              },
+              {
+                "name": "redirect",
+                "value": "",
+                "type": "query",
+                "description": "if true api will return HTTP 302 redirect to resource, otherwise it will return json response with link to a file."
+              }
+            ]
+          },
+          "docs": "Use this resource to download products in a file. The export can be requested in CSV.\n\n- CSV delimiter is `\\t` (tab)\n- CSV line is ended with `\\n` (end line)\n- CSV cell is escaped when containing special characters `\\t` (tab) `\\n` (new line) `\\r` (carriage return) with `\\\\t` `\\\\n` `\\\\r`\n- CSV cell is escaped with `\"` (double quote) when contain double quote originally (relevant to json fields) [RFC 4180](https://www.ietf.org/rfc/rfc4180.txt)\n\nSchema:\n- product_id (string)\n- variant_group_id (str"
+        },
+        {
+          "info": {
+            "name": "createCart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/checkout/carts",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates a new empty cart."
+        },
+        {
+          "info": {
+            "name": "showCart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/checkout/carts/:cartId",
+            "params": [
+              {
+                "name": "cartId",
+                "value": "",
+                "type": "path",
+                "description": "Cart ID"
+              }
+            ]
+          },
+          "docs": "Returns a cart by its ID."
+        },
+        {
+          "info": {
+            "name": "updateCart",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/checkout/carts/:cartId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cartId",
+                "value": "",
+                "type": "path",
+                "description": "Cart ID"
+              }
+            ]
+          },
+          "docs": "Changes a cart."
+        },
+        {
+          "info": {
+            "name": "createLineItem",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/checkout/carts/:cartId/items",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cartId",
+                "value": "",
+                "type": "path",
+                "description": "Cart ID"
+              }
+            ]
+          },
+          "docs": "Add a line item to a cart"
+        },
+        {
+          "info": {
+            "name": "updateLineItem",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/checkout/carts/:cartId/items/:lineItemId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cartId",
+                "value": "",
+                "type": "path",
+                "description": "Cart ID"
+              },
+              {
+                "name": "lineItemId",
+                "value": "",
+                "type": "path",
+                "description": "Line Item ID"
+              }
+            ]
+          },
+          "docs": "Updates cart line item details"
+        },
+        {
+          "info": {
+            "name": "destroyLineItem",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/checkout/carts/:cartId/items/:lineItemId",
+            "params": [
+              {
+                "name": "cartId",
+                "value": "",
+                "type": "path",
+                "description": "Cart ID"
+              },
+              {
+                "name": "lineItemId",
+                "value": "",
+                "type": "path",
+                "description": "Line Item ID"
+              }
+            ]
+          },
+          "docs": "Removes a line item and all its add-ons from the cart."
+        },
+        {
+          "info": {
+            "name": "createAddOnLineItem",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/checkout/carts/:cartId/items/:lineItemId/add-ons",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cartId",
+                "value": "",
+                "type": "path",
+                "description": "Cart ID"
+              },
+              {
+                "name": "lineItemId",
+                "value": "",
+                "type": "path",
+                "description": "Parent Line Item ID"
+              }
+            ]
+          },
+          "docs": "Create an add-on for a line item on a cart"
+        },
+        {
+          "info": {
+            "name": "listProfiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clienteling/profiles",
+            "params": [
+              {
+                "name": "next_page_token",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token that encodes the information required to retrieve the next page of profiles."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of profiles to be returned in a page."
+              }
+            ]
+          },
+          "docs": "List all clienteling profiles."
+        },
+        {
+          "info": {
+            "name": "showProfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/clienteling/profiles/:customer_id",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the customer."
+              }
+            ]
+          },
+          "docs": "Get a single clienteling profile."
+        },
+        {
+          "info": {
+            "name": "createRetrievalBulkEmailProfiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/customer/profiles/lookup-bulk-emails",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "**Warning: This endpoint is currently only available for non-pii tenants.**\nRetrieves a mapping of existing customer profiles given a list of profile emails. \nAny emails provided that are not associated with a Customer Profile, will not be part of the mapping returned.\n\n**Notes:**   \nFor profiles created before Jan 6th 2022 there is no uniqueness guarantee for the email. This means that for some tenants the mapping returned\nfrom this endpoint may be a bigger set than the emails requested.\n"
+        },
+        {
+          "info": {
+            "name": "createData",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/customer/data",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Stores a new PII data entry in a residency compliant way.\n"
+        },
+        {
+          "info": {
+            "name": "showData",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/customer/data/:data_id",
+            "params": [
+              {
+                "name": "data_id",
+                "value": "",
+                "type": "path",
+                "description": "Data ID"
+              }
+            ]
+          },
+          "docs": "Returns data for the given `data_id`, depending on the defined content-type."
+        },
+        {
+          "info": {
+            "name": "destroyData",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/customer/data/:data_id",
+            "params": [
+              {
+                "name": "data_id",
+                "value": "",
+                "type": "path",
+                "description": "Data ID"
+              }
+            ]
+          },
+          "docs": "Deletes data entry for the given `data_id`.\n"
+        },
+        {
+          "info": {
+            "name": "createTokensOperations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/customer/tokens",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "operation",
+                "value": "",
+                "type": "query",
+                "description": "The token operation that will be performed. By default it's **tokenize**."
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nThere are two possible operations:\n- **tokenize**\n  - T"
+        },
+        {
+          "info": {
+            "name": "listProfiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/customer/profiles",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "The search term to filter customers. The term is compared to the\nvalues in the `email`, `fullname` and `phonenumber` fields. A partial match is also\nconsidered a match.\n\nThe term will also be compared to the values in the `id` and `display_id` fields.\nOnly an exact match is considered a match."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The sort to be applied to customers response."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The customer profiles page offset."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "The number of requested customer profiles."
+              }
+            ]
+          },
+          "docs": "Returns a searchable list of consumer profiles.\n\nNote: This endpoint is designed for paginated front-end use with a search function. It is not suitable for exporting a comprehensive list of all customers due to the following limitations:\n- Pagination Per Page Limit: Up to 500 profiles can be fetched per page.\n- Total Profiles Limit: There is a maximum limit of 10,000 profiles.\n- API Error Beyond Limit: When trying to paginate beyond 10,000 profiles, the API will start returning errors.\n"
+        },
+        {
+          "info": {
+            "name": "createOrShowProfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/customer/profiles",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nGet-or-create by email. Creates a new customer profile,"
+        },
+        {
+          "info": {
+            "name": "showProfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              }
+            ]
+          },
+          "docs": "Returns a single customer profile for the given customer `profile_id`.\n"
+        },
+        {
+          "info": {
+            "name": "createProfileDeletionRequest",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              }
+            ]
+          },
+          "docs": "Creates request for customer profile deletion."
+        },
+        {
+          "info": {
+            "name": "updateProfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              }
+            ]
+          },
+          "docs": "Updates an existing customer profile for the given `profile_id`.\n\n**Note:**\nThe Consumer Profile V2 API allows for a single approach to update customer names. When updating a profile, the client must choose one of the following name approaches:\n\n- first_name and last_name\n- full_name\n\nProviding both approaches will result in a bad request error from the API.\n\n**Note:**\nIf `extended_attributes` is provided, it will replace any existing attributes for the customer.\n"
+        },
+        {
+          "info": {
+            "name": "listAddresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id/addresses",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The addresses page offset."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "The number of requested addresses."
+              }
+            ]
+          },
+          "docs": "Returns a list of addresses for given customer `profile_id`."
+        },
+        {
+          "info": {
+            "name": "createOrShowAddress",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id/addresses",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              }
+            ]
+          },
+          "docs": "Retrieves an existing address or creates a new address in case it has not been added yet.\n\n**Note:**\nA maximum of 1000 addresses can be stored per customer profile.\nWhen a new address is added after reaching the 1000 limit, the oldest address will be automatically replaced.\n"
+        },
+        {
+          "info": {
+            "name": "showAddress",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id/addresses/:address_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              },
+              {
+                "name": "address_id",
+                "value": "",
+                "type": "path",
+                "description": "Address ID"
+              }
+            ]
+          },
+          "docs": "Returns an address for the given customer `profile_id` and `address_id`."
+        },
+        {
+          "info": {
+            "name": "updateAddress",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id/addresses/:address_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              },
+              {
+                "name": "address_id",
+                "value": "",
+                "type": "path",
+                "description": "Address ID"
+              }
+            ]
+          },
+          "docs": "Updates address for the given customer `profile_id` and `address_id`."
+        },
+        {
+          "info": {
+            "name": "destroyAddress",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id/addresses/:address_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              },
+              {
+                "name": "address_id",
+                "value": "",
+                "type": "path",
+                "description": "Address ID"
+              }
+            ]
+          },
+          "docs": "Deletes address from the latest customer profile.\n"
+        },
+        {
+          "info": {
+            "name": "showConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/customer/config"
+          },
+          "docs": "Returns configuration settings for the tenant, including BYO CRM settings.\n"
+        },
+        {
+          "info": {
+            "name": "updateConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/customer/config",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Updates configuration settings for the tenant, including BYO CRM settings.\n\nNote that the following restrictions exist:\n\n- BYO CRM and `nom_consumer_profiles_merge` can't be enabled at the same time.\n"
+        },
+        {
+          "info": {
+            "name": "listStores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stores",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit for the number of results."
+              },
+              {
+                "name": "start_at",
+                "value": "",
+                "type": "query",
+                "description": "Key for retrieving the next page.\n* The value of `next_page_key` field from the response payload can be used for retrieving the next page."
+              },
+              {
+                "name": "include_cashboxes",
+                "value": "",
+                "type": "query",
+                "description": "Include cashboxes belonging to the store in the result."
+              },
+              {
+                "name": "country_codes",
+                "value": "",
+                "type": "query",
+                "description": "Country codes to filter by."
+              }
+            ]
+          },
+          "docs": "List stores for the given query."
+        },
+        {
+          "info": {
+            "name": "showStore",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stores/:storeId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get store for the given store identifier."
+        },
+        {
+          "info": {
+            "name": "updateStore",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/stores/:storeId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Updates a store for the given store identifier."
+        },
+        {
+          "info": {
+            "name": "listCashboxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stores/:storeId/cashboxes",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List cashboxes for the given store identifier."
+        },
+        {
+          "info": {
+            "name": "createCashbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/stores/:storeId/cashboxes",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Activate cashbox by using the given cashbox configuration for the given store identifier."
+        },
+        {
+          "info": {
+            "name": "showCashbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stores/:storeId/cashboxes/:cashboxId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cashboxId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get cashbox for the given store and cashbox identifiers."
+        },
+        {
+          "info": {
+            "name": "createCashboxRelease",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/stores/:storeId/cashboxes/:cashboxId/release",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cashboxId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\n[Italy] Create a release for the deactivated fiscal pri"
+        },
+        {
+          "info": {
+            "name": "showOrder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/orders/:orderId",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Order state."
+              },
+              {
+                "name": "transaction_state",
+                "value": "",
+                "type": "query",
+                "description": "Fiscal transaction state."
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nGet fiscal transactions and signatures for an order (sa"
+        },
+        {
+          "info": {
+            "name": "showReturn",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/orders/:orderId/returns/:returnId",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "returnId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Order state."
+              },
+              {
+                "name": "transaction_state",
+                "value": "",
+                "type": "query",
+                "description": "Fiscal transaction state."
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nGet fiscal transactions and signatures for an item retu"
+        },
+        {
+          "info": {
+            "name": "showTenantConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/config",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Configuration version number.\n* If left empty, the latest version of the configuration will be returned."
+              },
+              {
+                "name": "include_metadata",
+                "value": "",
+                "type": "query",
+                "description": "Include metadata fields."
+              }
+            ]
+          },
+          "docs": "Get fiscal configuration of the tenant."
+        },
+        {
+          "info": {
+            "name": "showTenantOfflineModeConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/config/offline-mode"
+          },
+          "docs": "Get list of countries supporting offline-mode for the tenant."
+        },
+        {
+          "info": {
+            "name": "updateTenantOfflineModeConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/config/offline-mode",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Update list of countries supporting offline-mode for the tenant.\n* Only editable countries are allowed.\n* List of editable countries can be retireved through `GET /f11n/config`."
+        },
+        {
+          "info": {
+            "name": "showEasypostAdapterConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/adapters/config"
+          },
+          "docs": "Retrieves the shipping configuration of the retailer that is integrated with the EasyPost adapter. Credentials are redacted but you can still push the configuration using the PUT endpoint with the REDACTED value: we will use the current value. A new value will be validated before saving the configuration."
+        },
+        {
+          "info": {
+            "name": "replaceEasypostAdapterConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/fulfillment/adapters/config",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates or updates the shipping configuration of the retailer that is integrated with the EasyPost adapter. Any current data in the existing configuration is overwritten using this request.\n\nA few notes on this configuration:\n\n* When an account has a large number of carrier accounts, please do associate a Fulfillment Node to a Carrier Account. Not doing so will result in long response time, waste of resources, extra easypost charges and possibly order injection issues.\n* Once the easypost API Ke"
+        },
+        {
+          "info": {
+            "name": "destroyEasypostAdapterConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/fulfillment/adapters/config"
+          },
+          "docs": "Deletes the shipping configuration of the retailer that is integrated with the EasyPost adapter."
+        },
+        {
+          "info": {
+            "name": "showConfigurationByName",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/configurations/shipments/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "showConfigurationByName"
+        },
+        {
+          "info": {
+            "name": "createConfigurationByName",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/fulfillment/configurations/shipments/:name",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "createConfigurationByName"
+        },
+        {
+          "info": {
+            "name": "showConfigurationsChecks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/configurations/shipments/checks"
+          },
+          "docs": "Designed for humans only: check Provider Rates, Service Levels, PRP and Carriers configurations"
+        },
+        {
+          "info": {
+            "name": "showProviderRatePriorities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/provider-rate-priorities"
+          },
+          "docs": "showProviderRatePriorities"
+        },
+        {
+          "info": {
+            "name": "replaceProviderRatePriorities",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/fulfillment/provider-rate-priorities",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "replaceProviderRatePriorities"
+        },
+        {
+          "info": {
+            "name": "listProviderRates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/provider-rates"
+          },
+          "docs": "listProviderRates"
+        },
+        {
+          "info": {
+            "name": "showProviderRate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/provider-rates/:provider_rate_id",
+            "params": [
+              {
+                "name": "provider_rate_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "showProviderRate"
+        },
+        {
+          "info": {
+            "name": "replaceProviderRate",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/fulfillment/provider-rates/:provider_rate_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "provider_rate_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "replaceProviderRate"
+        },
+        {
+          "info": {
+            "name": "destroyProviderRate",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/fulfillment/provider-rates/:provider_rate_id",
+            "params": [
+              {
+                "name": "provider_rate_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "destroyProviderRate"
+        },
+        {
+          "info": {
+            "name": "listShippingOptionAudits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/shipping-audits",
+            "params": [
+              {
+                "name": "search_from",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "search_key",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "listShippingOptionAudits"
+        },
+        {
+          "info": {
+            "name": "showShippingOptionAudit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/shipping-audits/:audit_id",
+            "params": [
+              {
+                "name": "audit_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "showShippingOptionAudit"
+        },
+        {
+          "info": {
+            "name": "showShippingLabel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/shipping-labels/:public_key",
+            "headers": [
+              {
+                "name": "x-newstore-tenant",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "public_key",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "showShippingLabel"
+        },
+        {
+          "info": {
+            "name": "listPackageTypes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/package-types"
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nReturns all configured package types sorted by alphabet"
+        },
+        {
+          "info": {
+            "name": "createPackageType",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/fulfillment/package-types",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nCreates a new package type for the tenant. Once created"
+        },
+        {
+          "info": {
+            "name": "showPackageType",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/package-types/:package_type_id",
+            "params": [
+              {
+                "name": "package_type_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nReturns a single package type by its ID. Package types "
+        },
+        {
+          "info": {
+            "name": "updatePackageType",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/fulfillment/package-types/:package_type_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "package_type_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nPartially updates an existing package type. Only the pr"
+        },
+        {
+          "info": {
+            "name": "destroyPackageType",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/fulfillment/package-types/:package_type_id",
+            "params": [
+              {
+                "name": "package_type_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nDeletes an existing package type. Once deleted, the pac"
+        },
+        {
+          "info": {
+            "name": "listProviders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/providers"
+          },
+          "docs": "Returns a list of configured identity providers for the tenant"
+        },
+        {
+          "info": {
+            "name": "createProvider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/iam/providers",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates and configures a new identity provider for the vendor / protocol combination."
+        },
+        {
+          "info": {
+            "name": "showProvider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/providers/:alias",
+            "params": [
+              {
+                "name": "alias",
+                "value": "",
+                "type": "path",
+                "description": "identity provider alias"
+              }
+            ]
+          },
+          "docs": "Returns the identity provider identified by its alias"
+        },
+        {
+          "info": {
+            "name": "updateProvider",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/iam/providers/:alias",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "alias",
+                "value": "",
+                "type": "path",
+                "description": "identity provider alias"
+              }
+            ]
+          },
+          "docs": "Change the configuration of the identity provider identified by its alias"
+        },
+        {
+          "info": {
+            "name": "destroyProvider",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/iam/providers/:alias",
+            "params": [
+              {
+                "name": "alias",
+                "value": "",
+                "type": "path",
+                "description": "identity provider alias"
+              }
+            ]
+          },
+          "docs": "Deletes the identity provider identified by its alias"
+        },
+        {
+          "info": {
+            "name": "listSupportedProviders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/supported-providers"
+          },
+          "docs": "Returns a list of supported identity providers and protocols"
+        },
+        {
+          "info": {
+            "name": "listUsers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/users",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Query the resulting list by first/last name or email address."
+              },
+              {
+                "name": "associate_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter to get user with the given associate_id."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset to be used for the resulting user account list."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "The number of requested user accounts."
+              },
+              {
+                "name": "role",
+                "value": "",
+                "type": "query",
+                "description": "The role of the users to filter by."
+              }
+            ]
+          },
+          "docs": "Retrieves all available user accounts for the retailer. Searches if the query parameter is used."
+        },
+        {
+          "info": {
+            "name": "createUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/iam/users",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates a new user account.\n\nTo assign roles to a new user account, provide the IDs of the relevant roles in the `roles` property.\nTo retrieve the role IDs, use the [List roles method](#operation/ListRoles).\n\nIf the `external_directory` property is set to `false`, the user account is created\nin Auth0 as well and an email with password setup instructions is sent. The user can then use these\ncredentials to log into NewStore.\n\n**Note:** If the user has no roles assigned, they will be able to log in"
+        },
+        {
+          "info": {
+            "name": "showUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "user id"
+              }
+            ]
+          },
+          "docs": "Retrieves the user account with the specified ID."
+        },
+        {
+          "info": {
+            "name": "replaceUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/iam/users/:id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "user id"
+              }
+            ]
+          },
+          "docs": "Updates the user account with the specified ID.\n\nIf the `external_directory` property is changed to `false`, the user account will be created in\nAuth0 as well and an email with password setup instructions will be send. The user can then use\nthese credentials to log into NewStore.\n\n**Note:** If the user has no roles assigned, they will be able to log in to NOM but will not be able to interact\nwith NOM until you assign roles to the user to allow them to interact with the various apps. See the\n[Cre"
+        },
+        {
+          "info": {
+            "name": "destroyUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/iam/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "user id"
+              }
+            ]
+          },
+          "docs": "Deletes the user account with the specified ID.\n\nIf the `external_directory` property is set to `false`, the user account will be deleted in Auth0 as well.\n\nIf the `external_directory` property is set to `true`, the user account will not be deleted from the\nrespective enterprise directory.\n"
+        },
+        {
+          "info": {
+            "name": "listPermissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/permissions"
+          },
+          "docs": "Lists all the user permissions available for the retailer."
+        },
+        {
+          "info": {
+            "name": "listRoles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/roles",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Query the resulting list by name."
+              }
+            ]
+          },
+          "docs": "Lists all available user roles for the retailer. Search if the query parameter is used."
+        },
+        {
+          "info": {
+            "name": "createRole",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/iam/roles",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates a new role."
+        },
+        {
+          "info": {
+            "name": "showRole",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/roles/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "role id"
+              }
+            ]
+          },
+          "docs": "Retrieves the user role with the specified ID."
+        },
+        {
+          "info": {
+            "name": "replaceRole",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/iam/roles/:id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "role id"
+              }
+            ]
+          },
+          "docs": "Updates the user role with the specified ID."
+        },
+        {
+          "info": {
+            "name": "destroyRole",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/iam/roles/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "role id"
+              }
+            ]
+          },
+          "docs": "Deletes the user role with the specified ID.\n\nOnce deleted, the user role is unassigned from all associated user accounts.\n"
+        },
+        {
+          "info": {
+            "name": "listUsersByRole",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/iam/roles/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "role id"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset to be used for the resulting user account list."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "The number of requested user accounts."
+              }
+            ]
+          },
+          "docs": "Retrieves all user accounts that have been assigned the specified user role."
+        },
+        {
+          "info": {
+            "name": "showInventoryConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/inventory/config",
+            "params": [
+              {
+                "name": "store_id",
+                "value": "",
+                "type": "query",
+                "description": "Store Identifier for store configuration at store level."
+              }
+            ]
+          },
+          "docs": "Returns the current inventory configuration."
+        },
+        {
+          "info": {
+            "name": "replaceInventoryConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/inventory/config",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sets the configuration. Note: you can pass an * to enable store-dependent features."
+        },
+        {
+          "info": {
+            "name": "showReservationConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/inventory/config/reservations"
+          },
+          "docs": "Gets the reservation configuration of the retailer."
+        },
+        {
+          "info": {
+            "name": "updateReservationConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/inventory/config/reservations",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Updates the reservations configuration for the retailer."
+        },
+        {
+          "info": {
+            "name": "listReservations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/inventory/reservations",
+            "headers": [
+              {
+                "name": "accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "location_id",
+                "value": "",
+                "type": "query",
+                "description": "ID of the fulfillment location in which the reservations are being listed."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Status(es) of the reservations to list. If omitted, all reservation statuses are listed."
+              },
+              {
+                "name": "external_id",
+                "value": "",
+                "type": "query",
+                "description": "If using V1 of the API, allows filtering on the user facing ID, and a partial match is also considered a match. If using V2, allows filtering on the external ID that was provided when the reservation was created, and only an exact match is considered a match."
+              },
+              {
+                "name": "display_id",
+                "value": "",
+                "type": "query",
+                "description": "Allows filtering the reservations by 'display_id'. A partial match is also considered a match. Only usable in V2 of the API."
+              },
+              {
+                "name": "customer_profile_id",
+                "value": "",
+                "type": "query",
+                "description": "Allows filtering the reservations by customer profile id"
+              },
+              {
+                "name": "associate_id",
+                "value": "",
+                "type": "query",
+                "description": "Allows filtering the reservations by associate id"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Page number to return"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return in each page"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Field(s) to sort by. Supported values are 'created_at|asc' or 'status|asc' to list in ascending order and 'created_at|desc' or 'status|desc' to list in descending order."
+              },
+              {
+                "name": "expired",
+                "value": "",
+                "type": "query",
+                "description": "Filter for expired reservations"
+              }
+            ]
+          },
+          "docs": "Lists all reservations, supporting various filters."
+        },
+        {
+          "info": {
+            "name": "createReservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/inventory/reservations",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates a new reservation. For each of the items in the reservation, 1 unit of the corresponding product will be moved from the 'main' stock location to the '_customer_reservations' stock location at the specified fulfillment location.\n\nReservations are created in the 'RESERVED' status by default, with an expiry date of 24 hours from when they have been created. The default duration of a reservation can by configured using the [Update Reservation Config](#/http/inventory/reservations/update-rese"
+        },
+        {
+          "info": {
+            "name": "showReservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/inventory/reservations/:reservation_id",
+            "headers": [
+              {
+                "name": "accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "reservation_id",
+                "value": "",
+                "type": "path",
+                "description": "Reservation identifier."
+              }
+            ]
+          },
+          "docs": "Retrieves a single reservation by ID.\n\nThe reservation status is derived from the status of its items as follows:\n- Any item is RESERVED => Reservation is RESERVED\n- Some items are CONVERTED to a sale or UNRESERVED => Reservation is CONVERTED\n- All items are UNRESERVED => Reservation is UNRESERVED, meaning the reservation has been cancelled"
+        },
+        {
+          "info": {
+            "name": "updateReservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/inventory/reservations/:reservation_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "reservation_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the reservation"
+              }
+            ]
+          },
+          "docs": "Updates the status of a 'PENDING' reservation to either 'REJECTED' or 'RESERVED'.\n\nIf the status is changed to 'RESERVED', stock for each item in the reservation will be moved from the 'main' stock location to the '_customer_reservations' stock location and the expiry date will be reset. An email will be sent to the customer using the 'reservation_accepted_email' template if the 'send_accepted_email' [config](#/http/inventory/reservations/update-reservation-config) is enabled.\n\nIf the status is "
+        },
+        {
+          "info": {
+            "name": "updateReservationItems",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/inventory/reservations/:reservation_id/items",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "reservation_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the reservation"
+              }
+            ]
+          },
+          "docs": "Updates the status of a reservation's items.\n\nItems start in the 'RESERVED' status, and can only be updated to 'CONVERTED' or 'UNRESERVED'. 'CONVERTED' and 'UNRESERVED' are both terminal states; You cannot change or update the status of items with these statuses.\n\nUpdating the status of a RESERVED item will cause 1 unit of the corresponding product to be moved from the '_customer_reservations' stock location to the 'main' stock location at the fulfillment location associated with the reservation"
+        },
+        {
+          "info": {
+            "name": "showOrderHistoryForCustomer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/orders",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "query",
+                "description": "NewStore's unique UUID for the customer"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset to be used for the resulting order list. Will only be accepted when using the ``Accept`` header with ``application/x.newstore.orders+json;version=2``."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "The number of requested orders. Will only be accepted when using the ``Accept`` header with ``application/x.newstore.orders+json;version=2``."
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 30 requests per second.\n</div>\n\n"
+        },
+        {
+          "info": {
+            "name": "showSalesOrderByIdAndIdType",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/orders/:id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the order."
+              },
+              {
+                "name": "id_type",
+                "value": "",
+                "type": "query",
+                "description": "ID type on which order should be fetched. Example \"external\" in case of human-readable identifier of the order, else \"internal\" in case of system-generated UUID (by NewStore)."
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 100 requests per second.\n</div>\n\nRetrieves the specified order by order ID and ID type for the order.\n\nThis method allows you to retrieve information about orders that were placed in the platform,\nas well as outside of the NewStore platform.\n\n**Not"
+        },
+        {
+          "info": {
+            "name": "createGracePeriod",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/orders/:id/_extend_grace_period",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the order."
+              },
+              {
+                "name": "id_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of the order id which should be used to extend the order grace period. Example \"external\" for human-readable identifiers, and \"internal\" for system-generated UUIDs (by NewStore)."
+              }
+            ]
+          },
+          "docs": "Use this method to extend the [grace period](https://docs.newstore.com/docs/glossary#remorse-period) timer\nfor the specified order by **15 minutes**, if the grace period of the order has not yet expired.\n"
+        },
+        {
+          "info": {
+            "name": "showCancellationStatus",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/orders/:id/cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the order."
+              },
+              {
+                "name": "id_type",
+                "value": "",
+                "type": "query",
+                "description": "ID type on which order should be fetched. Example \"external\"."
+              }
+            ]
+          },
+          "docs": "API to get cancellation status by order ID"
+        },
+        {
+          "info": {
+            "name": "createCancellation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/orders/:id/cancel",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the order."
+              },
+              {
+                "name": "id_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of order id which should be used for cancellation. Example \"external\"."
+              }
+            ]
+          },
+          "docs": "Initiates the cancellation of the specified order.\n\nWhen using this method to cancel an order, you must specify a reason for cancellation,\nsuch as ``Item was damaged during shipping``. You can also include a note to provide a\nlonger explanation for the cancellation of the order.\n"
+        },
+        {
+          "info": {
+            "name": "createLineItemCancellation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/orders/:id/items/:item_uuid/cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the order."
+              },
+              {
+                "name": "item_uuid",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the order item."
+              },
+              {
+                "name": "id_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of order id which should be used for cancellation of line items. Example \"external\" for human-readable identifiers, and \"internal\" for system-generated UUIDs (by NewStore)."
+              }
+            ]
+          },
+          "docs": "Use this resource to cancel line items.\n\n**Note:**\n1. This API currently only supports pre-ordered line items and will throw an error for other line items.\n2. The line item can only be cancelled for non-terminal item statuses.\n"
+        },
+        {
+          "info": {
+            "name": "createPriceInformationForItems",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/orders/:id/prices",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order."
+              }
+            ]
+          },
+          "docs": "Use this method to retrieve price information for products or shipping options, defined\nin ``items`` in the request payload. The price information includes the gross price of the item,\nthe net price, and the tax levied on the item.\n\nIf the prices you requested are for products, the response payload also contains the status\nof the product. For example, ``cancelled`` or ``pending``, or ``in_fulfillment``, and so on.\n\n**Important**: You can only request for the pricing information of a maximum of *"
+        },
+        {
+          "info": {
+            "name": "updateSalesOrderSerialNumbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v0/orders/:id/serial_numbers",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The internal identifier of the order, for example, ``b604ffda-7e31-4338-beab-7f939a8c2322``."
+              }
+            ]
+          },
+          "docs": "Use this method to add serial numbers to specified items of the order. Serial numbers will be overwritten in case\nsome or all of the items have already serial numbers attached.\n\nThe maximum number of items in this request cannot exceed **500**, otherwise this method will return a ``400`` error.\n"
+        },
+        {
+          "info": {
+            "name": "listAtpInsights",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/stock/insights",
+            "params": [
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "The product ID of the item."
+              },
+              {
+                "name": "fulfillment_node_id",
+                "value": "",
+                "type": "query",
+                "description": "The fulfillment node ID of the store/warehouse."
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 90 requests per second.\n</div>\n\nRetrieves the allocations and reservations by ATP keys in your business.\n"
+        },
+        {
+          "info": {
+            "name": "replaceProviderLocationMapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/payment/providers/:newstore/locations/:location/mappings",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "newstore",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "location",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "replaceProviderLocationMapping"
+        },
+        {
+          "info": {
+            "name": "destroyProviderLocationMapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/payment/providers/:newstore/locations/:location/mappings",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "newstore",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "location",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\n"
+        },
+        {
+          "info": {
+            "name": "listProviderLocationMappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/payment/providers/:newstore/locations/mappings",
+            "params": [
+              {
+                "name": "newstore",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "listProviderLocationMappings"
+        },
+        {
+          "info": {
+            "name": "showConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/promotions/configurations/:section-id",
+            "params": [
+              {
+                "name": "section-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves configuration."
+        },
+        {
+          "info": {
+            "name": "updateConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/promotions/configurations/:section-id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "section-id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Updates configuration."
+        },
+        {
+          "info": {
+            "name": "listReasonCodes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/promotions/reason-codes",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "feature",
+                "value": "",
+                "type": "query",
+                "description": "Indicates the feature of the reason code."
+              }
+            ]
+          },
+          "docs": "Retrieves reason codes per locale"
+        },
+        {
+          "info": {
+            "name": "createReasonCode",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/promotions/reason-codes",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "feature",
+                "value": "",
+                "type": "query",
+                "description": "Indicates the feature of the reason code."
+              }
+            ]
+          },
+          "docs": "Creates a new reason code"
+        },
+        {
+          "info": {
+            "name": "showReasonCode",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/promotions/reason-codes/:code",
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path",
+                "description": "An identifier of a reason code."
+              },
+              {
+                "name": "feature",
+                "value": "",
+                "type": "query",
+                "description": "Indicates the feature of the reason code."
+              }
+            ]
+          },
+          "docs": "Retrieves a reason code with all localisations"
+        },
+        {
+          "info": {
+            "name": "updateReasonCode",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/promotions/reason-codes/:code",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path",
+                "description": "An identifier of a reason code."
+              },
+              {
+                "name": "feature",
+                "value": "",
+                "type": "query",
+                "description": "Indicates the feature of the reason code."
+              }
+            ]
+          },
+          "docs": "Update the name of the reason code."
+        },
+        {
+          "info": {
+            "name": "destroyReasonCode",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/promotions/reason-codes/:code",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "code",
+                "value": "",
+                "type": "path",
+                "description": "An identifier of a reason code."
+              },
+              {
+                "name": "feature",
+                "value": "",
+                "type": "query",
+                "description": "Indicates the feature of the reason code."
+              }
+            ]
+          },
+          "docs": "Delete a reason code"
+        },
+        {
+          "info": {
+            "name": "showRoutingRuleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/routing/ruleset"
+          },
+          "docs": "Retrieves the current 'Routing Rule V2'. If customer using V1, this endpoint\nmaps the V1 configuration to V2 and returns a 200 OK.\n"
+        },
+        {
+          "info": {
+            "name": "replaceRoutingRuleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v0/routing/ruleset",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "This endpoint is used to initially seed the routing rules or to replace it completely\n\n**Note:**\n- You have the option of defining route entries with a single `country` or multiple `countries` by\nproviding the optional `Content-Type` header with your desired payload version.\n- If you'd like to define multiple countries set the Content-Type header to application/json; version=1.\nSelect the appropriate Content-Type in the the request schema drop-down to see the schema for supporting\nmultiple count"
+        },
+        {
+          "info": {
+            "name": "updateRoutingRuleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v0/routing/ruleset",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "If-Match",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "A convenience endpoint is where you use JSON patch to change parts of routing rules.\n\n**Note:**\n- You have the option of defining route entries with a single `country` or multiple `countries` by\nproviding the optional `Content-Type` header with your desired payload version.\n- If you'd like to define multiple countries set the Content-Type header to application/json; version=1.\nSelect the appropriate Content-Type in the the request schema drop-down to see the schema for supporting\nmultiple countr"
+        },
+        {
+          "info": {
+            "name": "showRoutingRulesetSection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/routing/ruleset/:section",
+            "params": [
+              {
+                "name": "section",
+                "value": "",
+                "type": "path",
+                "description": "name of the section to retrieve"
+              }
+            ]
+          },
+          "docs": "Retrieves a section of the current 'Routing Rule V2'. If customer using V1, this endpoint\nis of no use, and will return the error.\n"
+        },
+        {
+          "info": {
+            "name": "updateFulfillmentRequestItemStates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/fulfillment_request/:ffr_uuid/set_items_states",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "ffr_uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update the shipment status for items in the specified fulfillment request.\n\n**Important:** Do not confuse this API with\n[Fulfillment Provider API](/newstore-cloud/order_management/dc_fulfillment_node_api.html). For\nDC orders please use the Fulfillment Provider API.\n\nItems in a fulfillment request can be marked as shipped or rejected. When you use this API you can't mix\nshipment and rejection actions on the same call.\n\n**Important:** If you are doing a partial rejection of items in a fulfillment "
+        },
+        {
+          "info": {
+            "name": "listFulfillmentRequestsForOrder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/fulfillment_requests/:order_uuid",
+            "params": [
+              {
+                "name": "order_uuid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 70 requests per second.\n</div>\n\nReturns all fulfillment requests created for an order, sorted by creation date in the\nascending order (earliest first).\n\nIf order wasn't found, then the empty list of fulfillment requests will be returned.\n\nIf order "
+        },
+        {
+          "info": {
+            "name": "showExternalFulfillmentSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/config/routing/can_update_ffr_processed_externally"
+          },
+          "docs": "Retrieves the current configuration to determine if you can update\nthe status for fulfillment requests that were processed outside of the NewStore platform,\nbecause of possible issues with fulfillment or shipping status updates.\n\nFor more information, see the\n[guide](https://docs.newstore.com/docs/monitoring-orders#updating-the-shipment-status-for-external-orders).\n"
+        },
+        {
+          "info": {
+            "name": "createExternalFulfillmentSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/config/routing/can_update_ffr_processed_externally",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Enables the configuration to allow you to update\nthe status for fulfillment requests that were processed outside of the NewStore platform,\nbecause of possible issues with fulfillment or shipping status updates.\n\nFor more information, see the\n[guide](https://docs.newstore.com/docs/monitoring-orders#updating-the-shipment-status-for-external-orders).\n"
+        },
+        {
+          "info": {
+            "name": "showCancellationPolicySettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/config/routing/cancel_on_conflict"
+          },
+          "docs": "Retrieves the configuration based on which it is determined if orders in your business are\ncanceled automatically in case of a conflict.\n\nThe configuration also contains the reasons for which orders can be canceled automatically.\nFor more information about the properties, see the [guide](/developers/configuration/config-insuff-inv).\n"
+        },
+        {
+          "info": {
+            "name": "createCancellationPolicySettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/config/routing/cancel_on_conflict",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sets the configuration based on which it is determined if orders in your business are\ncanceled automatically in case of a conflict.\n\nThe configuration also contains the reasons for which orders can be canceled automatically.\nFor more information about the properties, see the [guide](/developers/configuration/config-insuff-inv).\n"
+        },
+        {
+          "info": {
+            "name": "showAutomaticReroutingSetting",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/config/routing/enable_automatic_rerouting"
+          },
+          "docs": "Retrieves the current configuration that determines if on hold orders are routed to\nfulfillment locations automatically when stock becomes available in these locations.\n"
+        },
+        {
+          "info": {
+            "name": "createAutomaticReroutingSetting",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/config/routing/enable_automatic_rerouting",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sets the configuration that determines if on hold orders are routed to\nfulfillment locations automatically when stock becomes available in these locations.\n"
+        },
+        {
+          "info": {
+            "name": "showCapacityBasedRoutingSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/config/routing/enable_capacity_based_routing"
+          },
+          "docs": "Retrieves the current configuration that determines if orders are routed to fulfillment locations based on a capacity aware algorithm.\n"
+        },
+        {
+          "info": {
+            "name": "createCapacityBasedRoutingSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/config/routing/enable_capacity_based_routing",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sets the current configuration that determines if orders are routed to\nfulfillment locations based on a capacity aware algorithm.\n"
+        },
+        {
+          "info": {
+            "name": "showRejectedReroutingSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/config/routing/reroute_to_rejected_fulfillment_nodes"
+          },
+          "docs": "Retrieves the configuration that determines if orders will be automatically routed to\nfulfillment locations where stock has become available, even if these locations had\nrejected the order fulfillment request earlier, due to insufficient stock at\nthese locations.\n"
+        },
+        {
+          "info": {
+            "name": "createRejectedReroutingSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/config/routing/reroute_to_rejected_fulfillment_nodes",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sets the configuration that determines if orders will be automatically routed to\nfulfillment locations where stock has become available, even if these locations had\nrejected the order fulfillment request earlier, due to insufficient stock at\nthese locations.\n"
+        },
+        {
+          "info": {
+            "name": "showShippingOfferUpdateSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/config/routing/skip_shipping_offer_update_for_dc_orders"
+          },
+          "docs": "Retrieves the current configuration, which determines if NewStore skips updating shipping\noffers when orders are routed to a warehouse or DC for fulfillment. By default, this is set to `true`.\n\nWe recommend setting this configuration to ``true``.\n\nPlease be aware that having this value set to `true` can cause a fulfillment request routed to DC to have an empty shipping provider field if the tenant is also configured, skipping soft routing on an order injection.\n"
+        },
+        {
+          "info": {
+            "name": "createShippingOfferUpdateSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/config/routing/skip_shipping_offer_update_for_dc_orders",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sets the configuration that allows NewStore to skip updating shipping offers when orders\nare routed to a warehouse or DC for fulfillment.\n\nWe recommend setting this configuration to ``true``.\n"
+        },
+        {
+          "info": {
+            "name": "showExternalAtpSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/config/routing/uses_external_atp"
+          },
+          "docs": "Specifies if ATP is requested from an external source or from NewStore.\n\nIf set to ``true``, NewStore uses ATP from an external availability source such as\nan [external OMS](/product/processes/about-ffment/#external-oms-config).\nIf not set or set to ``false``, NewStore retrieves ATP based on\nthe stock on hand) for the products.\n"
+        },
+        {
+          "info": {
+            "name": "createExternalAtpSettings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/config/routing/uses_external_atp",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Specifies if ATP is requested from an external source or from NewStore.\n\nIf set to ``true``, NewStore uses ATP from an external availability source such as\nan [external OMS](/product/processes/about-ffment/#external-oms-config).\nIf not set or set to ``false``, NewStore retrieves ATP based on\nthe stock on hand for the products.\n"
+        },
+        {
+          "info": {
+            "name": "listShipmentLimits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/routing/shipments_limit"
+          },
+          "docs": "List all shipments limits. This method is limited to return a maximum of 10.000 shipments limits per tenant.\n"
+        },
+        {
+          "info": {
+            "name": "createShipmentLimits",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/routing/shipments_limit",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Upsert a shipment limit for a (`currency`,`service_level`) pair.\n\nAn order will be marked as a conflict if any limit on `limit_exceeded_when` is reached.\n\nIt is not allowed to have two limits with the same `shipment_count_gt` value.\n\nThe  `order_amount_lt` of a given limit should be greater than or equal to others limits with\nsmaller `shipment_count_gt`.\n"
+        },
+        {
+          "info": {
+            "name": "listOrderRoutingInsights",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/routing/insights/order/:order_id",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "A sales order UUID or external order ID"
+              }
+            ]
+          },
+          "docs": "Get insights on routing and shipment details for orders being processed in the NewStore platform.\nThis includes details such as:\n\n- Items in the order\n- The fulfillment location that is assigned to fulfill orders\n- The time when the shipment was dispatched from the fulfillment location\n- Order routing strategies\n- Service levels\n\nData is retained up to 45 days for successfully routed order items. Until order items have been successfully routed, related data is retained indefinitely.\n"
+        },
+        {
+          "info": {
+            "name": "showOrderInjectionConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/r/config/order_injection"
+          },
+          "docs": "Retrieves the current order injection configuration set up for your business. The response payload\nalso contains the current version of the configuration, the timestamp when it was\nlast updated, and who updated it.\n"
+        },
+        {
+          "info": {
+            "name": "createOrderInjectionConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/r/config/order_injection",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Use this method to create a new order injection configuration or completely replace the current\nconfiguration for your business. The version value in the query parameter must either be set to 1\nor it must match the latest version returned by the GET endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "updateOrderInjectionConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1/r/config/order_injection",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Updates the current order injection configuration for your business. The version value in the query parameter\nmust match the latest version returned by the GET endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "createInjectedOrder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/d/fulfill_order",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 20 requests per second.\n</div>\n\nCreates an order in NewStore by importing an order placed via an external system.\nThis is also referred as *injecting an order*.\n\nEach request creates a single order in NewStore.\n\nThe request payload depends on the o"
+        },
+        {
+          "info": {
+            "name": "listAuditEvents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/audit-events",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Only return events at or after this RFC 3339 timestamp (inclusive start of the time range). Required together with `to` for a fresh query; omit both when paginating with `cursor`, which resumes the original query and ignores them."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "Only return events at or before this RFC 3339 timestamp (inclusive end of the time range). Required together with `from` for a fresh query; omit both when paginating with `cursor`, which resumes the original query and ignores them."
+              },
+              {
+                "name": "resource",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by the resource type or identifier affected."
+              },
+              {
+                "name": "operation",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by the operation performed."
+              },
+              {
+                "name": "actor_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by the actor's NewStore user id (actor.user_id)."
+              },
+              {
+                "name": "actor_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by a case-insensitive substring of the actor's display name (actor.display_name)."
+              },
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by the identifier of the specific resource affected."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque pagination token. Pass the `next_cursor` from a previous response to fetch the next page; omit it to fetch the first page. The other filter parameters must be unchanged across a paged sequence."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of events to return in this page. Defaults to 25; capped at 100. Pagination via `cursor` walks the full result set this many at a time."
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 1 requests per second.\n</div>\n\nList audit events for the tenant."
+        },
+        {
+          "info": {
+            "name": "listStoreConfigs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/taxes/config/stores",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit number of results to this value."
+              },
+              {
+                "name": "tax_calculation_strategy",
+                "value": "",
+                "type": "query",
+                "description": "Tax calculation strategy to filter by."
+              },
+              {
+                "name": "next_page_key",
+                "value": "",
+                "type": "query",
+                "description": "Key to be used to get the next page of results."
+              }
+            ]
+          },
+          "docs": "List store tax calculation configurations with the given query."
+        },
+        {
+          "info": {
+            "name": "createStoreConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/taxes/config/stores",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create a tax calculation configuration for the specified store identifier."
+        },
+        {
+          "info": {
+            "name": "showStoreConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/taxes/config/stores/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Store identifier."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Specific configuration version number to fetch. If left empty, the latest version of the configuration will be returned."
+              },
+              {
+                "name": "merged_tenant_fallback",
+                "value": "",
+                "type": "query",
+                "description": "Flag that indicates if the store configuration should be merged with the tenant configuration to provide tenant level fallbacks to the store. This flag defaults to true if it is not sent."
+              }
+            ]
+          },
+          "docs": "Get tax configuration for the given store identifier."
+        },
+        {
+          "info": {
+            "name": "updateStoreConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/taxes/config/stores/:id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Store identifier."
+              }
+            ]
+          },
+          "docs": "Partially update the tax configuration of a store by merging the given fields with the existing fields."
+        },
+        {
+          "info": {
+            "name": "destroyStoreConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/taxes/config/stores/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Store identifier."
+              }
+            ]
+          },
+          "docs": "Delete tax configuration for the given store identifier."
+        },
+        {
+          "info": {
+            "name": "createTaxTransactionPreview",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/taxes/previews/transactions",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "store-id",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates a preview tax transaction by calculating the total amounts of cart items using the configured tax strategy, without storing the transaction. Intended to be used for testing and validation purposes."
+        },
+        {
+          "info": {
+            "name": "showOrderTaxTransaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/taxes/transactions/:orderId",
+            "headers": [
+              {
+                "name": "store-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier."
+              }
+            ]
+          },
+          "docs": "Get tax transaction for the given order identifier."
+        },
+        {
+          "info": {
+            "name": "updateOrderTaxTransaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/taxes/transactions/:orderId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "store-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier."
+              }
+            ]
+          },
+          "docs": "Update tax transaction for the given order identifier."
+        },
+        {
+          "info": {
+            "name": "showReturnTaxTransaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/taxes/transactions/:orderId/returns/:returnId",
+            "headers": [
+              {
+                "name": "store-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier."
+              },
+              {
+                "name": "returnId",
+                "value": "",
+                "type": "path",
+                "description": "Return identifier."
+              }
+            ]
+          },
+          "docs": "Get tax transaction for the given return and order identifiers."
+        },
+        {
+          "info": {
+            "name": "showTenantConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/taxes/config",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Specific configuration version number to fetch. If left empty, the latest version of the configuration will be returned."
+              }
+            ]
+          },
+          "docs": "Get tax calculation configuration of your business."
+        },
+        {
+          "info": {
+            "name": "createTenantConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/taxes/config",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create tax calculation configuration for your business."
+        },
+        {
+          "info": {
+            "name": "updateTenantConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/taxes/config",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Partially update the tax configuration of your business by merging the given fields with the existing fields."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

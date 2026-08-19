@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address Inventory Configuration API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Inventory Configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showInventoryConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/inventory/config",
+            "params": [
+              {
+                "name": "store_id",
+                "value": "",
+                "type": "query",
+                "description": "Store Identifier for store configuration at store level."
+              }
+            ]
+          },
+          "docs": "Returns the current inventory configuration."
+        },
+        {
+          "info": {
+            "name": "replaceInventoryConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/inventory/config",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sets the configuration. Note: you can pass an * to enable store-dependent features."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

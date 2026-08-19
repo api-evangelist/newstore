@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address stock API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "stock",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listAtpInsights",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/stock/insights",
+            "params": [
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "The product ID of the item."
+              },
+              {
+                "name": "fulfillment_node_id",
+                "value": "",
+                "type": "query",
+                "description": "The fulfillment node ID of the store/warehouse."
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 90 requests per second.\n</div>\n\nRetrieves the allocations and reservations by ATP keys in your business.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

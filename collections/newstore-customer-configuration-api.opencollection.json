@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address customer-configuration API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "customer-configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/customer/config"
+          },
+          "docs": "Returns configuration settings for the tenant, including BYO CRM settings.\n"
+        },
+        {
+          "info": {
+            "name": "updateConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/customer/config",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Updates configuration settings for the tenant, including BYO CRM settings.\n\nNote that the following restrictions exist:\n\n- BYO CRM and `nom_consumer_profiles_merge` can't be enabled at the same time.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

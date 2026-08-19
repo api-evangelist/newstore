@@ -1,0 +1,124 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address tax-transactions API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "tax-transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "createTaxTransactionPreview",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/taxes/previews/transactions",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "store-id",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates a preview tax transaction by calculating the total amounts of cart items using the configured tax strategy, without storing the transaction. Intended to be used for testing and validation purposes."
+        },
+        {
+          "info": {
+            "name": "showOrderTaxTransaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/taxes/transactions/:orderId",
+            "headers": [
+              {
+                "name": "store-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier."
+              }
+            ]
+          },
+          "docs": "Get tax transaction for the given order identifier."
+        },
+        {
+          "info": {
+            "name": "updateOrderTaxTransaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/taxes/transactions/:orderId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "store-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier."
+              }
+            ]
+          },
+          "docs": "Update tax transaction for the given order identifier."
+        },
+        {
+          "info": {
+            "name": "showReturnTaxTransaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/taxes/transactions/:orderId/returns/:returnId",
+            "headers": [
+              {
+                "name": "store-id",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier."
+              },
+              {
+                "name": "returnId",
+                "value": "",
+                "type": "path",
+                "description": "Return identifier."
+              }
+            ]
+          },
+          "docs": "Get tax transaction for the given return and order identifiers."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

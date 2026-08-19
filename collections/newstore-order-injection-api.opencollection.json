@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address order-injection API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "order-injection",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "createInjectedOrder",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/d/fulfill_order",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 20 requests per second.\n</div>\n\nCreates an order in NewStore by importing an order placed via an external system.\nThis is also referred as *injecting an order*.\n\nEach request creates a single order in NewStore.\n\nThe request payload depends on the o"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address order-injection-config API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "order-injection-config",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showOrderInjectionConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/r/config/order_injection"
+          },
+          "docs": "Retrieves the current order injection configuration set up for your business. The response payload\nalso contains the current version of the configuration, the timestamp when it was\nlast updated, and who updated it.\n"
+        },
+        {
+          "info": {
+            "name": "createOrderInjectionConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/r/config/order_injection",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Use this method to create a new order injection configuration or completely replace the current\nconfiguration for your business. The version value in the query parameter must either be set to 1\nor it must match the latest version returned by the GET endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "updateOrderInjectionConfiguration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1/r/config/order_injection",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Updates the current order injection configuration for your business. The version value in the query parameter\nmust match the latest version returned by the GET endpoint.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

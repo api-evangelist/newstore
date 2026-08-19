@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address audit-events API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "audit-events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listAuditEvents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/audit-events",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "Only return events at or after this RFC 3339 timestamp (inclusive start of the time range). Required together with `to` for a fresh query; omit both when paginating with `cursor`, which resumes the original query and ignores them."
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "Only return events at or before this RFC 3339 timestamp (inclusive end of the time range). Required together with `from` for a fresh query; omit both when paginating with `cursor`, which resumes the original query and ignores them."
+              },
+              {
+                "name": "resource",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by the resource type or identifier affected."
+              },
+              {
+                "name": "operation",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by the operation performed."
+              },
+              {
+                "name": "actor_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by the actor's NewStore user id (actor.user_id)."
+              },
+              {
+                "name": "actor_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by a case-insensitive substring of the actor's display name (actor.display_name)."
+              },
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by the identifier of the specific resource affected."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque pagination token. Pass the `next_cursor` from a previous response to fetch the next page; omit it to fetch the first page. The other filter parameters must be unchanged across a paged sequence."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of events to return in this page. Defaults to 25; capped at 100. Pagination via `cursor` walks the full result set this many at a time."
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 1 requests per second.\n</div>\n\nList audit events for the tenant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

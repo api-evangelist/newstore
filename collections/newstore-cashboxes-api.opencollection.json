@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address cashboxes API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "cashboxes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listCashboxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stores/:storeId/cashboxes",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List cashboxes for the given store identifier."
+        },
+        {
+          "info": {
+            "name": "createCashbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/stores/:storeId/cashboxes",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Activate cashbox by using the given cashbox configuration for the given store identifier."
+        },
+        {
+          "info": {
+            "name": "showCashbox",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/stores/:storeId/cashboxes/:cashboxId",
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cashboxId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get cashbox for the given store and cashbox identifiers."
+        },
+        {
+          "info": {
+            "name": "createCashboxRelease",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/stores/:storeId/cashboxes/:cashboxId/release",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "storeId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cashboxId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\n[Italy] Create a release for the deactivated fiscal pri"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

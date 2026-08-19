@@ -1,0 +1,2809 @@
+{
+  "item": [
+    {
+      "id": "2ece968c-bc51-4512-b973-1ac9dd43c83d",
+      "name": "tax-transactions",
+      "description": {
+        "content": "Tax transactions",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6564500d-0845-4f69-94d7-d95e5914f25e",
+          "name": "createTaxTransactionPreview",
+          "request": {
+            "name": "createTaxTransactionPreview",
+            "description": {
+              "content": "Creates a preview tax transaction by calculating the total amounts of cart items using the configured tax strategy, without storing the transaction. Intended to be used for testing and validation purposes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "taxes",
+                "previews",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Store identifier.",
+                "key": "store-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [],\n  \"order_id\": \"<string>\",\n  \"calculation_mode\": \"<string>\",\n  \"exemption_class\": \"<string>\",\n  \"exemption_number\": \"<string>\",\n  \"return_id\": \"<string>\",\n  \"tax_date\": \"<dateTime>\",\n  \"tax_exempt\": false,\n  \"transaction_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "85fe8cf7-afed-4af4-bc2c-c769d95946ab",
+              "name": "Tax transaction.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "previews",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [],\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\",\n  \"calculation_mode\": \"STANDARD\",\n  \"exemption_class\": \"CHARITY_ORGANIZATION\",\n  \"exemption_number\": \"<string>\",\n  \"return_id\": \"4fbcc8b3-8511-4ad1-8c9f-96b7c08db664\",\n  \"tax_date\": \"2023-09-25T01:23:45Z\",\n  \"tax_exempt\": false,\n  \"transaction_type\": \"SALE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"document_id\": \"123\",\n  \"items\": [\n    {\n      \"item_price\": 200,\n      \"price_line_item\": 200,\n      \"price_net\": 180,\n      \"price_tax\": 20,\n      \"quantity\": 1,\n      \"shipping_address\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"shipping_origin\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"tax_class\": \"AAA000\",\n      \"tax_method\": \"vat_excluded\",\n      \"tax_rates\": [\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        },\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        }\n      ],\n      \"type\": \"product\",\n      \"consumer_uuid\": \"string\",\n      \"currency_consumer\": \"USD\",\n      \"extended_attributes\": [\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        },\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        }\n      ],\n      \"handling_charges\": 10,\n      \"id\": \"123\",\n      \"product_id\": \"123\",\n      \"product_name\": \"Metallica shirt\",\n      \"product_sku\": \"AIk-0790\"\n    },\n    {\n      \"item_price\": 200,\n      \"price_line_item\": 200,\n      \"price_net\": 180,\n      \"price_tax\": 20,\n      \"quantity\": 1,\n      \"shipping_address\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"shipping_origin\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"tax_class\": \"AAA000\",\n      \"tax_method\": \"vat_excluded\",\n      \"tax_rates\": [\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        },\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        }\n      ],\n      \"type\": \"product\",\n      \"consumer_uuid\": \"string\",\n      \"currency_consumer\": \"USD\",\n      \"extended_attributes\": [\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        },\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        }\n      ],\n      \"handling_charges\": 10,\n      \"id\": \"123\",\n      \"product_id\": \"123\",\n      \"product_name\": \"Metallica shirt\",\n      \"product_sku\": \"AIk-0790\"\n    }\n  ],\n  \"totals\": {\n    \"discount_total\": 5,\n    \"grand_total\": 200,\n    \"net_total\": 180,\n    \"shipping_tax_amount\": 5,\n    \"shipping_total\": 5,\n    \"subtotal\": 180,\n    \"tax_rates_summary\": [\n      {\n        \"amount\": 10,\n        \"country_code\": \"US\",\n        \"rate\": 0.19,\n        \"tax_name\": \"Colorado retail delivery fee\",\n        \"exempt_amount\": 10,\n        \"tax_status\": \"EXEMPT\",\n        \"taxable_amount\": 10\n      },\n      {\n        \"amount\": 10,\n        \"country_code\": \"US\",\n        \"rate\": 0.19,\n        \"tax_name\": \"Colorado retail delivery fee\",\n        \"exempt_amount\": 10,\n        \"tax_status\": \"EXEMPT\",\n        \"taxable_amount\": 10\n      }\n    ],\n    \"tax_strategy\": \"fixedrate\",\n    \"tax_total\": 20\n  },\n  \"calculation_mode\": \"STANDARD\",\n  \"exemption_class\": \"CHARITY_ORGANIZATION\",\n  \"exemption_number\": \"string\",\n  \"fallback_error\": {\n    \"error_code\": \"taxes_address_validation_failed\",\n    \"message\": \"Avalara request returned an incomplete or invalid address error\",\n    \"original_tax_provider\": \"fixedrate\"\n  },\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\",\n  \"return_id\": \"4fbcc8b3-8511-4ad1-8c9f-96b7c08db664\",\n  \"tax_exempt\": false,\n  \"transaction_type\": \"SALE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1bd2ae1d-ddd3-42c0-884a-820595cfd662",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "previews",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [],\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\",\n  \"calculation_mode\": \"STANDARD\",\n  \"exemption_class\": \"CHARITY_ORGANIZATION\",\n  \"exemption_number\": \"<string>\",\n  \"return_id\": \"4fbcc8b3-8511-4ad1-8c9f-96b7c08db664\",\n  \"tax_date\": \"2023-09-25T01:23:45Z\",\n  \"tax_exempt\": false,\n  \"transaction_type\": \"SALE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 457,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0925bceb-d6a3-4192-aee9-bd630b2fe3e0",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "previews",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [],\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\",\n  \"calculation_mode\": \"STANDARD\",\n  \"exemption_class\": \"CHARITY_ORGANIZATION\",\n  \"exemption_number\": \"<string>\",\n  \"return_id\": \"4fbcc8b3-8511-4ad1-8c9f-96b7c08db664\",\n  \"tax_date\": \"2023-09-25T01:23:45Z\",\n  \"tax_exempt\": false,\n  \"transaction_type\": \"SALE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5a68912-6e25-4e7a-939c-fc14d38cae5d",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "previews",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [],\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\",\n  \"calculation_mode\": \"STANDARD\",\n  \"exemption_class\": \"CHARITY_ORGANIZATION\",\n  \"exemption_number\": \"<string>\",\n  \"return_id\": \"4fbcc8b3-8511-4ad1-8c9f-96b7c08db664\",\n  \"tax_date\": \"2023-09-25T01:23:45Z\",\n  \"tax_exempt\": false,\n  \"transaction_type\": \"SALE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "52609081-7c88-4ce1-ae7a-a181d1ab4635",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "previews",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [],\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\",\n  \"calculation_mode\": \"STANDARD\",\n  \"exemption_class\": \"CHARITY_ORGANIZATION\",\n  \"exemption_number\": \"<string>\",\n  \"return_id\": \"4fbcc8b3-8511-4ad1-8c9f-96b7c08db664\",\n  \"tax_date\": \"2023-09-25T01:23:45Z\",\n  \"tax_exempt\": false,\n  \"transaction_type\": \"SALE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9908c767-bffd-4c93-98d3-c2b72ccdd3cc",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "previews",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [],\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\",\n  \"calculation_mode\": \"STANDARD\",\n  \"exemption_class\": \"CHARITY_ORGANIZATION\",\n  \"exemption_number\": \"<string>\",\n  \"return_id\": \"4fbcc8b3-8511-4ad1-8c9f-96b7c08db664\",\n  \"tax_date\": \"2023-09-25T01:23:45Z\",\n  \"tax_exempt\": false,\n  \"transaction_type\": \"SALE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83aa193a-f8dc-4fc9-92fb-bfe7c20842b3",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "previews",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [],\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\",\n  \"calculation_mode\": \"STANDARD\",\n  \"exemption_class\": \"CHARITY_ORGANIZATION\",\n  \"exemption_number\": \"<string>\",\n  \"return_id\": \"4fbcc8b3-8511-4ad1-8c9f-96b7c08db664\",\n  \"tax_date\": \"2023-09-25T01:23:45Z\",\n  \"tax_exempt\": false,\n  \"transaction_type\": \"SALE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de90ac90-f615-4fd0-9eb8-a0c70d6a051f",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "previews",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [],\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\",\n  \"calculation_mode\": \"STANDARD\",\n  \"exemption_class\": \"CHARITY_ORGANIZATION\",\n  \"exemption_number\": \"<string>\",\n  \"return_id\": \"4fbcc8b3-8511-4ad1-8c9f-96b7c08db664\",\n  \"tax_date\": \"2023-09-25T01:23:45Z\",\n  \"tax_exempt\": false,\n  \"transaction_type\": \"SALE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4135b2e8-06c7-449d-be32-899d032f9441",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "previews",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"items\": [],\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\",\n  \"calculation_mode\": \"STANDARD\",\n  \"exemption_class\": \"CHARITY_ORGANIZATION\",\n  \"exemption_number\": \"<string>\",\n  \"return_id\": \"4fbcc8b3-8511-4ad1-8c9f-96b7c08db664\",\n  \"tax_date\": \"2023-09-25T01:23:45Z\",\n  \"tax_exempt\": false,\n  \"transaction_type\": \"SALE\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bb70c17a-afa2-4bf2-bdf5-38d09df5460e",
+          "name": "showOrderTaxTransaction",
+          "request": {
+            "name": "showOrderTaxTransaction",
+            "description": {
+              "content": "Get tax transaction for the given order identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "taxes",
+                "transactions",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) Order identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Store identifier.",
+                "key": "store-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6cf652f4-8a55-4bd7-ae13-cc9c86ceb7a4",
+              "name": "Tax transaction.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"document_id\": \"123\",\n  \"items\": [\n    {\n      \"item_price\": 200,\n      \"price_line_item\": 200,\n      \"price_net\": 180,\n      \"price_tax\": 20,\n      \"quantity\": 1,\n      \"shipping_address\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"shipping_origin\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"tax_class\": \"AAA000\",\n      \"tax_method\": \"vat_excluded\",\n      \"tax_rates\": [\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        },\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        }\n      ],\n      \"type\": \"product\",\n      \"consumer_uuid\": \"string\",\n      \"currency_consumer\": \"USD\",\n      \"extended_attributes\": [\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        },\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        }\n      ],\n      \"handling_charges\": 10,\n      \"id\": \"123\",\n      \"product_id\": \"123\",\n      \"product_name\": \"Metallica shirt\",\n      \"product_sku\": \"AIk-0790\"\n    },\n    {\n      \"item_price\": 200,\n      \"price_line_item\": 200,\n      \"price_net\": 180,\n      \"price_tax\": 20,\n      \"quantity\": 1,\n      \"shipping_address\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"shipping_origin\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"tax_class\": \"AAA000\",\n      \"tax_method\": \"vat_excluded\",\n      \"tax_rates\": [\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        },\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        }\n      ],\n      \"type\": \"product\",\n      \"consumer_uuid\": \"string\",\n      \"currency_consumer\": \"USD\",\n      \"extended_attributes\": [\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        },\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        }\n      ],\n      \"handling_charges\": 10,\n      \"id\": \"123\",\n      \"product_id\": \"123\",\n      \"product_name\": \"Metallica shirt\",\n      \"product_sku\": \"AIk-0790\"\n    }\n  ],\n  \"totals\": {\n    \"discount_total\": 5,\n    \"grand_total\": 200,\n    \"net_total\": 180,\n    \"shipping_tax_amount\": 5,\n    \"shipping_total\": 5,\n    \"subtotal\": 180,\n    \"tax_rates_summary\": [\n      {\n        \"amount\": 10,\n        \"country_code\": \"US\",\n        \"rate\": 0.19,\n        \"tax_name\": \"Colorado retail delivery fee\",\n        \"exempt_amount\": 10,\n        \"tax_status\": \"EXEMPT\",\n        \"taxable_amount\": 10\n      },\n      {\n        \"amount\": 10,\n        \"country_code\": \"US\",\n        \"rate\": 0.19,\n        \"tax_name\": \"Colorado retail delivery fee\",\n        \"exempt_amount\": 10,\n        \"tax_status\": \"EXEMPT\",\n        \"taxable_amount\": 10\n      }\n    ],\n    \"tax_strategy\": \"fixedrate\",\n    \"tax_total\": 20\n  },\n  \"calculation_mode\": \"STANDARD\",\n  \"exemption_class\": \"CHARITY_ORGANIZATION\",\n  \"exemption_number\": \"string\",\n  \"fallback_error\": {\n    \"error_code\": \"taxes_address_validation_failed\",\n    \"message\": \"Avalara request returned an incomplete or invalid address error\",\n    \"original_tax_provider\": \"fixedrate\"\n  },\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\",\n  \"return_id\": \"4fbcc8b3-8511-4ad1-8c9f-96b7c08db664\",\n  \"tax_exempt\": false,\n  \"transaction_type\": \"SALE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dbc373aa-a382-4154-8821-d53e24d80212",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ab53b78-253b-4c11-99aa-e3449f470c99",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1be91298-6ecb-44ef-88b5-a42b958491bb",
+              "name": "Tax transaction not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f17d6c1-a3e6-4573-85dd-9371171a02a2",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef9f9b56-35bf-4b46-8221-4ae62e7d68b7",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe16bf3d-9c82-4560-a3be-a217ca7a6c20",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8417ca18-f95b-44d4-b456-f9796ab78bee",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b10e0517-283e-4695-9ab6-f2b220426157",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "64e7d056-53d0-4e9d-897b-04f6202279c6",
+          "name": "updateOrderTaxTransaction",
+          "request": {
+            "name": "updateOrderTaxTransaction",
+            "description": {
+              "content": "Update tax transaction for the given order identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "taxes",
+                "transactions",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) Order identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Store identifier.",
+                "key": "store-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"order_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9562a9f7-33b4-45c9-998d-c0fb8fd2d5ab",
+              "name": "Tax transaction.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"document_id\": \"123\",\n  \"items\": [\n    {\n      \"item_price\": 200,\n      \"price_line_item\": 200,\n      \"price_net\": 180,\n      \"price_tax\": 20,\n      \"quantity\": 1,\n      \"shipping_address\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"shipping_origin\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"tax_class\": \"AAA000\",\n      \"tax_method\": \"vat_excluded\",\n      \"tax_rates\": [\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        },\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        }\n      ],\n      \"type\": \"product\",\n      \"consumer_uuid\": \"string\",\n      \"currency_consumer\": \"USD\",\n      \"extended_attributes\": [\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        },\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        }\n      ],\n      \"handling_charges\": 10,\n      \"id\": \"123\",\n      \"product_id\": \"123\",\n      \"product_name\": \"Metallica shirt\",\n      \"product_sku\": \"AIk-0790\"\n    },\n    {\n      \"item_price\": 200,\n      \"price_line_item\": 200,\n      \"price_net\": 180,\n      \"price_tax\": 20,\n      \"quantity\": 1,\n      \"shipping_address\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"shipping_origin\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"tax_class\": \"AAA000\",\n      \"tax_method\": \"vat_excluded\",\n      \"tax_rates\": [\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        },\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        }\n      ],\n      \"type\": \"product\",\n      \"consumer_uuid\": \"string\",\n      \"currency_consumer\": \"USD\",\n      \"extended_attributes\": [\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        },\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        }\n      ],\n      \"handling_charges\": 10,\n      \"id\": \"123\",\n      \"product_id\": \"123\",\n      \"product_name\": \"Metallica shirt\",\n      \"product_sku\": \"AIk-0790\"\n    }\n  ],\n  \"totals\": {\n    \"discount_total\": 5,\n    \"grand_total\": 200,\n    \"net_total\": 180,\n    \"shipping_tax_amount\": 5,\n    \"shipping_total\": 5,\n    \"subtotal\": 180,\n    \"tax_rates_summary\": [\n      {\n        \"amount\": 10,\n        \"country_code\": \"US\",\n        \"rate\": 0.19,\n        \"tax_name\": \"Colorado retail delivery fee\",\n        \"exempt_amount\": 10,\n        \"tax_status\": \"EXEMPT\",\n        \"taxable_amount\": 10\n      },\n      {\n        \"amount\": 10,\n        \"country_code\": \"US\",\n        \"rate\": 0.19,\n        \"tax_name\": \"Colorado retail delivery fee\",\n        \"exempt_amount\": 10,\n        \"tax_status\": \"EXEMPT\",\n        \"taxable_amount\": 10\n      }\n    ],\n    \"tax_strategy\": \"fixedrate\",\n    \"tax_total\": 20\n  },\n  \"calculation_mode\": \"STANDARD\",\n  \"exemption_class\": \"CHARITY_ORGANIZATION\",\n  \"exemption_number\": \"string\",\n  \"fallback_error\": {\n    \"error_code\": \"taxes_address_validation_failed\",\n    \"message\": \"Avalara request returned an incomplete or invalid address error\",\n    \"original_tax_provider\": \"fixedrate\"\n  },\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\",\n  \"return_id\": \"4fbcc8b3-8511-4ad1-8c9f-96b7c08db664\",\n  \"tax_exempt\": false,\n  \"transaction_type\": \"SALE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e5037e9-2cd5-497f-ae3a-a0fab84b269b",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf204d01-2510-4bb0-9e15-692b373aa7b7",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60b8d036-7572-4ac0-8f64-670c0e59ec97",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a29c25f1-87bd-4a02-91c8-d0f5b086d24f",
+              "name": "Tax transaction not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e735b75-7efa-4a3a-8a26-e592bd702cda",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6f97797-0765-459d-b323-22782a77e0bb",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a004c465-6be8-4852-90c8-0166e0db3ba0",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40a537d8-d7aa-4054-b517-4256ccc9d8e4",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce188f87-0a57-42ad-9422-2fb72eef30ac",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "192543d2-ce3d-49a9-b530-6c9a57913e05",
+          "name": "showReturnTaxTransaction",
+          "request": {
+            "name": "showReturnTaxTransaction",
+            "description": {
+              "content": "Get tax transaction for the given return and order identifiers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "taxes",
+                "transactions",
+                ":orderId",
+                "returns",
+                ":returnId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) Order identifier."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "returnId",
+                  "description": "(Required) Return identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Store identifier.",
+                "key": "store-id",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/problem+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "catalog:import-schemas:read catalog:import-schemas:write catalog:pricebook-export:read catalog:product-export:read checkout:carts:read checkout:carts:write clienteling:profile:read customer:profile:read customer:profile:write newstore:configuration:read newstore:configuration:write fiscalization:orders:read fiscalization:orders:write shipments:read iam:providers:read iam:providers:write iam:roles:read iam:roles:write iam:users:read iam:users:write inventory:reservations:read inventory:reservations:write promotions:config:read promotions:config:write promotions:reason-codes:read promotions:reason-codes:write audit-events:read taxes:preview-transactions:write taxes:transactions:read"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://id.p.newstore.net/auth/realms/dodici-demo/protocol/openid-connect/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "25a80e43-c03d-4b5d-a8d1-013b74f0395d",
+              "name": "Tax transaction.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) Return identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"document_id\": \"123\",\n  \"items\": [\n    {\n      \"item_price\": 200,\n      \"price_line_item\": 200,\n      \"price_net\": 180,\n      \"price_tax\": 20,\n      \"quantity\": 1,\n      \"shipping_address\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"shipping_origin\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"tax_class\": \"AAA000\",\n      \"tax_method\": \"vat_excluded\",\n      \"tax_rates\": [\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        },\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        }\n      ],\n      \"type\": \"product\",\n      \"consumer_uuid\": \"string\",\n      \"currency_consumer\": \"USD\",\n      \"extended_attributes\": [\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        },\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        }\n      ],\n      \"handling_charges\": 10,\n      \"id\": \"123\",\n      \"product_id\": \"123\",\n      \"product_name\": \"Metallica shirt\",\n      \"product_sku\": \"AIk-0790\"\n    },\n    {\n      \"item_price\": 200,\n      \"price_line_item\": 200,\n      \"price_net\": 180,\n      \"price_tax\": 20,\n      \"quantity\": 1,\n      \"shipping_address\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"shipping_origin\": {\n        \"address_line_1\": \"81 Elk Rd Little\",\n        \"address_line_2\": \"string\",\n        \"city\": \"Albany\",\n        \"country_code\": \"string\",\n        \"province\": \"New York\",\n        \"state\": \"New York\",\n        \"store_id\": \"Munich-store\",\n        \"zip_code\": \"12207\"\n      },\n      \"tax_class\": \"AAA000\",\n      \"tax_method\": \"vat_excluded\",\n      \"tax_rates\": [\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        },\n        {\n          \"amount\": 10,\n          \"country_code\": \"US\",\n          \"rate\": 0.19,\n          \"tax_name\": \"Colorado retail delivery fee\",\n          \"exempt_amount\": 10,\n          \"tax_status\": \"EXEMPT\",\n          \"taxable_amount\": 10\n        }\n      ],\n      \"type\": \"product\",\n      \"consumer_uuid\": \"string\",\n      \"currency_consumer\": \"USD\",\n      \"extended_attributes\": [\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        },\n        {\n          \"name\": \"engraving\",\n          \"value\": \"For you.\"\n        }\n      ],\n      \"handling_charges\": 10,\n      \"id\": \"123\",\n      \"product_id\": \"123\",\n      \"product_name\": \"Metallica shirt\",\n      \"product_sku\": \"AIk-0790\"\n    }\n  ],\n  \"totals\": {\n    \"discount_total\": 5,\n    \"grand_total\": 200,\n    \"net_total\": 180,\n    \"shipping_tax_amount\": 5,\n    \"shipping_total\": 5,\n    \"subtotal\": 180,\n    \"tax_rates_summary\": [\n      {\n        \"amount\": 10,\n        \"country_code\": \"US\",\n        \"rate\": 0.19,\n        \"tax_name\": \"Colorado retail delivery fee\",\n        \"exempt_amount\": 10,\n        \"tax_status\": \"EXEMPT\",\n        \"taxable_amount\": 10\n      },\n      {\n        \"amount\": 10,\n        \"country_code\": \"US\",\n        \"rate\": 0.19,\n        \"tax_name\": \"Colorado retail delivery fee\",\n        \"exempt_amount\": 10,\n        \"tax_status\": \"EXEMPT\",\n        \"taxable_amount\": 10\n      }\n    ],\n    \"tax_strategy\": \"fixedrate\",\n    \"tax_total\": 20\n  },\n  \"calculation_mode\": \"STANDARD\",\n  \"exemption_class\": \"CHARITY_ORGANIZATION\",\n  \"exemption_number\": \"string\",\n  \"fallback_error\": {\n    \"error_code\": \"taxes_address_validation_failed\",\n    \"message\": \"Avalara request returned an incomplete or invalid address error\",\n    \"original_tax_provider\": \"fixedrate\"\n  },\n  \"order_id\": \"56bb9975-f43a-4eee-8fb2-200957eb0624\",\n  \"return_id\": \"4fbcc8b3-8511-4ad1-8c9f-96b7c08db664\",\n  \"tax_exempt\": false,\n  \"transaction_type\": \"SALE\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a28d279a-4a4d-4c23-9f6f-ddd05d65bad4",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) Return identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5328f2d-89b8-4c39-8cff-87e276a047c9",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) Return identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83ba6c1f-a190-400b-9c73-73336f2f9948",
+              "name": "Tax transaction not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) Return identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b306a671-9a8e-4618-a344-00cfb834561b",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) Return identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Retry-After",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27b44d90-468c-48ce-b48b-e0fcfe5d7ef9",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) Return identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec3635d3-bf70-4a20-8fa0-937c66c59bcc",
+              "name": "Bad Gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) Return identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30cef46b-fcaa-46f7-9cf7-b5538e25da0f",
+              "name": "Service Unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) Return identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c22a929-6250-4a0c-8781-ccbab994bcfd",
+              "name": "Unexpected error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "taxes",
+                    "transactions",
+                    ":orderId",
+                    "returns",
+                    ":returnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) Order identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) Return identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Store identifier.",
+                    "key": "store-id",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"some description for the error situation\",\n  \"error_code\": \"string\",\n  \"instance\": \"/some/uri-reference#specific-occurrence-context\",\n  \"message\": \"string\",\n  \"messages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"request_id\": \"string\",\n  \"status\": 345,\n  \"title\": \"some title for the error situation\",\n  \"type\": \"/some/uri-reference\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dodici-demo.p.newstore.net",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7d045a33-6ba4-44f0-ac9b-efe13c7662c4",
+    "name": "NewStore address tax-transactions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "NewStore public APIs\n\nContact Support:\n Name: NewStore API Support\n Email: support@newstore.com",
+      "type": "text/plain"
+    }
+  }
+}

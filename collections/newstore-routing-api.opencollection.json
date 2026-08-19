@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address routing API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "routing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listOrderRoutingInsights",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/routing/insights/order/:order_id",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "A sales order UUID or external order ID"
+              }
+            ]
+          },
+          "docs": "Get insights on routing and shipment details for orders being processed in the NewStore platform.\nThis includes details such as:\n\n- Items in the order\n- The fulfillment location that is assigned to fulfill orders\n- The time when the shipment was dispatched from the fulfillment location\n- Order routing strategies\n- Service levels\n\nData is retained up to 45 days for successfully routed order items. Until order items have been successfully routed, related data is retained indefinitely.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

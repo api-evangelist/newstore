@@ -1,0 +1,191 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address cart API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "cart",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "createCart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/checkout/carts",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates a new empty cart."
+        },
+        {
+          "info": {
+            "name": "showCart",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/checkout/carts/:cartId",
+            "params": [
+              {
+                "name": "cartId",
+                "value": "",
+                "type": "path",
+                "description": "Cart ID"
+              }
+            ]
+          },
+          "docs": "Returns a cart by its ID."
+        },
+        {
+          "info": {
+            "name": "updateCart",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/checkout/carts/:cartId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cartId",
+                "value": "",
+                "type": "path",
+                "description": "Cart ID"
+              }
+            ]
+          },
+          "docs": "Changes a cart."
+        },
+        {
+          "info": {
+            "name": "createLineItem",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/checkout/carts/:cartId/items",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cartId",
+                "value": "",
+                "type": "path",
+                "description": "Cart ID"
+              }
+            ]
+          },
+          "docs": "Add a line item to a cart"
+        },
+        {
+          "info": {
+            "name": "updateLineItem",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/checkout/carts/:cartId/items/:lineItemId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cartId",
+                "value": "",
+                "type": "path",
+                "description": "Cart ID"
+              },
+              {
+                "name": "lineItemId",
+                "value": "",
+                "type": "path",
+                "description": "Line Item ID"
+              }
+            ]
+          },
+          "docs": "Updates cart line item details"
+        },
+        {
+          "info": {
+            "name": "destroyLineItem",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/checkout/carts/:cartId/items/:lineItemId",
+            "params": [
+              {
+                "name": "cartId",
+                "value": "",
+                "type": "path",
+                "description": "Cart ID"
+              },
+              {
+                "name": "lineItemId",
+                "value": "",
+                "type": "path",
+                "description": "Line Item ID"
+              }
+            ]
+          },
+          "docs": "Removes a line item and all its add-ons from the cart."
+        },
+        {
+          "info": {
+            "name": "createAddOnLineItem",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/checkout/carts/:cartId/items/:lineItemId/add-ons",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cartId",
+                "value": "",
+                "type": "path",
+                "description": "Cart ID"
+              },
+              {
+                "name": "lineItemId",
+                "value": "",
+                "type": "path",
+                "description": "Parent Line Item ID"
+              }
+            ]
+          },
+          "docs": "Create an add-on for a line item on a cart"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

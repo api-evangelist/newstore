@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address tenant-tax-configuration API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "tenant-tax-configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showTenantConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/taxes/config",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Specific configuration version number to fetch. If left empty, the latest version of the configuration will be returned."
+              }
+            ]
+          },
+          "docs": "Get tax calculation configuration of your business."
+        },
+        {
+          "info": {
+            "name": "createTenantConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/taxes/config",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create tax calculation configuration for your business."
+        },
+        {
+          "info": {
+            "name": "updateTenantConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/taxes/config",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Partially update the tax configuration of your business by merging the given fields with the existing fields."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

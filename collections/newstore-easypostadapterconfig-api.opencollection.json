@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address EasypostAdapterConfig API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "EasypostAdapterConfig",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showEasypostAdapterConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/adapters/config"
+          },
+          "docs": "Retrieves the shipping configuration of the retailer that is integrated with the EasyPost adapter. Credentials are redacted but you can still push the configuration using the PUT endpoint with the REDACTED value: we will use the current value. A new value will be validated before saving the configuration."
+        },
+        {
+          "info": {
+            "name": "replaceEasypostAdapterConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/fulfillment/adapters/config",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates or updates the shipping configuration of the retailer that is integrated with the EasyPost adapter. Any current data in the existing configuration is overwritten using this request.\n\nA few notes on this configuration:\n\n* When an account has a large number of carrier accounts, please do associate a Fulfillment Node to a Carrier Account. Not doing so will result in long response time, waste of resources, extra easypost charges and possibly order injection issues.\n* Once the easypost API Ke"
+        },
+        {
+          "info": {
+            "name": "destroyEasypostAdapterConfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/fulfillment/adapters/config"
+          },
+          "docs": "Deletes the shipping configuration of the retailer that is integrated with the EasyPost adapter."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

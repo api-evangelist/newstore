@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address providers API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "providers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "replaceProviderLocationMapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/payment/providers/:newstore/locations/:location/mappings",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "newstore",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "location",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "replaceProviderLocationMapping"
+        },
+        {
+          "info": {
+            "name": "destroyProviderLocationMapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/payment/providers/:newstore/locations/:location/mappings",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "newstore",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "location",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\n"
+        },
+        {
+          "info": {
+            "name": "listProviderLocationMappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/payment/providers/:newstore/locations/mappings",
+            "params": [
+              {
+                "name": "newstore",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "listProviderLocationMappings"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

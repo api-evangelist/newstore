@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address shipping-option-audits API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "shipping-option-audits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listShippingOptionAudits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/shipping-audits",
+            "params": [
+              {
+                "name": "search_from",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "search_key",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "listShippingOptionAudits"
+        },
+        {
+          "info": {
+            "name": "showShippingOptionAudit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/fulfillment/shipping-audits/:audit_id",
+            "params": [
+              {
+                "name": "audit_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "showShippingOptionAudit"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

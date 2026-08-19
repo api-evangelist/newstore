@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address Pricebook export API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pricebook export",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showPricebookExport",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/catalog/exports/catalogs/:catalog/pricebooks/:pricebook",
+            "params": [
+              {
+                "name": "catalog",
+                "value": "",
+                "type": "path",
+                "description": "The catalog the pricebook, the user wants to export, belongs to."
+              },
+              {
+                "name": "pricebook",
+                "value": "",
+                "type": "path",
+                "description": "The pricebook the user wants to export."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "The desired response format, defaults to 'csv'."
+              }
+            ]
+          },
+          "docs": "Use this resource to export a specific price book. The export can be requested in CSV or SQLite format.\nThe export contains the following fields:\n\n| product_id (string) | price (float32) | currency_code (string) |\n|---|---|---|\n|  prod1 | 16.99  |  USD |\n\nExport API are not immediately scheduling new export.\nExports are automatically scheduled daily. Usually at 8:00 UTC. They are usually finished before 9:00 UTC.\nAPI can be used to retrieve max 1 day old snapshot of pricing data.\n\nResponse heade"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

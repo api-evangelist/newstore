@@ -1,0 +1,141 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address customer-profile API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "customer-profile",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "listProfiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/customer/profiles",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "The search term to filter customers. The term is compared to the\nvalues in the `email`, `fullname` and `phonenumber` fields. A partial match is also\nconsidered a match.\n\nThe term will also be compared to the values in the `id` and `display_id` fields.\nOnly an exact match is considered a match."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The sort to be applied to customers response."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The customer profiles page offset."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "The number of requested customer profiles."
+              }
+            ]
+          },
+          "docs": "Returns a searchable list of consumer profiles.\n\nNote: This endpoint is designed for paginated front-end use with a search function. It is not suitable for exporting a comprehensive list of all customers due to the following limitations:\n- Pagination Per Page Limit: Up to 500 profiles can be fetched per page.\n- Total Profiles Limit: There is a maximum limit of 10,000 profiles.\n- API Error Beyond Limit: When trying to paginate beyond 10,000 profiles, the API will start returning errors.\n"
+        },
+        {
+          "info": {
+            "name": "createOrShowProfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/customer/profiles",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; border-left: 4px solid #f39c12; padding: 12px; margin: 10px 0; border-radius: 4px; color: #f39c12;\">\n  <strong>🚧 BETA:</strong> This endpoint is in beta and may change.\n  <br />\n  See <a href=\"https://docs.newstore.com/docs/api-lifecycle\" target=\"_blank\" style=\"color: #f39c12; text-decoration: underline;\">API Lifecycle Documentation</a> for details.\n</div>\n\nGet-or-create by email. Creates a new customer profile,"
+        },
+        {
+          "info": {
+            "name": "showProfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id",
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              }
+            ]
+          },
+          "docs": "Returns a single customer profile for the given customer `profile_id`.\n"
+        },
+        {
+          "info": {
+            "name": "createProfileDeletionRequest",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              }
+            ]
+          },
+          "docs": "Creates request for customer profile deletion."
+        },
+        {
+          "info": {
+            "name": "updateProfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/customer/profiles/:profile_id",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path",
+                "description": "Profile ID"
+              }
+            ]
+          },
+          "docs": "Updates an existing customer profile for the given `profile_id`.\n\n**Note:**\nThe Consumer Profile V2 API allows for a single approach to update customer names. When updating a profile, the client must choose one of the following name approaches:\n\n- first_name and last_name\n- full_name\n\nProviding both approaches will result in a bad request error from the API.\n\n**Note:**\nIf `extended_attributes` is provided, it will replace any existing attributes for the customer.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

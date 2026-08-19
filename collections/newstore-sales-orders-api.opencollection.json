@@ -1,0 +1,242 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NewStore address sales-orders API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "sales-orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "showOrderHistoryForCustomer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/orders",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "query",
+                "description": "NewStore's unique UUID for the customer"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset to be used for the resulting order list. Will only be accepted when using the ``Accept`` header with ``application/x.newstore.orders+json;version=2``."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "The number of requested orders. Will only be accepted when using the ``Accept`` header with ``application/x.newstore.orders+json;version=2``."
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 30 requests per second.\n</div>\n\n"
+        },
+        {
+          "info": {
+            "name": "showSalesOrderByIdAndIdType",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/orders/:id",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the order."
+              },
+              {
+                "name": "id_type",
+                "value": "",
+                "type": "query",
+                "description": "ID type on which order should be fetched. Example \"external\" in case of human-readable identifier of the order, else \"internal\" in case of system-generated UUID (by NewStore)."
+              }
+            ]
+          },
+          "docs": "\n<div style=\"background-color: rgba(23, 162, 184, 0.15); border: 1px solid #17a2b8; border-left: 4px solid #17a2b8; padding: 12px; margin: 10px 0; border-radius: 4px; color: #17a2b8;\">\n  <strong>ℹ️ Rate Limit:</strong> This endpoint is rate limited to 100 requests per second.\n</div>\n\nRetrieves the specified order by order ID and ID type for the order.\n\nThis method allows you to retrieve information about orders that were placed in the platform,\nas well as outside of the NewStore platform.\n\n**Not"
+        },
+        {
+          "info": {
+            "name": "createGracePeriod",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/orders/:id/_extend_grace_period",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the order."
+              },
+              {
+                "name": "id_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of the order id which should be used to extend the order grace period. Example \"external\" for human-readable identifiers, and \"internal\" for system-generated UUIDs (by NewStore)."
+              }
+            ]
+          },
+          "docs": "Use this method to extend the [grace period](https://docs.newstore.com/docs/glossary#remorse-period) timer\nfor the specified order by **15 minutes**, if the grace period of the order has not yet expired.\n"
+        },
+        {
+          "info": {
+            "name": "showCancellationStatus",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v0/orders/:id/cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the order."
+              },
+              {
+                "name": "id_type",
+                "value": "",
+                "type": "query",
+                "description": "ID type on which order should be fetched. Example \"external\"."
+              }
+            ]
+          },
+          "docs": "API to get cancellation status by order ID"
+        },
+        {
+          "info": {
+            "name": "createCancellation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/orders/:id/cancel",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the order."
+              },
+              {
+                "name": "id_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of order id which should be used for cancellation. Example \"external\"."
+              }
+            ]
+          },
+          "docs": "Initiates the cancellation of the specified order.\n\nWhen using this method to cancel an order, you must specify a reason for cancellation,\nsuch as ``Item was damaged during shipping``. You can also include a note to provide a\nlonger explanation for the cancellation of the order.\n"
+        },
+        {
+          "info": {
+            "name": "createLineItemCancellation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/orders/:id/items/:item_uuid/cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the order."
+              },
+              {
+                "name": "item_uuid",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the order item."
+              },
+              {
+                "name": "id_type",
+                "value": "",
+                "type": "query",
+                "description": "Type of order id which should be used for cancellation of line items. Example \"external\" for human-readable identifiers, and \"internal\" for system-generated UUIDs (by NewStore)."
+              }
+            ]
+          },
+          "docs": "Use this resource to cancel line items.\n\n**Note:**\n1. This API currently only supports pre-ordered line items and will throw an error for other line items.\n2. The line item can only be cancelled for non-terminal item statuses.\n"
+        },
+        {
+          "info": {
+            "name": "createPriceInformationForItems",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v0/orders/:id/prices",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the order."
+              }
+            ]
+          },
+          "docs": "Use this method to retrieve price information for products or shipping options, defined\nin ``items`` in the request payload. The price information includes the gross price of the item,\nthe net price, and the tax levied on the item.\n\nIf the prices you requested are for products, the response payload also contains the status\nof the product. For example, ``cancelled`` or ``pending``, or ``in_fulfillment``, and so on.\n\n**Important**: You can only request for the pricing information of a maximum of *"
+        },
+        {
+          "info": {
+            "name": "updateSalesOrderSerialNumbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v0/orders/:id/serial_numbers",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The internal identifier of the order, for example, ``b604ffda-7e31-4338-beab-7f939a8c2322``."
+              }
+            ]
+          },
+          "docs": "Use this method to add serial numbers to specified items of the order. Serial numbers will be overwritten in case\nsome or all of the items have already serial numbers attached.\n\nThe maximum number of items in this request cannot exceed **500**, otherwise this method will return a ``400`` error.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
