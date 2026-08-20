@@ -42,6 +42,17 @@ tags:
 - Retail
 - Omnichannel
 - Order Management
+- Point-of-Sale
+- E-Commerce
+- Fulfillment
+- Inventory
+- Store Operations
+- REST
+tags_raw:
+- Company
+- Retail
+- Omnichannel
+- Order Management
 - Point of Sale
 - Ecommerce
 - Fulfillment
@@ -55,6 +66,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Address
+  tags_raw:
   - address
   properties:
   - type: OpenAPI
@@ -71,6 +84,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Audit Events
+  tags_raw:
   - audit-events
   properties:
   - type: OpenAPI
@@ -87,6 +102,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Cart
+  tags_raw:
   - cart
   properties:
   - type: OpenAPI
@@ -119,6 +136,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Customer Configuration
+  tags_raw:
   - customer-configuration
   properties:
   - type: OpenAPI
@@ -135,6 +154,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Customer Profile
+  tags_raw:
   - customer-profile
   properties:
   - type: OpenAPI
@@ -151,6 +172,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Customer Profile
+  tags_raw:
   - customerProfile
   properties:
   - type: OpenAPI
@@ -167,6 +190,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Data
+  tags_raw:
   - data
   properties:
   - type: OpenAPI
@@ -231,6 +256,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Identity Providers
+  tags_raw:
   - identity-providers
   properties:
   - type: OpenAPI
@@ -311,6 +338,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Order
+  tags_raw:
   - orders
   properties:
   - type: OpenAPI
@@ -359,6 +388,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Product Export
+  tags_raw:
   - Product export
   properties:
   - type: OpenAPI
@@ -375,6 +406,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Profiles
+  tags_raw:
   - profiles
   properties:
   - type: OpenAPI
@@ -407,6 +440,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Providers
+  tags_raw:
   - providers
   properties:
   - type: OpenAPI
@@ -439,6 +474,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Reservations
+  tags_raw:
   - reservations
   properties:
   - type: OpenAPI
@@ -455,6 +492,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Roles
+  tags_raw:
   - roles
   properties:
   - type: OpenAPI
@@ -471,6 +510,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Routing
+  tags_raw:
   - routing
   properties:
   - type: OpenAPI
@@ -519,6 +560,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Sales Orders
+  tags_raw:
   - sales-orders
   properties:
   - type: OpenAPI
@@ -583,6 +626,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Stock
+  tags_raw:
   - stock
   properties:
   - type: OpenAPI
@@ -615,6 +660,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Stores
+  tags_raw:
   - stores
   properties:
   - type: OpenAPI
@@ -647,6 +694,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Tenant Config
+  tags_raw:
   - tenant-config
   properties:
   - type: OpenAPI
@@ -679,6 +728,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Token Operations
+  tags_raw:
   - token-operations
   properties:
   - type: OpenAPI
@@ -711,6 +762,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - User
+  tags_raw:
   - users
   properties:
   - type: OpenAPI
