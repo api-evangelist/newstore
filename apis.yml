@@ -218,22 +218,6 @@ apis:
     url: https://docs.newstore.net/api/
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
-- aid: newstore:newstore-external-public-api
-  name: Newstore external-public API
-  description: The external-public API from Newstore — 89 operation(s) for external-public.
-  humanURL: https://developer.newstore.com
-  baseURL: https://dodici-demo.p.newstore.net
-  tags:
-  - external-public
-  properties:
-  - type: OpenAPI
-    url: openapi/newstore-external-public-api-openapi.yml
-  - type: APIReference
-    url: https://developer.newstore.com
-  - type: Documentation
-    url: https://docs.newstore.net/api/
-  - type: Webhooks
-    url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-fulfillment-requests-api
   name: Newstore fulfillment-requests API
   description: Fulfillment Requests
