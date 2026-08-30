@@ -78,7 +78,7 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
-  - Address
+  - address
   tags_raw:
   - address
   properties:
@@ -96,7 +96,7 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
-  - Audit Events
+  - audit-events
   tags_raw:
   - audit-events
   properties:
@@ -114,7 +114,7 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
-  - Cart
+  - cart
   tags_raw:
   - cart
   properties:
@@ -148,7 +148,7 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
-  - Customer Configuration
+  - customer-configuration
   tags_raw:
   - customer-configuration
   properties:
@@ -166,7 +166,7 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
-  - Customer Profile
+  - customer-profile
   tags_raw:
   - customer-profile
   properties:
@@ -183,8 +183,7 @@ apis:
   description: Customer Profiles
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
-  tags:
-  - Customer Profile
+  tags: []
   tags_raw:
   - customerProfile
   properties:
@@ -252,7 +251,7 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
-  - Identity Providers
+  - identity-providers
   tags_raw:
   - identity-providers
   properties:
@@ -384,7 +383,7 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
-  - Product Export
+  - Product export
   tags_raw:
   - Product export
   properties:
@@ -506,7 +505,7 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
-  - Routing
+  - routing
   tags_raw:
   - routing
   properties:
@@ -556,7 +555,7 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
-  - Sales Orders
+  - sales-orders
   tags_raw:
   - sales-orders
   properties:
@@ -622,7 +621,7 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
-  - Stock
+  - stock
   tags_raw:
   - stock
   properties:
@@ -690,7 +689,7 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
-  - Tenant Config
+  - tenant-config
   tags_raw:
   - tenant-config
   properties:
@@ -724,7 +723,7 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
-  - Token Operations
+  - token-operations
   tags_raw:
   - token-operations
   properties:
