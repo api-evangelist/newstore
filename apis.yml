@@ -1,19 +1,15 @@
 aid: newstore
 name: Newstore
-description: >-
-  NewStore is a mobile-first omnichannel order management system (OMS) and
-  point-of-service platform for retail brands. Its cloud platform unifies order
-  management, mobile POS and checkout, clienteling, inventory and availability,
-  fulfillment and order routing, returns, tax, fiscalization, and store
-  operations into a single system, exposed through the NewStore Omnichannel
-  REST API. The public API covers carts and checkout, customer profiles, orders
-  and sales orders, in-store pickup and shipments, stock and reservations,
-  fulfillment routing, catalog/pricebook/product export, identity and access
-  management (users, roles, providers), and tenant/store configuration.
-  Integrations are delivered through a documented webhook/adapter surface
-  (payment, tax, shipping, fulfillment, gift card, availability, and an event
-  stream). Authentication is OAuth 2.0 client-credentials against a per-tenant
-  Keycloak identity server. NewStore was founded by Stephan Schambach.
+description: NewStore is a mobile-first omnichannel order management system (OMS) and point-of-service
+  platform for retail brands. Its cloud platform unifies order management, mobile POS and checkout, clienteling,
+  inventory and availability, fulfillment and order routing, returns, tax, fiscalization, and store operations
+  into a single system, exposed through the NewStore Omnichannel REST API. The public API covers carts
+  and checkout, customer profiles, orders and sales orders, in-store pickup and shipments, stock and reservations,
+  fulfillment routing, catalog/pricebook/product export, identity and access management (users, roles,
+  providers), and tenant/store configuration. Integrations are delivered through a documented webhook/adapter
+  surface (payment, tax, shipping, fulfillment, gift card, availability, and an event stream). Authentication
+  is OAuth 2.0 client-credentials against a per-tenant Keycloak identity server. NewStore was founded
+  by Stephan Schambach.
 url: https://raw.githubusercontent.com/api-evangelist/newstore/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -47,7 +43,7 @@ accessModel:
   method: derived
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-20'
+modified: '2026-09-16'
 image: https://developer.newstore.com/static/images/logo.png
 tags:
 - Company
@@ -776,6 +772,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Website
+  url: https://newstore.com
 - type: CapabilityMap
   url: capabilities/newstore-capability-edges.yml
   name: Newstore Business Capability Map
@@ -817,7 +815,10 @@ common:
   url: well-known/newstore-well-known.yml
 - type: X-MCPServerCandidate
   url: mcp/newstore-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate
+    — a tool list derived from the published API contracts, not an existing server. The scorer already
+    read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type
+    surfaces with a server that does not exist.'
 - type: LLMsTxt
   url: llms/newstore-llms.txt
 - type: Overlay
