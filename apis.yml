@@ -174,24 +174,6 @@ apis:
     url: https://docs.newstore.net/api/
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
-- aid: newstore:newstore-customerprofile-api
-  name: Newstore customerProfile API
-  description: Customer Profiles
-  humanURL: https://developer.newstore.com
-  baseURL: https://dodici-demo.p.newstore.net
-  tags:
-  - Customer Profile
-  tags_raw:
-  - customerProfile
-  properties:
-  - type: OpenAPI
-    url: openapi/newstore-customerprofile-api-openapi.yml
-  - type: APIReference
-    url: https://developer.newstore.com
-  - type: Documentation
-    url: https://docs.newstore.net/api/
-  - type: Webhooks
-    url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-data-api
   name: Newstore data API
   description: PII Data
