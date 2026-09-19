@@ -330,6 +330,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Package Types
+  tags_raw:
   - package-types
   properties:
   - type: OpenAPI
@@ -600,7 +602,7 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
-  - Stock
+  - Stocks
   tags_raw:
   - stock
   properties:
