@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 14
+edge_count: 25
 edges:
 - tag: identity-providers
   spec_file: newstore-identity-providers-api-openapi.yml
@@ -42,6 +42,28 @@ edges:
     POST createProfileDeletionRequest
   reason: Create, list, read, update and deletion-request operations over customer profile records — the
     customer master/golden-record surface of the platform.
+- tag: cashboxes
+  spec_file: newstore-cashboxes-api-openapi.yml
+  capability_id: BC-2320.40
+  capability_id_l1: BC-2320
+  capability_name: POS Cash and Tender Handling
+  confidence: 0.85
+  evidence: 'POST /stores/{storeId}/cashboxes/{cashboxId}/release  createCashboxRelease ... schemas: CashboxState,
+    FiscalProviderId'
+  reason: Store-scoped cashbox creation, state and release operations are exactly till/cash-drawer and
+    tender handling at the point of sale.
+  recovered_from: vertical-retail-consumer-goods-edges.json
+- tag: users
+  spec_file: newstore-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: GET /iam/users listUsers; POST /iam/users createUser; DELETE /iam/users/{id} destroyUser;
+    schemas User, RoleItem
+  reason: IAM user CRUD with role assignment is identity and access management — platform user administration,
+    not an HR employee record capability.
+  recovered_from: vertical-retail-consumer-goods-edges.json
 - tag: address
   spec_file: newstore-address-api-openapi.yml
   capability_id: BC-420.10
@@ -91,6 +113,17 @@ edges:
     showReturnTaxTransaction; schemas TaxTotalsDto, TaxRateDto, ExemptionClass
   reason: Calculates, previews and records sales-tax transactions on orders and returns — indirect tax
     determination and reporting on transactions.
+- tag: cart
+  spec_file: newstore-cart-api-openapi.yml
+  capability_id: BC-2320.10
+  capability_id_l1: BC-2320
+  capability_name: Sales Transaction Management
+  confidence: 0.75
+  evidence: POST /checkout/carts  createCart ... POST /checkout/carts/{cartId}/items  createLineItem
+  reason: Checkout cart and line-item build with item prices and fulfillment attributes is the basket-build
+    stage of consumer sales transaction capture on this retail POS/OMS platform. Slight ambiguity versus
+    omnichannel order capture keeps it below 0.8.
+  recovered_from: vertical-retail-consumer-goods-edges.json
 - tag: profiles
   spec_file: newstore-profiles-api-openapi.yml
   capability_id: BC-420.10
@@ -100,6 +133,17 @@ edges:
   evidence: GET /clienteling/profiles/{customer_id} showProfile; schemas Profile, OptInState, OptedIn
   reason: Clienteling customer profiles keyed by customer_id with opt-in state — customer master/profile
     data management.
+- tag: routing
+  spec_file: newstore-routing-api-openapi.yml
+  capability_id: BC-520.40
+  capability_id_l1: BC-520
+  capability_name: Order Fulfilment Management
+  confidence: 0.75
+  evidence: GET /v0/routing/insights/order/{order_id} listOrderRoutingInsights; schemas RoutingInsightsFulfillmentRequests,
+    RoutingInsightsRoutingStrategies
+  reason: Exposes order routing strategy and fulfilment-request insights for an order — order fulfilment
+    orchestration.
+  recovered_from: sweep-20260829T005356Z-edges.json
 - tag: store-tax-configuration
   spec_file: newstore-store-tax-configuration-api-openapi.yml
   capability_id: BC-220.20
@@ -120,6 +164,17 @@ edges:
     FixedRateConfigDto, ExemptionClassItemDto
   reason: Tenant-level setup of the sales-tax determination engine, fixed rates and exemption classes
     — configuration of indirect tax management, not generic tenant settings.
+- tag: Pricebook export
+  spec_file: newstore-pricebook-export-api-openapi.yml
+  capability_id: BC-440.20
+  capability_id_l1: BC-440
+  capability_name: Price List Management
+  confidence: 0.7
+  evidence: GET /catalog/exports/catalogs/{catalog}/pricebooks/{pricebook}  showPricebookExport
+  reason: Operation exposes a pricebook (price list) export from the retail catalog, which realises price
+    list maintenance/distribution. Confidence moderated because the single operation is an export retrieval
+    rather than full price management.
+  recovered_from: sweep-20260829T005356Z-edges.json
 - tag: order-injection
   spec_file: newstore-order-injection-api-openapi.yml
   capability_id: BC-520.40
@@ -130,6 +185,50 @@ edges:
     InjectedOrderAddress
   reason: Single operation injects an externally-created order into the OMS to be fulfilled, which is
     order capture/fulfilment orchestration. Slight ambiguity vs sales order capture keeps confidence moderate.
+- tag: orders
+  spec_file: newstore-orders-api-openapi.yml
+  capability_id: BC-520.40
+  capability_id_l1: BC-520
+  capability_name: Order Fulfilment Management
+  confidence: 0.7
+  evidence: GET /orders/{orderId} showOrder; GET /orders/{orderId}/returns/{returnId} showReturn; schema
+    OrderManagementState
+  reason: Order and return retrieval within an omnichannel order management system maps to order fulfilment/order
+    lifecycle management; sub-capability choice is somewhat ambiguous (returns could sit under customer
+    service).
+  recovered_from: sweep-20260829T005356Z-edges.json
+- tag: package-types
+  spec_file: newstore-package-types-api-openapi.yml
+  capability_id: BC-520.50
+  capability_id_l1: BC-520
+  capability_name: Logistics Operations Management
+  confidence: 0.7
+  evidence: GET /fulfillment/package-types listPackageTypes; schemas PackageDimensions, PackageWeight,
+    dimension_unit
+  reason: Defines shipping package types with dimensions and weights used in fulfilment/shipping operations
+    — logistics execution master data.
+  recovered_from: sweep-20260829T005356Z-edges.json
+- tag: provider-rates
+  spec_file: newstore-provider-rates-api-openapi.yml
+  capability_id: BC-520.50
+  capability_id_l1: BC-520
+  capability_name: Logistics Operations Management
+  confidence: 0.7
+  evidence: GET /fulfillment/provider-rates listProviderRates; ProviderRateShippingType; showProviderRatePriorities
+  reason: Manages shipping carrier/provider rates and their priority ordering for fulfilment — transport/logistics
+    operations configuration.
+  recovered_from: sweep-20260829T005356Z-edges.json
+- tag: routing-config
+  spec_file: newstore-routing-config-api-openapi.yml
+  capability_id: BC-520.40
+  capability_id_l1: BC-520
+  capability_name: Order Fulfilment Management
+  confidence: 0.7
+  evidence: GET /v0/config/routing/enable_capacity_based_routing showCapacityBasedRoutingSettings; AutomaticReroutingSettings;
+    CancellationPolicySettings
+  reason: Settings that govern order routing/rerouting and fulfilment node behaviour, i.e. configuration
+    of fulfilment orchestration policy.
+  recovered_from: sweep-20260829T005356Z-edges.json
 - tag: routing-ruleset
   spec_file: newstore-routing-ruleset-api-openapi.yml
   capability_id: BC-520.40
@@ -139,6 +238,26 @@ edges:
   evidence: GET /v0/routing/ruleset showRoutingRuleset; schemas Routingruleset1, DestinationRegion1, Routes
   reason: Maintains the ruleset (routes, destination regions) used to route orders to fulfilment locations
     — order fulfilment orchestration/allocation logic in an OMS.
+- tag: sales-orders
+  spec_file: newstore-sales-orders-api-openapi.yml
+  capability_id: BC-2330.10
+  capability_id_l1: BC-2330
+  capability_name: Channel Orchestration Management
+  confidence: 0.7
+  evidence: GET /v0/orders showOrderHistoryForCustomer; POST /v0/orders/{id}/cancel createCancellation;
+    schema SalesOrderFulfillmentType
+  reason: Consumer sales order retrieval, cancellation and pricing across channels in a retail OMS — cross-channel
+    order view and lifecycle; could also read as generic order fulfilment management.
+  recovered_from: vertical-retail-consumer-goods-edges.json
+- tag: shipping-labels
+  spec_file: newstore-shipping-labels-api-openapi.yml
+  capability_id: BC-520.50
+  capability_id_l1: BC-520
+  capability_name: Logistics Operations Management
+  confidence: 0.7
+  evidence: GET /fulfillment/shipping-labels/{public_key} showShippingLabel
+  reason: Retrieval of shipping labels is an outbound logistics/shipping execution activity within fulfilment.
+  recovered_from: sweep-20260829T005356Z-edges.json
 - tag: stock
   spec_file: newstore-stock-api-openapi.yml
   capability_id: BC-530.30
