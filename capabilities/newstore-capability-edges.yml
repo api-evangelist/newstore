@@ -63,7 +63,8 @@ edges:
   reason: Creation, listing and update of inventory reservations and their items maps directly to Inventory
     Allocation Management, which explicitly covers reservations.
 - tag: customerProfile
-  spec_file: newstore-customerprofile-api-openapi.yml
+  spec_file: newstore-customer-profile-api-openapi.yml
+  reanchored_from: newstore-customerprofile-api-openapi.yml
   capability_id: BC-420.10
   capability_id_l1: BC-420
   capability_name: Customer Data Management
