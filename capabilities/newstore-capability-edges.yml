@@ -1,0 +1,150 @@
+slug: newstore
+provider: Newstore
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Transportation & Logistics
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 14
+edges:
+- tag: identity-providers
+  spec_file: newstore-identity-providers-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: GET /iam/providers listProviders; schemas CreateIdentityProviderRequest, IdentityProviderProtocol,
+    SupportedIdentityProviders
+  reason: CRUD over IAM identity providers / federation configuration is Identity & Access Management,
+    not a retail business capability.
+- tag: roles
+  spec_file: newstore-roles-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: GET /iam/roles listRoles; GET /iam/permissions listPermissions; GET /iam/roles/{id}/users
+    listUsersByRole
+  reason: Role and permission administration with user assignment is Identity & Access Management.
+- tag: customer-profile
+  spec_file: newstore-customer-profile-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.88
+  evidence: GET /customer/profiles listProfiles; PATCH /customer/profiles/{profile_id} updateProfile;
+    POST createProfileDeletionRequest
+  reason: Create, list, read, update and deletion-request operations over customer profile records — the
+    customer master/golden-record surface of the platform.
+- tag: address
+  spec_file: newstore-address-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.82
+  evidence: GET /customer/profiles/{profile_id}/addresses listAddresses; PATCH .../addresses/{address_id}
+    updateAddress; schema AddressModel
+  reason: Operations create, read, update and delete addresses attached to a customer profile — maintenance
+    of customer master attributes, i.e. customer data management.
+- tag: reservations
+  spec_file: newstore-reservations-api-openapi.yml
+  capability_id: BC-530.30
+  capability_id_l1: BC-530
+  capability_name: Inventory Allocation Management
+  confidence: 0.82
+  evidence: POST /inventory/reservations createReservation; schemas ReservationStatus, ReservationItemRequest,
+    ListReservationsResponseV1
+  reason: Creation, listing and update of inventory reservations and their items maps directly to Inventory
+    Allocation Management, which explicitly covers reservations.
+- tag: customerProfile
+  spec_file: newstore-customerprofile-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.78
+  evidence: POST /customer/profiles/lookup-bulk-emails createRetrievalBulkEmailProfiles; schema bulkProfileLookupResponse
+  reason: Bulk resolution of customer profiles by email address — identity lookup against the customer
+    master. Single bulk-lookup endpoint, so slightly lower confidence than the main profile tag.
+- tag: fulfillment-requests
+  spec_file: newstore-fulfillment-requests-api-openapi.yml
+  capability_id: BC-520.40
+  capability_id_l1: BC-520
+  capability_name: Order Fulfilment Management
+  confidence: 0.78
+  evidence: GET /v0/fulfillment_requests/{order_uuid} listFulfillmentRequestsForOrder; POST /v0/fulfillment_request/{ffr_uuid}/set_items_states
+  reason: Operations retrieve and update the state of fulfillment requests and their items against an
+    order — order fulfilment orchestration in an OMS, i.e. Order Fulfilment Management.
+- tag: tax-transactions
+  spec_file: newstore-tax-transactions-api-openapi.yml
+  capability_id: BC-220.20
+  capability_id_l1: BC-220
+  capability_name: Indirect Tax Management
+  confidence: 0.78
+  evidence: POST /taxes/previews/transactions createTaxTransactionPreview; GET /taxes/transactions/{orderId}/returns/{returnId}
+    showReturnTaxTransaction; schemas TaxTotalsDto, TaxRateDto, ExemptionClass
+  reason: Calculates, previews and records sales-tax transactions on orders and returns — indirect tax
+    determination and reporting on transactions.
+- tag: profiles
+  spec_file: newstore-profiles-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.75
+  evidence: GET /clienteling/profiles/{customer_id} showProfile; schemas Profile, OptInState, OptedIn
+  reason: Clienteling customer profiles keyed by customer_id with opt-in state — customer master/profile
+    data management.
+- tag: store-tax-configuration
+  spec_file: newstore-store-tax-configuration-api-openapi.yml
+  capability_id: BC-220.20
+  capability_id_l1: BC-220
+  capability_name: Indirect Tax Management
+  confidence: 0.75
+  evidence: POST /taxes/config/stores createStoreConfig; schemas AvalaraConfigUpdateDto, VertexConfigCreateDto,
+    ExemptionClassItemDto, FixedRateConfigDto
+  reason: Configures sales-tax determination per store, including tax engine providers (Avalara/Vertex),
+    fixed rates and exemption classes — indirect (sales) tax management setup.
+- tag: tenant-tax-configuration
+  spec_file: newstore-tenant-tax-configuration-api-openapi.yml
+  capability_id: BC-220.20
+  capability_id_l1: BC-220
+  capability_name: Indirect Tax Management
+  confidence: 0.72
+  evidence: POST /taxes/config createTenantConfig; schemas AvalaraConfigUpdateDto, VertexConfigCreateDto,
+    FixedRateConfigDto, ExemptionClassItemDto
+  reason: Tenant-level setup of the sales-tax determination engine, fixed rates and exemption classes
+    — configuration of indirect tax management, not generic tenant settings.
+- tag: order-injection
+  spec_file: newstore-order-injection-api-openapi.yml
+  capability_id: BC-520.40
+  capability_id_l1: BC-520
+  capability_name: Order Fulfilment Management
+  confidence: 0.7
+  evidence: POST /v0/d/fulfill_order createInjectedOrder; schemas InjectedOrderRequest, InjectedOrderPayment,
+    InjectedOrderAddress
+  reason: Single operation injects an externally-created order into the OMS to be fulfilled, which is
+    order capture/fulfilment orchestration. Slight ambiguity vs sales order capture keeps confidence moderate.
+- tag: routing-ruleset
+  spec_file: newstore-routing-ruleset-api-openapi.yml
+  capability_id: BC-520.40
+  capability_id_l1: BC-520
+  capability_name: Order Fulfilment Management
+  confidence: 0.7
+  evidence: GET /v0/routing/ruleset showRoutingRuleset; schemas Routingruleset1, DestinationRegion1, Routes
+  reason: Maintains the ruleset (routes, destination regions) used to route orders to fulfilment locations
+    — order fulfilment orchestration/allocation logic in an OMS.
+- tag: stock
+  spec_file: newstore-stock-api-openapi.yml
+  capability_id: BC-530.30
+  capability_id_l1: BC-530
+  capability_name: Inventory Allocation Management
+  confidence: 0.7
+  evidence: GET /v0/stock/insights listAtpInsights; schemas Allocation, FutureAllocation, Reservation,
+    AtpInsightsResponse
+  reason: Exposes available-to-promise insights with allocations and reservations — inventory allocation
+    and reservation visibility across the network.
