@@ -570,6 +570,8 @@ apis:
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
   tags:
+  - Shipping Labels
+  tags_raw:
   - shipping-labels
   properties:
   - type: OpenAPI
