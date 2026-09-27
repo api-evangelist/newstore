@@ -69,7 +69,7 @@ tags_raw:
 - REST
 apis:
 - aid: newstore:newstore-address-api
-  name: Newstore address API
+  name: Newstore Address API
   description: Customer Profile Addresses
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -87,7 +87,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-audit-events-api
-  name: Newstore audit-events API
+  name: Newstore Audit Events API
   description: Audit event operations.
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -105,7 +105,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-cart-api
-  name: Newstore cart API
+  name: Newstore Cart API
   description: Operations on carts
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -123,7 +123,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-cashboxes-api
-  name: Newstore cashboxes API
+  name: Newstore Cashboxes API
   description: Fiscal cashboxes
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -139,7 +139,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-customer-configuration-api
-  name: Newstore customer-configuration API
+  name: Newstore Customer Configuration API
   description: Customer API Configurations
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -157,7 +157,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-customer-profile-api
-  name: Newstore customer-profile API
+  name: Newstore Customer Profile API
   description: Customer Profiles
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -175,7 +175,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-data-api
-  name: Newstore data API
+  name: Newstore Data API
   description: PII Data
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -209,7 +209,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-fulfillment-requests-api
-  name: Newstore fulfillment-requests API
+  name: Newstore Fulfillment Requests API
   description: Fulfillment Requests
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -225,7 +225,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-identity-providers-api
-  name: Newstore identity-providers API
+  name: Newstore Identity Providers API
   description: Identity Providers
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -275,7 +275,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-order-injection-api
-  name: Newstore order-injection API
+  name: Newstore Order Injection API
   description: Order Injection
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -291,7 +291,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-order-injection-config-api
-  name: Newstore order-injection-config API
+  name: Newstore Order Injection Config API
   description: Order Injection Configuration
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -307,7 +307,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-orders-api
-  name: Newstore orders API
+  name: Newstore Orders API
   description: Fiscal orders
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -325,7 +325,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-package-types-api
-  name: Newstore package-types API
+  name: Newstore Package Types API
   description: Package Types
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -377,7 +377,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-profiles-api
-  name: Newstore profiles API
+  name: Newstore Profiles API
   description: Clienteling Profiles
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -395,7 +395,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-provider-rates-api
-  name: Newstore provider-rates API
+  name: Newstore Provider Rates API
   description: Provider Rates
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -411,7 +411,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-providers-api
-  name: Newstore providers API
+  name: Newstore Providers API
   description: Payment provider operations
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -445,7 +445,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-reservations-api
-  name: Newstore reservations API
+  name: Newstore Reservations API
   description: Reservations
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -463,7 +463,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-roles-api
-  name: Newstore roles API
+  name: Newstore Roles API
   description: Roles
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -481,7 +481,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-routing-api
-  name: Newstore routing API
+  name: Newstore Routing API
   description: Routing
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -499,7 +499,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-routing-config-api
-  name: Newstore routing-config API
+  name: Newstore Routing Config API
   description: Routing Configuration
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -515,7 +515,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-routing-ruleset-api
-  name: Newstore routing-ruleset API
+  name: Newstore Routing Ruleset API
   description: Routing Ruleset
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -531,7 +531,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-sales-orders-api
-  name: Newstore sales-orders API
+  name: Newstore Sales Orders API
   description: Operations related to sales order management.
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -549,7 +549,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-shipment-configurations-api
-  name: Newstore shipment-configurations API
+  name: Newstore Shipment Configurations API
   description: Shipment Configurations
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -565,7 +565,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-shipping-labels-api
-  name: Newstore shipping-labels API
+  name: Newstore Shipping Labels API
   description: Shipping Labels
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -583,7 +583,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-shipping-option-audits-api
-  name: Newstore shipping-option-audits API
+  name: Newstore Shipping Option Audits API
   description: Shipping Option Audits
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -599,7 +599,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-stock-api
-  name: Newstore stock API
+  name: Newstore Stock API
   description: Stock Operations
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -617,7 +617,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-store-tax-configuration-api
-  name: Newstore store-tax-configuration API
+  name: Newstore Store Tax Configuration API
   description: Tax configuration - Store
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -633,7 +633,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-stores-api
-  name: Newstore stores API
+  name: Newstore Stores API
   description: Fiscal stores
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -651,7 +651,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-tax-transactions-api
-  name: Newstore tax-transactions API
+  name: Newstore Tax Transactions API
   description: Tax transactions
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -667,7 +667,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-tenant-config-api
-  name: Newstore tenant-config API
+  name: Newstore Tenant Config API
   description: Tenant configuration
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -685,7 +685,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-tenant-tax-configuration-api
-  name: Newstore tenant-tax-configuration API
+  name: Newstore Tenant Tax Configuration API
   description: Tax configuration - Tenant
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -701,7 +701,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-token-operations-api
-  name: Newstore token-operations API
+  name: Newstore Token Operations API
   description: Tokens
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -719,7 +719,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-tppe-api
-  name: Newstore tppe API
+  name: Newstore Tppe API
   description: Third Party Promotions Engine
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net
@@ -735,7 +735,7 @@ apis:
   - type: Webhooks
     url: https://docs.newstore.net/api/webhooks/
 - aid: newstore:newstore-users-api
-  name: Newstore users API
+  name: Newstore Users API
   description: Users
   humanURL: https://developer.newstore.com
   baseURL: https://dodici-demo.p.newstore.net

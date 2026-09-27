@@ -860,15 +860,15 @@ paths:
         - iam:roles:read
 components:
   schemas:
-    GetPermissionsResponse:
-      title: GetPermissionsResponse
-      description: Returns a list of available permissions the system provides.
+    GetUsersByRoleResponse:
+      title: GetUsersByRoleResponse
+      description: Gets all users by role
       type: object
       properties:
         elements:
           type: array
           items:
-            $ref: '#/components/schemas/Permission'
+            $ref: '#/components/schemas/User'
     Problem:
       title: Problem
       type: object
@@ -928,46 +928,51 @@ components:
       required:
       - application
       - name
-    GetRolesResponse:
-      title: GetRolesResponse
-      description: Returns a list of roles.
+    User:
+      title: User
       type: object
       properties:
-        elements:
+        associate_id:
+          description: External identifier for the NewStore plattform. Formerly known as "newstore_id".
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        email:
+          description: Email address of the user.
+          type: string
+        external_directory:
+          description: User is managed by an external directory.
+          type: boolean
+        first_name:
+          description: First name of the user.
+          type: string
+        id:
+          description: Identifier of the user.
+          type: string
+        is_active:
+          description: Whether the user can login or not.
+          type: boolean
+        last_login_at:
+          description: Shows last login time of the user. If user never logged in the property is not presence.
+          type: string
+          format: date-time
+        last_name:
+          description: Last name of the user.
+          type: string
+        phone:
+          description: Telephone number of the user.
+          type: string
+        roles:
+          description: List of roles the user is assigned to.
           type: array
           items:
             $ref: '#/components/schemas/RoleItem'
-    GetUsersByRoleResponse:
-      title: GetUsersByRoleResponse
-      description: Gets all users by role
-      type: object
-      properties:
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
-    RoleItem:
-      title: RoleItem
-      description: Needed for granting permissions per group not individually.
-      type: object
-      properties:
-        id:
-          description: Identifier of the role.
-          type: string
-        is_readonly:
-          description: The role is read-only and not editable.
-          type: boolean
-        name:
-          description: Name of the role.
-          type: string
         updated_at:
           type: string
           format: date-time
-      required:
-      - id
-      - name
-    PutRolesByIdRequest:
-      title: PutRolesByIdRequest
+    PostRolesRequest:
+      title: PostRolesRequest
       description: Needed for granting permissions per group not individually.
       type: object
       properties:
@@ -1012,16 +1017,26 @@ components:
       required:
       - id
       - name
-    Application:
-      title: Application
-      description: Abbreviation of the application this permission belongs to.
-      type: string
-      enum:
-      - nom
-      - aa
-      - mcp
-    PostRolesRequest:
-      title: PostRolesRequest
+    GetPermissionsResponse:
+      title: GetPermissionsResponse
+      description: Returns a list of available permissions the system provides.
+      type: object
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+    GetRolesResponse:
+      title: GetRolesResponse
+      description: Returns a list of roles.
+      type: object
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleItem'
+    PutRolesByIdRequest:
+      title: PutRolesByIdRequest
       description: Needed for granting permissions per group not individually.
       type: object
       properties:
@@ -1038,49 +1053,34 @@ components:
       required:
       - name
       - permissions
-    User:
-      title: User
+    RoleItem:
+      title: RoleItem
+      description: Needed for granting permissions per group not individually.
       type: object
       properties:
-        associate_id:
-          description: External identifier for the NewStore plattform. Formerly known as "newstore_id".
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        email:
-          description: Email address of the user.
-          type: string
-        external_directory:
-          description: User is managed by an external directory.
-          type: boolean
-        first_name:
-          description: First name of the user.
-          type: string
         id:
-          description: Identifier of the user.
+          description: Identifier of the role.
           type: string
-        is_active:
-          description: Whether the user can login or not.
+        is_readonly:
+          description: The role is read-only and not editable.
           type: boolean
-        last_login_at:
-          description: Shows last login time of the user. If user never logged in the property is not presence.
+        name:
+          description: Name of the role.
           type: string
-          format: date-time
-        last_name:
-          description: Last name of the user.
-          type: string
-        phone:
-          description: Telephone number of the user.
-          type: string
-        roles:
-          description: List of roles the user is assigned to.
-          type: array
-          items:
-            $ref: '#/components/schemas/RoleItem'
         updated_at:
           type: string
           format: date-time
+      required:
+      - id
+      - name
+    Application:
+      title: Application
+      description: Abbreviation of the application this permission belongs to.
+      type: string
+      enum:
+      - nom
+      - aa
+      - mcp
   securitySchemes:
     oauth:
       type: oauth2

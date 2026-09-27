@@ -652,15 +652,6 @@ paths:
       - oauth: []
 components:
   schemas:
-    Putroutingrulesetresponse:
-      title: Putroutingrulesetresponse
-      type: object
-      properties:
-        fulfillment_config_uri:
-          description: Fulfillment Configuration Revision URI
-          type: string
-        routing_ruleset:
-          $ref: '#/components/schemas/Routingruleset1'
     Problem:
       title: Problem
       type: object
@@ -698,16 +689,6 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    Routes:
-      title: Routes
-      type: object
-      properties:
-        destination_region:
-          $ref: '#/components/schemas/DestinationRegion1'
-        fulfilled_by:
-          description: This configuration mentions the service levels identifications and which location group will serve this region
-          type: object
-          additionalProperties: {}
     DestinationRegion1:
       title: DestinationRegion1
       type: object
@@ -721,6 +702,25 @@ components:
         zip_code_region:
           description: Region identification that will cover that routing. Zip code region groups is defined in `zip_code_regions`.
           type: string
+    Routes:
+      title: Routes
+      type: object
+      properties:
+        destination_region:
+          $ref: '#/components/schemas/DestinationRegion1'
+        fulfilled_by:
+          description: This configuration mentions the service levels identifications and which location group will serve this region
+          type: object
+          additionalProperties: {}
+    Putroutingrulesetresponse:
+      title: Putroutingrulesetresponse
+      type: object
+      properties:
+        fulfillment_config_uri:
+          description: Fulfillment Configuration Revision URI
+          type: string
+        routing_ruleset:
+          $ref: '#/components/schemas/Routingruleset1'
     Routingruleset1:
       title: Routingruleset1
       type: object

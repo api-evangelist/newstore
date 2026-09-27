@@ -263,6 +263,14 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    AuditResponse:
+      title: AuditResponse
+      type: object
+      properties:
+        audit:
+          $ref: '#/components/schemas/AuditReadOnly'
+      required:
+      - audit
     AuditReadOnly:
       title: AuditReadOnly
       type: object
@@ -326,14 +334,6 @@ components:
       required:
       - audits
       - page_count
-    AuditResponse:
-      title: AuditResponse
-      type: object
-      properties:
-        audit:
-          $ref: '#/components/schemas/AuditReadOnly'
-      required:
-      - audit
   securitySchemes:
     oauth:
       type: oauth2

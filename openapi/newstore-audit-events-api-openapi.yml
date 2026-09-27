@@ -364,6 +364,35 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    RequestContext:
+      title: RequestContext
+      description: The HTTP request that carried the audited change.
+      type: object
+      properties:
+        method:
+          description: HTTP method.
+          type: string
+          maxLength: 16
+        path:
+          description: HTTP URL path.
+          type: string
+          maxLength: 2048
+        request_id:
+          description: X-Newstore-Request-Id header.
+          type: string
+          maxLength: 256
+        source_ip:
+          description: Client IP (first X-Forwarded-For hop, else RemoteAddr).
+          type: string
+          maxLength: 64
+        trace_id:
+          description: W3C traceparent trace-id segment.
+          type: string
+          maxLength: 256
+        user_agent:
+          description: User-Agent header.
+          type: string
+          maxLength: 1024
     AuditEventList:
       title: AuditEventList
       description: One page of audit log events, ordered newest first.
@@ -456,35 +485,6 @@ components:
           description: Legacy internal NewStore user id.
           type: string
           maxLength: 256
-    RequestContext:
-      title: RequestContext
-      description: The HTTP request that carried the audited change.
-      type: object
-      properties:
-        method:
-          description: HTTP method.
-          type: string
-          maxLength: 16
-        path:
-          description: HTTP URL path.
-          type: string
-          maxLength: 2048
-        request_id:
-          description: X-Newstore-Request-Id header.
-          type: string
-          maxLength: 256
-        source_ip:
-          description: Client IP (first X-Forwarded-For hop, else RemoteAddr).
-          type: string
-          maxLength: 64
-        trace_id:
-          description: W3C traceparent trace-id segment.
-          type: string
-          maxLength: 256
-        user_agent:
-          description: User-Agent header.
-          type: string
-          maxLength: 1024
   securitySchemes:
     oauth:
       type: oauth2

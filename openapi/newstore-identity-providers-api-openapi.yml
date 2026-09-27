@@ -684,21 +684,14 @@ paths:
         - iam:providers:read
 components:
   schemas:
-    SupportedIdentityProvider:
-      title: SupportedIdentityProvider
-      description: Supported identity providers and protocols
-      type: object
-      properties:
-        protocol:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/IdentityProviderProtocol'
-          - description: Supported Protocols for Identity Providers
-        vendor:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/IdentityProviderVendor'
-          - description: Supported Vendors for Identity Providers
+    IdentityProviderVendor:
+      title: IdentityProviderVendor
+      description: Supported Vendors for Identity Providers
+      type: string
+      enum:
+      - MICROSOFT
+      - OKTA
+      - GOOGLE
     Problem:
       title: Problem
       type: object
@@ -736,13 +729,15 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    IdentityProviderProtocol:
-      title: IdentityProviderProtocol
-      description: Supported Protocols for Identity Providers
-      type: string
-      enum:
-      - OIDC
-      - SAML
+    IdentityProvidersResponse:
+      title: IdentityProvidersResponse
+      description: A list of configured identity providers
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityProviderResponse'
     IdentityProviderConfig:
       title: IdentityProviderConfig
       description: Identity Provider configuration
@@ -769,23 +764,6 @@ components:
           default: true
       required:
       - config
-    IdentityProviderVendor:
-      title: IdentityProviderVendor
-      description: Supported Vendors for Identity Providers
-      type: string
-      enum:
-      - MICROSOFT
-      - OKTA
-      - GOOGLE
-    IdentityProvidersResponse:
-      title: IdentityProvidersResponse
-      description: A list of configured identity providers
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/IdentityProviderResponse'
     CreateIdentityProviderRequest:
       title: CreateIdentityProviderRequest
       description: Create an Identity Provider
@@ -809,15 +787,21 @@ components:
       - config
       - protocol
       - vendor
-    SupportedIdentityProviders:
-      title: SupportedIdentityProviders
-      description: A list of supported identity providers and protocols
+    SupportedIdentityProvider:
+      title: SupportedIdentityProvider
+      description: Supported identity providers and protocols
       type: object
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SupportedIdentityProvider'
+        protocol:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/IdentityProviderProtocol'
+          - description: Supported Protocols for Identity Providers
+        vendor:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/IdentityProviderVendor'
+          - description: Supported Vendors for Identity Providers
     IdentityProviderResponse:
       title: IdentityProviderResponse
       description: Configured identity provider
@@ -844,6 +828,22 @@ components:
           allOf:
           - $ref: '#/components/schemas/IdentityProviderVendor'
           - description: Supported Vendors for Identity Providers
+    IdentityProviderProtocol:
+      title: IdentityProviderProtocol
+      description: Supported Protocols for Identity Providers
+      type: string
+      enum:
+      - OIDC
+      - SAML
+    SupportedIdentityProviders:
+      title: SupportedIdentityProviders
+      description: A list of supported identity providers and protocols
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedIdentityProvider'
   securitySchemes:
     oauth:
       type: oauth2

@@ -111,38 +111,40 @@ paths:
       - oauth: []
 components:
   schemas:
-    RoutingInsightsCorrelation:
-      title: RoutingInsightsCorrelation
-      description: Information regarding which entities were affected by this event
+    Correlation:
+      title: Correlation
+      description: Correlation information used to interpret routing attempts by LO uuids
       type: object
       properties:
-        ancestor_logistic_order_uuid:
+        current_fulfillment_request_id:
+          description: The current fulfillment request ID to which this item belongs to
           type: string
           format: uuid
-        fulfillment_request:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/RoutingInsightsFulfillmentRequests'
-          - description: Any fulfillment request identifiers for this LO uuid
-        logistic_order_uuid:
+        current_logistic_order_id:
+          description: The current LO uuid with which this sales order item is being routed
           type: string
           format: uuid
-        routing_strategies:
-          $ref: '#/components/schemas/RoutingInsightsRoutingStrategies'
-        sales_order_item_ids:
+        logistic_order_ids:
+          description: All LO uuids that this item was a part of
           type: array
           items:
             type: string
             format: uuid
-        service_levels:
-          $ref: '#/components/schemas/RoutingInsightsServiceLevels'
       required:
-      - ancestor_logistic_order_uuid
-      - fulfillment_request
-      - logistic_order_uuid
-      - routing_strategies
-      - sales_order_item_ids
-      - service_levels
+      - current_fulfillment_request_id
+      - current_logistic_order_id
+      - logistic_order_ids
+    RoutingInsightsRoutingStrategy1:
+      title: RoutingInsightsRoutingStrategy1
+      type: object
+      properties:
+        fulfillment_node_id:
+          type: string
+          minLength: 1
+        strategy:
+          $ref: '#/components/schemas/RoutingInsightsStrategyType'
+      required:
+      - strategy
     Problem:
       title: Problem
       type: object
@@ -180,20 +182,34 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    Strategies:
-      title: Strategies
+    RoutingInsightsRoutingStrategies:
+      title: RoutingInsightsRoutingStrategies
       type: object
       properties:
         current:
+          description: The routing strategy for each item id in this LO
+          example:
+            6ba7b810-9dad-11d1-80b4-00c04fd430c8:
+              fulfillment_node_id: dc-456
+              strategy: prerouted
+            550e8400-e29b-41d4-a716-446655440000:
+              fulfillment_node_id: store-123
+              strategy: default
           type: object
-          allOf:
-          - $ref: '#/components/schemas/Current'
-          - description: The current routing strategy
+          additionalProperties:
+            $ref: '#/components/schemas/RoutingInsightsRoutingStrategy1'
         original:
+          description: The routing strategy for each item id in this LO
+          example:
+            6ba7b810-9dad-11d1-80b4-00c04fd430c8:
+              fulfillment_node_id: dc-456
+              strategy: prerouted
+            550e8400-e29b-41d4-a716-446655440000:
+              fulfillment_node_id: store-123
+              strategy: default
           type: object
-          allOf:
-          - $ref: '#/components/schemas/Original'
-          - description: The original routing strategy on order creation
+          additionalProperties:
+            $ref: '#/components/schemas/RoutingInsightsRoutingStrategy1'
     RoutingInsights:
       title: RoutingInsights
       description: Routing insights data by sales_order_uuid or external_id
@@ -206,6 +222,26 @@ components:
           - description: Routing insights information for an order
       required:
       - insights
+    Original:
+      title: Original
+      description: The original routing strategy on order creation
+      type: object
+      properties:
+        fulfillment_node_id:
+          type: string
+          minLength: 1
+        strategy:
+          $ref: '#/components/schemas/RoutingInsightsStrategyType'
+      required:
+      - strategy
+    RoutingInsightsStrategyType:
+      title: RoutingInsightsStrategyType
+      type: string
+      enum:
+      - external
+      - prerouted
+      - default
+      - manual
     RoutingInsightsFulfillmentRequests:
       title: RoutingInsightsFulfillmentRequests
       description: Any fulfillment request identifiers for this LO uuid
@@ -219,146 +255,6 @@ components:
         fulfillment_request_id:
           type: string
           format: uuid
-    RoutingInsightsStrategyType:
-      title: RoutingInsightsStrategyType
-      type: string
-      enum:
-      - external
-      - prerouted
-      - default
-      - manual
-    Correlation:
-      title: Correlation
-      description: Correlation information used to interpret routing attempts by LO uuids
-      type: object
-      properties:
-        current_fulfillment_request_id:
-          description: The current fulfillment request ID to which this item belongs to
-          type: string
-          format: uuid
-        current_logistic_order_id:
-          description: The current LO uuid with which this sales order item is being routed
-          type: string
-          format: uuid
-        logistic_order_ids:
-          description: All LO uuids that this item was a part of
-          type: array
-          items:
-            type: string
-            format: uuid
-      required:
-      - current_fulfillment_request_id
-      - current_logistic_order_id
-      - logistic_order_ids
-    ServiceLevels:
-      title: ServiceLevels
-      type: object
-      properties:
-        current:
-          description: Service level with which the order was fulfilled
-          type: string
-          minLength: 1
-        original:
-          description: Service level with which the order was created
-          type: string
-          minLength: 1
-    Original:
-      title: Original
-      description: The original routing strategy on order creation
-      type: object
-      properties:
-        fulfillment_node_id:
-          type: string
-          minLength: 1
-        strategy:
-          $ref: '#/components/schemas/RoutingInsightsStrategyType'
-      required:
-      - strategy
-    Salesorderitems1:
-      title: Salesorderitems1
-      description: Routing insights data for the current sales order item uuid
-      type: object
-      properties:
-        conflict_reason:
-          description: Current conflict reason for this sales order item. Empty, if item is not in a conflict state
-          type: string
-          minLength: 1
-        correlation:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Correlation'
-          - description: Correlation information used to interpret routing attempts by LO uuids
-        product_id:
-          type: string
-          minLength: 1
-        routing_status:
-          $ref: '#/components/schemas/RoutingStatus'
-        service_levels:
-          $ref: '#/components/schemas/ServiceLevels'
-        strategies:
-          $ref: '#/components/schemas/Strategies'
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - conflict_reason
-      - correlation
-      - product_id
-      - routing_status
-      - service_levels
-      - strategies
-      - updated_at
-    RoutingInsightsActivity:
-      title: RoutingInsightsActivity
-      type: object
-      properties:
-        correlation:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/RoutingInsightsCorrelation'
-          - description: Information regarding which entities were affected by this event
-        summary:
-          description: Information regarding the event type
-          type: string
-        timestamp:
-          type: string
-          format: date-time
-        type:
-          description: Event type
-          type: string
-        value: {}
-      required:
-      - correlation
-      - summary
-      - timestamp
-      - type
-      - value
-    RoutingInsightsRoutingStrategy1:
-      title: RoutingInsightsRoutingStrategy1
-      type: object
-      properties:
-        fulfillment_node_id:
-          type: string
-          minLength: 1
-        strategy:
-          $ref: '#/components/schemas/RoutingInsightsStrategyType'
-      required:
-      - strategy
-    RoutingStatus:
-      title: RoutingStatus
-      type: string
-      enum:
-      - open
-      - processed
-      - cancelled
-      - conflict
-      - dispatched
-      - ready_for_routing
-      - ready_for_rerouting
-      - rerouting_initiated
-      - voided
-      - recalculating_shipments
-      - swapped
     RoutingInsightsServiceLevels:
       title: RoutingInsightsServiceLevels
       type: object
@@ -371,18 +267,6 @@ components:
           description: Service level with which the order was created
           type: string
           minLength: 1
-    Current:
-      title: Current
-      description: The current routing strategy
-      type: object
-      properties:
-        fulfillment_node_id:
-          type: string
-          minLength: 1
-        strategy:
-          $ref: '#/components/schemas/RoutingInsightsStrategyType'
-      required:
-      - strategy
     RoutingInsightsData:
       title: RoutingInsightsData
       description: Routing insights information for an order
@@ -419,34 +303,150 @@ components:
       - sales_order_id
       - sales_order_item_ids
       - sales_order_items
-    RoutingInsightsRoutingStrategies:
-      title: RoutingInsightsRoutingStrategies
+    Salesorderitems1:
+      title: Salesorderitems1
+      description: Routing insights data for the current sales order item uuid
+      type: object
+      properties:
+        conflict_reason:
+          description: Current conflict reason for this sales order item. Empty, if item is not in a conflict state
+          type: string
+          minLength: 1
+        correlation:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Correlation'
+          - description: Correlation information used to interpret routing attempts by LO uuids
+        product_id:
+          type: string
+          minLength: 1
+        routing_status:
+          $ref: '#/components/schemas/RoutingStatus'
+        service_levels:
+          $ref: '#/components/schemas/ServiceLevels'
+        strategies:
+          $ref: '#/components/schemas/Strategies'
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - conflict_reason
+      - correlation
+      - product_id
+      - routing_status
+      - service_levels
+      - strategies
+      - updated_at
+    Strategies:
+      title: Strategies
       type: object
       properties:
         current:
-          description: The routing strategy for each item id in this LO
-          example:
-            6ba7b810-9dad-11d1-80b4-00c04fd430c8:
-              fulfillment_node_id: dc-456
-              strategy: prerouted
-            550e8400-e29b-41d4-a716-446655440000:
-              fulfillment_node_id: store-123
-              strategy: default
           type: object
-          additionalProperties:
-            $ref: '#/components/schemas/RoutingInsightsRoutingStrategy1'
+          allOf:
+          - $ref: '#/components/schemas/Current'
+          - description: The current routing strategy
         original:
-          description: The routing strategy for each item id in this LO
-          example:
-            6ba7b810-9dad-11d1-80b4-00c04fd430c8:
-              fulfillment_node_id: dc-456
-              strategy: prerouted
-            550e8400-e29b-41d4-a716-446655440000:
-              fulfillment_node_id: store-123
-              strategy: default
           type: object
-          additionalProperties:
-            $ref: '#/components/schemas/RoutingInsightsRoutingStrategy1'
+          allOf:
+          - $ref: '#/components/schemas/Original'
+          - description: The original routing strategy on order creation
+    RoutingInsightsCorrelation:
+      title: RoutingInsightsCorrelation
+      description: Information regarding which entities were affected by this event
+      type: object
+      properties:
+        ancestor_logistic_order_uuid:
+          type: string
+          format: uuid
+        fulfillment_request:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/RoutingInsightsFulfillmentRequests'
+          - description: Any fulfillment request identifiers for this LO uuid
+        logistic_order_uuid:
+          type: string
+          format: uuid
+        routing_strategies:
+          $ref: '#/components/schemas/RoutingInsightsRoutingStrategies'
+        sales_order_item_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        service_levels:
+          $ref: '#/components/schemas/RoutingInsightsServiceLevels'
+      required:
+      - ancestor_logistic_order_uuid
+      - fulfillment_request
+      - logistic_order_uuid
+      - routing_strategies
+      - sales_order_item_ids
+      - service_levels
+    ServiceLevels:
+      title: ServiceLevels
+      type: object
+      properties:
+        current:
+          description: Service level with which the order was fulfilled
+          type: string
+          minLength: 1
+        original:
+          description: Service level with which the order was created
+          type: string
+          minLength: 1
+    Current:
+      title: Current
+      description: The current routing strategy
+      type: object
+      properties:
+        fulfillment_node_id:
+          type: string
+          minLength: 1
+        strategy:
+          $ref: '#/components/schemas/RoutingInsightsStrategyType'
+      required:
+      - strategy
+    RoutingStatus:
+      title: RoutingStatus
+      type: string
+      enum:
+      - open
+      - processed
+      - cancelled
+      - conflict
+      - dispatched
+      - ready_for_routing
+      - ready_for_rerouting
+      - rerouting_initiated
+      - voided
+      - recalculating_shipments
+      - swapped
+    RoutingInsightsActivity:
+      title: RoutingInsightsActivity
+      type: object
+      properties:
+        correlation:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/RoutingInsightsCorrelation'
+          - description: Information regarding which entities were affected by this event
+        summary:
+          description: Information regarding the event type
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        type:
+          description: Event type
+          type: string
+        value: {}
+      required:
+      - correlation
+      - summary
+      - timestamp
+      - type
+      - value
   securitySchemes:
     oauth:
       type: oauth2

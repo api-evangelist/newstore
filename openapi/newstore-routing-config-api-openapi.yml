@@ -1181,6 +1181,32 @@ paths:
         required: true
 components:
   schemas:
+    ExternalAtpSettings:
+      title: ExternalAtpSettings
+      type: object
+      properties:
+        updated_at:
+          readOnly: true
+          type: string
+          format: date-time
+        value:
+          description: If true, use availability service to request ATP data; otherwise use unallocated items count.
+          type: boolean
+      required:
+      - value
+    ShippingOfferUpdateSettings:
+      title: ShippingOfferUpdateSettings
+      type: object
+      properties:
+        updated_at:
+          readOnly: true
+          type: string
+          format: date-time
+        value:
+          description: Determines whether an order routed to a DC needs a shipping offer update.
+          type: boolean
+      required:
+      - value
     Problem:
       title: Problem
       type: object
@@ -1218,32 +1244,6 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    RejectedReroutingSettings:
-      title: RejectedReroutingSettings
-      type: object
-      properties:
-        updated_at:
-          readOnly: true
-          type: string
-          format: date-time
-        value:
-          description: Tells the routing engine if it should ignore fulfillment nodes that already rejected the fulfillment request at hand.
-          type: boolean
-      required:
-      - value
-    ShippingOfferUpdateSettings:
-      title: ShippingOfferUpdateSettings
-      type: object
-      properties:
-        updated_at:
-          readOnly: true
-          type: string
-          format: date-time
-        value:
-          description: Determines whether an order routed to a DC needs a shipping offer update.
-          type: boolean
-      required:
-      - value
     ExternalFulfillmentSettingsResponse:
       title: ExternalFulfillmentSettingsResponse
       description: Current external-fulfillment configuration setting.
@@ -1258,6 +1258,49 @@ components:
       required:
       - updated_at
       - value
+    CancellationPolicySettingsValue:
+      title: CancellationPolicySettingsValue
+      description: Order cancellation policies.
+      type: object
+      properties:
+        default:
+          description: Determines whether orders are canceled automatically in case of a conflict.
+          type: boolean
+          default: true
+        reasons_to_overwrite_default:
+          description: A list of reasons to prevent an automatic cancelation of an order (in case default is 'true') or to prevent an order being in the conflict state.
+          type: array
+          items:
+            $ref: '#/components/schemas/CancellationPolicySettingsReasons'
+          minItems: 1
+    CapacityBasedRoutingSettings:
+      title: CapacityBasedRoutingSettings
+      type: object
+      properties:
+        updated_at:
+          readOnly: true
+          type: string
+          format: date-time
+        value:
+          description: Tenant-based release toggle for the feature of capacity-based routing.
+          type: boolean
+      required:
+      - value
+    CancellationPolicySettings:
+      title: CancellationPolicySettings
+      type: object
+      properties:
+        updated_at:
+          readOnly: true
+          type: string
+          format: date-time
+        value:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/CancellationPolicySettingsValue'
+          - description: Order cancellation policies.
+      required:
+      - value
     AutomaticReroutingSettings:
       title: AutomaticReroutingSettings
       type: object
@@ -1271,6 +1314,38 @@ components:
           type: boolean
       required:
       - value
+    ShipmentLimitsResponse:
+      title: ShipmentLimitsResponse
+      description: List of all shipments limit rules
+      type: object
+      properties:
+        shipments_limit:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShipmentLimitsRequest'
+      required:
+      - shipments_limit
+    ShipmentLimitsRequest:
+      title: ShipmentLimitsRequest
+      description: Limit shipment rules for given currency x service level
+      type: object
+      properties:
+        currency:
+          description: Currency alpha code in ISO 4217 format. Per example USD, EUR or JPY
+          type: string
+          minLength: 3
+          maxLength: 3
+        limit_exceeded_when:
+          type: array
+          items:
+            $ref: '#/components/schemas/LimitExceededWhen'
+        service_level:
+          description: Shipping service level
+          type: string
+      required:
+      - currency
+      - limit_exceeded_when
+      - service_level
     LimitExceededWhen:
       title: LimitExceededWhen
       type: object
@@ -1298,42 +1373,6 @@ components:
           type: boolean
       required:
       - value
-    CancellationPolicySettings:
-      title: CancellationPolicySettings
-      type: object
-      properties:
-        updated_at:
-          readOnly: true
-          type: string
-          format: date-time
-        value:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/CancellationPolicySettingsValue'
-          - description: Order cancellation policies.
-      required:
-      - value
-    ShipmentLimitsRequest:
-      title: ShipmentLimitsRequest
-      description: Limit shipment rules for given currency x service level
-      type: object
-      properties:
-        currency:
-          description: Currency alpha code in ISO 4217 format. Per example USD, EUR or JPY
-          type: string
-          minLength: 3
-          maxLength: 3
-        limit_exceeded_when:
-          type: array
-          items:
-            $ref: '#/components/schemas/LimitExceededWhen'
-        service_level:
-          description: Shipping service level
-          type: string
-      required:
-      - currency
-      - limit_exceeded_when
-      - service_level
     CancellationPolicySettingsReasons:
       title: CancellationPolicySettingsReasons
       type: string
@@ -1344,8 +1383,8 @@ components:
       - error
       - not_enough_stock_to_create_allocation
       - limit_of_shipments_exceeded
-    CapacityBasedRoutingSettings:
-      title: CapacityBasedRoutingSettings
+    RejectedReroutingSettings:
+      title: RejectedReroutingSettings
       type: object
       properties:
         updated_at:
@@ -1353,49 +1392,10 @@ components:
           type: string
           format: date-time
         value:
-          description: Tenant-based release toggle for the feature of capacity-based routing.
+          description: Tells the routing engine if it should ignore fulfillment nodes that already rejected the fulfillment request at hand.
           type: boolean
       required:
       - value
-    ShipmentLimitsResponse:
-      title: ShipmentLimitsResponse
-      description: List of all shipments limit rules
-      type: object
-      properties:
-        shipments_limit:
-          type: array
-          items:
-            $ref: '#/components/schemas/ShipmentLimitsRequest'
-      required:
-      - shipments_limit
-    ExternalAtpSettings:
-      title: ExternalAtpSettings
-      type: object
-      properties:
-        updated_at:
-          readOnly: true
-          type: string
-          format: date-time
-        value:
-          description: If true, use availability service to request ATP data; otherwise use unallocated items count.
-          type: boolean
-      required:
-      - value
-    CancellationPolicySettingsValue:
-      title: CancellationPolicySettingsValue
-      description: Order cancellation policies.
-      type: object
-      properties:
-        default:
-          description: Determines whether orders are canceled automatically in case of a conflict.
-          type: boolean
-          default: true
-        reasons_to_overwrite_default:
-          description: A list of reasons to prevent an automatic cancelation of an order (in case default is 'true') or to prevent an order being in the conflict state.
-          type: array
-          items:
-            $ref: '#/components/schemas/CancellationPolicySettingsReasons'
-          minItems: 1
   securitySchemes:
     oauth:
       type: oauth2

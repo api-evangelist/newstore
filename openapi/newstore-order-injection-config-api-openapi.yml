@@ -376,19 +376,6 @@ components:
           format: double
       required:
       - hard_limit_for_big_orders
-    OrderInjectionTenantConfiguration:
-      title: OrderInjectionTenantConfiguration
-      description: Tenant configuration object.
-      type: object
-      properties:
-        big_sales_order:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OrderInjectionConfigurationBigSalesOrder'
-          - description: The order item limits that determine if the order is routed or is considered a big order and placed on hold.
-        skip_soft_routing_on_injection:
-          description: When set to true, do not do the soft routing for injected orders with a service level identifier.
-          type: boolean
     OrderInjectionConfigurationResponse:
       title: OrderInjectionConfigurationResponse
       description: Update configuration response
@@ -445,6 +432,19 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    OrderInjectionTenantConfiguration:
+      title: OrderInjectionTenantConfiguration
+      description: Tenant configuration object.
+      type: object
+      properties:
+        big_sales_order:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OrderInjectionConfigurationBigSalesOrder'
+          - description: The order item limits that determine if the order is routed or is considered a big order and placed on hold.
+        skip_soft_routing_on_injection:
+          description: When set to true, do not do the soft routing for injected orders with a service level identifier.
+          type: boolean
   securitySchemes:
     oauth:
       type: oauth2

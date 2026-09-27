@@ -383,6 +383,65 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    OfflineCountriesConfigUpdateV1Dto:
+      title: OfflineCountriesConfigUpdateV1Dto
+      type: object
+      properties:
+        AT:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
+          - description: Per country offline mode configuration for Austria.
+        DE:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
+          - description: Per country offline mode configuration for Germany.
+        ES:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
+          - description: Per country offline mode configuration for Spain.
+        FR:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
+          - description: Per country offline mode configuration for France.
+        IE:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
+          - description: Per country offline mode configuration for Ireland.
+        IN:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
+          - description: Per country offline mode configuration for India
+        IT:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
+          - description: Per country offline mode configuration for Italy.
+        MC:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
+          - description: Per country offline mode configuration for Monaco.
+        PL:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
+          - description: Per country offline mode configuration for Poland.
+        PR:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
+          - description: Per country offline mode configuration for Puerto Rico.
+        TH:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
+          - description: Per country offline mode configuration for Thailand.
     OfflineCountryConfigMetadataV1Dto:
       title: OfflineCountryConfigMetadataV1Dto
       type: object
@@ -408,18 +467,42 @@ components:
       required:
       - enabled
       - strategy
-    OfflineCountryConfigV1Dto:
-      title: OfflineCountryConfigV1Dto
+    TenantConfigV1Dto:
+      title: TenantConfigV1Dto
       type: object
       properties:
-        enabled:
-          description: Defines whether offline mode is enabled for this country.
-          type: boolean
-        strategy:
-          $ref: '#/components/schemas/TransactionSignatureStrategy'
+        created_at:
+          description: Creation date of the configuration.
+          example: '2024-05-13T07:52:32.285Z'
+          type: string
+          format: date-time
+        environment:
+          $ref: '#/components/schemas/FiscalEnvironment'
+        offline_countries:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OfflineCountriesConfigMetadataV1Dto'
+          - description: Offline mode configuration per country.
+        updated_at:
+          description: Latest update date of the configuration.
+          example: '2024-05-13T07:52:32.285Z'
+          type: string
+          format: date-time
+        updated_by:
+          description: User identifier who updated the current version of the configuration.
+          example: '2136871599'
+          type: string
+        version:
+          description: 'Version number of the configuration.
+
+            * Version number `0` represents the system defaults.'
+          example: 1
+          type: integer
+          format: int32
       required:
-      - enabled
-      - strategy
+      - environment
+      - offline_countries
+      - version
     OfflineCountriesConfigMetadataV1Dto:
       title: OfflineCountriesConfigMetadataV1Dto
       type: object
@@ -503,122 +586,6 @@ components:
       - PR
       - SE
       - TH
-    OfflineCountriesConfigUpdateV1Dto:
-      title: OfflineCountriesConfigUpdateV1Dto
-      type: object
-      properties:
-        AT:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
-          - description: Per country offline mode configuration for Austria.
-        DE:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
-          - description: Per country offline mode configuration for Germany.
-        ES:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
-          - description: Per country offline mode configuration for Spain.
-        FR:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
-          - description: Per country offline mode configuration for France.
-        IE:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
-          - description: Per country offline mode configuration for Ireland.
-        IN:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
-          - description: Per country offline mode configuration for India
-        IT:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
-          - description: Per country offline mode configuration for Italy.
-        MC:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
-          - description: Per country offline mode configuration for Monaco.
-        PL:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
-          - description: Per country offline mode configuration for Poland.
-        PR:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
-          - description: Per country offline mode configuration for Puerto Rico.
-        TH:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OfflineCountryConfigV1Dto'
-          - description: Per country offline mode configuration for Thailand.
-    TenantConfigV1Dto:
-      title: TenantConfigV1Dto
-      type: object
-      properties:
-        created_at:
-          description: Creation date of the configuration.
-          example: '2024-05-13T07:52:32.285Z'
-          type: string
-          format: date-time
-        environment:
-          $ref: '#/components/schemas/FiscalEnvironment'
-        offline_countries:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OfflineCountriesConfigMetadataV1Dto'
-          - description: Offline mode configuration per country.
-        updated_at:
-          description: Latest update date of the configuration.
-          example: '2024-05-13T07:52:32.285Z'
-          type: string
-          format: date-time
-        updated_by:
-          description: User identifier who updated the current version of the configuration.
-          example: '2136871599'
-          type: string
-        version:
-          description: 'Version number of the configuration.
-
-            * Version number `0` represents the system defaults.'
-          example: 1
-          type: integer
-          format: int32
-      required:
-      - environment
-      - offline_countries
-      - version
-    OfflineCountriesUpdateRequestV1Dto:
-      title: OfflineCountriesUpdateRequestV1Dto
-      type: object
-      properties:
-        offline_countries:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OfflineCountriesConfigUpdateV1Dto'
-          - description: Per country offline mode configuration.
-      required:
-      - offline_countries
-    TransactionSignatureStrategy:
-      title: TransactionSignatureStrategy
-      description: "Offline transaction signature strategy that will be used while processing offline transactions.\n* `standard-signing`\n\n\n  * Offline orders will be fiscally signed according to regulations.\n  * Can be used in cases if the receipt would be emailed once the offline order is processed.\n* `late-signing`\n\n\n  * Offline orders will be signed with late signing flag.\n  * Can be used in cases if the receipt would be emailed once the offline order is processed.\n* `manual-receipts`\n\n\n  * Offline orders will be signed with manual flag.\n  * A receipt for the offline orders and do not need to be emailed later.\n  * Can be used in cases if the a manual receipt was issued by the store, and an electronic receipt should not be sent.\n* `no-signing`\n\n\n  * Offline orders will not be signed and should be considered completed without any signature needed.\n  * Can be used in cases if the fiscal signature was issued outside of the NewStore platform."
-      example: no-signing
-      type: string
-      enum:
-      - standard-signing
-      - late-signing
-      - manual-receipts
-      - no-signing
     OfflineCountriesResponseV1Dto:
       title: OfflineCountriesResponseV1Dto
       type: object
@@ -713,6 +680,16 @@ components:
       - PR
       - SE
       - TH
+    TransactionSignatureStrategy:
+      title: TransactionSignatureStrategy
+      description: "Offline transaction signature strategy that will be used while processing offline transactions.\n* `standard-signing`\n\n\n  * Offline orders will be fiscally signed according to regulations.\n  * Can be used in cases if the receipt would be emailed once the offline order is processed.\n* `late-signing`\n\n\n  * Offline orders will be signed with late signing flag.\n  * Can be used in cases if the receipt would be emailed once the offline order is processed.\n* `manual-receipts`\n\n\n  * Offline orders will be signed with manual flag.\n  * A receipt for the offline orders and do not need to be emailed later.\n  * Can be used in cases if the a manual receipt was issued by the store, and an electronic receipt should not be sent.\n* `no-signing`\n\n\n  * Offline orders will not be signed and should be considered completed without any signature needed.\n  * Can be used in cases if the fiscal signature was issued outside of the NewStore platform."
+      example: no-signing
+      type: string
+      enum:
+      - standard-signing
+      - late-signing
+      - manual-receipts
+      - no-signing
     FiscalEnvironment:
       title: FiscalEnvironment
       description: Fiscal environment of the tenant.
@@ -721,6 +698,29 @@ components:
       enum:
       - non-production
       - production
+    OfflineCountryConfigV1Dto:
+      title: OfflineCountryConfigV1Dto
+      type: object
+      properties:
+        enabled:
+          description: Defines whether offline mode is enabled for this country.
+          type: boolean
+        strategy:
+          $ref: '#/components/schemas/TransactionSignatureStrategy'
+      required:
+      - enabled
+      - strategy
+    OfflineCountriesUpdateRequestV1Dto:
+      title: OfflineCountriesUpdateRequestV1Dto
+      type: object
+      properties:
+        offline_countries:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OfflineCountriesConfigUpdateV1Dto'
+          - description: Per country offline mode configuration.
+      required:
+      - offline_countries
   securitySchemes:
     oauth:
       type: oauth2

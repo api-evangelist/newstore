@@ -316,30 +316,6 @@ components:
           minLength: 1
       required:
       - line_items
-    LineItem11:
-      title: LineItem11
-      description: Line item
-      type: object
-      properties:
-        item_id:
-          description: Sales order item UUID.
-          type: string
-          format: uuid
-        state:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/State'
-          - description: New state that should be applied to this item defined by sales order item UUID.
-      required:
-      - item_id
-      - state
-    State:
-      title: State
-      description: New state that should be applied to this item defined by sales order item UUID.
-      type: string
-      enum:
-      - shipped
-      - rejected
     Problem:
       title: Problem
       type: object
@@ -377,15 +353,32 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    Status11:
-      title: Status11
-      description: 'Current status of fulfillment request: dispatched - fulfillment request was sent to sent to store/DC services, but wasn''t acknowledged yet; acknowledged - fulfillment request was acknowledged by store/DC service and will be send to store/DC for fulfillment; partially_completed - some items of fulfillment request were already processed (cancelled, rejected, shipped) but not all of them; completed - all items of fulfillment request were processed (cancelled, rejected, shipped).'
+    Status2:
+      title: Status2
+      description: 'Status of this item: dispatched - item was routed to a store/DC (check status of fulfillment request to see whether DC/store service has already accepted this fulfillment request or not); shipped - item was marked as shipped; rejected - item was rejected by fulfillment node and going to be rerouted (or was rerouted if fulfillment request already completed); cancelled - item was cancelled.'
       type: string
       enum:
       - dispatched
-      - acknowledged
-      - partially_completed
-      - completed
+      - shipped
+      - rejected
+      - cancelled
+    LineItem11:
+      title: LineItem11
+      description: Line item
+      type: object
+      properties:
+        item_id:
+          description: Sales order item UUID.
+          type: string
+          format: uuid
+        state:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/State'
+          - description: New state that should be applied to this item defined by sales order item UUID.
+      required:
+      - item_id
+      - state
     OrderFulfillmentRequestsResponse:
       title: OrderFulfillmentRequestsResponse
       description: Fulfillment requests for an order
@@ -399,15 +392,22 @@ components:
           maxItems: 2000
       required:
       - fulfillment_requests
-    Status2:
-      title: Status2
-      description: 'Status of this item: dispatched - item was routed to a store/DC (check status of fulfillment request to see whether DC/store service has already accepted this fulfillment request or not); shipped - item was marked as shipped; rejected - item was rejected by fulfillment node and going to be rerouted (or was rerouted if fulfillment request already completed); cancelled - item was cancelled.'
+    State:
+      title: State
+      description: New state that should be applied to this item defined by sales order item UUID.
+      type: string
+      enum:
+      - shipped
+      - rejected
+    Status11:
+      title: Status11
+      description: 'Current status of fulfillment request: dispatched - fulfillment request was sent to sent to store/DC services, but wasn''t acknowledged yet; acknowledged - fulfillment request was acknowledged by store/DC service and will be send to store/DC for fulfillment; partially_completed - some items of fulfillment request were already processed (cancelled, rejected, shipped) but not all of them; completed - all items of fulfillment request were processed (cancelled, rejected, shipped).'
       type: string
       enum:
       - dispatched
-      - shipped
-      - rejected
-      - cancelled
+      - acknowledged
+      - partially_completed
+      - completed
     Item8:
       title: Item8
       type: object

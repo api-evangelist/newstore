@@ -141,6 +141,28 @@ paths:
       - oauth: []
 components:
   schemas:
+    Allocation:
+      title: Allocation
+      type: object
+      properties:
+        created_at:
+          description: Timestamp at which allocation was created
+          type: string
+          format: date-time
+        item_uuid:
+          description: The uuid of the order item.
+          type: string
+          minLength: 36
+          maxLength: 36
+        order_uuid:
+          description: The uuid of the order.
+          type: string
+          minLength: 36
+          maxLength: 36
+      required:
+      - created_at
+      - item_uuid
+      - order_uuid
     Problem:
       title: Problem
       type: object
@@ -211,28 +233,6 @@ components:
       properties:
         created_at:
           description: Timestamp at which reservation was created
-          type: string
-          format: date-time
-        item_uuid:
-          description: The uuid of the order item.
-          type: string
-          minLength: 36
-          maxLength: 36
-        order_uuid:
-          description: The uuid of the order.
-          type: string
-          minLength: 36
-          maxLength: 36
-      required:
-      - created_at
-      - item_uuid
-      - order_uuid
-    Allocation:
-      title: Allocation
-      type: object
-      properties:
-        created_at:
-          description: Timestamp at which allocation was created
           type: string
           format: date-time
         item_uuid:

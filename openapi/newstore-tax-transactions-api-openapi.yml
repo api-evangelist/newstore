@@ -525,57 +525,6 @@ paths:
         - taxes:transactions:read
 components:
   schemas:
-    TaxCalculationStrategy:
-      title: TaxCalculationStrategy
-      description: Tax calculation strategy.
-      example: fixedrate
-      type: string
-      enum:
-      - fixedrate
-      - fixed_rate_per_country
-      - avalara
-      - vertex
-      - custom
-    ItemType:
-      title: ItemType
-      description: Type of the item.
-      example: product
-      type: string
-      enum:
-      - gift-card
-      - gift-wrapping
-      - product
-      - shipping
-    FallbackErrorDto:
-      title: FallbackErrorDto
-      type: object
-      properties:
-        error_code:
-          $ref: '#/components/schemas/TaxServiceErrorCode'
-        message:
-          description: The error message of the underlying tax provider.
-          example: Avalara request returned an incomplete or invalid address error
-          type: string
-        original_tax_provider:
-          $ref: '#/components/schemas/TaxCalculationStrategy'
-      required:
-      - error_code
-      - message
-      - original_tax_provider
-    TransactionUpdateDto:
-      title: TransactionUpdateDto
-      type: object
-      properties:
-        order_id:
-          description: 'The order ID that will be used as a reference to link the order to the created tax transaction in the tax provider records.
-
-            * In case the order ID is not provided then a randomly generated identifier will be used instead.
-
-            * The tax transaction will be stored by using the given value.'
-          example: 56bb9975-f43a-4eee-8fb2-200957eb0624
-          type: string
-      required:
-      - order_id
     EnrichedTransactionDto:
       title: EnrichedTransactionDto
       type: object
@@ -634,14 +583,144 @@ components:
       - document_id
       - items
       - totals
-    TransactionType:
-      title: TransactionType
-      description: Type of the transaction.
-      example: SALE
+    EnrichedTransactionItemDto:
+      title: EnrichedTransactionItemDto
+      type: object
+      properties:
+        consumer_uuid:
+          description: UUID of the consumer.
+          type: string
+        currency_consumer:
+          description: Currency code shown and billed to the consumer.
+          example: USD
+          type: string
+        extended_attributes:
+          description: The item's list of extended attributes.
+          type: array
+          items:
+            $ref: '#/components/schemas/AddItemExtendedAttribute'
+        handling_charges:
+          description: Cost of handling.
+          example: 10
+          type: number
+          format: double
+        id:
+          description: Unique identifier of the item.
+          example: '123'
+          type: string
+        item_price:
+          description: Price per quantity 1 of the item, can be incl. or excl. tax depending on tax_method.
+          example: 200
+          type: number
+          format: double
+        price_line_item:
+          description: Gross price for the total quantity of the line item, after all discounts.
+          example: 200
+          type: number
+          format: double
+        price_net:
+          description: Net price for total quantity of line item, after applying all discounts.
+          example: 180
+          type: number
+          format: double
+        price_tax:
+          description: Total amount of tax added to the net price, after appplying all discounts.
+          example: 20
+          type: number
+          format: double
+        product_id:
+          description: Unique identifier of the product.
+          example: '123'
+          type: string
+        product_name:
+          description: Human-readable name of the product.
+          example: Metallica shirt
+          type: string
+          maxLength: 512
+        product_sku:
+          description: SKU of the product.
+          example: AIk-0790
+          type: string
+          maxLength: 256
+        quantity:
+          description: Item quantity. Positive number for sold items and negative number for returned items
+          example: 1
+          type: integer
+          format: int32
+        shipping_address:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/EnrichedTransactionAddressDto'
+          - description: Consumer's shipping address.
+        shipping_origin:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/EnrichedTransactionAddressDto'
+          - description: The origin of goods address, e.g. physical address of a store.
+        tax_class:
+          description: Tax classification identifier for the line item.
+          example: AAA000
+          type: string
+          maxLength: 256
+        tax_method:
+          $ref: '#/components/schemas/SalesOrderTaxMethod'
+        tax_rates:
+          description: All applied tax percent values and tax amounts for total quantity of line item (usually more than one rate per line item).
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxRateDto'
+        type:
+          $ref: '#/components/schemas/ItemType'
+      required:
+      - item_price
+      - price_line_item
+      - price_net
+      - price_tax
+      - quantity
+      - shipping_address
+      - shipping_origin
+      - tax_class
+      - tax_method
+      - tax_rates
+      - type
+    TaxServiceErrorCode:
+      title: TaxServiceErrorCode
+      description: The error code from the underlying tax provider.
+      example: taxes_address_validation_failed
       type: string
       enum:
-      - SALE
-      - RETURN
+      - taxes_unexpected_error
+      - taxes_tenant_missing
+      - taxes_config_already_exists
+      - taxes_config_not_found
+      - taxes_provider_config_missing
+      - taxes_tenant_config_required
+      - taxes_rounding_failed
+      - taxes_invalid_minor_units
+      - taxes_unsupported_currency
+      - taxes_xml_parsing_failed
+      - taxes_provider_error_response
+      - taxes_provider_unexpected_response
+      - taxes_provider_client_error_response
+      - taxes_provider_invalid_credentials
+      - taxes_address_validation_failed
+      - taxes_provider_config_validation_failed
+      - taxes_provider_generic_error
+      - taxes_provider_invalid_response
+      - taxes_transaction_not_found
+      - taxes_commit_integration_error
+      - reverse_calculation_provider_error
+      - transaction_modification_not_allowed
+    ItemType:
+      title: ItemType
+      description: Type of the item.
+      example: product
+      type: string
+      enum:
+      - gift-card
+      - gift-wrapping
+      - product
+      - shipping
     Problem:
       title: Problem
       type: object
@@ -769,239 +848,22 @@ components:
       - country_code
       - rate
       - tax_name
-    EnrichedTransactionAddressDto:
-      title: EnrichedTransactionAddressDto
+    FallbackErrorDto:
+      title: FallbackErrorDto
       type: object
       properties:
-        address_line_1:
-          description: Location address line 1.
-          example: 81 Elk Rd Little
+        error_code:
+          $ref: '#/components/schemas/TaxServiceErrorCode'
+        message:
+          description: The error message of the underlying tax provider.
+          example: Avalara request returned an incomplete or invalid address error
           type: string
-        address_line_2:
-          description: Location address line 2.
-          type: string
-        city:
-          description: Location city.
-          example: Albany
-          type: string
-        country_code:
-          type: string
-        province:
-          description: Location province.
-          example: New York
-          type: string
-        state:
-          description: Location state.
-          example: New York
-          type: string
-        store_id:
-          description: NewStore Store ID of the address.
-          example: Munich-store
-          type: string
-        zip_code:
-          description: Location ZIP code.
-          example: '12207'
-          type: string
-          maxLength: 32
-    TaxServiceErrorCode:
-      title: TaxServiceErrorCode
-      description: The error code from the underlying tax provider.
-      example: taxes_address_validation_failed
-      type: string
-      enum:
-      - taxes_unexpected_error
-      - taxes_tenant_missing
-      - taxes_config_already_exists
-      - taxes_config_not_found
-      - taxes_provider_config_missing
-      - taxes_tenant_config_required
-      - taxes_rounding_failed
-      - taxes_invalid_minor_units
-      - taxes_unsupported_currency
-      - taxes_xml_parsing_failed
-      - taxes_provider_error_response
-      - taxes_provider_unexpected_response
-      - taxes_provider_client_error_response
-      - taxes_provider_invalid_credentials
-      - taxes_address_validation_failed
-      - taxes_provider_config_validation_failed
-      - taxes_provider_generic_error
-      - taxes_provider_invalid_response
-      - taxes_transaction_not_found
-      - taxes_commit_integration_error
-      - reverse_calculation_provider_error
-      - transaction_modification_not_allowed
-    SalesOrderTaxMethod:
-      title: SalesOrderTaxMethod
-      description: Method of calculation of the taxes, can be vat_included or vat_excluded.
-      example: vat_excluded
-      type: string
-      enum:
-      - vat_included
-      - vat_excluded
-    AddItemExtendedAttribute:
-      title: AddItemExtendedAttribute
-      type: object
-      properties:
-        name:
-          example: engraving
-          type: string
-        value:
-          example: For you.
-          type: string
+        original_tax_provider:
+          $ref: '#/components/schemas/TaxCalculationStrategy'
       required:
-      - name
-      - value
-    EnrichedTransactionItemDto:
-      title: EnrichedTransactionItemDto
-      type: object
-      properties:
-        consumer_uuid:
-          description: UUID of the consumer.
-          type: string
-        currency_consumer:
-          description: Currency code shown and billed to the consumer.
-          example: USD
-          type: string
-        extended_attributes:
-          description: The item's list of extended attributes.
-          type: array
-          items:
-            $ref: '#/components/schemas/AddItemExtendedAttribute'
-        handling_charges:
-          description: Cost of handling.
-          example: 10
-          type: number
-          format: double
-        id:
-          description: Unique identifier of the item.
-          example: '123'
-          type: string
-        item_price:
-          description: Price per quantity 1 of the item, can be incl. or excl. tax depending on tax_method.
-          example: 200
-          type: number
-          format: double
-        price_line_item:
-          description: Gross price for the total quantity of the line item, after all discounts.
-          example: 200
-          type: number
-          format: double
-        price_net:
-          description: Net price for total quantity of line item, after applying all discounts.
-          example: 180
-          type: number
-          format: double
-        price_tax:
-          description: Total amount of tax added to the net price, after appplying all discounts.
-          example: 20
-          type: number
-          format: double
-        product_id:
-          description: Unique identifier of the product.
-          example: '123'
-          type: string
-        product_name:
-          description: Human-readable name of the product.
-          example: Metallica shirt
-          type: string
-          maxLength: 512
-        product_sku:
-          description: SKU of the product.
-          example: AIk-0790
-          type: string
-          maxLength: 256
-        quantity:
-          description: Item quantity. Positive number for sold items and negative number for returned items
-          example: 1
-          type: integer
-          format: int32
-        shipping_address:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/EnrichedTransactionAddressDto'
-          - description: Consumer's shipping address.
-        shipping_origin:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/EnrichedTransactionAddressDto'
-          - description: The origin of goods address, e.g. physical address of a store.
-        tax_class:
-          description: Tax classification identifier for the line item.
-          example: AAA000
-          type: string
-          maxLength: 256
-        tax_method:
-          $ref: '#/components/schemas/SalesOrderTaxMethod'
-        tax_rates:
-          description: All applied tax percent values and tax amounts for total quantity of line item (usually more than one rate per line item).
-          type: array
-          items:
-            $ref: '#/components/schemas/TaxRateDto'
-        type:
-          $ref: '#/components/schemas/ItemType'
-      required:
-      - item_price
-      - price_line_item
-      - price_net
-      - price_tax
-      - quantity
-      - shipping_address
-      - shipping_origin
-      - tax_class
-      - tax_method
-      - tax_rates
-      - type
-    CalculationMode:
-      title: CalculationMode
-      description: 'Type of the tax calculation
-
-
-        * `STANDARD`: Standard tax calculation (default).
-
-        * Taxes will be calculated for each line from `item_price * quantity` respecting the `tax_method` (tax incl./excl.).
-
-
-
-        * `REVERSE`: Reverse calculation of taxes from the total amount paid by customer (e.g. for injected offline or e-comm orders).
-
-        * Taxes will be calculated from `price_line_item` (total gross amount for given quantity) regardless of `tax_method` (tax incl./excl.).'
-      example: STANDARD
-      type: string
-      enum:
-      - STANDARD
-      - REVERSE
-    TaxStatus:
-      title: TaxStatus
-      description: "Type of the tax status applied to the tax line\n\n    * `TAXABLE`: Taxes are applied to the tax line.\n\n* `NOT_TAXABLE`: No taxes are applied to the tax line.\n\n* `EXEMPT`: Taxes are exempt for the tax line."
-      example: EXEMPT
-      type: string
-      enum:
-      - EXEMPT
-      - TAXABLE
-      - NOT_TAXABLE
-    ExemptionClass:
-      title: ExemptionClass
-      description: 'The tax exemption class that identifies the customer''s group/organization that accredited them with the tax exemption status.
-
-        * For custom tax exemption classes, the `CUSTOM_` prefix with a UPPER_SNAKE_CASE key can be used. Example: `CUSTOM_CANADA`'
-      example: CHARITY_ORGANIZATION
-      type: string
-      enum:
-      - FEDERAL_GOVERNMENT
-      - STATE_GOVERNMENT
-      - TRIBAL_GOVERNMENT
-      - LOCAL_GOVERNMENT
-      - FOREIGN_DIPLOMAT
-      - CHARITY_ORGANIZATION
-      - RELIGIOUS_ORGANIZATION
-      - EDUCATIONAL_ORGANIZATION
-      - RESALE
-      - DIRECT_PAY_PERMIT
-      - OTHER
-      - NON_RESIDENT
-      - FIRST_NATION_CITIZEN
-      - CUSTOM_*
+      - error_code
+      - message
+      - original_tax_provider
     TaxTotalsDto:
       title: TaxTotalsDto
       type: object
@@ -1058,6 +920,144 @@ components:
       - tax_rates_summary
       - tax_strategy
       - tax_total
+    TaxCalculationStrategy:
+      title: TaxCalculationStrategy
+      description: Tax calculation strategy.
+      example: fixedrate
+      type: string
+      enum:
+      - fixedrate
+      - fixed_rate_per_country
+      - avalara
+      - vertex
+      - custom
+    TaxStatus:
+      title: TaxStatus
+      description: "Type of the tax status applied to the tax line\n\n    * `TAXABLE`: Taxes are applied to the tax line.\n\n* `NOT_TAXABLE`: No taxes are applied to the tax line.\n\n* `EXEMPT`: Taxes are exempt for the tax line."
+      example: EXEMPT
+      type: string
+      enum:
+      - EXEMPT
+      - TAXABLE
+      - NOT_TAXABLE
+    EnrichedTransactionAddressDto:
+      title: EnrichedTransactionAddressDto
+      type: object
+      properties:
+        address_line_1:
+          description: Location address line 1.
+          example: 81 Elk Rd Little
+          type: string
+        address_line_2:
+          description: Location address line 2.
+          type: string
+        city:
+          description: Location city.
+          example: Albany
+          type: string
+        country_code:
+          type: string
+        province:
+          description: Location province.
+          example: New York
+          type: string
+        state:
+          description: Location state.
+          example: New York
+          type: string
+        store_id:
+          description: NewStore Store ID of the address.
+          example: Munich-store
+          type: string
+        zip_code:
+          description: Location ZIP code.
+          example: '12207'
+          type: string
+          maxLength: 32
+    TransactionType:
+      title: TransactionType
+      description: Type of the transaction.
+      example: SALE
+      type: string
+      enum:
+      - SALE
+      - RETURN
+    AddItemExtendedAttribute:
+      title: AddItemExtendedAttribute
+      type: object
+      properties:
+        name:
+          example: engraving
+          type: string
+        value:
+          example: For you.
+          type: string
+      required:
+      - name
+      - value
+    CalculationMode:
+      title: CalculationMode
+      description: 'Type of the tax calculation
+
+
+        * `STANDARD`: Standard tax calculation (default).
+
+        * Taxes will be calculated for each line from `item_price * quantity` respecting the `tax_method` (tax incl./excl.).
+
+
+
+        * `REVERSE`: Reverse calculation of taxes from the total amount paid by customer (e.g. for injected offline or e-comm orders).
+
+        * Taxes will be calculated from `price_line_item` (total gross amount for given quantity) regardless of `tax_method` (tax incl./excl.).'
+      example: STANDARD
+      type: string
+      enum:
+      - STANDARD
+      - REVERSE
+    ExemptionClass:
+      title: ExemptionClass
+      description: 'The tax exemption class that identifies the customer''s group/organization that accredited them with the tax exemption status.
+
+        * For custom tax exemption classes, the `CUSTOM_` prefix with a UPPER_SNAKE_CASE key can be used. Example: `CUSTOM_CANADA`'
+      example: CHARITY_ORGANIZATION
+      type: string
+      enum:
+      - FEDERAL_GOVERNMENT
+      - STATE_GOVERNMENT
+      - TRIBAL_GOVERNMENT
+      - LOCAL_GOVERNMENT
+      - FOREIGN_DIPLOMAT
+      - CHARITY_ORGANIZATION
+      - RELIGIOUS_ORGANIZATION
+      - EDUCATIONAL_ORGANIZATION
+      - RESALE
+      - DIRECT_PAY_PERMIT
+      - OTHER
+      - NON_RESIDENT
+      - FIRST_NATION_CITIZEN
+      - CUSTOM_*
+    SalesOrderTaxMethod:
+      title: SalesOrderTaxMethod
+      description: Method of calculation of the taxes, can be vat_included or vat_excluded.
+      example: vat_excluded
+      type: string
+      enum:
+      - vat_included
+      - vat_excluded
+    TransactionUpdateDto:
+      title: TransactionUpdateDto
+      type: object
+      properties:
+        order_id:
+          description: 'The order ID that will be used as a reference to link the order to the created tax transaction in the tax provider records.
+
+            * In case the order ID is not provided then a randomly generated identifier will be used instead.
+
+            * The tax transaction will be stored by using the given value.'
+          example: 56bb9975-f43a-4eee-8fb2-200957eb0624
+          type: string
+      required:
+      - order_id
   securitySchemes:
     oauth:
       type: oauth2

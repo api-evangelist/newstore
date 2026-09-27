@@ -306,35 +306,14 @@ paths:
         - fiscalization:orders:read
 components:
   schemas:
-    ContextV1Dto:
-      title: ContextV1Dto
-      type: object
-      properties:
-        associate_created_at:
-          description: Associate creation timestamp.
-          example: '2021-01-19T09:57:01.112Z'
-          type: string
-          format: date-time
-        associate_id:
-          description: Associate ID.
-          example: 012345678-abcd-0123-abcd-0123456789ab
-          type: string
-        associate_name:
-          example: Peter Smith
-          type: string
-        cashbox_id:
-          description: 'Cashbox ID for which fiscal transaction is executed.
-
-            * Used in multi-cashbox stores.'
-          example: 012345678-abcd-0123-abcd-0123456789ab
-          type: string
-        store_id:
-          description: Store ID where fiscal transaction is executed.
-          example: 494362b0-5240-4a94-ad1c-74407b005310
-          type: string
-      required:
-      - associate_id
-      - store_id
+    F11nTaxMethod:
+      title: F11nTaxMethod
+      description: Defines the tax method used (tax inclusive or exclusive).
+      example: tax_included
+      type: string
+      enum:
+      - tax_included
+      - tax_excluded
     Problem:
       title: Problem
       type: object
@@ -372,16 +351,14 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    FiscalMode:
-      title: FiscalMode
-      description: 'Fiscal mode.
-
-        * Defaults to `standard` if not provided.'
-      example: standard
+    OrderManagementState:
+      title: OrderManagementState
+      description: Order state.
+      example: OK
       type: string
       enum:
-      - standard
-      - offline
+      - OK
+      - FAILED
     F11nTransactionType:
       title: F11nTransactionType
       description: Transaction type.
@@ -461,14 +438,16 @@ components:
       - state
       - transactions
       - updated_at
-    F11nTaxMethod:
-      title: F11nTaxMethod
-      description: Defines the tax method used (tax inclusive or exclusive).
-      example: tax_included
+    FiscalMode:
+      title: FiscalMode
+      description: 'Fiscal mode.
+
+        * Defaults to `standard` if not provided.'
+      example: standard
       type: string
       enum:
-      - tax_included
-      - tax_excluded
+      - standard
+      - offline
     TransactionSignatureStrategy:
       title: TransactionSignatureStrategy
       description: "Offline transaction signature strategy that will be used while processing offline transactions.\n* `standard-signing`\n\n\n  * Offline orders will be fiscally signed according to regulations.\n  * Can be used in cases if the receipt would be emailed once the offline order is processed.\n* `late-signing`\n\n\n  * Offline orders will be signed with late signing flag.\n  * Can be used in cases if the receipt would be emailed once the offline order is processed.\n* `manual-receipts`\n\n\n  * Offline orders will be signed with manual flag.\n  * A receipt for the offline orders and do not need to be emailed later.\n  * Can be used in cases if the a manual receipt was issued by the store, and an electronic receipt should not be sent.\n* `no-signing`\n\n\n  * Offline orders will not be signed and should be considered completed without any signature needed.\n  * Can be used in cases if the fiscal signature was issued outside of the NewStore platform."
@@ -479,23 +458,6 @@ components:
       - late-signing
       - manual-receipts
       - no-signing
-    TransactionState:
-      title: TransactionState
-      description: Fiscal transaction state.
-      example: OK
-      type: string
-      enum:
-      - OK
-      - FAILED
-      - TEMP_SIGNED
-    OrderManagementState:
-      title: OrderManagementState
-      description: Order state.
-      example: OK
-      type: string
-      enum:
-      - OK
-      - FAILED
     TransactionMinV1Dto:
       title: TransactionMinV1Dto
       type: object
@@ -527,6 +489,44 @@ components:
       - temporary_signature
       - transaction_number
       - type
+    ContextV1Dto:
+      title: ContextV1Dto
+      type: object
+      properties:
+        associate_created_at:
+          description: Associate creation timestamp.
+          example: '2021-01-19T09:57:01.112Z'
+          type: string
+          format: date-time
+        associate_id:
+          description: Associate ID.
+          example: 012345678-abcd-0123-abcd-0123456789ab
+          type: string
+        associate_name:
+          example: Peter Smith
+          type: string
+        cashbox_id:
+          description: 'Cashbox ID for which fiscal transaction is executed.
+
+            * Used in multi-cashbox stores.'
+          example: 012345678-abcd-0123-abcd-0123456789ab
+          type: string
+        store_id:
+          description: Store ID where fiscal transaction is executed.
+          example: 494362b0-5240-4a94-ad1c-74407b005310
+          type: string
+      required:
+      - associate_id
+      - store_id
+    TransactionState:
+      title: TransactionState
+      description: Fiscal transaction state.
+      example: OK
+      type: string
+      enum:
+      - OK
+      - FAILED
+      - TEMP_SIGNED
   securitySchemes:
     oauth:
       type: oauth2

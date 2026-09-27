@@ -502,6 +502,24 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    PackageWeight:
+      title: PackageWeight
+      description: The weight of a package type.
+      type: object
+      properties:
+        amount:
+          description: Weight of the package.
+          type: number
+          format: double
+          exclusiveMinimum: 0.0
+        unit:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/weight_unit'
+          - description: Unit of measurement for the weight.
+      required:
+      - amount
+      - unit
     UpdatePackageTypeRequest:
       title: UpdatePackageTypeRequest
       description: 'Request body for updating an existing package type. All fields are optional;
@@ -516,82 +534,17 @@ components:
           type: string
         weight:
           $ref: '#/components/schemas/PackageWeight'
-    weight_unit:
-      title: weight_unit
-      description: Unit of measurement for the weight.
-      type: string
-      enum:
-      - lb
-      - oz
-      - kg
-      - g
-    PackageDimensions:
-      title: PackageDimensions
-      description: The physical dimensions of a package type.
+    PackageTypesResponse:
+      title: PackageTypesResponse
+      description: List of all package types configured.
       type: object
       properties:
-        height:
-          description: Height of the package.
-          type: number
-          format: double
-          exclusiveMinimum: 0.0
-        length:
-          description: Length of the package.
-          type: number
-          format: double
-          exclusiveMinimum: 0.0
-        unit:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/dimension_unit'
-          - description: Unit of measurement for the dimensions.
-        width:
-          description: Width of the package.
-          type: number
-          format: double
-          exclusiveMinimum: 0.0
+        package_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackageTypeResponse'
       required:
-      - height
-      - length
-      - unit
-      - width
-    PackageTypeResponse:
-      title: PackageTypeResponse
-      description: A package type that is available for associates to select during the packing flow.
-      type: object
-      properties:
-        dimensions:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/PackageDimensions'
-          - description: The physical dimensions of a package type.
-        id:
-          description: Unique identifier of the package type.
-          type: string
-          format: uuid
-        name:
-          description: Display name shown to associates when selecting a package.
-          type: string
-        weight:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/PackageWeight'
-          - description: The weight of a package type.
-      required:
-      - dimensions
-      - id
-      - name
-      - weight
-    dimension_unit:
-      title: dimension_unit
-      description: Unit of measurement for the dimensions.
-      type: string
-      enum:
-      - mm
-      - cm
-      - m
-      - in
-      - ft
+      - package_types
     CreatePackageTypeRequest:
       title: CreatePackageTypeRequest
       description: 'Request body for creating a new package type. Package types define the packages
@@ -626,35 +579,82 @@ components:
       - dimensions
       - name
       - weight
-    PackageTypesResponse:
-      title: PackageTypesResponse
-      description: List of all package types configured.
+    dimension_unit:
+      title: dimension_unit
+      description: Unit of measurement for the dimensions.
+      type: string
+      enum:
+      - mm
+      - cm
+      - m
+      - in
+      - ft
+    PackageDimensions:
+      title: PackageDimensions
+      description: The physical dimensions of a package type.
       type: object
       properties:
-        package_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/PackageTypeResponse'
-      required:
-      - package_types
-    PackageWeight:
-      title: PackageWeight
-      description: The weight of a package type.
-      type: object
-      properties:
-        amount:
-          description: Weight of the package.
+        height:
+          description: Height of the package.
+          type: number
+          format: double
+          exclusiveMinimum: 0.0
+        length:
+          description: Length of the package.
           type: number
           format: double
           exclusiveMinimum: 0.0
         unit:
           type: object
           allOf:
-          - $ref: '#/components/schemas/weight_unit'
-          - description: Unit of measurement for the weight.
+          - $ref: '#/components/schemas/dimension_unit'
+          - description: Unit of measurement for the dimensions.
+        width:
+          description: Width of the package.
+          type: number
+          format: double
+          exclusiveMinimum: 0.0
       required:
-      - amount
+      - height
+      - length
       - unit
+      - width
+    weight_unit:
+      title: weight_unit
+      description: Unit of measurement for the weight.
+      type: string
+      enum:
+      - lb
+      - oz
+      - kg
+      - g
+    PackageTypeResponse:
+      title: PackageTypeResponse
+      description: A package type that is available for associates to select during the packing flow.
+      type: object
+      properties:
+        dimensions:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/PackageDimensions'
+          - description: The physical dimensions of a package type.
+        id:
+          description: Unique identifier of the package type.
+          type: string
+          format: uuid
+        name:
+          description: Display name shown to associates when selecting a package.
+          type: string
+        weight:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/PackageWeight'
+          - description: The weight of a package type.
+      required:
+      - dimensions
+      - id
+      - name
+      - weight
   securitySchemes:
     oauth:
       type: oauth2

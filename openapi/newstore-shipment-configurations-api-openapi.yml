@@ -318,45 +318,6 @@ paths:
         - newstore:configuration:read
 components:
   schemas:
-    Body:
-      title: Body
-      type: object
-      properties:
-        value:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Value'
-          - description: fulfillment node ID to customs signer config
-    Value:
-      title: Value
-      description: fulfillment node ID to customs signer config
-      type: object
-      properties:
-        base_url:
-          description: The Provider Rate customization adapter URL. Must end with a slash /
-          type: string
-          minLength: 1
-          maxLength: 2083
-        api_base_url:
-          description: The shipping provider adapter URL. Must end with a slash /
-          type: string
-          minLength: 1
-          maxLength: 2083
-        api_key:
-          type: string
-        booking_includes_return:
-          type: boolean
-          default: false
-        return_deliveries_should_be_canceled:
-          type: boolean
-          default: false
-        customs_signer:
-          type: string
-          minLength: 1
-      required:
-      - base_url
-      - api_base_url
-      - customs_signer
     Problem:
       title: Problem
       type: object
@@ -403,6 +364,15 @@ components:
           allOf:
           - $ref: '#/components/schemas/Value'
           - description: fulfillment node ID to customs signer config
+    Body:
+      title: Body
+      type: object
+      properties:
+        value:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Value'
+          - description: fulfillment node ID to customs signer config
     ResponseShowconfigurationbyname:
       title: ResponseShowconfigurationbyname
       type: object
@@ -412,6 +382,36 @@ components:
           allOf:
           - $ref: '#/components/schemas/Value'
           - description: fulfillment node ID to customs signer config
+    Value:
+      title: Value
+      description: fulfillment node ID to customs signer config
+      type: object
+      properties:
+        base_url:
+          description: The Provider Rate customization adapter URL. Must end with a slash /
+          type: string
+          minLength: 1
+          maxLength: 2083
+        api_base_url:
+          description: The shipping provider adapter URL. Must end with a slash /
+          type: string
+          minLength: 1
+          maxLength: 2083
+        api_key:
+          type: string
+        booking_includes_return:
+          type: boolean
+          default: false
+        return_deliveries_should_be_canceled:
+          type: boolean
+          default: false
+        customs_signer:
+          type: string
+          minLength: 1
+      required:
+      - base_url
+      - api_base_url
+      - customs_signer
   securitySchemes:
     oauth:
       type: oauth2

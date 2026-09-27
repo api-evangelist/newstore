@@ -189,6 +189,21 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    TokensRequest:
+      title: TokensRequest
+      description: Tokens request.
+      type: object
+      properties:
+        data:
+          description: Sensitive data to be tokenized or detokenized, according to the operation.
+          example:
+            key1: foo
+            key2: bar
+          type: object
+          minProperties: 1
+          maxProperties: 25
+      required:
+      - data
     TokensResponse:
       title: TokensResponse
       description: Tokens response.
@@ -209,21 +224,6 @@ components:
       required:
       - data
       - errors
-    TokensRequest:
-      title: TokensRequest
-      description: Tokens request.
-      type: object
-      properties:
-        data:
-          description: Sensitive data to be tokenized or detokenized, according to the operation.
-          example:
-            key1: foo
-            key2: bar
-          type: object
-          minProperties: 1
-          maxProperties: 25
-      required:
-      - data
   securitySchemes:
     oauth:
       type: oauth2
