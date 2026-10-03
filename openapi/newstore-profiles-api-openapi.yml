@@ -190,6 +190,90 @@ paths:
         - clienteling:profile:read
 components:
   schemas:
+    Profile:
+      title: Profile
+      description: Clienteling profile information for a customer.
+      example:
+        customer_id: 123e4567-e89b-12d3-a456-426614174000
+        opted_in:
+          store_123:
+            opt_in_state: accepted
+            opt_in_state_modified_at: '2024-03-20T15:30:00Z'
+          store_456:
+            opt_in_state: waiting
+            opt_in_state_modified_at: '2024-03-18T09:00:00Z'
+        opted_out: false
+        opted_out_at: null
+        phone_number: '+1234567890'
+      type: object
+      properties:
+        customer_id:
+          description: The identifier of the customer.
+          type: string
+          format: uuid
+        opted_in:
+          description: The opt-in status for the customer per store.
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/OptedIn'
+        opted_out:
+          description: Whether the customer has opted out.
+          type: boolean
+        opted_out_at:
+          description: The date when the customer opted out.
+          type: string
+          format: date-time
+        phone_number:
+          description: The phone number of the customer.
+          type: string
+      required:
+      - customer_id
+      - opted_in
+      - opted_out
+      - opted_out_at
+      - phone_number
+    OptedIn:
+      title: OptedIn
+      description: Opt-in status information for a conversation between a customer and a store.
+      example:
+        opt_in_state: accepted
+        opt_in_state_modified_at: '2025-01-03T18:03:00Z'
+      type: object
+      properties:
+        opt_in_state:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OptInState'
+          - description: The current opt-in state for this store.
+        opt_in_state_modified_at:
+          description: Timestamp when the opt-in state was last modified.
+          type: string
+          format: date-time
+      required:
+      - opt_in_state
+      - opt_in_state_modified_at
+    Meta:
+      title: Meta
+      description: Additional response information.
+      example:
+        next_page_token: abcfed
+      type: object
+      properties:
+        next_page_token:
+          description: 'Token that can be used to retrieve the next page of results.
+
+            If this field is null, the last page of the results has been reached.'
+          type: string
+      required:
+      - next_page_token
+    OptInState:
+      title: OptInState
+      description: The current opt-in state for this store.
+      type: string
+      enum:
+      - accepted
+      - waiting
+      - rejected
     Profiles:
       title: Profiles
       description: Clienteling profile information for multiple customers.
@@ -266,90 +350,6 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    OptedIn:
-      title: OptedIn
-      description: Opt-in status information for a conversation between a customer and a store.
-      example:
-        opt_in_state: accepted
-        opt_in_state_modified_at: '2025-01-03T18:03:00Z'
-      type: object
-      properties:
-        opt_in_state:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OptInState'
-          - description: The current opt-in state for this store.
-        opt_in_state_modified_at:
-          description: Timestamp when the opt-in state was last modified.
-          type: string
-          format: date-time
-      required:
-      - opt_in_state
-      - opt_in_state_modified_at
-    Profile:
-      title: Profile
-      description: Clienteling profile information for a customer.
-      example:
-        customer_id: 123e4567-e89b-12d3-a456-426614174000
-        opted_in:
-          store_123:
-            opt_in_state: accepted
-            opt_in_state_modified_at: '2024-03-20T15:30:00Z'
-          store_456:
-            opt_in_state: waiting
-            opt_in_state_modified_at: '2024-03-18T09:00:00Z'
-        opted_out: false
-        opted_out_at: null
-        phone_number: '+1234567890'
-      type: object
-      properties:
-        customer_id:
-          description: The identifier of the customer.
-          type: string
-          format: uuid
-        opted_in:
-          description: The opt-in status for the customer per store.
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/OptedIn'
-        opted_out:
-          description: Whether the customer has opted out.
-          type: boolean
-        opted_out_at:
-          description: The date when the customer opted out.
-          type: string
-          format: date-time
-        phone_number:
-          description: The phone number of the customer.
-          type: string
-      required:
-      - customer_id
-      - opted_in
-      - opted_out
-      - opted_out_at
-      - phone_number
-    Meta:
-      title: Meta
-      description: Additional response information.
-      example:
-        next_page_token: abcfed
-      type: object
-      properties:
-        next_page_token:
-          description: 'Token that can be used to retrieve the next page of results.
-
-            If this field is null, the last page of the results has been reached.'
-          type: string
-      required:
-      - next_page_token
-    OptInState:
-      title: OptInState
-      description: The current opt-in state for this store.
-      type: string
-      enum:
-      - accepted
-      - waiting
-      - rejected
   securitySchemes:
     oauth:
       type: oauth2

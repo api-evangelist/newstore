@@ -152,6 +152,41 @@ paths:
         required: true
 components:
   schemas:
+    TokensRequest:
+      title: TokensRequest
+      description: Tokens request.
+      type: object
+      properties:
+        data:
+          description: Sensitive data to be tokenized or detokenized, according to the operation.
+          example:
+            key1: foo
+            key2: bar
+          type: object
+          minProperties: 1
+          maxProperties: 25
+      required:
+      - data
+    TokensResponse:
+      title: TokensResponse
+      description: Tokens response.
+      type: object
+      properties:
+        data:
+          description: Keys with tokens or detokenized plaintext data, according to the operation.
+          example:
+            key1: john.doe@example.org
+          type: object
+          maxProperties: 25
+        errors:
+          description: Keys with error codes.
+          example:
+            key2: token_not_found_error
+          type: object
+          maxProperties: 25
+      required:
+      - data
+      - errors
     Problem:
       title: Problem
       type: object
@@ -189,41 +224,6 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    TokensRequest:
-      title: TokensRequest
-      description: Tokens request.
-      type: object
-      properties:
-        data:
-          description: Sensitive data to be tokenized or detokenized, according to the operation.
-          example:
-            key1: foo
-            key2: bar
-          type: object
-          minProperties: 1
-          maxProperties: 25
-      required:
-      - data
-    TokensResponse:
-      title: TokensResponse
-      description: Tokens response.
-      type: object
-      properties:
-        data:
-          description: Keys with tokens or detokenized plaintext data, according to the operation.
-          example:
-            key1: john.doe@example.org
-          type: object
-          maxProperties: 25
-        errors:
-          description: Keys with error codes.
-          example:
-            key2: token_not_found_error
-          type: object
-          maxProperties: 25
-      required:
-      - data
-      - errors
   securitySchemes:
     oauth:
       type: oauth2

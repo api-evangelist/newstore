@@ -1181,6 +1181,27 @@ paths:
         required: true
 components:
   schemas:
+    ShipmentLimitsRequest:
+      title: ShipmentLimitsRequest
+      description: Limit shipment rules for given currency x service level
+      type: object
+      properties:
+        currency:
+          description: Currency alpha code in ISO 4217 format. Per example USD, EUR or JPY
+          type: string
+          minLength: 3
+          maxLength: 3
+        limit_exceeded_when:
+          type: array
+          items:
+            $ref: '#/components/schemas/LimitExceededWhen'
+        service_level:
+          description: Shipping service level
+          type: string
+      required:
+      - currency
+      - limit_exceeded_when
+      - service_level
     ExternalAtpSettings:
       title: ExternalAtpSettings
       type: object
@@ -1204,6 +1225,137 @@ components:
           format: date-time
         value:
           description: Determines whether an order routed to a DC needs a shipping offer update.
+          type: boolean
+      required:
+      - value
+    CancellationPolicySettingsReasons:
+      title: CancellationPolicySettingsReasons
+      type: string
+      enum:
+      - insufficient_stock
+      - failed_fulfillment_node_mapping
+      - shipping_offer_update_error
+      - error
+      - not_enough_stock_to_create_allocation
+      - limit_of_shipments_exceeded
+    LimitExceededWhen:
+      title: LimitExceededWhen
+      type: object
+      properties:
+        order_amount_lt:
+          description: AND order amount less than
+          type: number
+          minimum: 0.0
+          format: double
+        shipment_count_gt:
+          description: 'AAAAACondition: number of shipments greater than'
+          type: integer
+          minimum: 0.0
+          format: int64
+      required:
+      - order_amount_lt
+      - shipment_count_gt
+    CancellationPolicySettings:
+      title: CancellationPolicySettings
+      type: object
+      properties:
+        updated_at:
+          readOnly: true
+          type: string
+          format: date-time
+        value:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/CancellationPolicySettingsValue'
+          - description: Order cancellation policies.
+      required:
+      - value
+    CancellationPolicySettingsValue:
+      title: CancellationPolicySettingsValue
+      description: Order cancellation policies.
+      type: object
+      properties:
+        default:
+          description: Determines whether orders are canceled automatically in case of a conflict.
+          type: boolean
+          default: true
+        reasons_to_overwrite_default:
+          description: A list of reasons to prevent an automatic cancelation of an order (in case default is 'true') or to prevent an order being in the conflict state.
+          type: array
+          items:
+            $ref: '#/components/schemas/CancellationPolicySettingsReasons'
+          minItems: 1
+    CapacityBasedRoutingSettings:
+      title: CapacityBasedRoutingSettings
+      type: object
+      properties:
+        updated_at:
+          readOnly: true
+          type: string
+          format: date-time
+        value:
+          description: Tenant-based release toggle for the feature of capacity-based routing.
+          type: boolean
+      required:
+      - value
+    ExternalFulfillmentSettingsRequest:
+      title: ExternalFulfillmentSettingsRequest
+      description: Payload for setting external-fulfillment configuration.
+      type: object
+      properties:
+        value:
+          description: Tenant-based release toggle for updating the status of a fulfillment request in NOM.
+          type: boolean
+      required:
+      - value
+    RejectedReroutingSettings:
+      title: RejectedReroutingSettings
+      type: object
+      properties:
+        updated_at:
+          readOnly: true
+          type: string
+          format: date-time
+        value:
+          description: Tells the routing engine if it should ignore fulfillment nodes that already rejected the fulfillment request at hand.
+          type: boolean
+      required:
+      - value
+    ShipmentLimitsResponse:
+      title: ShipmentLimitsResponse
+      description: List of all shipments limit rules
+      type: object
+      properties:
+        shipments_limit:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShipmentLimitsRequest'
+      required:
+      - shipments_limit
+    ExternalFulfillmentSettingsResponse:
+      title: ExternalFulfillmentSettingsResponse
+      description: Current external-fulfillment configuration setting.
+      type: object
+      properties:
+        updated_at:
+          description: Contains date-time in ISO8601 UTC format when config was updated at least once. Value can be null if config value has not been specified yet by the retailer.
+          type: string
+        value:
+          description: Tenant-based release toggle for updating the status of a fulfillment request in NOM.
+          type: boolean
+      required:
+      - updated_at
+      - value
+    AutomaticReroutingSettings:
+      title: AutomaticReroutingSettings
+      type: object
+      properties:
+        updated_at:
+          readOnly: true
+          type: string
+          format: date-time
+        value:
+          description: Tenant-based release toggle for the automatic rerouting feature in order to roll it out on a per tenant basis.
           type: boolean
       required:
       - value
@@ -1244,158 +1396,6 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    ExternalFulfillmentSettingsResponse:
-      title: ExternalFulfillmentSettingsResponse
-      description: Current external-fulfillment configuration setting.
-      type: object
-      properties:
-        updated_at:
-          description: Contains date-time in ISO8601 UTC format when config was updated at least once. Value can be null if config value has not been specified yet by the retailer.
-          type: string
-        value:
-          description: Tenant-based release toggle for updating the status of a fulfillment request in NOM.
-          type: boolean
-      required:
-      - updated_at
-      - value
-    CancellationPolicySettingsValue:
-      title: CancellationPolicySettingsValue
-      description: Order cancellation policies.
-      type: object
-      properties:
-        default:
-          description: Determines whether orders are canceled automatically in case of a conflict.
-          type: boolean
-          default: true
-        reasons_to_overwrite_default:
-          description: A list of reasons to prevent an automatic cancelation of an order (in case default is 'true') or to prevent an order being in the conflict state.
-          type: array
-          items:
-            $ref: '#/components/schemas/CancellationPolicySettingsReasons'
-          minItems: 1
-    CapacityBasedRoutingSettings:
-      title: CapacityBasedRoutingSettings
-      type: object
-      properties:
-        updated_at:
-          readOnly: true
-          type: string
-          format: date-time
-        value:
-          description: Tenant-based release toggle for the feature of capacity-based routing.
-          type: boolean
-      required:
-      - value
-    CancellationPolicySettings:
-      title: CancellationPolicySettings
-      type: object
-      properties:
-        updated_at:
-          readOnly: true
-          type: string
-          format: date-time
-        value:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/CancellationPolicySettingsValue'
-          - description: Order cancellation policies.
-      required:
-      - value
-    AutomaticReroutingSettings:
-      title: AutomaticReroutingSettings
-      type: object
-      properties:
-        updated_at:
-          readOnly: true
-          type: string
-          format: date-time
-        value:
-          description: Tenant-based release toggle for the automatic rerouting feature in order to roll it out on a per tenant basis.
-          type: boolean
-      required:
-      - value
-    ShipmentLimitsResponse:
-      title: ShipmentLimitsResponse
-      description: List of all shipments limit rules
-      type: object
-      properties:
-        shipments_limit:
-          type: array
-          items:
-            $ref: '#/components/schemas/ShipmentLimitsRequest'
-      required:
-      - shipments_limit
-    ShipmentLimitsRequest:
-      title: ShipmentLimitsRequest
-      description: Limit shipment rules for given currency x service level
-      type: object
-      properties:
-        currency:
-          description: Currency alpha code in ISO 4217 format. Per example USD, EUR or JPY
-          type: string
-          minLength: 3
-          maxLength: 3
-        limit_exceeded_when:
-          type: array
-          items:
-            $ref: '#/components/schemas/LimitExceededWhen'
-        service_level:
-          description: Shipping service level
-          type: string
-      required:
-      - currency
-      - limit_exceeded_when
-      - service_level
-    LimitExceededWhen:
-      title: LimitExceededWhen
-      type: object
-      properties:
-        order_amount_lt:
-          description: AND order amount less than
-          type: number
-          minimum: 0.0
-          format: double
-        shipment_count_gt:
-          description: 'AAAAACondition: number of shipments greater than'
-          type: integer
-          minimum: 0.0
-          format: int64
-      required:
-      - order_amount_lt
-      - shipment_count_gt
-    ExternalFulfillmentSettingsRequest:
-      title: ExternalFulfillmentSettingsRequest
-      description: Payload for setting external-fulfillment configuration.
-      type: object
-      properties:
-        value:
-          description: Tenant-based release toggle for updating the status of a fulfillment request in NOM.
-          type: boolean
-      required:
-      - value
-    CancellationPolicySettingsReasons:
-      title: CancellationPolicySettingsReasons
-      type: string
-      enum:
-      - insufficient_stock
-      - failed_fulfillment_node_mapping
-      - shipping_offer_update_error
-      - error
-      - not_enough_stock_to_create_allocation
-      - limit_of_shipments_exceeded
-    RejectedReroutingSettings:
-      title: RejectedReroutingSettings
-      type: object
-      properties:
-        updated_at:
-          readOnly: true
-          type: string
-          format: date-time
-        value:
-          description: Tells the routing engine if it should ignore fulfillment nodes that already rejected the fulfillment request at hand.
-          type: boolean
-      required:
-      - value
   securitySchemes:
     oauth:
       type: oauth2

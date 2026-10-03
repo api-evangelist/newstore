@@ -141,6 +141,88 @@ paths:
       - oauth: []
 components:
   schemas:
+    AtpInsightsResponse:
+      title: AtpInsightsResponse
+      description: Limited response of valid request for fetching allocations by ATP keys.
+      type: object
+      properties:
+        allocations:
+          description: Allocations for the product with given product_id at the fulfillment node with given fulfillment_node_id. This request will limit the response to a maximum of 2000 allocations.
+          type: array
+          items:
+            $ref: '#/components/schemas/Allocation'
+          maxItems: 1000
+        fulfillment_node_id:
+          description: The fulfillment node ID of the store/warehouse.
+          type: string
+        future_allocations:
+          description: Future allocations for the product with given product_id at the fulfillment node with given fulfillment_node_id. This request will limit the response to a maximum of 2000 allocations.
+          type: array
+          items:
+            $ref: '#/components/schemas/FutureAllocation'
+          maxItems: 1000
+        product_id:
+          description: The product ID of the item.
+          type: string
+        reservations:
+          description: Reservations for the product with given product_id at the fulfillment node with given fulfillment_node_id. This request will limit the response to a maximum of 2000 reservations.
+          type: array
+          items:
+            $ref: '#/components/schemas/Reservation'
+          maxItems: 1000
+      required:
+      - allocations
+      - fulfillment_node_id
+      - product_id
+    FutureAllocation:
+      title: FutureAllocation
+      type: object
+      properties:
+        created_at:
+          description: Timestamp at which reservation was created
+          type: string
+          format: date-time
+        item_uuid:
+          description: The uuid of the order item.
+          type: string
+          minLength: 36
+          maxLength: 36
+        order_uuid:
+          description: The uuid of the order.
+          type: string
+          minLength: 36
+          maxLength: 36
+      required:
+      - created_at
+      - item_uuid
+      - order_uuid
+    Reservation:
+      title: Reservation
+      type: object
+      properties:
+        created_at:
+          description: Timestamp at which reservation was created
+          type: string
+          format: date-time
+        expires_at:
+          description: Timestamp at which reservation will expire
+          type: string
+          format: date-time
+        item_uuid:
+          description: The uuid of the order item.
+          type: string
+          minLength: 36
+          maxLength: 36
+        order_uuid:
+          description: The uuid of the order.
+          type: string
+          minLength: 36
+          maxLength: 36
+      required:
+      - created_at
+      - expires_at
+      - item_uuid
+      - order_uuid
     Allocation:
       title: Allocation
       type: object
@@ -200,88 +282,6 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    Reservation:
-      title: Reservation
-      type: object
-      properties:
-        created_at:
-          description: Timestamp at which reservation was created
-          type: string
-          format: date-time
-        expires_at:
-          description: Timestamp at which reservation will expire
-          type: string
-          format: date-time
-        item_uuid:
-          description: The uuid of the order item.
-          type: string
-          minLength: 36
-          maxLength: 36
-        order_uuid:
-          description: The uuid of the order.
-          type: string
-          minLength: 36
-          maxLength: 36
-      required:
-      - created_at
-      - expires_at
-      - item_uuid
-      - order_uuid
-    FutureAllocation:
-      title: FutureAllocation
-      type: object
-      properties:
-        created_at:
-          description: Timestamp at which reservation was created
-          type: string
-          format: date-time
-        item_uuid:
-          description: The uuid of the order item.
-          type: string
-          minLength: 36
-          maxLength: 36
-        order_uuid:
-          description: The uuid of the order.
-          type: string
-          minLength: 36
-          maxLength: 36
-      required:
-      - created_at
-      - item_uuid
-      - order_uuid
-    AtpInsightsResponse:
-      title: AtpInsightsResponse
-      description: Limited response of valid request for fetching allocations by ATP keys.
-      type: object
-      properties:
-        allocations:
-          description: Allocations for the product with given product_id at the fulfillment node with given fulfillment_node_id. This request will limit the response to a maximum of 2000 allocations.
-          type: array
-          items:
-            $ref: '#/components/schemas/Allocation'
-          maxItems: 1000
-        fulfillment_node_id:
-          description: The fulfillment node ID of the store/warehouse.
-          type: string
-        future_allocations:
-          description: Future allocations for the product with given product_id at the fulfillment node with given fulfillment_node_id. This request will limit the response to a maximum of 2000 allocations.
-          type: array
-          items:
-            $ref: '#/components/schemas/FutureAllocation'
-          maxItems: 1000
-        product_id:
-          description: The product ID of the item.
-          type: string
-        reservations:
-          description: Reservations for the product with given product_id at the fulfillment node with given fulfillment_node_id. This request will limit the response to a maximum of 2000 reservations.
-          type: array
-          items:
-            $ref: '#/components/schemas/Reservation'
-          maxItems: 1000
-      required:
-      - allocations
-      - fulfillment_node_id
-      - product_id
   securitySchemes:
     oauth:
       type: oauth2

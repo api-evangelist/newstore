@@ -684,6 +684,57 @@ paths:
         - iam:providers:read
 components:
   schemas:
+    IdentityProviderProtocol:
+      title: IdentityProviderProtocol
+      description: Supported Protocols for Identity Providers
+      type: string
+      enum:
+      - OIDC
+      - SAML
+    SupportedIdentityProvider:
+      title: SupportedIdentityProvider
+      description: Supported identity providers and protocols
+      type: object
+      properties:
+        protocol:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/IdentityProviderProtocol'
+          - description: Supported Protocols for Identity Providers
+        vendor:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/IdentityProviderVendor'
+          - description: Supported Vendors for Identity Providers
+    SupportedIdentityProviders:
+      title: SupportedIdentityProviders
+      description: A list of supported identity providers and protocols
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedIdentityProvider'
+    UpdateIdentityProviderRequest:
+      title: UpdateIdentityProviderRequest
+      description: Update an Identity Provider.
+      type: object
+      properties:
+        config: {}
+        enabled:
+          type: boolean
+          default: true
+      required:
+      - config
+    IdentityProvidersResponse:
+      title: IdentityProvidersResponse
+      description: A list of configured identity providers
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityProviderResponse'
     IdentityProviderVendor:
       title: IdentityProviderVendor
       description: Supported Vendors for Identity Providers
@@ -729,79 +780,6 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    IdentityProvidersResponse:
-      title: IdentityProvidersResponse
-      description: A list of configured identity providers
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/IdentityProviderResponse'
-    IdentityProviderConfig:
-      title: IdentityProviderConfig
-      description: Identity Provider configuration
-      type: object
-      properties:
-        client_id:
-          type: string
-        directory_id:
-          type: string
-        entity_id:
-          type: string
-        logout_uri:
-          type: string
-        redirect_uri:
-          type: string
-    UpdateIdentityProviderRequest:
-      title: UpdateIdentityProviderRequest
-      description: Update an Identity Provider.
-      type: object
-      properties:
-        config: {}
-        enabled:
-          type: boolean
-          default: true
-      required:
-      - config
-    CreateIdentityProviderRequest:
-      title: CreateIdentityProviderRequest
-      description: Create an Identity Provider
-      type: object
-      properties:
-        config: {}
-        enabled:
-          type: boolean
-          default: true
-        protocol:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/IdentityProviderProtocol'
-          - description: Supported Protocols for Identity Providers
-        vendor:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/IdentityProviderVendor'
-          - description: Supported Vendors for Identity Providers
-      required:
-      - config
-      - protocol
-      - vendor
-    SupportedIdentityProvider:
-      title: SupportedIdentityProvider
-      description: Supported identity providers and protocols
-      type: object
-      properties:
-        protocol:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/IdentityProviderProtocol'
-          - description: Supported Protocols for Identity Providers
-        vendor:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/IdentityProviderVendor'
-          - description: Supported Vendors for Identity Providers
     IdentityProviderResponse:
       title: IdentityProviderResponse
       description: Configured identity provider
@@ -828,22 +806,44 @@ components:
           allOf:
           - $ref: '#/components/schemas/IdentityProviderVendor'
           - description: Supported Vendors for Identity Providers
-    IdentityProviderProtocol:
-      title: IdentityProviderProtocol
-      description: Supported Protocols for Identity Providers
-      type: string
-      enum:
-      - OIDC
-      - SAML
-    SupportedIdentityProviders:
-      title: SupportedIdentityProviders
-      description: A list of supported identity providers and protocols
+    IdentityProviderConfig:
+      title: IdentityProviderConfig
+      description: Identity Provider configuration
       type: object
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SupportedIdentityProvider'
+        client_id:
+          type: string
+        directory_id:
+          type: string
+        entity_id:
+          type: string
+        logout_uri:
+          type: string
+        redirect_uri:
+          type: string
+    CreateIdentityProviderRequest:
+      title: CreateIdentityProviderRequest
+      description: Create an Identity Provider
+      type: object
+      properties:
+        config: {}
+        enabled:
+          type: boolean
+          default: true
+        protocol:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/IdentityProviderProtocol'
+          - description: Supported Protocols for Identity Providers
+        vendor:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/IdentityProviderVendor'
+          - description: Supported Vendors for Identity Providers
+      required:
+      - config
+      - protocol
+      - vendor
   securitySchemes:
     oauth:
       type: oauth2

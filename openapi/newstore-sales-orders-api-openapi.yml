@@ -1006,166 +1006,111 @@ paths:
         required: true
 components:
   schemas:
-    SalesOrderProductAttributes:
-      title: SalesOrderProductAttributes
-      description: Additional product-related information.
+    SalesOrderItem:
+      title: SalesOrderItem
       type: object
       properties:
-        additional_variant_1:
-          description: A free form field for additional product attributes.
-          type: string
-          minLength: 1
-        additional_variant_2:
-          description: A free form field for additional product attributes.
-          type: string
-          minLength: 1
-        color:
-          description: The color of the product.
-          type: string
-          minLength: 1
-        image_url:
-          description: The URL to a product image.
-          type: string
-          minLength: 1
-        name:
-          description: The name of the product.
-          type: string
-          minLength: 1
-        size:
-          description: The size of the product.
-          type: string
-          minLength: 1
-      required:
-      - name
-    SalesOrderDetailResponse:
-      title: SalesOrderDetailResponse
-      description: Schema for fetching sales order using external ID
-      type: object
-      properties:
-        billing_address:
+        external_identifier:
           type: object
           allOf:
-          - $ref: '#/components/schemas/SalesOrderAddress'
-          - description: Address
-        catalog:
-          description: The catalog identifier (shop) associated with the order.
-          type: string
-        channel_type:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderChannelType'
-          - description: The channel through which the order was placed.
-        currency:
-          description: Currency code (ISO 4217) used in internal accounting
-          type: string
-          minLength: 3
-          maxLength: 3
-        customer:
-          $ref: '#/components/schemas/SalesOrderCustomer'
-        exemption_class:
-          description: The tax exemption class for the order (e.g. CHARITY_ORGANIZATION). Only present when the order carries a tax exemption.
-          type: string
-        exemption_number:
-          description: The tax exemption certificate number for the order. Only present when the order carries a tax exemption.
-          type: string
-        extended_attributes:
-          description: Extended attributes of the sales order item.
-          type: array
-          items:
-            $ref: '#/components/schemas/SalesOrderExtendedAttribute'
-          maxItems: 100
-        fulfillment_type:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderFulfillmentType'
-          - description: The fulfillment type of the order. In case of mixed cart orders, fulfillment type is always 'multiple'
-            minLength: 1
-        fulfillments:
-          description: Fulfillment groups for the order. Each group references its order items and carries the ship-from origin for those items.
-          type: array
-          items:
-            $ref: '#/components/schemas/SalesOrderFulfillment'
-        gift_wrapping:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderGiftWrapping'
-          - description: Gift wrapping information. This field is not required and will not be present if gift wrapping is not applicable for the order
+          - $ref: '#/components/schemas/SalesOrderExternalIdentifier'
+          - description: External identifier for the order item
         id:
-          description: External ID of an order
+          description: External ID of the item
           type: string
-        is_offline:
-          description: Set to true if sales order item was created in offline mode.
-          type: boolean
-        items:
-          description: Contains a list of order items
-          type: array
-          items:
-            $ref: '#/components/schemas/SalesOrderDetail'
-        notification_blacklist:
-          description: Excludes the specified notifications from being sent to the customer.
-          type: array
-          items:
-            type: string
-        origin:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderOrigin'
-          - description: Describes in which Order Management System the order originated from.
         origin_id:
-          description: The identifier of the order from the Order Management System where it originated from. If it originated in Newstore, it is the system-generated UUID assigned to the order during the order creation process. If it originated in an external OMS, it is the human-readable identifier.
+          description: If the origin of the order is 'newstore', this should be the order item identifier. If the order originated in an external system, it should be the identifier from the external system.
           type: string
           minLength: 1
-        payment_history:
-          description: 'Note: This field will be empty if a NewStore internal order is requested. This field is only set when the order is fetched from an external source.'
-          type: array
-          items:
-            $ref: '#/components/schemas/SalesOrderItemPaymentHistory'
-        placed_at:
-          description: The time when the order was placed. It should follow https://tools.ietf.org/html/rfc3339 in UTC.
-          type: string
-          format: date-time
-        shipments:
-          type: array
-          items:
-            $ref: '#/components/schemas/SalesOrderItemShipment'
-        shipping_address:
+        price:
           type: object
           allOf:
-          - $ref: '#/components/schemas/SalesOrderAddress'
-          - description: Address
-        shop_locale:
-          description: The locale used for the shop, in RFC 5646.
-          type: string
+          - $ref: '#/components/schemas/SalesOrderPrice1'
+          - description: The response for retrieving price information.
+        product_attributes:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderProductAttributes'
+          - description: Additional product-related information.
         status:
           type: object
           allOf:
-          - $ref: '#/components/schemas/SalesOrderStatus'
-          - description: Current status of the sales order
-        store_id:
-          description: The store id where the order was placed.
-          type: string
-          minLength: 1
-        tax_exempt:
-          description: If the tax was exempted for this order. In case of external orders, the flag will always return false.
-          type: boolean
-        tax_method:
+          - $ref: '#/components/schemas/SalesOrderItemStatus'
+          - description: Current status of the order item. 'pending' means the item is in the grace period, 'on_hold' means the item couldn't be fulfilled and is in a conflict status.
+            minLength: 1
+      required:
+      - external_identifier
+      - id
+      - origin_id
+      - price
+      - product_attributes
+      - status
+    SalesOrderItemPaymentHistory:
+      title: SalesOrderItemPaymentHistory
+      description: Contains the payments/refunds history for the order. Can also include multiple payments against multiple credit sources (i.e. gift card + credit card)
+      type: object
+      properties:
+        amount:
+          description: The monetary value of the payment/refund.
+          type: number
+          minimum: 0.0
+          format: double
+        category:
           type: object
           allOf:
-          - $ref: '#/components/schemas/SalesOrderTaxMethod'
-          - description: Method of calculation of the taxes, can be vat_included or vat_excluded.
-        totals:
-          $ref: '#/components/schemas/SalesOrderTotals'
+          - $ref: '#/components/schemas/Category'
+          - description: Describes if it is a Payment (authorization or capture) or Refund.
+        currency:
+          description: The currency of the amount as 3 character ISO-4217 code. Example USD, EUR.
+          type: string
+          minLength: 3
+          maxLength: 3
+        method:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderPaymentMethod'
+          - description: The method customer paid for the order.
+        payment_information:
+          description: Any payment information related to the payment method used. For example, it can contain the card type along with the last 4 digits of the credit card number.
+          example: Visa (**** 1111)
+          type: string
       required:
-      - channel_type
+      - amount
+      - category
       - currency
-      - fulfillment_type
+      - method
+    SalesOrderSerialNumbersRequestItem:
+      title: SalesOrderSerialNumbersRequestItem
+      type: object
+      properties:
+        epc:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderSerialNumbersRequestItemEpc'
+          - description: The epc which should be assigned to the specified order line item.
+        id:
+          description: The identifier of the order line item.
+          type: string
+          minLength: 36
+          maxLength: 36
+        serial_number:
+          description: The serial number which should be assigned to the specified order line item.
+          type: string
+      required:
       - id
-      - items
-      - origin
-      - origin_id
-      - placed_at
-      - status
-      - totals
+      - serial_number
+    SalesOrderListResponse:
+      title: SalesOrderListResponse
+      description: Order history for a customer retrieved from external OMS
+      type: object
+      properties:
+        orders:
+          description: Customer's order history
+          type: array
+          items:
+            $ref: '#/components/schemas/SalesOrder'
+      required:
+      - orders
     SalesOrderDiscount:
       title: SalesOrderDiscount
       type: object
@@ -1204,273 +1149,6 @@ components:
       - price_adjustment
       - type
       - value
-    Problem:
-      title: Problem
-      type: object
-      properties:
-        detail:
-          description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
-          example: some description for the error situation
-          type: string
-        error_code:
-          type: string
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
-          example: /some/uri-reference#specific-occurrence-context
-          type: string
-        message:
-          type: string
-        messages:
-          type: array
-          items:
-            type: string
-        request_id:
-          type: string
-        status:
-          description: The HTTP status code generated by the origin server for this occurrence of the problem.
-          type: integer
-          minimum: 100.0
-          format: int32
-          exclusiveMaximum: 600.0
-        title:
-          description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
-          example: some title for the error situation
-          type: string
-        type:
-          description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
-          example: /some/uri-reference
-          type: string
-          default: about:blank
-    SalesOrderFulfillment:
-      title: SalesOrderFulfillment
-      type: object
-      properties:
-        item_ids:
-          description: The order item UUIDs belonging to this fulfillment group.
-          type: array
-          items:
-            type: string
-        origin:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Origin'
-          - description: The ship-from origin for this fulfillment group. Omitted when neither zip code nor country code is known.
-      required:
-      - item_ids
-    SalesOrder:
-      title: SalesOrder
-      type: object
-      properties:
-        catalog:
-          description: The catalog identifier (shop) associated with the order.
-          type: string
-        channel_type:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderChannelType'
-          - description: The channel through which the order was placed.
-        currency:
-          description: Currency code (ISO 4217) used in internal accounting
-          type: string
-          minLength: 3
-          maxLength: 3
-        fulfillment_type:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderFulfillmentType'
-          - description: The fulfillment type of the order. In case of mixed cart orders, fulfillment type is always 'multiple'
-            minLength: 1
-        id:
-          description: External ID of the order
-          type: string
-        items:
-          description: A list of line items which were ordered
-          type: array
-          items:
-            $ref: '#/components/schemas/SalesOrderItem'
-        origin:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderOrigin'
-          - description: Describes in which Order Management System the order originated from.
-        origin_id:
-          description: The identifier of the order from the Order Management System where it originated from. If it originated in Newstore, it must be the identifier assigned to the order during the order creation process.
-          type: string
-          minLength: 1
-        placed_at:
-          description: The time when the order was placed. It should follow https://tools.ietf.org/html/rfc3339 in UTC.
-          type: string
-          format: date-time
-        status:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderStatus'
-          - description: Current status of the sales order
-      required:
-      - channel_type
-      - currency
-      - fulfillment_type
-      - id
-      - items
-      - origin
-      - origin_id
-      - placed_at
-      - status
-    SalesOrderExternalIdentifier:
-      title: SalesOrderExternalIdentifier
-      description: External identifier for the order item
-      type: object
-      properties:
-        epc:
-          description: EPC (Electronic Product Code) for order item
-          type: string
-        serial_number:
-          description: Serial number of order item
-          type: string
-    Origin:
-      title: Origin
-      description: The ship-from origin for this fulfillment group. Omitted when neither zip code nor country code is known.
-      type: object
-      properties:
-        country_code:
-          description: The ship-from country code (ISO 3166-1 alpha-2).
-          type: string
-        zip_code:
-          description: The ship-from postal code.
-          type: string
-    SalesOrderPricesRequest:
-      title: SalesOrderPricesRequest
-      description: The request for retrieving price information.
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            type: object
-          minItems: 1
-      required:
-      - items
-    Level:
-      title: Level
-      description: On which level the discount was applied, either on the entire order or only on this item.
-      example: item
-      type: string
-      enum:
-      - item
-      - order
-    Type1:
-      title: Type1
-      description: The type of the discount, either 'fixed' or 'percentage'.
-      type: string
-      enum:
-      - fixed
-      - percentage
-    Category:
-      title: Category
-      description: Describes if it is a Payment (authorization or capture) or Refund.
-      type: string
-      enum:
-      - payment
-      - refund
-    SalesOrderItemStatus:
-      title: SalesOrderItemStatus
-      description: Current status of the order item. 'pending' means the item is in the grace period, 'on_hold' means the item couldn't be fulfilled and is in a conflict status.
-      type: string
-      enum:
-      - pending
-      - in_fulfillment
-      - on_hold
-      - complete
-      - cancelled
-      - returned
-    SalesOrderStatus:
-      title: SalesOrderStatus
-      description: Current status of the sales order
-      type: string
-      enum:
-      - on_hold
-      - open
-      - closed
-      - created_for_blind_return
-      - failed
-    SalesOrderDetail:
-      title: SalesOrderDetail
-      type: object
-      properties:
-        addon_parent_item_id:
-          description: Represents the ID of this addon item parent.
-          type: string
-        discounts:
-          description: A list of applied discounts
-          type: array
-          items:
-            $ref: '#/components/schemas/SalesOrderDiscount'
-        extended_attributes:
-          description: Extended attributes of the sales order item.
-          type: array
-          items:
-            $ref: '#/components/schemas/SalesOrderExtendedAttribute'
-            maxProperties: 2
-          maxItems: 100
-          maxProperties: 2
-        external_identifier:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderExternalIdentifier'
-          - description: External identifier for the order item
-        fulfillment_group_type:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Fulfillment'
-          - description: The method by which the item was or will be fulfilled. This field is optional and is only populated when the capture path supplies it. For orders captured while the POS is offline (offline order sync), the value is null and the field is omitted from the response. To reliably identify cash-and-carry (in-store handover) orders, use the order-level `fulfillment_type` field (value `in_store_purchase`) rather than relying on this item-level field.
-        id:
-          description: Order item UUID
-          type: string
-        origin_id:
-          description: If the origin of the order is 'newstore', this should be the order item identifier. If the order originated in an external system, it should be the identifier from the external system.
-          type: string
-          minLength: 1
-        price:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderPrice1'
-          - description: The response for retrieving price information.
-        price_catalog:
-          description: The catalog price of the item.
-          type: number
-          format: double
-        product_attributes:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderProductAttributes'
-          - description: Additional product-related information.
-        product_id:
-          description: Product ID for order item.
-          type: string
-        shipping_method:
-          description: The shipping method, if applicable
-          type: string
-        status:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderItemStatus'
-          - description: Current status of the order item. 'pending' means the item is in the grace period, 'on_hold' means the item couldn't be fulfilled and is in a conflict status.
-            minLength: 1
-        tax_class:
-          description: The tax classification code of the item.
-          type: string
-        tax_lines:
-          description: Detailed tax information.
-          type: array
-          items:
-            $ref: '#/components/schemas/SalesOrderTaxLine'
-          maxItems: 100
-      required:
-      - id
-      - origin_id
-      - price
-      - product_attributes
-      - status
     Fulfillment:
       title: Fulfillment
       description: Fulfillment type
@@ -1478,66 +1156,37 @@ components:
       enum:
       - SHIPPING
       - IN_STORE_HANDOVER
-    SalesOrderCustomer:
-      title: SalesOrderCustomer
+    SalesOrderProductAttributes:
+      title: SalesOrderProductAttributes
+      description: Additional product-related information.
       type: object
       properties:
-        email:
-          description: The email address of the customer.
+        additional_variant_1:
+          description: A free form field for additional product attributes.
           type: string
           minLength: 1
-        id:
-          description: The identifier of the customer.
+        additional_variant_2:
+          description: A free form field for additional product attributes.
           type: string
           minLength: 1
-        language:
-          description: The code of the language to be used in communicating with the customer in ISO 639-1 format, e.g. fr, de or en.
+        color:
+          description: The color of the product.
           type: string
-          maxLength: 2
+          minLength: 1
+        image_url:
+          description: The URL to a product image.
+          type: string
+          minLength: 1
         name:
-          description: The full name of the customer.
+          description: The name of the product.
           type: string
           minLength: 1
-    SalesOrderCancellationRequest:
-      title: SalesOrderCancellationRequest
-      description: Request schema for order cancellation.
-      type: object
-      properties:
-        note:
-          description: An optional note.
-          type: string
-        reason:
-          description: The reason why the order was cancelled.
+        size:
+          description: The size of the product.
           type: string
           minLength: 1
       required:
-      - reason
-    SalesOrderOrigin:
-      title: SalesOrderOrigin
-      description: Describes in which Order Management System the order originated from.
-      type: string
-      enum:
-      - newstore
-      - external
-    SalesOrderChannelType:
-      title: SalesOrderChannelType
-      description: The channel through which the order was placed.
-      type: string
-      enum:
-      - store
-      - web
-    SalesOrderListResponse:
-      title: SalesOrderListResponse
-      description: Order history for a customer retrieved from external OMS
-      type: object
-      properties:
-        orders:
-          description: Customer's order history
-          type: array
-          items:
-            $ref: '#/components/schemas/SalesOrder'
-      required:
-      - orders
+      - name
     CountryCode:
       title: CountryCode
       description: Country code for this address. Must be <a href='https://www.iso.org/iso/country_codes.htm'>ISO-3166 reference</a>
@@ -1792,6 +1441,234 @@ components:
       - ZA
       - ZM
       - ZW
+    SalesOrderPaymentMethod:
+      title: SalesOrderPaymentMethod
+      description: The method customer paid for the order.
+      type: string
+      enum:
+      - gift_card
+      - credit_card
+      - cash
+    SalesOrderTotals:
+      title: SalesOrderTotals
+      type: object
+      properties:
+        discount:
+          description: The applied discount to the entire order.
+          type: number
+          minimum: 0.0
+          format: double
+        gift_wrapping:
+          description: The amount paid for gift wrapping.
+          type: number
+          minimum: 0.0
+          format: double
+        gross:
+          description: The gross price of the order, is the sum of all product item gross prices.
+          type: number
+          minimum: 0.0
+          format: double
+        net:
+          description: The net price of the order, is the sum of all product item net prices.
+          type: number
+          minimum: 0.0
+          format: double
+        shipping:
+          description: The shipping amount.
+          type: number
+          minimum: 0.0
+          format: double
+        tax:
+          description: The taxes of the order, is the sum of all product item taxes.
+          type: number
+          minimum: 0.0
+          format: double
+        total:
+          description: The total amount that the customer paid including shipping costs, taxes, gift_wrapping and any discounts.
+          type: number
+          minimum: 0.0
+          format: double
+    SalesOrderFulfillment:
+      title: SalesOrderFulfillment
+      type: object
+      properties:
+        item_ids:
+          description: The order item UUIDs belonging to this fulfillment group.
+          type: array
+          items:
+            type: string
+        origin:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Origin'
+          - description: The ship-from origin for this fulfillment group. Omitted when neither zip code nor country code is known.
+      required:
+      - item_ids
+    SalesOrderChannelType:
+      title: SalesOrderChannelType
+      description: The channel through which the order was placed.
+      type: string
+      enum:
+      - store
+      - web
+    SalesOrderStatus:
+      title: SalesOrderStatus
+      description: Current status of the sales order
+      type: string
+      enum:
+      - on_hold
+      - open
+      - closed
+      - created_for_blind_return
+      - failed
+    SalesOrderDetail:
+      title: SalesOrderDetail
+      type: object
+      properties:
+        addon_parent_item_id:
+          description: Represents the ID of this addon item parent.
+          type: string
+        discounts:
+          description: A list of applied discounts
+          type: array
+          items:
+            $ref: '#/components/schemas/SalesOrderDiscount'
+        extended_attributes:
+          description: Extended attributes of the sales order item.
+          type: array
+          items:
+            $ref: '#/components/schemas/SalesOrderExtendedAttribute'
+            maxProperties: 2
+          maxItems: 100
+          maxProperties: 2
+        external_identifier:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderExternalIdentifier'
+          - description: External identifier for the order item
+        fulfillment_group_type:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Fulfillment'
+          - description: The method by which the item was or will be fulfilled. This field is optional and is only populated when the capture path supplies it. For orders captured while the POS is offline (offline order sync), the value is null and the field is omitted from the response. To reliably identify cash-and-carry (in-store handover) orders, use the order-level `fulfillment_type` field (value `in_store_purchase`) rather than relying on this item-level field.
+        id:
+          description: Order item UUID
+          type: string
+        origin_id:
+          description: If the origin of the order is 'newstore', this should be the order item identifier. If the order originated in an external system, it should be the identifier from the external system.
+          type: string
+          minLength: 1
+        price:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderPrice1'
+          - description: The response for retrieving price information.
+        price_catalog:
+          description: The catalog price of the item.
+          type: number
+          format: double
+        product_attributes:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderProductAttributes'
+          - description: Additional product-related information.
+        product_id:
+          description: Product ID for order item.
+          type: string
+        shipping_method:
+          description: The shipping method, if applicable
+          type: string
+        status:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderItemStatus'
+          - description: Current status of the order item. 'pending' means the item is in the grace period, 'on_hold' means the item couldn't be fulfilled and is in a conflict status.
+            minLength: 1
+        tax_class:
+          description: The tax classification code of the item.
+          type: string
+        tax_lines:
+          description: Detailed tax information.
+          type: array
+          items:
+            $ref: '#/components/schemas/SalesOrderTaxLine'
+          maxItems: 100
+      required:
+      - id
+      - origin_id
+      - price
+      - product_attributes
+      - status
+    SalesOrderExtendedAttribute:
+      title: SalesOrderExtendedAttribute
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        value:
+          type: string
+          maxLength: 8192
+      required:
+      - name
+      - value
+      maxProperties: 2
+    Category:
+      title: Category
+      description: Describes if it is a Payment (authorization or capture) or Refund.
+      type: string
+      enum:
+      - payment
+      - refund
+    SalesOrderSerialNumbersRequestItemEpc:
+      title: SalesOrderSerialNumbersRequestItemEpc
+      description: The epc which should be assigned to the specified order line item.
+      type: object
+      properties:
+        code:
+          description: The epc code.
+          type: string
+        external_id:
+          description: The external identifier for the epc.
+          type: string
+        serial_number:
+          description: The serial number associated with the epc.
+          type: string
+      required:
+      - code
+      - external_id
+      - serial_number
+    SalesOrderPrice1:
+      title: SalesOrderPrice1
+      description: The response for retrieving price information.
+      type: object
+      properties:
+        base:
+          description: Price of the item that contains the catalog price or the overridden price.
+          type: number
+          format: double
+        discount:
+          description: The applied discount to the item.
+          type: number
+          format: double
+        gross:
+          description: The gross price of the item.
+          type: number
+          format: double
+        net:
+          description: The net price of the item.
+          type: number
+          format: double
+        tax:
+          description: The taxes of the item.
+          type: number
+          format: double
+      required:
+      - base
+      - discount
+      - gross
+      - net
+      - tax
     SalesOrderAddress:
       title: SalesOrderAddress
       description: Address
@@ -1835,66 +1712,6 @@ components:
         zip_code:
           type: string
           maxLength: 32
-    SalesOrderCancellationResponse:
-      title: SalesOrderCancellationResponse
-      description: Request schema for order cancellation status.
-      type: object
-      properties:
-        cancelable:
-          description: Describes if the order is cancelable in the current state.
-          type: boolean
-        canceled:
-          description: Describes if the order has been canceled.
-          type: boolean
-        is_safe:
-          description: Describes if it is safe to cancel the order in the current state.
-          type: boolean
-      required:
-      - cancelable
-      - canceled
-      - is_safe
-    SalesOrderSerialNumbersRequestItemEpc:
-      title: SalesOrderSerialNumbersRequestItemEpc
-      description: The epc which should be assigned to the specified order line item.
-      type: object
-      properties:
-        code:
-          description: The epc code.
-          type: string
-        external_id:
-          description: The external identifier for the epc.
-          type: string
-        serial_number:
-          description: The serial number associated with the epc.
-          type: string
-      required:
-      - code
-      - external_id
-      - serial_number
-    SalesOrderTaxLine:
-      title: SalesOrderTaxLine
-      type: object
-      properties:
-        amount:
-          description: Monetary tax amount for this line.
-          type: number
-          minimum: 0.0
-          format: double
-        country_code:
-          description: The code of the country of the tax in the ISO 3166 ALPHA-2 format. For example, GB, DE or US.
-          type: string
-          maxLength: 2
-        name:
-          description: Name of the tax line, e.g. MA Sales Tax.
-          type: string
-        rate:
-          description: Decimal representation of the tax rate for this line, e.g. 6.25
-          type: number
-          minimum: 0.0
-          format: double
-      required:
-      - amount
-      - rate
     SalesOrderFulfillmentType:
       title: SalesOrderFulfillmentType
       description: The fulfillment type of the order. In case of mixed cart orders, fulfillment type is always 'multiple'
@@ -1905,146 +1722,17 @@ components:
       - in_store_pickup
       - in_store_purchase
       - multiple
-    SalesOrderPaymentMethod:
-      title: SalesOrderPaymentMethod
-      description: The method customer paid for the order.
+    SalesOrderItemStatus:
+      title: SalesOrderItemStatus
+      description: Current status of the order item. 'pending' means the item is in the grace period, 'on_hold' means the item couldn't be fulfilled and is in a conflict status.
       type: string
       enum:
-      - gift_card
-      - credit_card
-      - cash
-    SalesOrderSerialNumbersRequest:
-      title: SalesOrderSerialNumbersRequest
-      description: The response for adding serial number information.
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/SalesOrderSerialNumbersRequestItem'
-          minItems: 1
-          maxItems: 500
-      required:
-      - items
-    SalesOrderItem:
-      title: SalesOrderItem
-      type: object
-      properties:
-        external_identifier:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderExternalIdentifier'
-          - description: External identifier for the order item
-        id:
-          description: External ID of the item
-          type: string
-        origin_id:
-          description: If the origin of the order is 'newstore', this should be the order item identifier. If the order originated in an external system, it should be the identifier from the external system.
-          type: string
-          minLength: 1
-        price:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderPrice1'
-          - description: The response for retrieving price information.
-        product_attributes:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderProductAttributes'
-          - description: Additional product-related information.
-        status:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderItemStatus'
-          - description: Current status of the order item. 'pending' means the item is in the grace period, 'on_hold' means the item couldn't be fulfilled and is in a conflict status.
-            minLength: 1
-      required:
-      - external_identifier
-      - id
-      - origin_id
-      - price
-      - product_attributes
-      - status
-    Price1:
-      title: Price1
-      type: object
-      properties:
-        gross:
-          description: Gross price for the gift wrapping.
-          type: number
-          format: double
-        net:
-          description: Net price for gift wrapping.
-          type: number
-          format: double
-        tax:
-          description: Tax amount for the gift wrapping
-          type: number
-          format: double
-        tax_code:
-          description: Tax code (also known as tax class) for gift wrapping.
-          type: string
-      required:
-      - gross
-      - net
-      - tax
-    SalesOrderTotals:
-      title: SalesOrderTotals
-      type: object
-      properties:
-        discount:
-          description: The applied discount to the entire order.
-          type: number
-          minimum: 0.0
-          format: double
-        gift_wrapping:
-          description: The amount paid for gift wrapping.
-          type: number
-          minimum: 0.0
-          format: double
-        gross:
-          description: The gross price of the order, is the sum of all product item gross prices.
-          type: number
-          minimum: 0.0
-          format: double
-        net:
-          description: The net price of the order, is the sum of all product item net prices.
-          type: number
-          minimum: 0.0
-          format: double
-        shipping:
-          description: The shipping amount.
-          type: number
-          minimum: 0.0
-          format: double
-        tax:
-          description: The taxes of the order, is the sum of all product item taxes.
-          type: number
-          minimum: 0.0
-          format: double
-        total:
-          description: The total amount that the customer paid including shipping costs, taxes, gift_wrapping and any discounts.
-          type: number
-          minimum: 0.0
-          format: double
-    SalesOrderGiftWrapping:
-      title: SalesOrderGiftWrapping
-      description: Gift wrapping information. This field is not required and will not be present if gift wrapping is not applicable for the order
-      type: object
-      properties:
-        message:
-          description: Personalised message to be printing on the gift wrapper.
-          type: string
-        price:
-          $ref: '#/components/schemas/Price1'
-        tax_lines:
-          description: Detailed tax information.
-          type: array
-          items:
-            $ref: '#/components/schemas/SalesOrderTaxLine'
-          maxItems: 100
-      required:
-      - price
+      - pending
+      - in_fulfillment
+      - on_hold
+      - complete
+      - cancelled
+      - returned
     SalesOrderItemShipment:
       title: SalesOrderItemShipment
       type: object
@@ -2071,74 +1759,322 @@ components:
       required:
       - id
       - price
-    SalesOrderItemPaymentHistory:
-      title: SalesOrderItemPaymentHistory
-      description: Contains the payments/refunds history for the order. Can also include multiple payments against multiple credit sources (i.e. gift card + credit card)
+    SalesOrderCancellationResponse:
+      title: SalesOrderCancellationResponse
+      description: Request schema for order cancellation status.
       type: object
       properties:
-        amount:
-          description: The monetary value of the payment/refund.
-          type: number
-          minimum: 0.0
-          format: double
-        category:
+        cancelable:
+          description: Describes if the order is cancelable in the current state.
+          type: boolean
+        canceled:
+          description: Describes if the order has been canceled.
+          type: boolean
+        is_safe:
+          description: Describes if it is safe to cancel the order in the current state.
+          type: boolean
+      required:
+      - cancelable
+      - canceled
+      - is_safe
+    SalesOrderDetailResponse:
+      title: SalesOrderDetailResponse
+      description: Schema for fetching sales order using external ID
+      type: object
+      properties:
+        billing_address:
           type: object
           allOf:
-          - $ref: '#/components/schemas/Category'
-          - description: Describes if it is a Payment (authorization or capture) or Refund.
+          - $ref: '#/components/schemas/SalesOrderAddress'
+          - description: Address
+        catalog:
+          description: The catalog identifier (shop) associated with the order.
+          type: string
+        channel_type:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderChannelType'
+          - description: The channel through which the order was placed.
         currency:
-          description: The currency of the amount as 3 character ISO-4217 code. Example USD, EUR.
+          description: Currency code (ISO 4217) used in internal accounting
           type: string
           minLength: 3
           maxLength: 3
-        method:
+        customer:
+          $ref: '#/components/schemas/SalesOrderCustomer'
+        exemption_class:
+          description: The tax exemption class for the order (e.g. CHARITY_ORGANIZATION). Only present when the order carries a tax exemption.
+          type: string
+        exemption_number:
+          description: The tax exemption certificate number for the order. Only present when the order carries a tax exemption.
+          type: string
+        extended_attributes:
+          description: Extended attributes of the sales order item.
+          type: array
+          items:
+            $ref: '#/components/schemas/SalesOrderExtendedAttribute'
+          maxItems: 100
+        fulfillment_type:
           type: object
           allOf:
-          - $ref: '#/components/schemas/SalesOrderPaymentMethod'
-          - description: The method customer paid for the order.
-        payment_information:
-          description: Any payment information related to the payment method used. For example, it can contain the card type along with the last 4 digits of the credit card number.
-          example: Visa (**** 1111)
+          - $ref: '#/components/schemas/SalesOrderFulfillmentType'
+          - description: The fulfillment type of the order. In case of mixed cart orders, fulfillment type is always 'multiple'
+            minLength: 1
+        fulfillments:
+          description: Fulfillment groups for the order. Each group references its order items and carries the ship-from origin for those items.
+          type: array
+          items:
+            $ref: '#/components/schemas/SalesOrderFulfillment'
+        gift_wrapping:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderGiftWrapping'
+          - description: Gift wrapping information. This field is not required and will not be present if gift wrapping is not applicable for the order
+        id:
+          description: External ID of an order
           type: string
+        is_offline:
+          description: Set to true if sales order item was created in offline mode.
+          type: boolean
+        items:
+          description: Contains a list of order items
+          type: array
+          items:
+            $ref: '#/components/schemas/SalesOrderDetail'
+        notification_blacklist:
+          description: Excludes the specified notifications from being sent to the customer.
+          type: array
+          items:
+            type: string
+        origin:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderOrigin'
+          - description: Describes in which Order Management System the order originated from.
+        origin_id:
+          description: The identifier of the order from the Order Management System where it originated from. If it originated in Newstore, it is the system-generated UUID assigned to the order during the order creation process. If it originated in an external OMS, it is the human-readable identifier.
+          type: string
+          minLength: 1
+        payment_history:
+          description: 'Note: This field will be empty if a NewStore internal order is requested. This field is only set when the order is fetched from an external source.'
+          type: array
+          items:
+            $ref: '#/components/schemas/SalesOrderItemPaymentHistory'
+        placed_at:
+          description: The time when the order was placed. It should follow https://tools.ietf.org/html/rfc3339 in UTC.
+          type: string
+          format: date-time
+        shipments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SalesOrderItemShipment'
+        shipping_address:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderAddress'
+          - description: Address
+        shop_locale:
+          description: The locale used for the shop, in RFC 5646.
+          type: string
+        status:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderStatus'
+          - description: Current status of the sales order
+        store_id:
+          description: The store id where the order was placed.
+          type: string
+          minLength: 1
+        tax_exempt:
+          description: If the tax was exempted for this order. In case of external orders, the flag will always return false.
+          type: boolean
+        tax_method:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderTaxMethod'
+          - description: Method of calculation of the taxes, can be vat_included or vat_excluded.
+        totals:
+          $ref: '#/components/schemas/SalesOrderTotals'
       required:
-      - amount
-      - category
+      - channel_type
       - currency
-      - method
-    SalesOrderSerialNumbersRequestItem:
-      title: SalesOrderSerialNumbersRequestItem
+      - fulfillment_type
+      - id
+      - items
+      - origin
+      - origin_id
+      - placed_at
+      - status
+      - totals
+    SalesOrderOrigin:
+      title: SalesOrderOrigin
+      description: Describes in which Order Management System the order originated from.
+      type: string
+      enum:
+      - newstore
+      - external
+    SalesOrderExternalIdentifier:
+      title: SalesOrderExternalIdentifier
+      description: External identifier for the order item
       type: object
       properties:
         epc:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/SalesOrderSerialNumbersRequestItemEpc'
-          - description: The epc which should be assigned to the specified order line item.
-        id:
-          description: The identifier of the order line item.
+          description: EPC (Electronic Product Code) for order item
           type: string
-          minLength: 36
-          maxLength: 36
         serial_number:
-          description: The serial number which should be assigned to the specified order line item.
+          description: Serial number of order item
           type: string
-      required:
-      - id
-      - serial_number
-    SalesOrderExtendedAttribute:
-      title: SalesOrderExtendedAttribute
+    Price1:
+      title: Price1
       type: object
       properties:
-        name:
+        gross:
+          description: Gross price for the gift wrapping.
+          type: number
+          format: double
+        net:
+          description: Net price for gift wrapping.
+          type: number
+          format: double
+        tax:
+          description: Tax amount for the gift wrapping
+          type: number
+          format: double
+        tax_code:
+          description: Tax code (also known as tax class) for gift wrapping.
           type: string
-          maxLength: 100
-        value:
-          type: string
-          maxLength: 8192
       required:
-      - name
-      - value
-      maxProperties: 2
+      - gross
+      - net
+      - tax
+    SalesOrder:
+      title: SalesOrder
+      type: object
+      properties:
+        catalog:
+          description: The catalog identifier (shop) associated with the order.
+          type: string
+        channel_type:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderChannelType'
+          - description: The channel through which the order was placed.
+        currency:
+          description: Currency code (ISO 4217) used in internal accounting
+          type: string
+          minLength: 3
+          maxLength: 3
+        fulfillment_type:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderFulfillmentType'
+          - description: The fulfillment type of the order. In case of mixed cart orders, fulfillment type is always 'multiple'
+            minLength: 1
+        id:
+          description: External ID of the order
+          type: string
+        items:
+          description: A list of line items which were ordered
+          type: array
+          items:
+            $ref: '#/components/schemas/SalesOrderItem'
+        origin:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderOrigin'
+          - description: Describes in which Order Management System the order originated from.
+        origin_id:
+          description: The identifier of the order from the Order Management System where it originated from. If it originated in Newstore, it must be the identifier assigned to the order during the order creation process.
+          type: string
+          minLength: 1
+        placed_at:
+          description: The time when the order was placed. It should follow https://tools.ietf.org/html/rfc3339 in UTC.
+          type: string
+          format: date-time
+        status:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/SalesOrderStatus'
+          - description: Current status of the sales order
+      required:
+      - channel_type
+      - currency
+      - fulfillment_type
+      - id
+      - items
+      - origin
+      - origin_id
+      - placed_at
+      - status
+    SalesOrderPricesRequest:
+      title: SalesOrderPricesRequest
+      description: The request for retrieving price information.
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+          minItems: 1
+      required:
+      - items
+    SalesOrderSerialNumbersRequest:
+      title: SalesOrderSerialNumbersRequest
+      description: The response for adding serial number information.
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SalesOrderSerialNumbersRequestItem'
+          minItems: 1
+          maxItems: 500
+      required:
+      - items
+    Type1:
+      title: Type1
+      description: The type of the discount, either 'fixed' or 'percentage'.
+      type: string
+      enum:
+      - fixed
+      - percentage
+    Problem:
+      title: Problem
+      type: object
+      properties:
+        detail:
+          description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+          example: some description for the error situation
+          type: string
+        error_code:
+          type: string
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+          example: /some/uri-reference#specific-occurrence-context
+          type: string
+        message:
+          type: string
+        messages:
+          type: array
+          items:
+            type: string
+        request_id:
+          type: string
+        status:
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          type: integer
+          minimum: 100.0
+          format: int32
+          exclusiveMaximum: 600.0
+        title:
+          description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+          example: some title for the error situation
+          type: string
+        type:
+          description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+          example: /some/uri-reference
+          type: string
+          default: about:blank
     SalesOrderPricesResponse:
       title: SalesOrderPricesResponse
       description: The response for retrieving price information.
@@ -2155,37 +2091,40 @@ components:
       required:
       - currency
       - items
-    SalesOrderPrice1:
-      title: SalesOrderPrice1
-      description: The response for retrieving price information.
+    SalesOrderCustomer:
+      title: SalesOrderCustomer
       type: object
       properties:
-        base:
-          description: Price of the item that contains the catalog price or the overridden price.
-          type: number
-          format: double
-        discount:
-          description: The applied discount to the item.
-          type: number
-          format: double
-        gross:
-          description: The gross price of the item.
-          type: number
-          format: double
-        net:
-          description: The net price of the item.
-          type: number
-          format: double
-        tax:
-          description: The taxes of the item.
-          type: number
-          format: double
+        email:
+          description: The email address of the customer.
+          type: string
+          minLength: 1
+        id:
+          description: The identifier of the customer.
+          type: string
+          minLength: 1
+        language:
+          description: The code of the language to be used in communicating with the customer in ISO 639-1 format, e.g. fr, de or en.
+          type: string
+          maxLength: 2
+        name:
+          description: The full name of the customer.
+          type: string
+          minLength: 1
+    SalesOrderCancellationRequest:
+      title: SalesOrderCancellationRequest
+      description: Request schema for order cancellation.
+      type: object
+      properties:
+        note:
+          description: An optional note.
+          type: string
+        reason:
+          description: The reason why the order was cancelled.
+          type: string
+          minLength: 1
       required:
-      - base
-      - discount
-      - gross
-      - net
-      - tax
+      - reason
     SalesOrderTaxMethod:
       title: SalesOrderTaxMethod
       description: Method of calculation of the taxes, can be vat_included or vat_excluded.
@@ -2194,6 +2133,67 @@ components:
       enum:
       - vat_included
       - vat_excluded
+    SalesOrderTaxLine:
+      title: SalesOrderTaxLine
+      type: object
+      properties:
+        amount:
+          description: Monetary tax amount for this line.
+          type: number
+          minimum: 0.0
+          format: double
+        country_code:
+          description: The code of the country of the tax in the ISO 3166 ALPHA-2 format. For example, GB, DE or US.
+          type: string
+          maxLength: 2
+        name:
+          description: Name of the tax line, e.g. MA Sales Tax.
+          type: string
+        rate:
+          description: Decimal representation of the tax rate for this line, e.g. 6.25
+          type: number
+          minimum: 0.0
+          format: double
+      required:
+      - amount
+      - rate
+    Level:
+      title: Level
+      description: On which level the discount was applied, either on the entire order or only on this item.
+      example: item
+      type: string
+      enum:
+      - item
+      - order
+    SalesOrderGiftWrapping:
+      title: SalesOrderGiftWrapping
+      description: Gift wrapping information. This field is not required and will not be present if gift wrapping is not applicable for the order
+      type: object
+      properties:
+        message:
+          description: Personalised message to be printing on the gift wrapper.
+          type: string
+        price:
+          $ref: '#/components/schemas/Price1'
+        tax_lines:
+          description: Detailed tax information.
+          type: array
+          items:
+            $ref: '#/components/schemas/SalesOrderTaxLine'
+          maxItems: 100
+      required:
+      - price
+    Origin:
+      title: Origin
+      description: The ship-from origin for this fulfillment group. Omitted when neither zip code nor country code is known.
+      type: object
+      properties:
+        country_code:
+          description: The ship-from country code (ISO 3166-1 alpha-2).
+          type: string
+        zip_code:
+          description: The ship-from postal code.
+          type: string
   securitySchemes:
     oauth:
       type: oauth2

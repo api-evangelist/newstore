@@ -599,6 +599,96 @@ paths:
               $ref: '#/components/schemas/ReasonCodePatch'
 components:
   schemas:
+    LocalizedReasonCode:
+      title: LocalizedReasonCode
+      example:
+        code: DFT
+        locale: en-us
+        name: defect
+      type: object
+      properties:
+        code:
+          description: An identifier of the reason code, pattern is '^[^+=%]+$'
+          type: string
+          maxLength: 256
+        locale:
+          description: The locale of the reason code, pattern is '(^[a-z]{2}-[A-Za-z]{2}$)'
+          type: string
+        name:
+          type: string
+      required:
+      - code
+      - locale
+      - name
+    Localization:
+      title: Localization
+      example:
+        locale: en-us
+        name: defect
+      type: object
+      properties:
+        locale:
+          description: The locale of the reason code, pattern is '(^[a-z]{2}-[A-Za-z]{2}$)'
+          type: string
+        name:
+          description: The name of the reason code.
+          type: string
+      required:
+      - locale
+      - name
+    ReasonCodeInit:
+      title: ReasonCodeInit
+      example:
+        code: DFT
+        name: defect
+      type: object
+      properties:
+        code:
+          description: An identifier of the reason code, pattern is '^[^+=%]+$'
+          type: string
+          maxLength: 256
+        name:
+          description: The name of the reason code.
+          type: string
+      required:
+      - code
+      - name
+    ListResponse:
+      title: ListResponse
+      type: object
+      properties:
+        codes:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocalizedReasonCode'
+      required:
+      - codes
+    GetResponse:
+      title: GetResponse
+      type: object
+      properties:
+        code:
+          description: An identifier of the reason code, pattern is '^[^+=%]+$'
+          type: string
+          maxLength: 256
+        localizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Localization'
+      required:
+      - code
+      - localizations
+    ReasonCodePatch:
+      title: ReasonCodePatch
+      example:
+        name: defect
+      type: object
+      properties:
+        name:
+          description: The name of the reason code.
+          type: string
+      required:
+      - name
     Problem:
       title: Problem
       type: object
@@ -636,96 +726,6 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    GetResponse:
-      title: GetResponse
-      type: object
-      properties:
-        code:
-          description: An identifier of the reason code, pattern is '^[^+=%]+$'
-          type: string
-          maxLength: 256
-        localizations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Localization'
-      required:
-      - code
-      - localizations
-    ListResponse:
-      title: ListResponse
-      type: object
-      properties:
-        codes:
-          type: array
-          items:
-            $ref: '#/components/schemas/LocalizedReasonCode'
-      required:
-      - codes
-    ReasonCodeInit:
-      title: ReasonCodeInit
-      example:
-        code: DFT
-        name: defect
-      type: object
-      properties:
-        code:
-          description: An identifier of the reason code, pattern is '^[^+=%]+$'
-          type: string
-          maxLength: 256
-        name:
-          description: The name of the reason code.
-          type: string
-      required:
-      - code
-      - name
-    Localization:
-      title: Localization
-      example:
-        locale: en-us
-        name: defect
-      type: object
-      properties:
-        locale:
-          description: The locale of the reason code, pattern is '(^[a-z]{2}-[A-Za-z]{2}$)'
-          type: string
-        name:
-          description: The name of the reason code.
-          type: string
-      required:
-      - locale
-      - name
-    ReasonCodePatch:
-      title: ReasonCodePatch
-      example:
-        name: defect
-      type: object
-      properties:
-        name:
-          description: The name of the reason code.
-          type: string
-      required:
-      - name
-    LocalizedReasonCode:
-      title: LocalizedReasonCode
-      example:
-        code: DFT
-        locale: en-us
-        name: defect
-      type: object
-      properties:
-        code:
-          description: An identifier of the reason code, pattern is '^[^+=%]+$'
-          type: string
-          maxLength: 256
-        locale:
-          description: The locale of the reason code, pattern is '(^[a-z]{2}-[A-Za-z]{2}$)'
-          type: string
-        name:
-          type: string
-      required:
-      - code
-      - locale
-      - name
   securitySchemes:
     oauth:
       type: oauth2

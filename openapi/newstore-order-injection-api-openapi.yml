@@ -249,6 +249,150 @@ paths:
         required: true
 components:
   schemas:
+    Type12:
+      title: Type12
+      description: 'The type of payment information that is passed: either the payment is already authorized, or already captured. The Order Injection API does not support not authorized payments (tokens).'
+      type: string
+      enum:
+      - authorized
+      - captured
+    InjectedOrderRequest:
+      title: InjectedOrderRequest
+      description: An order placed in an external system, identified by its `external_id` in NewStore. An order contains a list of shipments and the products in each shipment.
+      type: object
+      properties:
+        associate_id:
+          description: ID of the store associate who processed this order.
+          type: string
+          maxLength: 256
+        billing_address:
+          $ref: '#/components/schemas/InjectedOrderAddress'
+        channel_name:
+          description: A string used to distinguish between various sources of orders.
+          type: string
+          minLength: 1
+          maxLength: 64
+        channel_type:
+          $ref: '#/components/schemas/ChannelType1'
+        currency:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Currency2'
+          - description: The currency for all the prices contained within this payload.
+        customer_email:
+          type: string
+          minLength: 1
+          maxLength: 64
+        customer_language:
+          description: Language code according to ISO 639-1 to be used in the communication with the consumer (e.g. 'de', 'en' or 'fr')
+          type: string
+          maxLength: 2
+        customer_name:
+          type: string
+          minLength: 1
+          maxLength: 128
+        extended_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/InjectedOrderExtendedAttribute'
+            maxProperties: 2
+          maxItems: 100
+          maxProperties: 2
+        external_customer_id:
+          type: string
+          maxLength: 64
+        external_id:
+          type: string
+          minLength: 1
+          maxLength: 64
+        ip_address: {}
+        is_fulfilled:
+          description: Set to true if the order was already fulfilled. It is either an in-store purchase, or the order was fulfilled by an external system.
+          type: boolean
+          default: false
+        is_historical:
+          description: Set to true if the order is historical was created and fulfilled by an external system.
+          type: boolean
+          default: false
+        is_offline:
+          description: Set to true if the order was handled offline. It is an in-store purchase with internet connection failure.
+          type: boolean
+          default: false
+        is_preconfirmed:
+          description: Set to true, if the customer was already notified about order being placed. This is always true for in-store orders.
+          type: boolean
+          default: false
+        notification_blacklist:
+          description: Excludes the specified notifications from being sent to the customer.
+          type: array
+          items:
+            type: string
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/InjectedOrderPayment'
+          maxItems: 40
+        placed_at:
+          description: Date representation of when the order was placed, containing date, time and timezone as defined by https://tools.ietf.org/html/rfc3339 (ISO 8601).
+          type: string
+          format: date-time
+        price_method:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/F11nTaxMethod'
+          - description: Specifies if the prices for the shipment items and shipping options include tax or not. This is used in calculating the total order price to determine if the tax price should be included in the calculation or not.
+        shipments:
+          type: array
+          items: {}
+          minItems: 1
+          maxItems: 10
+        shipping_address:
+          $ref: '#/components/schemas/InjectedOrderAddress'
+        shop:
+          description: The shop containing the items of the order.
+          type: string
+          minLength: 1
+          maxLength: 128
+        shop_locale:
+          description: The locale of the customer used for the shop, in RFC 5646.
+          type: string
+          minLength: 1
+          maxLength: 128
+        store_id:
+          description: ID of the store where this order was placed.
+          type: string
+          maxLength: 256
+      required:
+      - channel_name
+      - channel_type
+      - currency
+      - external_id
+      - shipments
+      - shop
+      - shop_locale
+    InjectedOrderItemIds:
+      title: InjectedOrderItemIds
+      type: object
+      properties:
+        external_item_id:
+          description: The external order item id as specified in the request.
+          type: string
+          minLength: 1
+          maxLength: 64
+        id:
+          description: An identifier that is assigned to the item by the system.
+          type: string
+          minLength: 36
+          maxLength: 36
+        product_id:
+          description: The product id from the catalog.
+          type: string
+          minLength: 1
+          maxLength: 64
+      required:
+      - external_item_id
+      - id
+      - product_id
     F11nTaxMethod:
       title: F11nTaxMethod
       description: Defines the tax method used (tax inclusive or exclusive).
@@ -257,6 +401,59 @@ components:
       enum:
       - tax_included
       - tax_excluded
+    ChannelType1:
+      title: ChannelType1
+      type: string
+      enum:
+      - web
+      - mobile
+      - store
+    InjectedOrderAddress:
+      title: InjectedOrderAddress
+      type: object
+      properties:
+        address_line_1:
+          type: string
+          minLength: 1
+          maxLength: 128
+        address_line_2:
+          type: string
+          maxLength: 256
+        city:
+          type: string
+          maxLength: 64
+        country:
+          description: The code of the country in the ISO ALPHA-2 format.
+          type: string
+          minLength: 2
+          maxLength: 2
+        first_name:
+          type: string
+          maxLength: 64
+        last_name:
+          type: string
+          maxLength: 64
+        phone:
+          type: string
+          maxLength: 128
+        salutation:
+          type: string
+          maxLength: 32
+        state:
+          type: string
+          maxLength: 32
+        suffix:
+          type: string
+          maxLength: 32
+        title:
+          type: string
+          maxLength: 32
+        zip_code:
+          type: string
+          maxLength: 32
+      required:
+      - address_line_1
+      - country
     Currency2:
       title: Currency2
       description: The currency for all the prices contained within this payload.
@@ -464,233 +661,6 @@ components:
       - external_id
       - id
       - items
-    Problem:
-      title: Problem
-      type: object
-      properties:
-        detail:
-          description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
-          example: some description for the error situation
-          type: string
-        error_code:
-          type: string
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
-          example: /some/uri-reference#specific-occurrence-context
-          type: string
-        message:
-          type: string
-        messages:
-          type: array
-          items:
-            type: string
-        request_id:
-          type: string
-        status:
-          description: The HTTP status code generated by the origin server for this occurrence of the problem.
-          type: integer
-          minimum: 100.0
-          format: int32
-          exclusiveMaximum: 600.0
-        title:
-          description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
-          example: some title for the error situation
-          type: string
-        type:
-          description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
-          example: /some/uri-reference
-          type: string
-          default: about:blank
-    InjectedOrderRequest:
-      title: InjectedOrderRequest
-      description: An order placed in an external system, identified by its `external_id` in NewStore. An order contains a list of shipments and the products in each shipment.
-      type: object
-      properties:
-        associate_id:
-          description: ID of the store associate who processed this order.
-          type: string
-          maxLength: 256
-        billing_address:
-          $ref: '#/components/schemas/InjectedOrderAddress'
-        channel_name:
-          description: A string used to distinguish between various sources of orders.
-          type: string
-          minLength: 1
-          maxLength: 64
-        channel_type:
-          $ref: '#/components/schemas/ChannelType1'
-        currency:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Currency2'
-          - description: The currency for all the prices contained within this payload.
-        customer_email:
-          type: string
-          minLength: 1
-          maxLength: 64
-        customer_language:
-          description: Language code according to ISO 639-1 to be used in the communication with the consumer (e.g. 'de', 'en' or 'fr')
-          type: string
-          maxLength: 2
-        customer_name:
-          type: string
-          minLength: 1
-          maxLength: 128
-        extended_attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/InjectedOrderExtendedAttribute'
-            maxProperties: 2
-          maxItems: 100
-          maxProperties: 2
-        external_customer_id:
-          type: string
-          maxLength: 64
-        external_id:
-          type: string
-          minLength: 1
-          maxLength: 64
-        ip_address: {}
-        is_fulfilled:
-          description: Set to true if the order was already fulfilled. It is either an in-store purchase, or the order was fulfilled by an external system.
-          type: boolean
-          default: false
-        is_historical:
-          description: Set to true if the order is historical was created and fulfilled by an external system.
-          type: boolean
-          default: false
-        is_offline:
-          description: Set to true if the order was handled offline. It is an in-store purchase with internet connection failure.
-          type: boolean
-          default: false
-        is_preconfirmed:
-          description: Set to true, if the customer was already notified about order being placed. This is always true for in-store orders.
-          type: boolean
-          default: false
-        notification_blacklist:
-          description: Excludes the specified notifications from being sent to the customer.
-          type: array
-          items:
-            type: string
-        payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/InjectedOrderPayment'
-          maxItems: 40
-        placed_at:
-          description: Date representation of when the order was placed, containing date, time and timezone as defined by https://tools.ietf.org/html/rfc3339 (ISO 8601).
-          type: string
-          format: date-time
-        price_method:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/F11nTaxMethod'
-          - description: Specifies if the prices for the shipment items and shipping options include tax or not. This is used in calculating the total order price to determine if the tax price should be included in the calculation or not.
-        shipments:
-          type: array
-          items: {}
-          minItems: 1
-          maxItems: 10
-        shipping_address:
-          $ref: '#/components/schemas/InjectedOrderAddress'
-        shop:
-          description: The shop containing the items of the order.
-          type: string
-          minLength: 1
-          maxLength: 128
-        shop_locale:
-          description: The locale of the customer used for the shop, in RFC 5646.
-          type: string
-          minLength: 1
-          maxLength: 128
-        store_id:
-          description: ID of the store where this order was placed.
-          type: string
-          maxLength: 256
-      required:
-      - channel_name
-      - channel_type
-      - currency
-      - external_id
-      - shipments
-      - shop
-      - shop_locale
-    InjectedOrderAddress:
-      title: InjectedOrderAddress
-      type: object
-      properties:
-        address_line_1:
-          type: string
-          minLength: 1
-          maxLength: 128
-        address_line_2:
-          type: string
-          maxLength: 256
-        city:
-          type: string
-          maxLength: 64
-        country:
-          description: The code of the country in the ISO ALPHA-2 format.
-          type: string
-          minLength: 2
-          maxLength: 2
-        first_name:
-          type: string
-          maxLength: 64
-        last_name:
-          type: string
-          maxLength: 64
-        phone:
-          type: string
-          maxLength: 128
-        salutation:
-          type: string
-          maxLength: 32
-        state:
-          type: string
-          maxLength: 32
-        suffix:
-          type: string
-          maxLength: 32
-        title:
-          type: string
-          maxLength: 32
-        zip_code:
-          type: string
-          maxLength: 32
-      required:
-      - address_line_1
-      - country
-    InjectedOrderItemIds:
-      title: InjectedOrderItemIds
-      type: object
-      properties:
-        external_item_id:
-          description: The external order item id as specified in the request.
-          type: string
-          minLength: 1
-          maxLength: 64
-        id:
-          description: An identifier that is assigned to the item by the system.
-          type: string
-          minLength: 36
-          maxLength: 36
-        product_id:
-          description: The product id from the catalog.
-          type: string
-          minLength: 1
-          maxLength: 64
-      required:
-      - external_item_id
-      - id
-      - product_id
-    Type12:
-      title: Type12
-      description: 'The type of payment information that is passed: either the payment is already authorized, or already captured. The Order Injection API does not support not authorized payments (tokens).'
-      type: string
-      enum:
-      - authorized
-      - captured
     InjectedOrderExtendedAttribute:
       title: InjectedOrderExtendedAttribute
       description: Extra information about the order, which is propagated through NewStore applications.
@@ -707,13 +677,6 @@ components:
       - name
       - value
       maxProperties: 2
-    ChannelType1:
-      title: ChannelType1
-      type: string
-      enum:
-      - web
-      - mobile
-      - store
     InjectedOrderPayment:
       title: InjectedOrderPayment
       description: A payment supplied for this order. Only payments that are already authorized or captured are supported. Tokens that are not authorized are not supported. The validity of a payment is not checked during import, so an order with invalid payments is imported successfully and fulfilled. For example, a payment validity issue can be a voided authorization or an incorrect payment amount.
@@ -764,6 +727,43 @@ components:
       - processed_at
       - processor
       - type
+    Problem:
+      title: Problem
+      type: object
+      properties:
+        detail:
+          description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+          example: some description for the error situation
+          type: string
+        error_code:
+          type: string
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+          example: /some/uri-reference#specific-occurrence-context
+          type: string
+        message:
+          type: string
+        messages:
+          type: array
+          items:
+            type: string
+        request_id:
+          type: string
+        status:
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          type: integer
+          minimum: 100.0
+          format: int32
+          exclusiveMaximum: 600.0
+        title:
+          description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+          example: some title for the error situation
+          type: string
+        type:
+          description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+          example: /some/uri-reference
+          type: string
+          default: about:blank
   securitySchemes:
     oauth:
       type: oauth2
