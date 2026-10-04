@@ -301,6 +301,15 @@ paths:
         - catalog:product-export:read
 components:
   schemas:
+    DownloadResponse:
+      title: DownloadResponse
+      type: object
+      properties:
+        download_url:
+          description: The presigned URL to redirect to, to download the requested offline products.
+          type: string
+      required:
+      - download_url
     Problem:
       title: Problem
       type: object
@@ -338,15 +347,6 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    DownloadResponse:
-      title: DownloadResponse
-      type: object
-      properties:
-        download_url:
-          description: The presigned URL to redirect to, to download the requested offline products.
-          type: string
-      required:
-      - download_url
   securitySchemes:
     oauth:
       type: oauth2

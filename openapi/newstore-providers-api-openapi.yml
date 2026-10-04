@@ -308,34 +308,6 @@ paths:
         - newstore:configuration:read
 components:
   schemas:
-    ProcessorMetadata:
-      title: ProcessorMetadata
-      type: object
-      properties:
-        embedded_processor:
-          type: string
-          minLength: 1
-      required:
-      - embedded_processor
-    LocationMappingBody:
-      title: LocationMappingBody
-      type: object
-      properties:
-        connected_account_id:
-          type: string
-          minLength: 1
-        environment:
-          type: string
-          minLength: 1
-        location_id:
-          type: string
-          minLength: 1
-        metadata:
-          $ref: '#/components/schemas/ProcessorMetadata'
-      required:
-      - connected_account_id
-      - environment
-      - location_id
     LocationMappingsResponse:
       title: LocationMappingsResponse
       type: object
@@ -346,20 +318,6 @@ components:
             $ref: '#/components/schemas/LocationMapping'
       required:
       - location_mappings
-    LocationMapping:
-      title: LocationMapping
-      type: object
-      properties:
-        connected_account_id:
-          type: string
-        environment:
-          type: string
-        location_id:
-          type: string
-      required:
-      - connected_account_id
-      - environment
-      - location_id
     Problem:
       title: Problem
       type: object
@@ -397,6 +355,48 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    LocationMapping:
+      title: LocationMapping
+      type: object
+      properties:
+        connected_account_id:
+          type: string
+        environment:
+          type: string
+        location_id:
+          type: string
+      required:
+      - connected_account_id
+      - environment
+      - location_id
+    LocationMappingBody:
+      title: LocationMappingBody
+      type: object
+      properties:
+        connected_account_id:
+          type: string
+          minLength: 1
+        environment:
+          type: string
+          minLength: 1
+        location_id:
+          type: string
+          minLength: 1
+        metadata:
+          $ref: '#/components/schemas/ProcessorMetadata'
+      required:
+      - connected_account_id
+      - environment
+      - location_id
+    ProcessorMetadata:
+      title: ProcessorMetadata
+      type: object
+      properties:
+        embedded_processor:
+          type: string
+          minLength: 1
+      required:
+      - embedded_processor
   securitySchemes:
     oauth:
       type: oauth2

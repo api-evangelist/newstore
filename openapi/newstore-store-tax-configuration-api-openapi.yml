@@ -622,205 +622,6 @@ paths:
         required: true
 components:
   schemas:
-    VertexExemptionClassItemDto:
-      title: VertexExemptionClassItemDto
-      type: object
-      properties:
-        display_text:
-          description: 'Display text to be used in Associate App while rendering the exemption class.
-
-            * Required for custom tax exemption classes.
-
-            * Optional for pre-defined tax exemption classes.
-
-            * Keys must be a valid ISO 639-1 language code.
-
-            * Must include English translation by default.'
-          example:
-            en: First Nation Citizen
-            fr: Premières Nations
-          type: object
-          additionalProperties: {}
-        exemption_class:
-          $ref: '#/components/schemas/ExemptionClass'
-        valid_countries:
-          description: The list of countries where this tax exemption class is valid.
-          type: array
-          items:
-            $ref: '#/components/schemas/TaxExemptionCountryCode'
-        vertex_class_code:
-          description: 'Vertex class code.
-
-            * A code used to represent groups of customers, vendors, dispatchers, or recipients who have similar taxability.'
-          example: '01'
-          type: string
-          minLength: 1
-          maxLength: 20
-      required:
-      - exemption_class
-      - valid_countries
-      - vertex_class_code
-    VertexFlexibleFieldConfigCreateDto:
-      title: VertexFlexibleFieldConfigCreateDto
-      type: object
-      properties:
-        extended_attribute_name:
-          description: The name of the extended attribute.
-          example: shoeSize
-          type: string
-          minLength: 1
-          maxLength: 255
-        target_field_id:
-          description: 'Vertex flexible field identifier.
-
-            * If `target_field_type` is set to `flexible_code_field`, maximum length is 25.
-
-            * If `target_field_type` is set to `flexible_numeric_field`, maximum length is 10.
-
-            * If `target_field_type` is set to `flexible_date_field`, maximum length is 5.'
-          example: 1
-          type: integer
-          minimum: 0.0
-          maximum: 25.0
-          format: int32
-        target_field_type:
-          $ref: '#/components/schemas/VertexTargetField'
-      required:
-      - extended_attribute_name
-      - target_field_id
-      - target_field_type
-    StoreConfigCreateDto:
-      title: StoreConfigCreateDto
-      type: object
-      properties:
-        avalara:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/AvalaraConfigCreateDto'
-          - description: 'Avalara configuration.
-
-              * Required if the `tax_calculation_strategy` is set to `avalara`.
-
-              * If the tax calculation strategy is set to `avalara`, the given configuration will be used.
-
-              * If the Avalara configuration is defined, the configuration will be validated through a ping request to Avalara, which will validate the authenticity of Avalara credentials.'
-            example:
-              account_number: '2000123456'
-              company_code: NEWSTOREINC
-              default_customer_code: Anonymous customer
-              environment: sandbox
-              license_key: C1234567890ABCFE
-        country_code:
-          type: string
-        custom:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/CustomConfigCreateDto'
-          - description: 'Custom provider configuration.
-
-              * Required if the `tax_calculation_strategy` is set to `custom`.
-
-              * If the tax calculation strategy is set to `custom`, the given configuration will be used.'
-            example:
-              api_version: v1
-              base_url: https://my-custom-tax-url.com
-        fixed_rate:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/FixedRateConfigCreateDto'
-          - description: 'Fixed rate configuration.
-
-              * If the tax calculation strategy is set to `fixedrate`, the specified tax rate will be used.
-
-              * For the other tax calculation strategies, the specified rate will be used as a fallback if the tax calculation fails (e.g. if the tax provider is not reachable).
-
-              * The specified rate will be used as a fallback by the Associate App in offline-mode.'
-            example:
-              tax_name: Standard VAT rate for Austria
-              tax_rate: 0.2
-        fixed_rate_per_country:
-          description: "Fixed rate configuration per country.\n* Uses ISO 3166 Alpha-2 format as the key in upper-case.\n* Fixed rate specification can be defined under each country key for the desired countries.\n* If the tax calculation strategy is set to `fixed_rate_per_country`:\n\n\n  * Fixed rate configuration must be configured.\n  * The specified tax rate will be used if the country code of the store has a fixed rate configuration.\n  * The tax calculation will fail if the country code of the store does not have a fixed rate configuration."
-          example:
-            AT:
-              tax_name: Standard VAT rate for Austria
-              tax_rate: 0.2
-            DE:
-              tax_name: Standard VAT rate for Germany
-              tax_rate: 0.19
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/FixedRateConfigCreateDto'
-        store_id:
-          description: Store identifier within the NewStore platform.
-          example: '123'
-          type: string
-        tax_calculation_strategy:
-          $ref: '#/components/schemas/TaxCalculationStrategy'
-        vertex:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/VertexConfigCreateDto'
-          - description: 'Vertex configuration.
-
-              * Required if the `tax_calculation_strategy` is set to `vertex`.
-
-              * If the tax calculation strategy is set to `vertex`, the given configuration will be used.
-
-              * If the Vertex configuration is defined, the configuration will be validated through a ping request to Vertex, which will validate the authenticity of Vertex credentials.'
-            example:
-              administrative_origin:
-                city: Berlin
-                country: DE
-                currency_code: EUR
-                currency_value: 1.1
-                main_division: Berlin
-                postal_code: '10785'
-                street_address_1: Potsdamer Str. 7
-                street_address_2: Potsdamer Platz
-              company_code: '1234'
-              division_code: '1234'
-              flexible_fields:
-              - extended_attribute_name: productClass
-                target_field_id: 1
-                target_field_type: flexible_code_field
-              - extended_attribute_name: shoeSize
-                target_field_id: 1
-                target_field_type: flexible_numeric_field
-              login_type: trusted_id
-              soap_url: https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90
-              trusted_id: 9SDPdc9bo3
-      required:
-      - country_code
-      - store_id
-    ExemptionClassItemDto:
-      title: ExemptionClassItemDto
-      type: object
-      properties:
-        display_text:
-          description: 'Display text to be used in Associate App while rendering the exemption class.
-
-            * Required for custom tax exemption classes.
-
-            * Optional for pre-defined tax exemption classes.
-
-            * Keys must be a valid ISO 639-1 language code.
-
-            * Must include English translation by default.'
-          example:
-            en: First Nation Citizen
-            fr: Premières Nations
-          type: object
-          additionalProperties: {}
-        exemption_class:
-          $ref: '#/components/schemas/ExemptionClass'
-        valid_countries:
-          description: The list of countries where this tax exemption class is valid.
-          type: array
-          items:
-            $ref: '#/components/schemas/TaxExemptionCountryCode'
-      required:
-      - exemption_class
-      - valid_countries
     CustomConfigCreateDto:
       title: CustomConfigCreateDto
       type: object
@@ -849,318 +650,15 @@ components:
             $ref: '#/components/schemas/ExemptionClassItemCreateDto'
       required:
       - api_version
-    CustomConfigAuthenticationMethod:
-      title: CustomConfigAuthenticationMethod
-      description: Custom provider authentication method.
-      example: Basic
-      type: string
-      enum:
-      - Basic
-    VertexConfigCreateDto:
-      title: VertexConfigCreateDto
-      type: object
-      properties:
-        administrative_origin:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/VertexAdministrativeOriginCreateDto'
-          - description: Administrative origin information of the legal entity. Should be set based on the retailer corporate information.
-            example:
-              city: Berlin
-              country: Germany
-              currency_code: USD
-              currency_value: 1.1
-              main_division: Berlin
-              postal_code: '10785'
-              street_address_1: Potsdamer Str. 7
-              street_address_2: Potsdamer Platz
-        company_code:
-          description: 'Vertex taxpayer code of the company.
-
-            * Identifies the top-level legal entity (company).
-
-            * The value should be set to the taxpayer code of the top-level taxpayer (company).'
-          example: '1234'
-          type: string
-          minLength: 1
-          maxLength: 40
-        division_code:
-          description: 'Vertex taxpayer code of the division.
-
-            * Identifies the mid-level legal entity (division) under a top-level legal entity (company).
-
-            * If exists, the value can be set to the taxpayer code of the mid-level taxpayer (division) under a top-level taxpayer (company).'
-          example: '1234'
-          type: string
-          minLength: 1
-          maxLength: 40
-        exemption_classes:
-          description: A list of mappings between `ExemptionClass` enum and Vertex class codes.
-          type: array
-          items:
-            $ref: '#/components/schemas/VertexExemptionClassItemCreateDto'
-        flexible_fields:
-          description: The mapping between extended attributes of items in the NewStore platform and flexible fields as defined in Vertex.
-          example:
-          - extended_attribute_name: productClass
-            target_field_id: 1
-            target_field_type: flexible_code_field
-          - extended_attribute_name: shoeSize
-            target_field_id: 1
-            target_field_type: flexible_numeric_field
-          type: array
-          items:
-            $ref: '#/components/schemas/VertexFlexibleFieldConfigCreateDto'
-        jurisdiction_in_tax_name_enabled:
-          description: 'Enable appending the jurisdiction name to the tax line''s `tax_name` field.
-
-            * This can help identify which jurisdiction imposed a given tax line.
-
-            * Example: The tax name `Sales And Use Tax - Colorado` includes the jurisdiction name `Colorado` when the given flag is enabled.'
-          example: true
-          type: boolean
-        login_type:
-          $ref: '#/components/schemas/VertexAuthLoginType'
-        password:
-          description: 'Password of the Vertex account.
-
-            * Required if `login_type` is set to `user_and_password`.'
-          type: string
-          minLength: 1
-          maxLength: 255
-          format: password
-        soap_url:
-          description: SOAP URL of the Vertex CalculateTax endpoint.
-          example: https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90
-          type: string
-        trusted_id:
-          description: 'Trusted ID of the Vertex account.
-
-            * Required if `login_type` is set to `trusted_id`.'
-          type: string
-          minLength: 1
-          maxLength: 255
-          format: password
-        use_location_code:
-          description: 'Use Vertex location code instead of address information.
-
-            * When this value is set to `true` the NewStore platform will use the Store IDs to communicate origin and destination addresses instead of using standard address information (address line 1, postal code, etc.).
-
-            * Store IDs are currently only available for cash & carry orders, all other order scenarios will use the standard address information to communicate origin and destination addresses even with this value set to `true`.
-
-            * In case the NewStore Store ID length is longer than 20 characters, NewStore will only send the first 20 characters as Vertex field length is capped at that limit.'
-          example: true
-          type: boolean
-          default: false
-        username:
-          description: 'Username of the Vertex account.
-
-            * Required if `login_type` is set to `user_and_password`.'
-          type: string
-          minLength: 1
-          maxLength: 255
-      required:
-      - company_code
-      - login_type
-      - soap_url
-    VertexFlexibleFieldConfigUpdateDto:
-      title: VertexFlexibleFieldConfigUpdateDto
-      type: object
-      properties:
-        extended_attribute_name:
-          description: The name of the extended attribute.
-          example: shoeSize
-          type: string
-          minLength: 1
-          maxLength: 255
-        target_field_id:
-          description: 'Vertex flexible field identifier.
-
-            * If `target_field_type` is set to `flexible_code_field`, maximum length is 25.
-
-            * If `target_field_type` is set to `flexible_numeric_field`, maximum length is 10.
-
-            * If `target_field_type` is set to `flexible_date_field`, maximum length is 5.'
-          example: 1
-          type: integer
-          minimum: 0.0
-          maximum: 25.0
-          format: int32
-        target_field_type:
-          $ref: '#/components/schemas/VertexTargetField'
-    VertexAdministrativeOriginCreateDto:
-      title: VertexAdministrativeOriginCreateDto
-      type: object
-      properties:
-        city:
-          description: The proper name of the city used to determine the Tax Area ID.
-          example: Berlin
-          type: string
-          minLength: 1
-          maxLength: 60
-        country:
-          type: string
-        currency_code:
-          $ref: '#/components/schemas/Currency3'
-        currency_value:
-          description: The rate (multiplier) used for converting the transaction currency amount to the filing currency amount.
-          example: 1.1
-          type: number
-          format: double
-        main_division:
-          description: The proper name or the postal abbreviation of the state, province, or territory used to determine the Tax Area ID.
-          example: Berlin
-          type: string
-          minLength: 1
-          maxLength: 60
-        postal_code:
-          description: The postal code used to determine the Tax Area ID
-          example: '10785'
-          type: string
-          minLength: 1
-          maxLength: 20
-        street_address_1:
-          description: The first line of the street address.
-          example: Potsdamer Str. 7
-          type: string
-          minLength: 1
-          maxLength: 100
-        street_address_2:
-          description: The second line of the street address.
-          example: Potsdamer Platz
-          type: string
-          minLength: 1
-          maxLength: 100
-      required:
-      - city
-      - country
-      - currency_code
-      - currency_value
-      - main_division
-      - postal_code
-      - street_address_1
-      - street_address_2
-    TaxCalculationStrategy:
-      title: TaxCalculationStrategy
-      description: Tax calculation strategy.
-      example: fixedrate
-      type: string
-      enum:
-      - fixedrate
-      - fixed_rate_per_country
-      - avalara
-      - vertex
-      - custom
-    CustomApiVersion:
-      title: CustomApiVersion
-      description: Custom provider API version.
-      example: v1
-      type: string
-      enum:
-      - v0-avalara
-      - v1
-    AvalaraConfigCreateDto:
-      title: AvalaraConfigCreateDto
-      type: object
-      properties:
-        account_number:
-          description: AvaTax account number or account ID.
-          example: '2000123456'
-          type: string
-          minLength: 1
-          maxLength: 10
-        company_code:
-          description: 'Company code that identifies the company in the AvaTax account.
-
-            * Value is case-sensitive.
-
-            * Declared during the company setup in the AvaTax Admin Console.'
-          example: NEWSTOREINC
-          type: string
-          minLength: 1
-          maxLength: 25
-        default_customer_code:
-          description: Default customer code. Will be used in case when no ConsumerUUID is provided.
-          example: Anonymous customer
-          type: string
-          minLength: 1
-          maxLength: 50
-        environment:
-          $ref: '#/components/schemas/AvalaraEnv'
-        exemption_classes:
-          description: A list of mappings between `ExemptionClass` enum and Avalara custom entity use codes.
-          type: array
-          items:
-            $ref: '#/components/schemas/AvalaraExemptionClassItemCreateDto'
-        license_key:
-          description: AvaTax license key.
-          example: C1234567890ABCFE
-          type: string
-          minLength: 1
-          maxLength: 16
-          format: password
-      required:
-      - account_number
-      - company_code
-      - environment
-      - license_key
-    AvalaraConfigUpdateDto:
-      title: AvalaraConfigUpdateDto
-      type: object
-      properties:
-        account_number:
-          description: AvaTax account number or account ID.
-          example: '2000123456'
-          type: string
-          minLength: 1
-          maxLength: 10
-        company_code:
-          description: 'Company code that identifies the company in the AvaTax account.
-
-            * Value is case-sensitive.
-
-            * Declared during the company setup in the AvaTax Admin Console.'
-          example: NEWSTOREINC
-          type: string
-          minLength: 1
-          maxLength: 25
-        default_customer_code:
-          description: Default customer code. Will be used in case when no ConsumerUUID is provided.
-          example: Anonymous customer
-          type: string
-          minLength: 1
-          maxLength: 50
-        environment:
-          $ref: '#/components/schemas/AvalaraEnv'
-        exemption_classes:
-          description: A list of mappings between `ExemptionClass` enum and Avalara custom entity use codes.
-          type: array
-          items:
-            $ref: '#/components/schemas/AvalaraExemptionClassItemUpdateDto'
-        license_key:
-          description: AvaTax license key.
-          example: C1234567890ABCFE
-          type: string
-          minLength: 1
-          maxLength: 16
-          format: password
-    AvalaraEnv:
-      title: AvalaraEnv
-      description: Avalara environment.
-      example: sandbox
-      type: string
-      enum:
-      - sandbox
-      - production
-    FixedRateConfigDto:
-      title: FixedRateConfigDto
+    FixedRateConfigUpdateDto:
+      title: FixedRateConfigUpdateDto
       type: object
       properties:
         exemption_classes:
           description: A list of supported exemption classes.
           type: array
           items:
-            $ref: '#/components/schemas/ExemptionClassItemDto'
+            $ref: '#/components/schemas/ExemptionClassItemUpdateDto'
         tax_name:
           description: Tax name to be used in the tax lines.
           example: Standard VAT rate
@@ -1172,397 +670,6 @@ components:
           example: 0.19
           type: number
           format: double
-      required:
-      - tax_rate
-    ExemptionClassItemCreateDto:
-      title: ExemptionClassItemCreateDto
-      type: object
-      properties:
-        display_text:
-          description: 'Display text to be used in Associate App while rendering the exemption class.
-
-            * Required for custom tax exemption classes.
-
-            * Optional for pre-defined tax exemption classes.
-
-            * Keys must be a valid ISO 639-1 language code.
-
-            * Must include English translation by default.'
-          example:
-            en: First Nation Citizen
-            fr: Premières Nations
-          type: object
-          additionalProperties: {}
-        exemption_class:
-          $ref: '#/components/schemas/ExemptionClass'
-        valid_countries:
-          description: The list of countries where this tax exemption class is valid.
-          type: array
-          items:
-            $ref: '#/components/schemas/TaxExemptionCountryCode'
-      required:
-      - exemption_class
-      - valid_countries
-    VertexExemptionClassItemUpdateDto:
-      title: VertexExemptionClassItemUpdateDto
-      type: object
-      properties:
-        display_text:
-          description: 'Display text to be used in Associate App while rendering the exemption class.
-
-            * Required for custom tax exemption classes.
-
-            * Optional for pre-defined tax exemption classes.
-
-            * Keys must be a valid ISO 639-1 language code.
-
-            * Must include English translation by default.'
-          example:
-            en: First Nation Citizen
-            fr: Premières Nations
-          type: object
-          additionalProperties: {}
-        exemption_class:
-          $ref: '#/components/schemas/ExemptionClass'
-        valid_countries:
-          description: The list of countries where this tax exemption class is valid.
-          type: array
-          items:
-            $ref: '#/components/schemas/TaxExemptionCountryCode'
-        vertex_class_code:
-          description: 'Vertex class code.
-
-            * A code used to represent groups of customers, vendors, dispatchers, or recipients who have similar taxability.'
-          example: '01'
-          type: string
-          minLength: 1
-          maxLength: 20
-      required:
-      - exemption_class
-      - valid_countries
-      - vertex_class_code
-    CustomConfigAdditionalCreateDto:
-      title: CustomConfigAdditionalCreateDto
-      type: object
-      properties:
-        avalara:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/CustomV0AvalaraConfigCreateDto'
-          - description: 'Avalara custom provider configuration.
-
-              * Required if the `api_version` is set to `v0-avalara`.
-
-              * If the tax calculation strategy is set to `custom` and `api_version` is set to `v0-avalara`, the given configuration will be used.'
-            example:
-              account_number: '2000123456'
-              company_code: NEWSTOREINC
-              license_key: C1234567890ABCFE
-              url: https://custom.provider.net/1.0/tax/get
-    AvalaraExemptionClassItemUpdateDto:
-      title: AvalaraExemptionClassItemUpdateDto
-      type: object
-      properties:
-        avalara_entity_use_code:
-          description: 'Avalara entity use code.
-
-            * For pre-defined tax exemption classes, value must correspond to the Avalara entity use code. For the possible options, please refer to the [List of entity use codes](https://knowledge.avalara.com/bundle/hff1682048150115_hff1682048150115/page/List_of_entity_use_codes.html).
-
-            * For custom tax exemption classes, value must correspond to the custom entity use code defined under the exempt entity custom tax rule.'
-          example: CANADA_FNC
-          type: string
-          minLength: 1
-          maxLength: 25
-        display_text:
-          description: 'Display text to be used in Associate App while rendering the exemption class.
-
-            * Required for custom tax exemption classes.
-
-            * Optional for pre-defined tax exemption classes.
-
-            * Keys must be a valid ISO 639-1 language code.
-
-            * Must include English translation by default.'
-          example:
-            en: First Nation Citizen
-            fr: Premières Nations
-          type: object
-          additionalProperties: {}
-        exemption_class:
-          $ref: '#/components/schemas/ExemptionClass'
-        valid_countries:
-          description: The list of countries where this tax exemption class is valid.
-          type: array
-          items:
-            $ref: '#/components/schemas/TaxExemptionCountryCode'
-      required:
-      - avalara_entity_use_code
-      - exemption_class
-      - valid_countries
-    AvalaraConfigDto:
-      title: AvalaraConfigDto
-      type: object
-      properties:
-        account_number:
-          description: AvaTax account number or account ID.
-          example: '2000123456'
-          type: string
-          minLength: 1
-          maxLength: 10
-        company_code:
-          description: 'Company code that identifies the company in the AvaTax account.
-
-            * Value is case-sensitive.
-
-            * Declared during the company setup in the AvaTax Admin Console.'
-          example: NEWSTOREINC
-          type: string
-          minLength: 1
-          maxLength: 25
-        default_customer_code:
-          description: Default customer code. Will be used in case when no ConsumerUUID is provided.
-          example: Anonymous customer
-          type: string
-          minLength: 1
-          maxLength: 50
-        environment:
-          $ref: '#/components/schemas/AvalaraEnv'
-        exemption_classes:
-          description: A list of mappings between `ExemptionClass` enum and Avalara custom entity use codes.
-          type: array
-          items:
-            $ref: '#/components/schemas/AvalaraExemptionClassItemDto'
-        license_key:
-          description: AvaTax license key.
-          example: C1234567890ABCFE
-          type: string
-          minLength: 1
-          maxLength: 16
-          format: password
-      required:
-      - account_number
-      - company_code
-      - environment
-      - license_key
-    StoreConfigDto:
-      title: StoreConfigDto
-      type: object
-      properties:
-        avalara:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/AvalaraConfigDto'
-          - description: 'Avalara configuration.
-
-              * Required if the `tax_calculation_strategy` is set to `avalara`.
-
-              * If the tax calculation strategy is set to `avalara`, the given configuration will be used.
-
-              * If the Avalara configuration is defined, the configuration will be validated through a ping request to Avalara, which will validate the authenticity of Avalara credentials.'
-            example:
-              account_number: '2000123456'
-              company_code: NEWSTOREINC
-              default_customer_code: Anonymous customer
-              environment: sandbox
-              license_key: C1234567890ABCFE
-        country_code:
-          type: string
-        created_at:
-          description: Creation date of the configuration.
-          example: '2023-02-28T16:58:46.961Z'
-          type: string
-          format: date-time
-        custom:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/CustomConfigDto'
-          - description: 'Custom provider configuration.
-
-              * Required if the `tax_calculation_strategy` is set to `custom`.
-
-              * If the tax calculation strategy is set to `custom`, the given configuration will be used.'
-            example:
-              api_version: v1
-              base_url: https://my-custom-tax-url.com
-        fixed_rate:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/FixedRateConfigDto'
-          - description: 'Fixed rate configuration.
-
-              * If the tax calculation strategy is set to `fixedrate`, the specified tax rate will be used.
-
-              * For the other tax calculation strategies, the specified rate will be used as a fallback if the tax calculation fails (e.g. if the tax provider is not reachable).
-
-              * The specified rate will be used as a fallback by the Associate App in offline-mode.'
-            example:
-              tax_name: Standard VAT rate for Austria
-              tax_rate: 0.2
-        fixed_rate_per_country:
-          description: "Fixed rate configuration per country.\n* Uses ISO 3166 Alpha-2 format as the key in upper-case.\n* Fixed rate specification can be defined under each country key for the desired countries.\n* If the tax calculation strategy is set to `fixed_rate_per_country`:\n\n\n  * Fixed rate configuration must be configured.\n  * The specified tax rate will be used if the country code of the store has a fixed rate configuration.\n  * The tax calculation will fail if the country code of the store does not have a fixed rate configuration."
-          example:
-            AT:
-              tax_name: Standard VAT rate for Austria
-              tax_rate: 0.2
-            DE:
-              tax_name: Standard VAT rate for Germany
-              tax_rate: 0.19
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/FixedRateConfigCreateDto'
-        is_deleted:
-          description: Flag that indicates if the configuration was deleted.
-          example: false
-          type: boolean
-        store_id:
-          description: Store identifier within the NewStore platform.
-          example: '123'
-          type: string
-        tax_calculation_strategy:
-          $ref: '#/components/schemas/TaxCalculationStrategy'
-        tenant:
-          description: Tenant identifier.
-          example: dodici
-          type: string
-        updated_at:
-          description: Latest update date of the configuration.
-          example: '2023-02-28T16:58:46.961Z'
-          type: string
-          format: date-time
-        updated_by:
-          description: Identifier of the user who updated the current version of the configuration.
-          example: '2136871599'
-          type: string
-        version:
-          description: 'Version number of the config.
-
-            * Version number 0 represents the system defaults.'
-          example: 1
-          type: integer
-          format: int32
-        vertex:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/VertexConfigDto'
-          - description: 'Vertex configuration.
-
-              * Required if the `tax_calculation_strategy` is set to `vertex`.
-
-              * If the tax calculation strategy is set to `vertex`, the given configuration will be used.
-
-              * If the Vertex configuration is defined, the configuration will be validated through a ping request to Vertex, which will validate the authenticity of Vertex credentials.'
-            example:
-              administrative_origin:
-                city: Berlin
-                country: DE
-                currency_code: EUR
-                currency_value: 1.1
-                main_division: Berlin
-                postal_code: '10785'
-                street_address_1: Potsdamer Str. 7
-                street_address_2: Potsdamer Platz
-              company_code: '1234'
-              division_code: '1234'
-              flexible_fields:
-              - extended_attribute_name: productClass
-                target_field_id: 1
-                target_field_type: flexible_code_field
-              - extended_attribute_name: shoeSize
-                target_field_id: 1
-                target_field_type: flexible_numeric_field
-              login_type: trusted_id
-              soap_url: https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90
-              trusted_id: 9SDPdc9bo3
-      required:
-      - country_code
-      - created_at
-      - fixed_rate
-      - store_id
-      - tax_calculation_strategy
-      - tenant
-      - updated_at
-      - updated_by
-      - version
-    AvalaraExemptionClassItemDto:
-      title: AvalaraExemptionClassItemDto
-      type: object
-      properties:
-        avalara_entity_use_code:
-          description: 'Avalara entity use code.
-
-            * For pre-defined tax exemption classes, value must correspond to the Avalara entity use code. For the possible options, please refer to the [List of entity use codes](https://knowledge.avalara.com/bundle/hff1682048150115_hff1682048150115/page/List_of_entity_use_codes.html).
-
-            * For custom tax exemption classes, value must correspond to the custom entity use code defined under the exempt entity custom tax rule.'
-          example: CANADA_FNC
-          type: string
-          minLength: 1
-          maxLength: 25
-        display_text:
-          description: 'Display text to be used in Associate App while rendering the exemption class.
-
-            * Required for custom tax exemption classes.
-
-            * Optional for pre-defined tax exemption classes.
-
-            * Keys must be a valid ISO 639-1 language code.
-
-            * Must include English translation by default.'
-          example:
-            en: First Nation Citizen
-            fr: Premières Nations
-          type: object
-          additionalProperties: {}
-        exemption_class:
-          $ref: '#/components/schemas/ExemptionClass'
-        valid_countries:
-          description: The list of countries where this tax exemption class is valid.
-          type: array
-          items:
-            $ref: '#/components/schemas/TaxExemptionCountryCode'
-      required:
-      - avalara_entity_use_code
-      - exemption_class
-      - valid_countries
-    CustomConfigAdditionalDto:
-      title: CustomConfigAdditionalDto
-      type: object
-      properties:
-        avalara:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/CustomV0AvalaraConfigDto'
-          - description: 'Avalara custom provider configuration.
-
-              * Required if the `api_version` is set to `v0-avalara`.
-
-              * If the tax calculation strategy is set to `custom` and `api_version` is set to `v0-avalara`, the given configuration will be used.'
-            example:
-              account_number: '2000123456'
-              company_code: NEWSTOREINC
-              license_key: C1234567890ABCFE
-              url: https://custom.provider.net/1.0/tax/get
-    ExemptionClass:
-      title: ExemptionClass
-      description: 'The tax exemption class that identifies the customer''s group/organization that accredited them with the tax exemption status.
-
-        * For custom tax exemption classes, the `CUSTOM_` prefix with a UPPER_SNAKE_CASE key can be used. Example: `CUSTOM_CANADA`'
-      example: CHARITY_ORGANIZATION
-      type: string
-      enum:
-      - FEDERAL_GOVERNMENT
-      - STATE_GOVERNMENT
-      - TRIBAL_GOVERNMENT
-      - LOCAL_GOVERNMENT
-      - FOREIGN_DIPLOMAT
-      - CHARITY_ORGANIZATION
-      - RELIGIOUS_ORGANIZATION
-      - EDUCATIONAL_ORGANIZATION
-      - RESALE
-      - DIRECT_PAY_PERMIT
-      - OTHER
-      - NON_RESIDENT
-      - FIRST_NATION_CITIZEN
-      - CUSTOM_*
     StoreConfigUpdateDto:
       title: StoreConfigUpdateDto
       type: object
@@ -1659,365 +766,24 @@ components:
               login_type: trusted_id
               soap_url: https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90
               trusted_id: 9SDPdc9bo3
-    VertexAdministrativeOriginDto:
-      title: VertexAdministrativeOriginDto
+    CustomConfigAdditionalCreateDto:
+      title: CustomConfigAdditionalCreateDto
       type: object
       properties:
-        city:
-          description: The proper name of the city used to determine the Tax Area ID.
-          example: Berlin
-          type: string
-          minLength: 1
-          maxLength: 60
-        country:
-          type: string
-        currency_code:
-          $ref: '#/components/schemas/Currency3'
-        currency_value:
-          description: The rate (multiplier) used for converting the transaction currency amount to the filing currency amount.
-          example: 1.1
-          type: number
-          format: double
-        main_division:
-          description: The proper name or the postal abbreviation of the state, province, or territory used to determine the Tax Area ID.
-          example: Berlin
-          type: string
-          minLength: 1
-          maxLength: 60
-        postal_code:
-          description: The postal code used to determine the Tax Area ID
-          example: '10785'
-          type: string
-          minLength: 1
-          maxLength: 20
-        street_address_1:
-          description: The first line of the street address.
-          example: Potsdamer Str. 7
-          type: string
-          minLength: 1
-          maxLength: 100
-        street_address_2:
-          description: The second line of the street address.
-          example: Potsdamer Platz
-          type: string
-          minLength: 1
-          maxLength: 100
-      required:
-      - city
-      - country
-      - currency_code
-      - currency_value
-      - main_division
-      - postal_code
-      - street_address_1
-      - street_address_2
-    FixedRateConfigUpdateDto:
-      title: FixedRateConfigUpdateDto
-      type: object
-      properties:
-        exemption_classes:
-          description: A list of supported exemption classes.
-          type: array
-          items:
-            $ref: '#/components/schemas/ExemptionClassItemUpdateDto'
-        tax_name:
-          description: Tax name to be used in the tax lines.
-          example: Standard VAT rate
-          type: string
-        tax_rate:
-          description: 'Tax rate to be used as a fixed rate during tax calculations.
-
-            * Allows up to 5 decimal points.'
-          example: 0.19
-          type: number
-          format: double
-    VertexFlexibleFieldConfigDto:
-      title: VertexFlexibleFieldConfigDto
-      type: object
-      properties:
-        extended_attribute_name:
-          description: The name of the extended attribute.
-          example: shoeSize
-          type: string
-          minLength: 1
-          maxLength: 255
-        target_field_id:
-          description: 'Vertex flexible field identifier.
-
-            * If `target_field_type` is set to `flexible_code_field`, maximum length is 25.
-
-            * If `target_field_type` is set to `flexible_numeric_field`, maximum length is 10.
-
-            * If `target_field_type` is set to `flexible_date_field`, maximum length is 5.'
-          example: 1
-          type: integer
-          minimum: 0.0
-          maximum: 25.0
-          format: int32
-        target_field_type:
-          $ref: '#/components/schemas/VertexTargetField'
-      required:
-      - extended_attribute_name
-      - target_field_id
-      - target_field_type
-    VertexConfigDto:
-      title: VertexConfigDto
-      type: object
-      properties:
-        administrative_origin:
+        avalara:
           type: object
           allOf:
-          - $ref: '#/components/schemas/VertexAdministrativeOriginDto'
-          - description: Administrative origin information of the legal entity. Should be set based on the retailer corporate information.
+          - $ref: '#/components/schemas/CustomV0AvalaraConfigCreateDto'
+          - description: 'Avalara custom provider configuration.
+
+              * Required if the `api_version` is set to `v0-avalara`.
+
+              * If the tax calculation strategy is set to `custom` and `api_version` is set to `v0-avalara`, the given configuration will be used.'
             example:
-              city: Berlin
-              country: Germany
-              currency_code: USD
-              currency_value: 1.1
-              main_division: Berlin
-              postal_code: '10785'
-              street_address_1: Potsdamer Str. 7
-              street_address_2: Potsdamer Platz
-        company_code:
-          description: 'Vertex taxpayer code of the company.
-
-            * Identifies the top-level legal entity (company).
-
-            * The value should be set to the taxpayer code of the top-level taxpayer (company).'
-          example: '1234'
-          type: string
-          minLength: 1
-          maxLength: 40
-        division_code:
-          description: 'Vertex taxpayer code of the division.
-
-            * Identifies the mid-level legal entity (division) under a top-level legal entity (company).
-
-            * If exists, the value can be set to the taxpayer code of the mid-level taxpayer (division) under a top-level taxpayer (company).'
-          example: '1234'
-          type: string
-          minLength: 1
-          maxLength: 40
-        exemption_classes:
-          description: A list of mappings between `ExemptionClass` enum and Vertex class codes.
-          type: array
-          items:
-            $ref: '#/components/schemas/VertexExemptionClassItemDto'
-        flexible_fields:
-          description: The mapping between extended attributes of items in the NewStore platform and flexible fields as defined in Vertex.
-          example:
-          - extended_attribute_name: productClass
-            target_field_id: 1
-            target_field_type: flexible_code_field
-          - extended_attribute_name: shoeSize
-            target_field_id: 1
-            target_field_type: flexible_numeric_field
-          type: array
-          items:
-            $ref: '#/components/schemas/VertexFlexibleFieldConfigDto'
-        jurisdiction_in_tax_name_enabled:
-          description: 'Enable appending the jurisdiction name to the tax line''s `tax_name` field.
-
-            * This can help identify which jurisdiction imposed a given tax line.
-
-            * Example: The tax name `Sales And Use Tax - Colorado` includes the jurisdiction name `Colorado` when the given flag is enabled.'
-          example: true
-          type: boolean
-        login_type:
-          $ref: '#/components/schemas/VertexAuthLoginType'
-        password:
-          description: 'Password of the Vertex account.
-
-            * Required if `login_type` is set to `user_and_password`.'
-          type: string
-          minLength: 1
-          maxLength: 255
-          format: password
-        soap_url:
-          description: SOAP URL of the Vertex CalculateTax endpoint.
-          example: https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90
-          type: string
-        trusted_id:
-          description: 'Trusted ID of the Vertex account.
-
-            * Required if `login_type` is set to `trusted_id`.'
-          type: string
-          minLength: 1
-          maxLength: 255
-          format: password
-        use_location_code:
-          description: 'Use Vertex location code instead of address information.
-
-            * When this value is set to `true` the NewStore platform will use the Store IDs to communicate origin and destination addresses instead of using standard address information (address line 1, postal code, etc.).
-
-            * Store IDs are currently only available for cash & carry orders, all other order scenarios will use the standard address information to communicate origin and destination addresses even with this value set to `true`.
-
-            * In case the NewStore Store ID length is longer than 20 characters, NewStore will only send the first 20 characters as Vertex field length is capped at that limit.'
-          example: true
-          type: boolean
-          default: false
-        username:
-          description: 'Username of the Vertex account.
-
-            * Required if `login_type` is set to `user_and_password`.'
-          type: string
-          minLength: 1
-          maxLength: 255
-      required:
-      - company_code
-      - login_type
-      - soap_url
-    VertexConfigUpdateDto:
-      title: VertexConfigUpdateDto
-      type: object
-      properties:
-        administrative_origin:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/VertexAdministrativeOriginUpdateDto'
-          - description: Administrative origin information of the legal entity. Should be set based on the retailer corporate information.
-            example:
-              city: Berlin
-              country: Germany
-              currency_code: USD
-              currency_value: 1.1
-              main_division: Berlin
-              postal_code: '10785'
-              street_address_1: Potsdamer Str. 7
-              street_address_2: Potsdamer Platz
-        company_code:
-          description: 'Vertex taxpayer code of the company.
-
-            * Identifies the top-level legal entity (company).
-
-            * The value should be set to the taxpayer code of the top-level taxpayer (company).'
-          example: '1234'
-          type: string
-          minLength: 1
-          maxLength: 40
-        division_code:
-          description: 'Vertex taxpayer code of the division.
-
-            * Identifies the mid-level legal entity (division) under a top-level legal entity (company).
-
-            * If exists, the value can be set to the taxpayer code of the mid-level taxpayer (division) under a top-level taxpayer (company).'
-          example: '1234'
-          type: string
-          minLength: 1
-          maxLength: 40
-        exemption_classes:
-          description: A list of mappings between `ExemptionClass` enum and Vertex class codes.
-          type: array
-          items:
-            $ref: '#/components/schemas/VertexExemptionClassItemUpdateDto'
-        flexible_fields:
-          description: The mapping between extended attributes of items in the NewStore platform and flexible fields as defined in Vertex.
-          example:
-          - extended_attribute_name: productClass
-            target_field_id: 1
-            target_field_type: flexible_code_field
-          - extended_attribute_name: shoeSize
-            target_field_id: 1
-            target_field_type: flexible_numeric_field
-          type: array
-          items:
-            $ref: '#/components/schemas/VertexFlexibleFieldConfigUpdateDto'
-        jurisdiction_in_tax_name_enabled:
-          description: 'Enable appending the jurisdiction name to the tax line''s `tax_name` field.
-
-            * This can help identify which jurisdiction imposed a given tax line.
-
-            * Example: The tax name `Sales And Use Tax - Colorado` includes the jurisdiction name `Colorado` when the given flag is enabled.'
-          example: true
-          type: boolean
-        login_type:
-          $ref: '#/components/schemas/VertexAuthLoginType'
-        password:
-          description: 'Password of the Vertex account.
-
-            * Required if `login_type` is set to `user_and_password`.'
-          type: string
-          minLength: 1
-          maxLength: 255
-          format: password
-        soap_url:
-          description: SOAP URL of the Vertex CalculateTax endpoint.
-          example: https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90
-          type: string
-        trusted_id:
-          description: 'Trusted ID of the Vertex account.
-
-            * Required if `login_type` is set to `trusted_id`.'
-          type: string
-          minLength: 1
-          maxLength: 255
-          format: password
-        use_location_code:
-          description: 'Use Vertex location code instead of address information.
-
-            * When this value is set to `true` the NewStore platform will use the Store IDs to communicate origin and destination addresses instead of using standard address information (address line 1, postal code, etc.).
-
-            * Store IDs are currently only available for cash & carry orders, all other order scenarios will use the standard address information to communicate origin and destination addresses even with this value set to `true`.
-
-            * In case the NewStore Store ID length is longer than 20 characters, NewStore will only send the first 20 characters as Vertex field length is capped at that limit.'
-          example: true
-          type: boolean
-          default: false
-        username:
-          description: 'Username of the Vertex account.
-
-            * Required if `login_type` is set to `user_and_password`.'
-          type: string
-          minLength: 1
-          maxLength: 255
-    CustomConfigUpdateDto:
-      title: CustomConfigUpdateDto
-      type: object
-      properties:
-        additional_config:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/CustomConfigAdditionalUpdateDto'
-          - description: Other necessary configuration specific to the custom provider (currently configs for non-officially supported avalara based custom implementation)
-        api_version:
-          $ref: '#/components/schemas/CustomApiVersion'
-        authentication:
-          $ref: '#/components/schemas/CustomConfigAuthenticationDto'
-        base_url:
-          description: 'The base URL for the custom taxes RESTful API. The value should include the route prefix to the quotation API.
-
-            * Required if the `api_version` is set to `v1`.
-
-            * If the tax calculation strategy is set to `custom` and `api_version` is set to `v1`, the given configuration will be used.'
-          example: https://my.custom.domain/base_path
-          type: string
-        exemption_classes:
-          description: A list of supported exemption classes.
-          type: array
-          items:
-            $ref: '#/components/schemas/ExemptionClassItemUpdateDto'
-    FixedRateConfigCreateDto:
-      title: FixedRateConfigCreateDto
-      type: object
-      properties:
-        exemption_classes:
-          description: A list of supported exemption classes.
-          type: array
-          items:
-            $ref: '#/components/schemas/ExemptionClassItemCreateDto'
-        tax_name:
-          description: Tax name to be used in the tax lines.
-          example: Standard VAT rate
-          type: string
-        tax_rate:
-          description: 'Tax rate to be used as a fixed rate during tax calculations.
-
-            * Allows up to 5 decimal points.'
-          example: 0.19
-          type: number
-          format: double
-      required:
-      - tax_rate
+              account_number: '2000123456'
+              company_code: NEWSTOREINC
+              license_key: C1234567890ABCFE
+              url: https://custom.provider.net/1.0/tax/get
     CustomV0AvalaraConfigCreateDto:
       title: CustomV0AvalaraConfigCreateDto
       type: object
@@ -2054,76 +820,6 @@ components:
       - company_code
       - license_key
       - url
-    CustomConfigDto:
-      title: CustomConfigDto
-      type: object
-      properties:
-        additional_config:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/CustomConfigAdditionalDto'
-          - description: Other necessary configuration specific to the custom provider (currently configs for non-officially supported avalara based custom implementation)
-        api_version:
-          $ref: '#/components/schemas/CustomApiVersion'
-        authentication:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/CustomConfigAuthenticationDto'
-          - description: 'Custom provider API authentication method.
-
-              * Currently, only Basic authentication is supported.
-
-              * If the tax calculation strategy is set to `custom` and `api_version` is set to `v1`, the given configuration will be used.'
-            example:
-              method: Basic
-              password: pass
-              username: user
-        base_url:
-          description: 'The base URL for the custom taxes RESTful API. The value should include the route prefix to the quotation API.
-
-            * Required if the `api_version` is set to `v1`.
-
-            * If the tax calculation strategy is set to `custom` and `api_version` is set to `v1`, the given configuration will be used.'
-          example: https://my.custom.domain/base_path
-          type: string
-        exemption_classes:
-          description: A list of supported exemption classes.
-          type: array
-          items:
-            $ref: '#/components/schemas/ExemptionClassItemDto'
-      required:
-      - api_version
-    CustomV0AvalaraConfigUpdateDto:
-      title: CustomV0AvalaraConfigUpdateDto
-      type: object
-      properties:
-        account_number:
-          description: AvaTax account number or account ID.
-          example: '2000123456'
-          type: string
-          minLength: 1
-          maxLength: 10
-        company_code:
-          description: 'Company code that identifies the company in the AvaTax account.
-
-            * Value is case-sensitive.
-
-            * Declared during the company setup in the AvaTax Admin Console.'
-          example: NEWSTOREINC
-          type: string
-          minLength: 1
-          maxLength: 25
-        license_key:
-          description: AvaTax license key.
-          example: C1234567890ABCFE
-          type: string
-          minLength: 1
-          maxLength: 16
-          format: password
-        url:
-          description: Custom provider RESTful API URL that uses AvaTax v1 schema. Will be used for tax calculations.
-          example: https://custom.provider.net/1.0/tax/get
-          type: string
     Problem:
       title: Problem
       type: object
@@ -2161,172 +857,6 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    StoreConfigListDto:
-      title: StoreConfigListDto
-      type: object
-      properties:
-        items:
-          description: List of tax configurations of stores.
-          type: array
-          items:
-            $ref: '#/components/schemas/StoreConfigDto'
-        next_page_key:
-          description: Key for retrieving the next page of results.
-          type: string
-        scan_count:
-          description: Number of database scans performed to populate the list.
-          example: 1
-          type: integer
-          format: int32
-      required:
-      - items
-      - scan_count
-    CustomV0AvalaraConfigDto:
-      title: CustomV0AvalaraConfigDto
-      type: object
-      properties:
-        account_number:
-          description: AvaTax account number or account ID.
-          example: '2000123456'
-          type: string
-          minLength: 1
-          maxLength: 10
-        company_code:
-          description: 'Company code that identifies the company in the AvaTax account.
-
-            * Value is case-sensitive.
-
-            * Declared during the company setup in the AvaTax Admin Console.'
-          example: NEWSTOREINC
-          type: string
-          minLength: 1
-          maxLength: 25
-        license_key:
-          description: AvaTax license key.
-          example: C1234567890ABCFE
-          type: string
-          minLength: 1
-          maxLength: 16
-          format: password
-        url:
-          description: Custom provider RESTful API URL that uses AvaTax v1 schema. Will be used for tax calculations.
-          example: https://custom.provider.net/1.0/tax/get
-          type: string
-      required:
-      - account_number
-      - company_code
-      - license_key
-      - url
-    AvalaraExemptionClassItemCreateDto:
-      title: AvalaraExemptionClassItemCreateDto
-      type: object
-      properties:
-        avalara_entity_use_code:
-          description: 'Avalara entity use code.
-
-            * For pre-defined tax exemption classes, value must correspond to the Avalara entity use code. For the possible options, please refer to the [List of entity use codes](https://knowledge.avalara.com/bundle/hff1682048150115_hff1682048150115/page/List_of_entity_use_codes.html).
-
-            * For custom tax exemption classes, value must correspond to the custom entity use code defined under the exempt entity custom tax rule.'
-          example: CANADA_FNC
-          type: string
-          minLength: 1
-          maxLength: 25
-        display_text:
-          description: 'Display text to be used in Associate App while rendering the exemption class.
-
-            * Required for custom tax exemption classes.
-
-            * Optional for pre-defined tax exemption classes.
-
-            * Keys must be a valid ISO 639-1 language code.
-
-            * Must include English translation by default.'
-          example:
-            en: First Nation Citizen
-            fr: Premières Nations
-          type: object
-          additionalProperties: {}
-        exemption_class:
-          $ref: '#/components/schemas/ExemptionClass'
-        valid_countries:
-          description: The list of countries where this tax exemption class is valid.
-          type: array
-          items:
-            $ref: '#/components/schemas/TaxExemptionCountryCode'
-      required:
-      - avalara_entity_use_code
-      - exemption_class
-      - valid_countries
-    VertexAuthLoginType:
-      title: VertexAuthLoginType
-      description: 'Vertex Login Type.
-
-        * Used for selecting the authentication method.
-
-        * `trusted_id` field is required if `login_type` is set to `trusted_id`.
-
-        * `username` and `password` fields are required if `login_type` is set to `user_and_password`.'
-      example: trusted_id
-      type: string
-      enum:
-      - trusted_id
-      - user_and_password
-    ExemptionClassItemUpdateDto:
-      title: ExemptionClassItemUpdateDto
-      type: object
-      properties:
-        display_text:
-          description: 'Display text to be used in Associate App while rendering the exemption class.
-
-            * Required for custom tax exemption classes.
-
-            * Optional for pre-defined tax exemption classes.
-
-            * Keys must be a valid ISO 639-1 language code.
-
-            * Must include English translation by default.'
-          example:
-            en: First Nation Citizen
-            fr: Premières Nations
-          type: object
-          additionalProperties: {}
-        exemption_class:
-          $ref: '#/components/schemas/ExemptionClass'
-        valid_countries:
-          description: The list of countries where this tax exemption class is valid.
-          type: array
-          items:
-            $ref: '#/components/schemas/TaxExemptionCountryCode'
-      required:
-      - exemption_class
-      - valid_countries
-    CustomConfigAdditionalUpdateDto:
-      title: CustomConfigAdditionalUpdateDto
-      type: object
-      properties:
-        avalara:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/CustomV0AvalaraConfigUpdateDto'
-          - description: 'Avalara custom provider configuration.
-
-              * Required if the `api_version` is set to `v0-avalara`.
-
-              * If the tax calculation strategy is set to `custom` and `api_version` is set to `v0-avalara`, the given configuration will be used.'
-            example:
-              account_number: '2000123456'
-              company_code: NEWSTOREINC
-              license_key: C1234567890ABCFE
-              url: https://custom.provider.net/1.0/tax/get
-    VertexTargetField:
-      title: VertexTargetField
-      description: Vertex flexible field type.
-      example: flexible_numeric_field
-      type: string
-      enum:
-      - flexible_code_field
-      - flexible_numeric_field
-      - flexible_date_field
     CustomConfigAuthenticationDto:
       title: CustomConfigAuthenticationDto
       type: object
@@ -2345,6 +875,57 @@ components:
       - method
       - password
       - username
+    FixedRateConfigCreateDto:
+      title: FixedRateConfigCreateDto
+      type: object
+      properties:
+        exemption_classes:
+          description: A list of supported exemption classes.
+          type: array
+          items:
+            $ref: '#/components/schemas/ExemptionClassItemCreateDto'
+        tax_name:
+          description: Tax name to be used in the tax lines.
+          example: Standard VAT rate
+          type: string
+        tax_rate:
+          description: 'Tax rate to be used as a fixed rate during tax calculations.
+
+            * Allows up to 5 decimal points.'
+          example: 0.19
+          type: number
+          format: double
+      required:
+      - tax_rate
+    ExemptionClassItemDto:
+      title: ExemptionClassItemDto
+      type: object
+      properties:
+        display_text:
+          description: 'Display text to be used in Associate App while rendering the exemption class.
+
+            * Required for custom tax exemption classes.
+
+            * Optional for pre-defined tax exemption classes.
+
+            * Keys must be a valid ISO 639-1 language code.
+
+            * Must include English translation by default.'
+          example:
+            en: First Nation Citizen
+            fr: Premières Nations
+          type: object
+          additionalProperties: {}
+        exemption_class:
+          $ref: '#/components/schemas/ExemptionClass'
+        valid_countries:
+          description: The list of countries where this tax exemption class is valid.
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxExemptionCountryCode'
+      required:
+      - exemption_class
+      - valid_countries
     TaxExemptionCountryCode:
       title: TaxExemptionCountryCode
       description: "The list of countries where this tax exemption class is relevant.\n    * '*' indicates worldwide support"
@@ -2597,51 +1178,206 @@ components:
       - YE
       - ZM
       - ZW
-    VertexAdministrativeOriginUpdateDto:
-      title: VertexAdministrativeOriginUpdateDto
+    CustomConfigUpdateDto:
+      title: CustomConfigUpdateDto
       type: object
       properties:
-        city:
-          description: The proper name of the city used to determine the Tax Area ID.
-          example: Berlin
+        additional_config:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/CustomConfigAdditionalUpdateDto'
+          - description: Other necessary configuration specific to the custom provider (currently configs for non-officially supported avalara based custom implementation)
+        api_version:
+          $ref: '#/components/schemas/CustomApiVersion'
+        authentication:
+          $ref: '#/components/schemas/CustomConfigAuthenticationDto'
+        base_url:
+          description: 'The base URL for the custom taxes RESTful API. The value should include the route prefix to the quotation API.
+
+            * Required if the `api_version` is set to `v1`.
+
+            * If the tax calculation strategy is set to `custom` and `api_version` is set to `v1`, the given configuration will be used.'
+          example: https://my.custom.domain/base_path
+          type: string
+        exemption_classes:
+          description: A list of supported exemption classes.
+          type: array
+          items:
+            $ref: '#/components/schemas/ExemptionClassItemUpdateDto'
+    StoreConfigCreateDto:
+      title: StoreConfigCreateDto
+      type: object
+      properties:
+        avalara:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/AvalaraConfigCreateDto'
+          - description: 'Avalara configuration.
+
+              * Required if the `tax_calculation_strategy` is set to `avalara`.
+
+              * If the tax calculation strategy is set to `avalara`, the given configuration will be used.
+
+              * If the Avalara configuration is defined, the configuration will be validated through a ping request to Avalara, which will validate the authenticity of Avalara credentials.'
+            example:
+              account_number: '2000123456'
+              company_code: NEWSTOREINC
+              default_customer_code: Anonymous customer
+              environment: sandbox
+              license_key: C1234567890ABCFE
+        country_code:
+          type: string
+        custom:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/CustomConfigCreateDto'
+          - description: 'Custom provider configuration.
+
+              * Required if the `tax_calculation_strategy` is set to `custom`.
+
+              * If the tax calculation strategy is set to `custom`, the given configuration will be used.'
+            example:
+              api_version: v1
+              base_url: https://my-custom-tax-url.com
+        fixed_rate:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/FixedRateConfigCreateDto'
+          - description: 'Fixed rate configuration.
+
+              * If the tax calculation strategy is set to `fixedrate`, the specified tax rate will be used.
+
+              * For the other tax calculation strategies, the specified rate will be used as a fallback if the tax calculation fails (e.g. if the tax provider is not reachable).
+
+              * The specified rate will be used as a fallback by the Associate App in offline-mode.'
+            example:
+              tax_name: Standard VAT rate for Austria
+              tax_rate: 0.2
+        fixed_rate_per_country:
+          description: "Fixed rate configuration per country.\n* Uses ISO 3166 Alpha-2 format as the key in upper-case.\n* Fixed rate specification can be defined under each country key for the desired countries.\n* If the tax calculation strategy is set to `fixed_rate_per_country`:\n\n\n  * Fixed rate configuration must be configured.\n  * The specified tax rate will be used if the country code of the store has a fixed rate configuration.\n  * The tax calculation will fail if the country code of the store does not have a fixed rate configuration."
+          example:
+            AT:
+              tax_name: Standard VAT rate for Austria
+              tax_rate: 0.2
+            DE:
+              tax_name: Standard VAT rate for Germany
+              tax_rate: 0.19
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/FixedRateConfigCreateDto'
+        store_id:
+          description: Store identifier within the NewStore platform.
+          example: '123'
+          type: string
+        tax_calculation_strategy:
+          $ref: '#/components/schemas/TaxCalculationStrategy'
+        vertex:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/VertexConfigCreateDto'
+          - description: 'Vertex configuration.
+
+              * Required if the `tax_calculation_strategy` is set to `vertex`.
+
+              * If the tax calculation strategy is set to `vertex`, the given configuration will be used.
+
+              * If the Vertex configuration is defined, the configuration will be validated through a ping request to Vertex, which will validate the authenticity of Vertex credentials.'
+            example:
+              administrative_origin:
+                city: Berlin
+                country: DE
+                currency_code: EUR
+                currency_value: 1.1
+                main_division: Berlin
+                postal_code: '10785'
+                street_address_1: Potsdamer Str. 7
+                street_address_2: Potsdamer Platz
+              company_code: '1234'
+              division_code: '1234'
+              flexible_fields:
+              - extended_attribute_name: productClass
+                target_field_id: 1
+                target_field_type: flexible_code_field
+              - extended_attribute_name: shoeSize
+                target_field_id: 1
+                target_field_type: flexible_numeric_field
+              login_type: trusted_id
+              soap_url: https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90
+              trusted_id: 9SDPdc9bo3
+      required:
+      - country_code
+      - store_id
+    AvalaraExemptionClassItemCreateDto:
+      title: AvalaraExemptionClassItemCreateDto
+      type: object
+      properties:
+        avalara_entity_use_code:
+          description: 'Avalara entity use code.
+
+            * For pre-defined tax exemption classes, value must correspond to the Avalara entity use code. For the possible options, please refer to the [List of entity use codes](https://knowledge.avalara.com/bundle/hff1682048150115_hff1682048150115/page/List_of_entity_use_codes.html).
+
+            * For custom tax exemption classes, value must correspond to the custom entity use code defined under the exempt entity custom tax rule.'
+          example: CANADA_FNC
           type: string
           minLength: 1
-          maxLength: 60
-        country:
-          type: string
-        currency_code:
-          $ref: '#/components/schemas/Currency3'
-        currency_value:
-          description: The rate (multiplier) used for converting the transaction currency amount to the filing currency amount.
-          example: 1.1
-          type: number
-          format: double
-        main_division:
-          description: The proper name or the postal abbreviation of the state, province, or territory used to determine the Tax Area ID.
-          example: Berlin
-          type: string
-          minLength: 1
-          maxLength: 60
-        postal_code:
-          description: The postal code used to determine the Tax Area ID
-          example: '10785'
-          type: string
-          minLength: 1
-          maxLength: 20
-        street_address_1:
-          description: The first line of the street address.
-          example: Potsdamer Str. 7
-          type: string
-          minLength: 1
-          maxLength: 100
-        street_address_2:
-          description: The second line of the street address.
-          example: Potsdamer Platz
-          type: string
-          minLength: 1
-          maxLength: 100
-    VertexExemptionClassItemCreateDto:
-      title: VertexExemptionClassItemCreateDto
+          maxLength: 25
+        display_text:
+          description: 'Display text to be used in Associate App while rendering the exemption class.
+
+            * Required for custom tax exemption classes.
+
+            * Optional for pre-defined tax exemption classes.
+
+            * Keys must be a valid ISO 639-1 language code.
+
+            * Must include English translation by default.'
+          example:
+            en: First Nation Citizen
+            fr: Premières Nations
+          type: object
+          additionalProperties: {}
+        exemption_class:
+          $ref: '#/components/schemas/ExemptionClass'
+        valid_countries:
+          description: The list of countries where this tax exemption class is valid.
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxExemptionCountryCode'
+      required:
+      - avalara_entity_use_code
+      - exemption_class
+      - valid_countries
+    TaxCalculationStrategy:
+      title: TaxCalculationStrategy
+      description: Tax calculation strategy.
+      example: fixedrate
+      type: string
+      enum:
+      - fixedrate
+      - fixed_rate_per_country
+      - avalara
+      - vertex
+      - custom
+    CustomConfigAdditionalDto:
+      title: CustomConfigAdditionalDto
+      type: object
+      properties:
+        avalara:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/CustomV0AvalaraConfigDto'
+          - description: 'Avalara custom provider configuration.
+
+              * Required if the `api_version` is set to `v0-avalara`.
+
+              * If the tax calculation strategy is set to `custom` and `api_version` is set to `v0-avalara`, the given configuration will be used.'
+            example:
+              account_number: '2000123456'
+              company_code: NEWSTOREINC
+              license_key: C1234567890ABCFE
+              url: https://custom.provider.net/1.0/tax/get
+    ExemptionClassItemUpdateDto:
+      title: ExemptionClassItemUpdateDto
       type: object
       properties:
         display_text:
@@ -2666,18 +1402,137 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TaxExemptionCountryCode'
-        vertex_class_code:
-          description: 'Vertex class code.
-
-            * A code used to represent groups of customers, vendors, dispatchers, or recipients who have similar taxability.'
-          example: '01'
-          type: string
-          minLength: 1
-          maxLength: 20
       required:
       - exemption_class
       - valid_countries
-      - vertex_class_code
+    FixedRateConfigDto:
+      title: FixedRateConfigDto
+      type: object
+      properties:
+        exemption_classes:
+          description: A list of supported exemption classes.
+          type: array
+          items:
+            $ref: '#/components/schemas/ExemptionClassItemDto'
+        tax_name:
+          description: Tax name to be used in the tax lines.
+          example: Standard VAT rate
+          type: string
+        tax_rate:
+          description: 'Tax rate to be used as a fixed rate during tax calculations.
+
+            * Allows up to 5 decimal points.'
+          example: 0.19
+          type: number
+          format: double
+      required:
+      - tax_rate
+    CustomV0AvalaraConfigDto:
+      title: CustomV0AvalaraConfigDto
+      type: object
+      properties:
+        account_number:
+          description: AvaTax account number or account ID.
+          example: '2000123456'
+          type: string
+          minLength: 1
+          maxLength: 10
+        company_code:
+          description: 'Company code that identifies the company in the AvaTax account.
+
+            * Value is case-sensitive.
+
+            * Declared during the company setup in the AvaTax Admin Console.'
+          example: NEWSTOREINC
+          type: string
+          minLength: 1
+          maxLength: 25
+        license_key:
+          description: AvaTax license key.
+          example: C1234567890ABCFE
+          type: string
+          minLength: 1
+          maxLength: 16
+          format: password
+        url:
+          description: Custom provider RESTful API URL that uses AvaTax v1 schema. Will be used for tax calculations.
+          example: https://custom.provider.net/1.0/tax/get
+          type: string
+      required:
+      - account_number
+      - company_code
+      - license_key
+      - url
+    AvalaraConfigDto:
+      title: AvalaraConfigDto
+      type: object
+      properties:
+        account_number:
+          description: AvaTax account number or account ID.
+          example: '2000123456'
+          type: string
+          minLength: 1
+          maxLength: 10
+        company_code:
+          description: 'Company code that identifies the company in the AvaTax account.
+
+            * Value is case-sensitive.
+
+            * Declared during the company setup in the AvaTax Admin Console.'
+          example: NEWSTOREINC
+          type: string
+          minLength: 1
+          maxLength: 25
+        default_customer_code:
+          description: Default customer code. Will be used in case when no ConsumerUUID is provided.
+          example: Anonymous customer
+          type: string
+          minLength: 1
+          maxLength: 50
+        environment:
+          $ref: '#/components/schemas/AvalaraEnv'
+        exemption_classes:
+          description: A list of mappings between `ExemptionClass` enum and Avalara custom entity use codes.
+          type: array
+          items:
+            $ref: '#/components/schemas/AvalaraExemptionClassItemDto'
+        license_key:
+          description: AvaTax license key.
+          example: C1234567890ABCFE
+          type: string
+          minLength: 1
+          maxLength: 16
+          format: password
+      required:
+      - account_number
+      - company_code
+      - environment
+      - license_key
+    VertexFlexibleFieldConfigUpdateDto:
+      title: VertexFlexibleFieldConfigUpdateDto
+      type: object
+      properties:
+        extended_attribute_name:
+          description: The name of the extended attribute.
+          example: shoeSize
+          type: string
+          minLength: 1
+          maxLength: 255
+        target_field_id:
+          description: 'Vertex flexible field identifier.
+
+            * If `target_field_type` is set to `flexible_code_field`, maximum length is 25.
+
+            * If `target_field_type` is set to `flexible_numeric_field`, maximum length is 10.
+
+            * If `target_field_type` is set to `flexible_date_field`, maximum length is 5.'
+          example: 1
+          type: integer
+          minimum: 0.0
+          maximum: 25.0
+          format: int32
+        target_field_type:
+          $ref: '#/components/schemas/VertexTargetField'
     Currency3:
       title: Currency3
       description: Currency code in ISO 4217 format.
@@ -2846,6 +1701,1151 @@ components:
       - ZAR
       - ZMW
       - ZWD
+    VertexAdministrativeOriginUpdateDto:
+      title: VertexAdministrativeOriginUpdateDto
+      type: object
+      properties:
+        city:
+          description: The proper name of the city used to determine the Tax Area ID.
+          example: Berlin
+          type: string
+          minLength: 1
+          maxLength: 60
+        country:
+          type: string
+        currency_code:
+          $ref: '#/components/schemas/Currency3'
+        currency_value:
+          description: The rate (multiplier) used for converting the transaction currency amount to the filing currency amount.
+          example: 1.1
+          type: number
+          format: double
+        main_division:
+          description: The proper name or the postal abbreviation of the state, province, or territory used to determine the Tax Area ID.
+          example: Berlin
+          type: string
+          minLength: 1
+          maxLength: 60
+        postal_code:
+          description: The postal code used to determine the Tax Area ID
+          example: '10785'
+          type: string
+          minLength: 1
+          maxLength: 20
+        street_address_1:
+          description: The first line of the street address.
+          example: Potsdamer Str. 7
+          type: string
+          minLength: 1
+          maxLength: 100
+        street_address_2:
+          description: The second line of the street address.
+          example: Potsdamer Platz
+          type: string
+          minLength: 1
+          maxLength: 100
+    VertexFlexibleFieldConfigCreateDto:
+      title: VertexFlexibleFieldConfigCreateDto
+      type: object
+      properties:
+        extended_attribute_name:
+          description: The name of the extended attribute.
+          example: shoeSize
+          type: string
+          minLength: 1
+          maxLength: 255
+        target_field_id:
+          description: 'Vertex flexible field identifier.
+
+            * If `target_field_type` is set to `flexible_code_field`, maximum length is 25.
+
+            * If `target_field_type` is set to `flexible_numeric_field`, maximum length is 10.
+
+            * If `target_field_type` is set to `flexible_date_field`, maximum length is 5.'
+          example: 1
+          type: integer
+          minimum: 0.0
+          maximum: 25.0
+          format: int32
+        target_field_type:
+          $ref: '#/components/schemas/VertexTargetField'
+      required:
+      - extended_attribute_name
+      - target_field_id
+      - target_field_type
+    CustomV0AvalaraConfigUpdateDto:
+      title: CustomV0AvalaraConfigUpdateDto
+      type: object
+      properties:
+        account_number:
+          description: AvaTax account number or account ID.
+          example: '2000123456'
+          type: string
+          minLength: 1
+          maxLength: 10
+        company_code:
+          description: 'Company code that identifies the company in the AvaTax account.
+
+            * Value is case-sensitive.
+
+            * Declared during the company setup in the AvaTax Admin Console.'
+          example: NEWSTOREINC
+          type: string
+          minLength: 1
+          maxLength: 25
+        license_key:
+          description: AvaTax license key.
+          example: C1234567890ABCFE
+          type: string
+          minLength: 1
+          maxLength: 16
+          format: password
+        url:
+          description: Custom provider RESTful API URL that uses AvaTax v1 schema. Will be used for tax calculations.
+          example: https://custom.provider.net/1.0/tax/get
+          type: string
+    CustomConfigAuthenticationMethod:
+      title: CustomConfigAuthenticationMethod
+      description: Custom provider authentication method.
+      example: Basic
+      type: string
+      enum:
+      - Basic
+    VertexConfigDto:
+      title: VertexConfigDto
+      type: object
+      properties:
+        administrative_origin:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/VertexAdministrativeOriginDto'
+          - description: Administrative origin information of the legal entity. Should be set based on the retailer corporate information.
+            example:
+              city: Berlin
+              country: Germany
+              currency_code: USD
+              currency_value: 1.1
+              main_division: Berlin
+              postal_code: '10785'
+              street_address_1: Potsdamer Str. 7
+              street_address_2: Potsdamer Platz
+        company_code:
+          description: 'Vertex taxpayer code of the company.
+
+            * Identifies the top-level legal entity (company).
+
+            * The value should be set to the taxpayer code of the top-level taxpayer (company).'
+          example: '1234'
+          type: string
+          minLength: 1
+          maxLength: 40
+        division_code:
+          description: 'Vertex taxpayer code of the division.
+
+            * Identifies the mid-level legal entity (division) under a top-level legal entity (company).
+
+            * If exists, the value can be set to the taxpayer code of the mid-level taxpayer (division) under a top-level taxpayer (company).'
+          example: '1234'
+          type: string
+          minLength: 1
+          maxLength: 40
+        exemption_classes:
+          description: A list of mappings between `ExemptionClass` enum and Vertex class codes.
+          type: array
+          items:
+            $ref: '#/components/schemas/VertexExemptionClassItemDto'
+        flexible_fields:
+          description: The mapping between extended attributes of items in the NewStore platform and flexible fields as defined in Vertex.
+          example:
+          - extended_attribute_name: productClass
+            target_field_id: 1
+            target_field_type: flexible_code_field
+          - extended_attribute_name: shoeSize
+            target_field_id: 1
+            target_field_type: flexible_numeric_field
+          type: array
+          items:
+            $ref: '#/components/schemas/VertexFlexibleFieldConfigDto'
+        jurisdiction_in_tax_name_enabled:
+          description: 'Enable appending the jurisdiction name to the tax line''s `tax_name` field.
+
+            * This can help identify which jurisdiction imposed a given tax line.
+
+            * Example: The tax name `Sales And Use Tax - Colorado` includes the jurisdiction name `Colorado` when the given flag is enabled.'
+          example: true
+          type: boolean
+        login_type:
+          $ref: '#/components/schemas/VertexAuthLoginType'
+        password:
+          description: 'Password of the Vertex account.
+
+            * Required if `login_type` is set to `user_and_password`.'
+          type: string
+          minLength: 1
+          maxLength: 255
+          format: password
+        soap_url:
+          description: SOAP URL of the Vertex CalculateTax endpoint.
+          example: https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90
+          type: string
+        trusted_id:
+          description: 'Trusted ID of the Vertex account.
+
+            * Required if `login_type` is set to `trusted_id`.'
+          type: string
+          minLength: 1
+          maxLength: 255
+          format: password
+        use_location_code:
+          description: 'Use Vertex location code instead of address information.
+
+            * When this value is set to `true` the NewStore platform will use the Store IDs to communicate origin and destination addresses instead of using standard address information (address line 1, postal code, etc.).
+
+            * Store IDs are currently only available for cash & carry orders, all other order scenarios will use the standard address information to communicate origin and destination addresses even with this value set to `true`.
+
+            * In case the NewStore Store ID length is longer than 20 characters, NewStore will only send the first 20 characters as Vertex field length is capped at that limit.'
+          example: true
+          type: boolean
+          default: false
+        username:
+          description: 'Username of the Vertex account.
+
+            * Required if `login_type` is set to `user_and_password`.'
+          type: string
+          minLength: 1
+          maxLength: 255
+      required:
+      - company_code
+      - login_type
+      - soap_url
+    VertexConfigUpdateDto:
+      title: VertexConfigUpdateDto
+      type: object
+      properties:
+        administrative_origin:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/VertexAdministrativeOriginUpdateDto'
+          - description: Administrative origin information of the legal entity. Should be set based on the retailer corporate information.
+            example:
+              city: Berlin
+              country: Germany
+              currency_code: USD
+              currency_value: 1.1
+              main_division: Berlin
+              postal_code: '10785'
+              street_address_1: Potsdamer Str. 7
+              street_address_2: Potsdamer Platz
+        company_code:
+          description: 'Vertex taxpayer code of the company.
+
+            * Identifies the top-level legal entity (company).
+
+            * The value should be set to the taxpayer code of the top-level taxpayer (company).'
+          example: '1234'
+          type: string
+          minLength: 1
+          maxLength: 40
+        division_code:
+          description: 'Vertex taxpayer code of the division.
+
+            * Identifies the mid-level legal entity (division) under a top-level legal entity (company).
+
+            * If exists, the value can be set to the taxpayer code of the mid-level taxpayer (division) under a top-level taxpayer (company).'
+          example: '1234'
+          type: string
+          minLength: 1
+          maxLength: 40
+        exemption_classes:
+          description: A list of mappings between `ExemptionClass` enum and Vertex class codes.
+          type: array
+          items:
+            $ref: '#/components/schemas/VertexExemptionClassItemUpdateDto'
+        flexible_fields:
+          description: The mapping between extended attributes of items in the NewStore platform and flexible fields as defined in Vertex.
+          example:
+          - extended_attribute_name: productClass
+            target_field_id: 1
+            target_field_type: flexible_code_field
+          - extended_attribute_name: shoeSize
+            target_field_id: 1
+            target_field_type: flexible_numeric_field
+          type: array
+          items:
+            $ref: '#/components/schemas/VertexFlexibleFieldConfigUpdateDto'
+        jurisdiction_in_tax_name_enabled:
+          description: 'Enable appending the jurisdiction name to the tax line''s `tax_name` field.
+
+            * This can help identify which jurisdiction imposed a given tax line.
+
+            * Example: The tax name `Sales And Use Tax - Colorado` includes the jurisdiction name `Colorado` when the given flag is enabled.'
+          example: true
+          type: boolean
+        login_type:
+          $ref: '#/components/schemas/VertexAuthLoginType'
+        password:
+          description: 'Password of the Vertex account.
+
+            * Required if `login_type` is set to `user_and_password`.'
+          type: string
+          minLength: 1
+          maxLength: 255
+          format: password
+        soap_url:
+          description: SOAP URL of the Vertex CalculateTax endpoint.
+          example: https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90
+          type: string
+        trusted_id:
+          description: 'Trusted ID of the Vertex account.
+
+            * Required if `login_type` is set to `trusted_id`.'
+          type: string
+          minLength: 1
+          maxLength: 255
+          format: password
+        use_location_code:
+          description: 'Use Vertex location code instead of address information.
+
+            * When this value is set to `true` the NewStore platform will use the Store IDs to communicate origin and destination addresses instead of using standard address information (address line 1, postal code, etc.).
+
+            * Store IDs are currently only available for cash & carry orders, all other order scenarios will use the standard address information to communicate origin and destination addresses even with this value set to `true`.
+
+            * In case the NewStore Store ID length is longer than 20 characters, NewStore will only send the first 20 characters as Vertex field length is capped at that limit.'
+          example: true
+          type: boolean
+          default: false
+        username:
+          description: 'Username of the Vertex account.
+
+            * Required if `login_type` is set to `user_and_password`.'
+          type: string
+          minLength: 1
+          maxLength: 255
+    VertexExemptionClassItemCreateDto:
+      title: VertexExemptionClassItemCreateDto
+      type: object
+      properties:
+        display_text:
+          description: 'Display text to be used in Associate App while rendering the exemption class.
+
+            * Required for custom tax exemption classes.
+
+            * Optional for pre-defined tax exemption classes.
+
+            * Keys must be a valid ISO 639-1 language code.
+
+            * Must include English translation by default.'
+          example:
+            en: First Nation Citizen
+            fr: Premières Nations
+          type: object
+          additionalProperties: {}
+        exemption_class:
+          $ref: '#/components/schemas/ExemptionClass'
+        valid_countries:
+          description: The list of countries where this tax exemption class is valid.
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxExemptionCountryCode'
+        vertex_class_code:
+          description: 'Vertex class code.
+
+            * A code used to represent groups of customers, vendors, dispatchers, or recipients who have similar taxability.'
+          example: '01'
+          type: string
+          minLength: 1
+          maxLength: 20
+      required:
+      - exemption_class
+      - valid_countries
+      - vertex_class_code
+    StoreConfigDto:
+      title: StoreConfigDto
+      type: object
+      properties:
+        avalara:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/AvalaraConfigDto'
+          - description: 'Avalara configuration.
+
+              * Required if the `tax_calculation_strategy` is set to `avalara`.
+
+              * If the tax calculation strategy is set to `avalara`, the given configuration will be used.
+
+              * If the Avalara configuration is defined, the configuration will be validated through a ping request to Avalara, which will validate the authenticity of Avalara credentials.'
+            example:
+              account_number: '2000123456'
+              company_code: NEWSTOREINC
+              default_customer_code: Anonymous customer
+              environment: sandbox
+              license_key: C1234567890ABCFE
+        country_code:
+          type: string
+        created_at:
+          description: Creation date of the configuration.
+          example: '2023-02-28T16:58:46.961Z'
+          type: string
+          format: date-time
+        custom:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/CustomConfigDto'
+          - description: 'Custom provider configuration.
+
+              * Required if the `tax_calculation_strategy` is set to `custom`.
+
+              * If the tax calculation strategy is set to `custom`, the given configuration will be used.'
+            example:
+              api_version: v1
+              base_url: https://my-custom-tax-url.com
+        fixed_rate:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/FixedRateConfigDto'
+          - description: 'Fixed rate configuration.
+
+              * If the tax calculation strategy is set to `fixedrate`, the specified tax rate will be used.
+
+              * For the other tax calculation strategies, the specified rate will be used as a fallback if the tax calculation fails (e.g. if the tax provider is not reachable).
+
+              * The specified rate will be used as a fallback by the Associate App in offline-mode.'
+            example:
+              tax_name: Standard VAT rate for Austria
+              tax_rate: 0.2
+        fixed_rate_per_country:
+          description: "Fixed rate configuration per country.\n* Uses ISO 3166 Alpha-2 format as the key in upper-case.\n* Fixed rate specification can be defined under each country key for the desired countries.\n* If the tax calculation strategy is set to `fixed_rate_per_country`:\n\n\n  * Fixed rate configuration must be configured.\n  * The specified tax rate will be used if the country code of the store has a fixed rate configuration.\n  * The tax calculation will fail if the country code of the store does not have a fixed rate configuration."
+          example:
+            AT:
+              tax_name: Standard VAT rate for Austria
+              tax_rate: 0.2
+            DE:
+              tax_name: Standard VAT rate for Germany
+              tax_rate: 0.19
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/FixedRateConfigCreateDto'
+        is_deleted:
+          description: Flag that indicates if the configuration was deleted.
+          example: false
+          type: boolean
+        store_id:
+          description: Store identifier within the NewStore platform.
+          example: '123'
+          type: string
+        tax_calculation_strategy:
+          $ref: '#/components/schemas/TaxCalculationStrategy'
+        tenant:
+          description: Tenant identifier.
+          example: dodici
+          type: string
+        updated_at:
+          description: Latest update date of the configuration.
+          example: '2023-02-28T16:58:46.961Z'
+          type: string
+          format: date-time
+        updated_by:
+          description: Identifier of the user who updated the current version of the configuration.
+          example: '2136871599'
+          type: string
+        version:
+          description: 'Version number of the config.
+
+            * Version number 0 represents the system defaults.'
+          example: 1
+          type: integer
+          format: int32
+        vertex:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/VertexConfigDto'
+          - description: 'Vertex configuration.
+
+              * Required if the `tax_calculation_strategy` is set to `vertex`.
+
+              * If the tax calculation strategy is set to `vertex`, the given configuration will be used.
+
+              * If the Vertex configuration is defined, the configuration will be validated through a ping request to Vertex, which will validate the authenticity of Vertex credentials.'
+            example:
+              administrative_origin:
+                city: Berlin
+                country: DE
+                currency_code: EUR
+                currency_value: 1.1
+                main_division: Berlin
+                postal_code: '10785'
+                street_address_1: Potsdamer Str. 7
+                street_address_2: Potsdamer Platz
+              company_code: '1234'
+              division_code: '1234'
+              flexible_fields:
+              - extended_attribute_name: productClass
+                target_field_id: 1
+                target_field_type: flexible_code_field
+              - extended_attribute_name: shoeSize
+                target_field_id: 1
+                target_field_type: flexible_numeric_field
+              login_type: trusted_id
+              soap_url: https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90
+              trusted_id: 9SDPdc9bo3
+      required:
+      - country_code
+      - created_at
+      - fixed_rate
+      - store_id
+      - tax_calculation_strategy
+      - tenant
+      - updated_at
+      - updated_by
+      - version
+    AvalaraEnv:
+      title: AvalaraEnv
+      description: Avalara environment.
+      example: sandbox
+      type: string
+      enum:
+      - sandbox
+      - production
+    VertexExemptionClassItemDto:
+      title: VertexExemptionClassItemDto
+      type: object
+      properties:
+        display_text:
+          description: 'Display text to be used in Associate App while rendering the exemption class.
+
+            * Required for custom tax exemption classes.
+
+            * Optional for pre-defined tax exemption classes.
+
+            * Keys must be a valid ISO 639-1 language code.
+
+            * Must include English translation by default.'
+          example:
+            en: First Nation Citizen
+            fr: Premières Nations
+          type: object
+          additionalProperties: {}
+        exemption_class:
+          $ref: '#/components/schemas/ExemptionClass'
+        valid_countries:
+          description: The list of countries where this tax exemption class is valid.
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxExemptionCountryCode'
+        vertex_class_code:
+          description: 'Vertex class code.
+
+            * A code used to represent groups of customers, vendors, dispatchers, or recipients who have similar taxability.'
+          example: '01'
+          type: string
+          minLength: 1
+          maxLength: 20
+      required:
+      - exemption_class
+      - valid_countries
+      - vertex_class_code
+    AvalaraExemptionClassItemDto:
+      title: AvalaraExemptionClassItemDto
+      type: object
+      properties:
+        avalara_entity_use_code:
+          description: 'Avalara entity use code.
+
+            * For pre-defined tax exemption classes, value must correspond to the Avalara entity use code. For the possible options, please refer to the [List of entity use codes](https://knowledge.avalara.com/bundle/hff1682048150115_hff1682048150115/page/List_of_entity_use_codes.html).
+
+            * For custom tax exemption classes, value must correspond to the custom entity use code defined under the exempt entity custom tax rule.'
+          example: CANADA_FNC
+          type: string
+          minLength: 1
+          maxLength: 25
+        display_text:
+          description: 'Display text to be used in Associate App while rendering the exemption class.
+
+            * Required for custom tax exemption classes.
+
+            * Optional for pre-defined tax exemption classes.
+
+            * Keys must be a valid ISO 639-1 language code.
+
+            * Must include English translation by default.'
+          example:
+            en: First Nation Citizen
+            fr: Premières Nations
+          type: object
+          additionalProperties: {}
+        exemption_class:
+          $ref: '#/components/schemas/ExemptionClass'
+        valid_countries:
+          description: The list of countries where this tax exemption class is valid.
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxExemptionCountryCode'
+      required:
+      - avalara_entity_use_code
+      - exemption_class
+      - valid_countries
+    VertexAdministrativeOriginCreateDto:
+      title: VertexAdministrativeOriginCreateDto
+      type: object
+      properties:
+        city:
+          description: The proper name of the city used to determine the Tax Area ID.
+          example: Berlin
+          type: string
+          minLength: 1
+          maxLength: 60
+        country:
+          type: string
+        currency_code:
+          $ref: '#/components/schemas/Currency3'
+        currency_value:
+          description: The rate (multiplier) used for converting the transaction currency amount to the filing currency amount.
+          example: 1.1
+          type: number
+          format: double
+        main_division:
+          description: The proper name or the postal abbreviation of the state, province, or territory used to determine the Tax Area ID.
+          example: Berlin
+          type: string
+          minLength: 1
+          maxLength: 60
+        postal_code:
+          description: The postal code used to determine the Tax Area ID
+          example: '10785'
+          type: string
+          minLength: 1
+          maxLength: 20
+        street_address_1:
+          description: The first line of the street address.
+          example: Potsdamer Str. 7
+          type: string
+          minLength: 1
+          maxLength: 100
+        street_address_2:
+          description: The second line of the street address.
+          example: Potsdamer Platz
+          type: string
+          minLength: 1
+          maxLength: 100
+      required:
+      - city
+      - country
+      - currency_code
+      - currency_value
+      - main_division
+      - postal_code
+      - street_address_1
+      - street_address_2
+    VertexFlexibleFieldConfigDto:
+      title: VertexFlexibleFieldConfigDto
+      type: object
+      properties:
+        extended_attribute_name:
+          description: The name of the extended attribute.
+          example: shoeSize
+          type: string
+          minLength: 1
+          maxLength: 255
+        target_field_id:
+          description: 'Vertex flexible field identifier.
+
+            * If `target_field_type` is set to `flexible_code_field`, maximum length is 25.
+
+            * If `target_field_type` is set to `flexible_numeric_field`, maximum length is 10.
+
+            * If `target_field_type` is set to `flexible_date_field`, maximum length is 5.'
+          example: 1
+          type: integer
+          minimum: 0.0
+          maximum: 25.0
+          format: int32
+        target_field_type:
+          $ref: '#/components/schemas/VertexTargetField'
+      required:
+      - extended_attribute_name
+      - target_field_id
+      - target_field_type
+    VertexAdministrativeOriginDto:
+      title: VertexAdministrativeOriginDto
+      type: object
+      properties:
+        city:
+          description: The proper name of the city used to determine the Tax Area ID.
+          example: Berlin
+          type: string
+          minLength: 1
+          maxLength: 60
+        country:
+          type: string
+        currency_code:
+          $ref: '#/components/schemas/Currency3'
+        currency_value:
+          description: The rate (multiplier) used for converting the transaction currency amount to the filing currency amount.
+          example: 1.1
+          type: number
+          format: double
+        main_division:
+          description: The proper name or the postal abbreviation of the state, province, or territory used to determine the Tax Area ID.
+          example: Berlin
+          type: string
+          minLength: 1
+          maxLength: 60
+        postal_code:
+          description: The postal code used to determine the Tax Area ID
+          example: '10785'
+          type: string
+          minLength: 1
+          maxLength: 20
+        street_address_1:
+          description: The first line of the street address.
+          example: Potsdamer Str. 7
+          type: string
+          minLength: 1
+          maxLength: 100
+        street_address_2:
+          description: The second line of the street address.
+          example: Potsdamer Platz
+          type: string
+          minLength: 1
+          maxLength: 100
+      required:
+      - city
+      - country
+      - currency_code
+      - currency_value
+      - main_division
+      - postal_code
+      - street_address_1
+      - street_address_2
+    AvalaraConfigUpdateDto:
+      title: AvalaraConfigUpdateDto
+      type: object
+      properties:
+        account_number:
+          description: AvaTax account number or account ID.
+          example: '2000123456'
+          type: string
+          minLength: 1
+          maxLength: 10
+        company_code:
+          description: 'Company code that identifies the company in the AvaTax account.
+
+            * Value is case-sensitive.
+
+            * Declared during the company setup in the AvaTax Admin Console.'
+          example: NEWSTOREINC
+          type: string
+          minLength: 1
+          maxLength: 25
+        default_customer_code:
+          description: Default customer code. Will be used in case when no ConsumerUUID is provided.
+          example: Anonymous customer
+          type: string
+          minLength: 1
+          maxLength: 50
+        environment:
+          $ref: '#/components/schemas/AvalaraEnv'
+        exemption_classes:
+          description: A list of mappings between `ExemptionClass` enum and Avalara custom entity use codes.
+          type: array
+          items:
+            $ref: '#/components/schemas/AvalaraExemptionClassItemUpdateDto'
+        license_key:
+          description: AvaTax license key.
+          example: C1234567890ABCFE
+          type: string
+          minLength: 1
+          maxLength: 16
+          format: password
+    CustomConfigAdditionalUpdateDto:
+      title: CustomConfigAdditionalUpdateDto
+      type: object
+      properties:
+        avalara:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/CustomV0AvalaraConfigUpdateDto'
+          - description: 'Avalara custom provider configuration.
+
+              * Required if the `api_version` is set to `v0-avalara`.
+
+              * If the tax calculation strategy is set to `custom` and `api_version` is set to `v0-avalara`, the given configuration will be used.'
+            example:
+              account_number: '2000123456'
+              company_code: NEWSTOREINC
+              license_key: C1234567890ABCFE
+              url: https://custom.provider.net/1.0/tax/get
+    ExemptionClassItemCreateDto:
+      title: ExemptionClassItemCreateDto
+      type: object
+      properties:
+        display_text:
+          description: 'Display text to be used in Associate App while rendering the exemption class.
+
+            * Required for custom tax exemption classes.
+
+            * Optional for pre-defined tax exemption classes.
+
+            * Keys must be a valid ISO 639-1 language code.
+
+            * Must include English translation by default.'
+          example:
+            en: First Nation Citizen
+            fr: Premières Nations
+          type: object
+          additionalProperties: {}
+        exemption_class:
+          $ref: '#/components/schemas/ExemptionClass'
+        valid_countries:
+          description: The list of countries where this tax exemption class is valid.
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxExemptionCountryCode'
+      required:
+      - exemption_class
+      - valid_countries
+    CustomConfigDto:
+      title: CustomConfigDto
+      type: object
+      properties:
+        additional_config:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/CustomConfigAdditionalDto'
+          - description: Other necessary configuration specific to the custom provider (currently configs for non-officially supported avalara based custom implementation)
+        api_version:
+          $ref: '#/components/schemas/CustomApiVersion'
+        authentication:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/CustomConfigAuthenticationDto'
+          - description: 'Custom provider API authentication method.
+
+              * Currently, only Basic authentication is supported.
+
+              * If the tax calculation strategy is set to `custom` and `api_version` is set to `v1`, the given configuration will be used.'
+            example:
+              method: Basic
+              password: pass
+              username: user
+        base_url:
+          description: 'The base URL for the custom taxes RESTful API. The value should include the route prefix to the quotation API.
+
+            * Required if the `api_version` is set to `v1`.
+
+            * If the tax calculation strategy is set to `custom` and `api_version` is set to `v1`, the given configuration will be used.'
+          example: https://my.custom.domain/base_path
+          type: string
+        exemption_classes:
+          description: A list of supported exemption classes.
+          type: array
+          items:
+            $ref: '#/components/schemas/ExemptionClassItemDto'
+      required:
+      - api_version
+    VertexExemptionClassItemUpdateDto:
+      title: VertexExemptionClassItemUpdateDto
+      type: object
+      properties:
+        display_text:
+          description: 'Display text to be used in Associate App while rendering the exemption class.
+
+            * Required for custom tax exemption classes.
+
+            * Optional for pre-defined tax exemption classes.
+
+            * Keys must be a valid ISO 639-1 language code.
+
+            * Must include English translation by default.'
+          example:
+            en: First Nation Citizen
+            fr: Premières Nations
+          type: object
+          additionalProperties: {}
+        exemption_class:
+          $ref: '#/components/schemas/ExemptionClass'
+        valid_countries:
+          description: The list of countries where this tax exemption class is valid.
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxExemptionCountryCode'
+        vertex_class_code:
+          description: 'Vertex class code.
+
+            * A code used to represent groups of customers, vendors, dispatchers, or recipients who have similar taxability.'
+          example: '01'
+          type: string
+          minLength: 1
+          maxLength: 20
+      required:
+      - exemption_class
+      - valid_countries
+      - vertex_class_code
+    VertexTargetField:
+      title: VertexTargetField
+      description: Vertex flexible field type.
+      example: flexible_numeric_field
+      type: string
+      enum:
+      - flexible_code_field
+      - flexible_numeric_field
+      - flexible_date_field
+    AvalaraExemptionClassItemUpdateDto:
+      title: AvalaraExemptionClassItemUpdateDto
+      type: object
+      properties:
+        avalara_entity_use_code:
+          description: 'Avalara entity use code.
+
+            * For pre-defined tax exemption classes, value must correspond to the Avalara entity use code. For the possible options, please refer to the [List of entity use codes](https://knowledge.avalara.com/bundle/hff1682048150115_hff1682048150115/page/List_of_entity_use_codes.html).
+
+            * For custom tax exemption classes, value must correspond to the custom entity use code defined under the exempt entity custom tax rule.'
+          example: CANADA_FNC
+          type: string
+          minLength: 1
+          maxLength: 25
+        display_text:
+          description: 'Display text to be used in Associate App while rendering the exemption class.
+
+            * Required for custom tax exemption classes.
+
+            * Optional for pre-defined tax exemption classes.
+
+            * Keys must be a valid ISO 639-1 language code.
+
+            * Must include English translation by default.'
+          example:
+            en: First Nation Citizen
+            fr: Premières Nations
+          type: object
+          additionalProperties: {}
+        exemption_class:
+          $ref: '#/components/schemas/ExemptionClass'
+        valid_countries:
+          description: The list of countries where this tax exemption class is valid.
+          type: array
+          items:
+            $ref: '#/components/schemas/TaxExemptionCountryCode'
+      required:
+      - avalara_entity_use_code
+      - exemption_class
+      - valid_countries
+    VertexAuthLoginType:
+      title: VertexAuthLoginType
+      description: 'Vertex Login Type.
+
+        * Used for selecting the authentication method.
+
+        * `trusted_id` field is required if `login_type` is set to `trusted_id`.
+
+        * `username` and `password` fields are required if `login_type` is set to `user_and_password`.'
+      example: trusted_id
+      type: string
+      enum:
+      - trusted_id
+      - user_and_password
+    VertexConfigCreateDto:
+      title: VertexConfigCreateDto
+      type: object
+      properties:
+        administrative_origin:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/VertexAdministrativeOriginCreateDto'
+          - description: Administrative origin information of the legal entity. Should be set based on the retailer corporate information.
+            example:
+              city: Berlin
+              country: Germany
+              currency_code: USD
+              currency_value: 1.1
+              main_division: Berlin
+              postal_code: '10785'
+              street_address_1: Potsdamer Str. 7
+              street_address_2: Potsdamer Platz
+        company_code:
+          description: 'Vertex taxpayer code of the company.
+
+            * Identifies the top-level legal entity (company).
+
+            * The value should be set to the taxpayer code of the top-level taxpayer (company).'
+          example: '1234'
+          type: string
+          minLength: 1
+          maxLength: 40
+        division_code:
+          description: 'Vertex taxpayer code of the division.
+
+            * Identifies the mid-level legal entity (division) under a top-level legal entity (company).
+
+            * If exists, the value can be set to the taxpayer code of the mid-level taxpayer (division) under a top-level taxpayer (company).'
+          example: '1234'
+          type: string
+          minLength: 1
+          maxLength: 40
+        exemption_classes:
+          description: A list of mappings between `ExemptionClass` enum and Vertex class codes.
+          type: array
+          items:
+            $ref: '#/components/schemas/VertexExemptionClassItemCreateDto'
+        flexible_fields:
+          description: The mapping between extended attributes of items in the NewStore platform and flexible fields as defined in Vertex.
+          example:
+          - extended_attribute_name: productClass
+            target_field_id: 1
+            target_field_type: flexible_code_field
+          - extended_attribute_name: shoeSize
+            target_field_id: 1
+            target_field_type: flexible_numeric_field
+          type: array
+          items:
+            $ref: '#/components/schemas/VertexFlexibleFieldConfigCreateDto'
+        jurisdiction_in_tax_name_enabled:
+          description: 'Enable appending the jurisdiction name to the tax line''s `tax_name` field.
+
+            * This can help identify which jurisdiction imposed a given tax line.
+
+            * Example: The tax name `Sales And Use Tax - Colorado` includes the jurisdiction name `Colorado` when the given flag is enabled.'
+          example: true
+          type: boolean
+        login_type:
+          $ref: '#/components/schemas/VertexAuthLoginType'
+        password:
+          description: 'Password of the Vertex account.
+
+            * Required if `login_type` is set to `user_and_password`.'
+          type: string
+          minLength: 1
+          maxLength: 255
+          format: password
+        soap_url:
+          description: SOAP URL of the Vertex CalculateTax endpoint.
+          example: https://sandboxap2.na1.ondemand.vertexinc.com/vertex-ws/services/CalculateTax90
+          type: string
+        trusted_id:
+          description: 'Trusted ID of the Vertex account.
+
+            * Required if `login_type` is set to `trusted_id`.'
+          type: string
+          minLength: 1
+          maxLength: 255
+          format: password
+        use_location_code:
+          description: 'Use Vertex location code instead of address information.
+
+            * When this value is set to `true` the NewStore platform will use the Store IDs to communicate origin and destination addresses instead of using standard address information (address line 1, postal code, etc.).
+
+            * Store IDs are currently only available for cash & carry orders, all other order scenarios will use the standard address information to communicate origin and destination addresses even with this value set to `true`.
+
+            * In case the NewStore Store ID length is longer than 20 characters, NewStore will only send the first 20 characters as Vertex field length is capped at that limit.'
+          example: true
+          type: boolean
+          default: false
+        username:
+          description: 'Username of the Vertex account.
+
+            * Required if `login_type` is set to `user_and_password`.'
+          type: string
+          minLength: 1
+          maxLength: 255
+      required:
+      - company_code
+      - login_type
+      - soap_url
+    ExemptionClass:
+      title: ExemptionClass
+      description: 'The tax exemption class that identifies the customer''s group/organization that accredited them with the tax exemption status.
+
+        * For custom tax exemption classes, the `CUSTOM_` prefix with a UPPER_SNAKE_CASE key can be used. Example: `CUSTOM_CANADA`'
+      example: CHARITY_ORGANIZATION
+      type: string
+      enum:
+      - FEDERAL_GOVERNMENT
+      - STATE_GOVERNMENT
+      - TRIBAL_GOVERNMENT
+      - LOCAL_GOVERNMENT
+      - FOREIGN_DIPLOMAT
+      - CHARITY_ORGANIZATION
+      - RELIGIOUS_ORGANIZATION
+      - EDUCATIONAL_ORGANIZATION
+      - RESALE
+      - DIRECT_PAY_PERMIT
+      - OTHER
+      - NON_RESIDENT
+      - FIRST_NATION_CITIZEN
+      - CUSTOM_*
+    StoreConfigListDto:
+      title: StoreConfigListDto
+      type: object
+      properties:
+        items:
+          description: List of tax configurations of stores.
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreConfigDto'
+        next_page_key:
+          description: Key for retrieving the next page of results.
+          type: string
+        scan_count:
+          description: Number of database scans performed to populate the list.
+          example: 1
+          type: integer
+          format: int32
+      required:
+      - items
+      - scan_count
+    AvalaraConfigCreateDto:
+      title: AvalaraConfigCreateDto
+      type: object
+      properties:
+        account_number:
+          description: AvaTax account number or account ID.
+          example: '2000123456'
+          type: string
+          minLength: 1
+          maxLength: 10
+        company_code:
+          description: 'Company code that identifies the company in the AvaTax account.
+
+            * Value is case-sensitive.
+
+            * Declared during the company setup in the AvaTax Admin Console.'
+          example: NEWSTOREINC
+          type: string
+          minLength: 1
+          maxLength: 25
+        default_customer_code:
+          description: Default customer code. Will be used in case when no ConsumerUUID is provided.
+          example: Anonymous customer
+          type: string
+          minLength: 1
+          maxLength: 50
+        environment:
+          $ref: '#/components/schemas/AvalaraEnv'
+        exemption_classes:
+          description: A list of mappings between `ExemptionClass` enum and Avalara custom entity use codes.
+          type: array
+          items:
+            $ref: '#/components/schemas/AvalaraExemptionClassItemCreateDto'
+        license_key:
+          description: AvaTax license key.
+          example: C1234567890ABCFE
+          type: string
+          minLength: 1
+          maxLength: 16
+          format: password
+      required:
+      - account_number
+      - company_code
+      - environment
+      - license_key
+    CustomApiVersion:
+      title: CustomApiVersion
+      description: Custom provider API version.
+      example: v1
+      type: string
+      enum:
+      - v0-avalara
+      - v1
   securitySchemes:
     oauth:
       type: oauth2

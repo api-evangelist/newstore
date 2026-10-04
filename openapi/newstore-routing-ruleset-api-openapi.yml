@@ -652,67 +652,6 @@ paths:
       - oauth: []
 components:
   schemas:
-    DestinationRegion1:
-      title: DestinationRegion1
-      type: object
-      properties:
-        country:
-          description: Country in 2 chars (ISO 3166-1 alpha-2) definition
-          type: string
-          minLength: 2
-          maxLength: 2
-          pattern: ([A-Z]){2}
-        zip_code_region:
-          description: Region identification that will cover that routing. Zip code region groups is defined in `zip_code_regions`.
-          type: string
-    Routes:
-      title: Routes
-      type: object
-      properties:
-        destination_region:
-          $ref: '#/components/schemas/DestinationRegion1'
-        fulfilled_by:
-          description: This configuration mentions the service levels identifications and which location group will serve this region
-          type: object
-          additionalProperties: {}
-    Routingruleset1:
-      title: Routingruleset1
-      type: object
-      properties:
-        location_groups:
-          description: Location groups identifiers
-          type: object
-          additionalProperties: {}
-        preferred_locations:
-          description: Specifies which locations within each group the routing engine should try first before falling back to the remaining locations in that group. The key is the location group identifier, the value is an ordered list of location IDs to prefer within this group.
-          type: object
-          additionalProperties: {}
-        routes:
-          description: Routing rules specification
-          type: array
-          items:
-            $ref: '#/components/schemas/Routes'
-        sl_levels_priority:
-          description: Service levels priority. This is ordered according to which service level will be taken first
-          type: array
-          items:
-            type: string
-            minLength: 1
-          minLength: 1
-          minItems: 1
-        zip_code_regions:
-          description: Zip code groups, in order to facilitate the identification routes per regions
-          type: object
-          additionalProperties: {}
-    Putroutingrulesetresponse:
-      title: Putroutingrulesetresponse
-      type: object
-      properties:
-        fulfillment_config_uri:
-          description: Fulfillment Configuration Revision URI
-          type: string
-        routing_ruleset:
-          $ref: '#/components/schemas/Routingruleset1'
     Problem:
       title: Problem
       type: object
@@ -750,6 +689,67 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    Putroutingrulesetresponse:
+      title: Putroutingrulesetresponse
+      type: object
+      properties:
+        fulfillment_config_uri:
+          description: Fulfillment Configuration Revision URI
+          type: string
+        routing_ruleset:
+          $ref: '#/components/schemas/Routingruleset1'
+    Routingruleset1:
+      title: Routingruleset1
+      type: object
+      properties:
+        location_groups:
+          description: Location groups identifiers
+          type: object
+          additionalProperties: {}
+        preferred_locations:
+          description: Specifies which locations within each group the routing engine should try first before falling back to the remaining locations in that group. The key is the location group identifier, the value is an ordered list of location IDs to prefer within this group.
+          type: object
+          additionalProperties: {}
+        routes:
+          description: Routing rules specification
+          type: array
+          items:
+            $ref: '#/components/schemas/Routes'
+        sl_levels_priority:
+          description: Service levels priority. This is ordered according to which service level will be taken first
+          type: array
+          items:
+            type: string
+            minLength: 1
+          minLength: 1
+          minItems: 1
+        zip_code_regions:
+          description: Zip code groups, in order to facilitate the identification routes per regions
+          type: object
+          additionalProperties: {}
+    Routes:
+      title: Routes
+      type: object
+      properties:
+        destination_region:
+          $ref: '#/components/schemas/DestinationRegion1'
+        fulfilled_by:
+          description: This configuration mentions the service levels identifications and which location group will serve this region
+          type: object
+          additionalProperties: {}
+    DestinationRegion1:
+      title: DestinationRegion1
+      type: object
+      properties:
+        country:
+          description: Country in 2 chars (ISO 3166-1 alpha-2) definition
+          type: string
+          minLength: 2
+          maxLength: 2
+          pattern: ([A-Z]){2}
+        zip_code_region:
+          description: Region identification that will cover that routing. Zip code region groups is defined in `zip_code_regions`.
+          type: string
   securitySchemes:
     oauth:
       type: oauth2

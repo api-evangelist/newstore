@@ -802,144 +802,6 @@ paths:
         required: true
 components:
   schemas:
-    ReservationStatus:
-      title: ReservationStatus
-      description: The status of a reservation.
-      type: string
-      enum:
-      - PENDING
-      - REJECTED
-      - RESERVED
-      - CONVERTED
-      - UNRESERVED
-    ReservationItemRequest:
-      title: ReservationItemRequest
-      type: object
-      properties:
-        product_id:
-          type: string
-          minLength: 1
-      required:
-      - product_id
-    UpdatedReservationStatus:
-      title: UpdatedReservationStatus
-      type: string
-      enum:
-      - REJECTED
-      - RESERVED
-    InitialReservationStatus:
-      title: InitialReservationStatus
-      description: 'Initial status of the reservation. If PENDING then the reservation will need to be confirmed by a store
-
-        associate before the stock is reserved.'
-      type: string
-      enum:
-      - PENDING
-      - RESERVED
-    ListReservationsResponseV1:
-      title: ListReservationsResponseV1
-      type: object
-      properties:
-        items:
-          description: List of reservations.
-          type: array
-          items:
-            $ref: '#/components/schemas/ReservationSummaryResponseV1'
-          maxItems: 100
-        pagination_info:
-          $ref: '#/components/schemas/ReservationsPaginationInfo'
-      required:
-      - items
-      - pagination_info
-    UpdatedItemStatus:
-      title: UpdatedItemStatus
-      type: string
-      enum:
-      - CONVERTED
-      - UNRESERVED
-    ReservationItemSummaryResponse:
-      title: ReservationItemSummaryResponse
-      type: object
-      properties:
-        id:
-          description: Unique identifier for the reservation item
-          type: string
-          format: uuid
-        product_id:
-          description: ID of the product the reservation item corresponds to
-          type: string
-      required:
-      - id
-      - product_id
-    ReservationDetailsResponseV1:
-      title: ReservationDetailsResponseV1
-      type: object
-      properties:
-        associate_id:
-          description: ID of the associate assigned to the reservation
-          type: string
-        created_at:
-          description: Date and time the reservation was created
-          type: string
-          format: date-time
-        customer_profile_id:
-          description: Profile ID of the customer the reservation is for
-          type: string
-        expires_at:
-          description: Date and time the reservation expires
-          type: string
-          format: date-time
-        external_id:
-          description: Short, human-readable identifier for the reservation
-          type: string
-        id:
-          description: Unique identifier for the reservation
-          type: string
-          format: uuid
-        items:
-          description: Items associated with the reservation
-          type: array
-          items:
-            $ref: '#/components/schemas/ReservationItemDetailsResponse'
-          maxItems: 500
-        location_id:
-          description: ID of the fulfillment location the reservation is for
-          type: string
-        status:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/ReservationStatus'
-          - description: The status of a reservation.
-        updated_at:
-          description: Date and time the reservation was updated
-          type: string
-          format: date-time
-      required:
-      - associate_id
-      - created_at
-      - customer_profile_id
-      - expires_at
-      - external_id
-      - id
-      - items
-      - location_id
-      - status
-      - updated_at
-    ReservationConfigUpdate:
-      title: ReservationConfigUpdate
-      type: object
-      properties:
-        expires_in_min:
-          description: Default duration for reservations, in minutes.
-          type: integer
-          minimum: 1.0
-          format: int32
-        send_accepted_emails:
-          description: Whether to send emails to customers when a pending reservation is accepted by a store.
-          type: boolean
-        send_rejected_emails:
-          description: Whether to send emails to customers when a pending reservation is rejected by a store.
-          type: boolean
     ReservationItemDetailsResponse:
       title: ReservationItemDetailsResponse
       type: object
@@ -968,119 +830,6 @@ components:
       - product_id
       - status
       - updated_at
-    ReservationItemUpdate:
-      title: ReservationItemUpdate
-      type: object
-      properties:
-        cart_id:
-          description: ID of the cart in which the item was purchased during conversion
-          type: string
-        id:
-          description: Unique identifier of the reservation item to update
-          type: string
-          format: uuid
-        status:
-          $ref: '#/components/schemas/UpdatedItemStatus'
-      required:
-      - id
-      - status
-    ReservationItemStatus:
-      title: ReservationItemStatus
-      description: The status of a reservation item.
-      type: string
-      enum:
-      - PENDING
-      - REJECTED
-      - RESERVED
-      - CONVERTED
-      - UNRESERVED
-    ReservationConfigResponse:
-      title: ReservationConfigResponse
-      type: object
-      properties:
-        expires_in_min:
-          description: Duration of the reservation in minutes
-          type: integer
-          minimum: 0.0
-          format: int32
-        send_accepted_emails:
-          description: Whether to send emails to customers when a pending reservation is accepted by a store.
-          type: boolean
-        send_rejected_emails:
-          description: Whether to send emails to customers when a pending reservation is rejected by a store.
-          type: boolean
-      required:
-      - expires_in_min
-      - send_accepted_emails
-      - send_rejected_emails
-    CreateReservationRequestV1:
-      title: CreateReservationRequestV1
-      example:
-        customer_profile_id: 7809c25e-630c-42d1-aa5d-f61388b97d74
-        items:
-        - product_id: p1
-        - product_id: p2
-        - product_id: p3
-        location_id: US01
-      type: object
-      properties:
-        associate_id:
-          description: 'ID of the associate who owns the reservation. If not provided, the associate ID present in the JWT will be used.
-
-
-            **Important**: if this method is called using an API client and the ''associate_id'' value is not provided, it will be set to null and the reservation won''t be linked to any associate.'
-          type: string
-          minLength: 1
-        customer_profile_id:
-          description: Profile ID of the customer the reservation is for
-          type: string
-          minLength: 1
-        expires_in_min:
-          description: "Duration of the reservation in minutes. If not provided, the default value is the [configured](#/http/inventory/reservations/replace-reservation-config) one \nor 1440 minutes (if there's no default configured)."
-          type: integer
-          minimum: 0.0
-          format: int32
-        items:
-          description: Items to reserve
-          type: array
-          items:
-            $ref: '#/components/schemas/ReservationItemRequest'
-          minItems: 1
-          maxItems: 500
-        location_id:
-          description: ID of the fulfillment location the reservation is created in
-          type: string
-          minLength: 1
-        status:
-          $ref: '#/components/schemas/InitialReservationStatus'
-      required:
-      - customer_profile_id
-      - items
-      - location_id
-    ReservationsPaginationInfo:
-      title: ReservationsPaginationInfo
-      type: object
-      properties:
-        count:
-          type: integer
-          minimum: 0.0
-          format: int32
-        offset:
-          type: integer
-          minimum: 0.0
-          format: int32
-        reserved_item_count:
-          description: Total number of reserved items.
-          type: integer
-          minimum: 0.0
-          format: int32
-        total:
-          description: Total number of items.
-          type: integer
-          minimum: 0.0
-          format: int32
-      required:
-      - total
     ReservationSummaryResponseV1:
       title: ReservationSummaryResponseV1
       type: object
@@ -1136,6 +885,143 @@ components:
       - location_id
       - reserved_item_count
       - status
+    ReservationItemSummaryResponse:
+      title: ReservationItemSummaryResponse
+      type: object
+      properties:
+        id:
+          description: Unique identifier for the reservation item
+          type: string
+          format: uuid
+        product_id:
+          description: ID of the product the reservation item corresponds to
+          type: string
+      required:
+      - id
+      - product_id
+    ReservationStatus:
+      title: ReservationStatus
+      description: The status of a reservation.
+      type: string
+      enum:
+      - PENDING
+      - REJECTED
+      - RESERVED
+      - CONVERTED
+      - UNRESERVED
+    ReservationDetailsResponseV1:
+      title: ReservationDetailsResponseV1
+      type: object
+      properties:
+        associate_id:
+          description: ID of the associate assigned to the reservation
+          type: string
+        created_at:
+          description: Date and time the reservation was created
+          type: string
+          format: date-time
+        customer_profile_id:
+          description: Profile ID of the customer the reservation is for
+          type: string
+        expires_at:
+          description: Date and time the reservation expires
+          type: string
+          format: date-time
+        external_id:
+          description: Short, human-readable identifier for the reservation
+          type: string
+        id:
+          description: Unique identifier for the reservation
+          type: string
+          format: uuid
+        items:
+          description: Items associated with the reservation
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationItemDetailsResponse'
+          maxItems: 500
+        location_id:
+          description: ID of the fulfillment location the reservation is for
+          type: string
+        status:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/ReservationStatus'
+          - description: The status of a reservation.
+        updated_at:
+          description: Date and time the reservation was updated
+          type: string
+          format: date-time
+      required:
+      - associate_id
+      - created_at
+      - customer_profile_id
+      - expires_at
+      - external_id
+      - id
+      - items
+      - location_id
+      - status
+      - updated_at
+    ListReservationsResponseV1:
+      title: ListReservationsResponseV1
+      type: object
+      properties:
+        items:
+          description: List of reservations.
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationSummaryResponseV1'
+          maxItems: 100
+        pagination_info:
+          $ref: '#/components/schemas/ReservationsPaginationInfo'
+      required:
+      - items
+      - pagination_info
+    CreateReservationRequestV1:
+      title: CreateReservationRequestV1
+      example:
+        customer_profile_id: 7809c25e-630c-42d1-aa5d-f61388b97d74
+        items:
+        - product_id: p1
+        - product_id: p2
+        - product_id: p3
+        location_id: US01
+      type: object
+      properties:
+        associate_id:
+          description: 'ID of the associate who owns the reservation. If not provided, the associate ID present in the JWT will be used.
+
+
+            **Important**: if this method is called using an API client and the ''associate_id'' value is not provided, it will be set to null and the reservation won''t be linked to any associate.'
+          type: string
+          minLength: 1
+        customer_profile_id:
+          description: Profile ID of the customer the reservation is for
+          type: string
+          minLength: 1
+        expires_in_min:
+          description: "Duration of the reservation in minutes. If not provided, the default value is the [configured](#/http/inventory/reservations/replace-reservation-config) one \nor 1440 minutes (if there's no default configured)."
+          type: integer
+          minimum: 0.0
+          format: int32
+        items:
+          description: Items to reserve
+          type: array
+          items:
+            $ref: '#/components/schemas/ReservationItemRequest'
+          minItems: 1
+          maxItems: 500
+        location_id:
+          description: ID of the fulfillment location the reservation is created in
+          type: string
+          minLength: 1
+        status:
+          $ref: '#/components/schemas/InitialReservationStatus'
+      required:
+      - customer_profile_id
+      - items
+      - location_id
     Problem:
       title: Problem
       type: object
@@ -1173,6 +1059,82 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    ReservationsPaginationInfo:
+      title: ReservationsPaginationInfo
+      type: object
+      properties:
+        count:
+          type: integer
+          minimum: 0.0
+          format: int32
+        offset:
+          type: integer
+          minimum: 0.0
+          format: int32
+        reserved_item_count:
+          description: Total number of reserved items.
+          type: integer
+          minimum: 0.0
+          format: int32
+        total:
+          description: Total number of items.
+          type: integer
+          minimum: 0.0
+          format: int32
+      required:
+      - total
+    ReservationConfigUpdate:
+      title: ReservationConfigUpdate
+      type: object
+      properties:
+        expires_in_min:
+          description: Default duration for reservations, in minutes.
+          type: integer
+          minimum: 1.0
+          format: int32
+        send_accepted_emails:
+          description: Whether to send emails to customers when a pending reservation is accepted by a store.
+          type: boolean
+        send_rejected_emails:
+          description: Whether to send emails to customers when a pending reservation is rejected by a store.
+          type: boolean
+    ReservationItemRequest:
+      title: ReservationItemRequest
+      type: object
+      properties:
+        product_id:
+          type: string
+          minLength: 1
+      required:
+      - product_id
+    ReservationConfigResponse:
+      title: ReservationConfigResponse
+      type: object
+      properties:
+        expires_in_min:
+          description: Duration of the reservation in minutes
+          type: integer
+          minimum: 0.0
+          format: int32
+        send_accepted_emails:
+          description: Whether to send emails to customers when a pending reservation is accepted by a store.
+          type: boolean
+        send_rejected_emails:
+          description: Whether to send emails to customers when a pending reservation is rejected by a store.
+          type: boolean
+      required:
+      - expires_in_min
+      - send_accepted_emails
+      - send_rejected_emails
+    InitialReservationStatus:
+      title: InitialReservationStatus
+      description: 'Initial status of the reservation. If PENDING then the reservation will need to be confirmed by a store
+
+        associate before the stock is reserved.'
+      type: string
+      enum:
+      - PENDING
+      - RESERVED
     ReservationUpdate:
       title: ReservationUpdate
       type: object
@@ -1180,6 +1142,44 @@ components:
         status:
           $ref: '#/components/schemas/UpdatedReservationStatus'
       required:
+      - status
+    UpdatedReservationStatus:
+      title: UpdatedReservationStatus
+      type: string
+      enum:
+      - REJECTED
+      - RESERVED
+    ReservationItemStatus:
+      title: ReservationItemStatus
+      description: The status of a reservation item.
+      type: string
+      enum:
+      - PENDING
+      - REJECTED
+      - RESERVED
+      - CONVERTED
+      - UNRESERVED
+    UpdatedItemStatus:
+      title: UpdatedItemStatus
+      type: string
+      enum:
+      - CONVERTED
+      - UNRESERVED
+    ReservationItemUpdate:
+      title: ReservationItemUpdate
+      type: object
+      properties:
+        cart_id:
+          description: ID of the cart in which the item was purchased during conversion
+          type: string
+        id:
+          description: Unique identifier of the reservation item to update
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/UpdatedItemStatus'
+      required:
+      - id
       - status
   securitySchemes:
     oauth:

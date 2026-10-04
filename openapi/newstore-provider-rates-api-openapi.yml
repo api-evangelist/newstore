@@ -579,14 +579,37 @@ paths:
         required: true
 components:
   schemas:
-    ProviderRateShippingType:
-      title: ProviderRateShippingType
-      description: Required for backwards compatibility purposes.
-      type: string
-      enum:
-      - traditional_carrier
-      - same_day_delivery
-      - in_store_pick_up
+    ReplaceProviderRateSchema:
+      title: ReplaceProviderRateSchema
+      type: object
+      properties:
+        carrier_defined_service_level:
+          description: Carrier specific name that defines the service level. When defining provider rates with the same shipping provider, the value you specify here must be unique and should always match the name defined by the shipping provider API. For example, 'NextDayAirSaver' for UPS and 'GROUND_HOME_DELIVERY' for FedEx. If no value is provided, NewStore uses the unique identifier of the provider rate as the default value.
+          type: string
+        return_provider_rate_id:
+          description: The ID for the provider rate used for the return shipment.
+          type: string
+        service_level_id:
+          description: Service level that the provider rate corresponds to.
+          type: string
+        shipping_carrier_name:
+          description: The name of shipping provider associated with this provider rate.
+          type: string
+        shipping_type:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/ProviderRateShippingType'
+          - description: Required for backwards compatibility purposes.
+        use_as_customer_facing_cost:
+          description: Flag to indicate if the shipping provider cost is used instead of the service level cost defined in the fulfillment configuration. If set to true, the cost quoted by the shipping provider is displayed to the customer.
+          type: boolean
+      required:
+      - carrier_defined_service_level
+      - return_provider_rate_id
+      - service_level_id
+      - shipping_carrier_name
+      - shipping_type
+      - use_as_customer_facing_cost
     ProviderRateSchema:
       title: ProviderRateSchema
       type: object
@@ -622,47 +645,14 @@ components:
       - shipping_carrier_name
       - shipping_type
       - use_as_customer_facing_cost
-    ShowProviderRatesSchema:
-      title: ShowProviderRatesSchema
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProviderRateSchema'
-      required:
-      - data
-    ReplaceProviderRateSchema:
-      title: ReplaceProviderRateSchema
-      type: object
-      properties:
-        carrier_defined_service_level:
-          description: Carrier specific name that defines the service level. When defining provider rates with the same shipping provider, the value you specify here must be unique and should always match the name defined by the shipping provider API. For example, 'NextDayAirSaver' for UPS and 'GROUND_HOME_DELIVERY' for FedEx. If no value is provided, NewStore uses the unique identifier of the provider rate as the default value.
-          type: string
-        return_provider_rate_id:
-          description: The ID for the provider rate used for the return shipment.
-          type: string
-        service_level_id:
-          description: Service level that the provider rate corresponds to.
-          type: string
-        shipping_carrier_name:
-          description: The name of shipping provider associated with this provider rate.
-          type: string
-        shipping_type:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/ProviderRateShippingType'
-          - description: Required for backwards compatibility purposes.
-        use_as_customer_facing_cost:
-          description: Flag to indicate if the shipping provider cost is used instead of the service level cost defined in the fulfillment configuration. If set to true, the cost quoted by the shipping provider is displayed to the customer.
-          type: boolean
-      required:
-      - carrier_defined_service_level
-      - return_provider_rate_id
-      - service_level_id
-      - shipping_carrier_name
-      - shipping_type
-      - use_as_customer_facing_cost
+    ProviderRateShippingType:
+      title: ProviderRateShippingType
+      description: Required for backwards compatibility purposes.
+      type: string
+      enum:
+      - traditional_carrier
+      - same_day_delivery
+      - in_store_pick_up
     Problem:
       title: Problem
       type: object
@@ -700,6 +690,16 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    ShowProviderRatesSchema:
+      title: ShowProviderRatesSchema
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProviderRateSchema'
+      required:
+      - data
   securitySchemes:
     oauth:
       type: oauth2

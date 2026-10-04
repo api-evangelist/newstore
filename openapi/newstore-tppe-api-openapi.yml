@@ -247,20 +247,6 @@ components:
       required:
       - message
       - status
-    IntegrationConfig:
-      title: IntegrationConfig
-      description: Third party promotions engine integration config.
-      type: object
-      properties:
-        auth_token:
-          description: The auth token that will be used as Bearer token for the authentication with the third party integration APIs. It can be empty.
-          type: string
-        session_update_url:
-          description: 'Session Update URL.
-
-
-            The URL that will be called each time the order gets updated in NewStore''s Associate App. The URL has to end with the placeholder {customerSessionId} that will be replaced with the cart ID/order ID.'
-          type: string
     Problem:
       title: Problem
       type: object
@@ -298,6 +284,20 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    IntegrationConfig:
+      title: IntegrationConfig
+      description: Third party promotions engine integration config.
+      type: object
+      properties:
+        auth_token:
+          description: The auth token that will be used as Bearer token for the authentication with the third party integration APIs. It can be empty.
+          type: string
+        session_update_url:
+          description: 'Session Update URL.
+
+
+            The URL that will be called each time the order gets updated in NewStore''s Associate App. The URL has to end with the placeholder {customerSessionId} that will be replaced with the cart ID/order ID.'
+          type: string
   securitySchemes:
     oauth:
       type: oauth2

@@ -365,36 +365,6 @@ paths:
         description: The updated config value
 components:
   schemas:
-    OrderInjectionConfigurationResponse:
-      title: OrderInjectionConfigurationResponse
-      description: Update configuration response
-      type: object
-      properties:
-        updated_at:
-          type: string
-          format: date-time
-        updated_by:
-          description: Internal User ID
-          type: string
-        value:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OrderInjectionTenantConfiguration'
-          - description: Tenant configuration object.
-        version:
-          description: Current Configuration version
-          type: string
-    OrderInjectionConfigurationBigSalesOrder:
-      title: OrderInjectionConfigurationBigSalesOrder
-      description: The order item limits that determine if the order is routed or is considered a big order and placed on hold.
-      type: object
-      properties:
-        hard_limit_for_big_orders:
-          description: The maximum number of items an injected or external order can contain for it to be placed on hold and not be canceled. For example, if this is ``800`` and ``soft_limit_for_big_orders`` is ``300``, external orders with items between ``301`` and ``800`` are placed on hold, and an external order with ``801`` items is canceled.
-          type: number
-          format: double
-      required:
-      - hard_limit_for_big_orders
     OrderInjectionTenantConfiguration:
       title: OrderInjectionTenantConfiguration
       description: Tenant configuration object.
@@ -445,6 +415,36 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    OrderInjectionConfigurationBigSalesOrder:
+      title: OrderInjectionConfigurationBigSalesOrder
+      description: The order item limits that determine if the order is routed or is considered a big order and placed on hold.
+      type: object
+      properties:
+        hard_limit_for_big_orders:
+          description: The maximum number of items an injected or external order can contain for it to be placed on hold and not be canceled. For example, if this is ``800`` and ``soft_limit_for_big_orders`` is ``300``, external orders with items between ``301`` and ``800`` are placed on hold, and an external order with ``801`` items is canceled.
+          type: number
+          format: double
+      required:
+      - hard_limit_for_big_orders
+    OrderInjectionConfigurationResponse:
+      title: OrderInjectionConfigurationResponse
+      description: Update configuration response
+      type: object
+      properties:
+        updated_at:
+          type: string
+          format: date-time
+        updated_by:
+          description: Internal User ID
+          type: string
+        value:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OrderInjectionTenantConfiguration'
+          - description: Tenant configuration object.
+        version:
+          description: Current Configuration version
+          type: string
   securitySchemes:
     oauth:
       type: oauth2

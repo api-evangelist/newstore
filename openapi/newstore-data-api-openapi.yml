@@ -348,18 +348,27 @@ paths:
         - customer:profile:read
 components:
   schemas:
-    CreateDataResponse:
-      title: CreateDataResponse
-      description: Store file response.
+    CreateDataRequest:
+      title: CreateDataRequest
+      description: Create data request.
       type: object
       properties:
-        id:
-          description: The ID for retriving the file content.
-          example: NS-EU-a5548746-acc1-4d75-81b9-72aec2bfebb7
+        content:
+          description: The file content to store.
           type: string
-          pattern: ^NS-[A-Z]{2}-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[8|9|aA|bB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$
+          format: binary
+        content_type:
+          description: The media type of the content data.
+          example: application/pdf
+          type: string
+        ttl:
+          description: Time to live in days, will be kept indefinitely if not set.
+          example: 30
+          type: integer
+          format: int64
       required:
-      - id
+      - content
+      - content_type
     Problem:
       title: Problem
       type: object
@@ -397,27 +406,18 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    CreateDataRequest:
-      title: CreateDataRequest
-      description: Create data request.
+    CreateDataResponse:
+      title: CreateDataResponse
+      description: Store file response.
       type: object
       properties:
-        content:
-          description: The file content to store.
+        id:
+          description: The ID for retriving the file content.
+          example: NS-EU-a5548746-acc1-4d75-81b9-72aec2bfebb7
           type: string
-          format: binary
-        content_type:
-          description: The media type of the content data.
-          example: application/pdf
-          type: string
-        ttl:
-          description: Time to live in days, will be kept indefinitely if not set.
-          example: 30
-          type: integer
-          format: int64
+          pattern: ^NS-[A-Z]{2}-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[8|9|aA|bB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$
       required:
-      - content
-      - content_type
+      - id
   securitySchemes:
     oauth:
       type: oauth2

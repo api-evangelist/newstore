@@ -336,15 +336,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/Value'
           - description: fulfillment node ID to customs signer config
-    Body:
-      title: Body
-      type: object
-      properties:
-        value:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Value'
-          - description: fulfillment node ID to customs signer config
     Value:
       title: Value
       description: fulfillment node ID to customs signer config
@@ -412,6 +403,15 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    Body:
+      title: Body
+      type: object
+      properties:
+        value:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Value'
+          - description: fulfillment node ID to customs signer config
   securitySchemes:
     oauth:
       type: oauth2

@@ -860,14 +860,15 @@ paths:
         - iam:roles:read
 components:
   schemas:
-    Application:
-      title: Application
-      description: Abbreviation of the application this permission belongs to.
-      type: string
-      enum:
-      - nom
-      - aa
-      - mcp
+    GetRolesResponse:
+      title: GetRolesResponse
+      description: Returns a list of roles.
+      type: object
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleItem'
     User:
       title: User
       type: object
@@ -911,84 +912,6 @@ components:
         updated_at:
           type: string
           format: date-time
-    RoleItem:
-      title: RoleItem
-      description: Needed for granting permissions per group not individually.
-      type: object
-      properties:
-        id:
-          description: Identifier of the role.
-          type: string
-        is_readonly:
-          description: The role is read-only and not editable.
-          type: boolean
-        name:
-          description: Name of the role.
-          type: string
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - id
-      - name
-    PutRolesByIdRequest:
-      title: PutRolesByIdRequest
-      description: Needed for granting permissions per group not individually.
-      type: object
-      properties:
-        name:
-          description: Name of the role. To be valid, it can't include slashes ('/').
-          type: string
-          pattern: ^[^/]+$
-        permissions:
-          description: List of permissions.
-          type: array
-          items:
-            $ref: '#/components/schemas/Permission'
-          minItems: 1
-      required:
-      - name
-      - permissions
-    GetRolesResponse:
-      title: GetRolesResponse
-      description: Returns a list of roles.
-      type: object
-      properties:
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoleItem'
-    Permission:
-      title: Permission
-      description: List of all available system permissions.
-      type: object
-      properties:
-        application:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Application'
-          - description: Abbreviation of the application this permission belongs to.
-        children:
-          description: Nested list of child permissions.
-          type: array
-          items:
-            $ref: '#/components/schemas/Permission'
-          minItems: 1
-        name:
-          description: Name of the permission.
-          type: string
-      required:
-      - application
-      - name
-    GetUsersByRoleResponse:
-      title: GetUsersByRoleResponse
-      description: Gets all users by role
-      type: object
-      properties:
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
     GetPermissionsResponse:
       title: GetPermissionsResponse
       description: Returns a list of available permissions the system provides.
@@ -998,52 +921,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Permission'
-    PostRolesRequest:
-      title: PostRolesRequest
-      description: Needed for granting permissions per group not individually.
-      type: object
-      properties:
-        name:
-          description: Name of the role. To be valid, it can't include slashes ('/').
-          type: string
-          pattern: ^[^/]+$
-        permissions:
-          description: List of permissions.
-          type: array
-          items:
-            $ref: '#/components/schemas/Permission'
-          minItems: 1
-      required:
-      - name
-      - permissions
-    Role:
-      title: Role
-      description: Needed for granting permissions per group not individually.
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-        id:
-          description: Identifier of the role.
-          type: string
-        is_readonly:
-          description: The role is read-only and not editable.
-          type: boolean
-        name:
-          description: Name of the role.
-          type: string
-        permissions:
-          description: List of permissions which are assigned to the role.
-          type: array
-          items:
-            $ref: '#/components/schemas/Permission'
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - id
-      - name
     Problem:
       title: Problem
       type: object
@@ -1081,6 +958,129 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    PostRolesRequest:
+      title: PostRolesRequest
+      description: Needed for granting permissions per group not individually.
+      type: object
+      properties:
+        name:
+          description: Name of the role. To be valid, it can't include slashes ('/').
+          type: string
+          pattern: ^[^/]+$
+        permissions:
+          description: List of permissions.
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+          minItems: 1
+      required:
+      - name
+      - permissions
+    Permission:
+      title: Permission
+      description: List of all available system permissions.
+      type: object
+      properties:
+        application:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Application'
+          - description: Abbreviation of the application this permission belongs to.
+        children:
+          description: Nested list of child permissions.
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+          minItems: 1
+        name:
+          description: Name of the permission.
+          type: string
+      required:
+      - application
+      - name
+    RoleItem:
+      title: RoleItem
+      description: Needed for granting permissions per group not individually.
+      type: object
+      properties:
+        id:
+          description: Identifier of the role.
+          type: string
+        is_readonly:
+          description: The role is read-only and not editable.
+          type: boolean
+        name:
+          description: Name of the role.
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - name
+    Role:
+      title: Role
+      description: Needed for granting permissions per group not individually.
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        id:
+          description: Identifier of the role.
+          type: string
+        is_readonly:
+          description: The role is read-only and not editable.
+          type: boolean
+        name:
+          description: Name of the role.
+          type: string
+        permissions:
+          description: List of permissions which are assigned to the role.
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - name
+    PutRolesByIdRequest:
+      title: PutRolesByIdRequest
+      description: Needed for granting permissions per group not individually.
+      type: object
+      properties:
+        name:
+          description: Name of the role. To be valid, it can't include slashes ('/').
+          type: string
+          pattern: ^[^/]+$
+        permissions:
+          description: List of permissions.
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+          minItems: 1
+      required:
+      - name
+      - permissions
+    GetUsersByRoleResponse:
+      title: GetUsersByRoleResponse
+      description: Gets all users by role
+      type: object
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    Application:
+      title: Application
+      description: Abbreviation of the application this permission belongs to.
+      type: string
+      enum:
+      - nom
+      - aa
+      - mcp
   securitySchemes:
     oauth:
       type: oauth2

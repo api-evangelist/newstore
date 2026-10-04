@@ -465,33 +465,17 @@ paths:
         required: true
 components:
   schemas:
-    PackageWeight:
-      title: PackageWeight
-      description: The weight of a package type.
+    PackageTypesResponse:
+      title: PackageTypesResponse
+      description: List of all package types configured.
       type: object
       properties:
-        amount:
-          description: Weight of the package.
-          type: number
-          format: double
-          exclusiveMinimum: 0.0
-        unit:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/weight_unit'
-          - description: Unit of measurement for the weight.
+        package_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackageTypeResponse'
       required:
-      - amount
-      - unit
-    weight_unit:
-      title: weight_unit
-      description: Unit of measurement for the weight.
-      type: string
-      enum:
-      - lb
-      - oz
-      - kg
-      - g
+      - package_types
     CreatePackageTypeRequest:
       title: CreatePackageTypeRequest
       description: 'Request body for creating a new package type. Package types define the packages
@@ -524,98 +508,6 @@ components:
           - description: The weight of a package type.
       required:
       - dimensions
-      - name
-      - weight
-    PackageTypesResponse:
-      title: PackageTypesResponse
-      description: List of all package types configured.
-      type: object
-      properties:
-        package_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/PackageTypeResponse'
-      required:
-      - package_types
-    PackageDimensions:
-      title: PackageDimensions
-      description: The physical dimensions of a package type.
-      type: object
-      properties:
-        height:
-          description: Height of the package.
-          type: number
-          format: double
-          exclusiveMinimum: 0.0
-        length:
-          description: Length of the package.
-          type: number
-          format: double
-          exclusiveMinimum: 0.0
-        unit:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/dimension_unit'
-          - description: Unit of measurement for the dimensions.
-        width:
-          description: Width of the package.
-          type: number
-          format: double
-          exclusiveMinimum: 0.0
-      required:
-      - height
-      - length
-      - unit
-      - width
-    UpdatePackageTypeRequest:
-      title: UpdatePackageTypeRequest
-      description: 'Request body for updating an existing package type. All fields are optional;
-
-        only provided fields will be updated.'
-      type: object
-      properties:
-        dimensions:
-          $ref: '#/components/schemas/PackageDimensions'
-        name:
-          description: Display name shown to associates when selecting a package.
-          type: string
-        weight:
-          $ref: '#/components/schemas/PackageWeight'
-    dimension_unit:
-      title: dimension_unit
-      description: Unit of measurement for the dimensions.
-      type: string
-      enum:
-      - mm
-      - cm
-      - m
-      - in
-      - ft
-    PackageTypeResponse:
-      title: PackageTypeResponse
-      description: A package type that is available for associates to select during the packing flow.
-      type: object
-      properties:
-        dimensions:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/PackageDimensions'
-          - description: The physical dimensions of a package type.
-        id:
-          description: Unique identifier of the package type.
-          type: string
-          format: uuid
-        name:
-          description: Display name shown to associates when selecting a package.
-          type: string
-        weight:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/PackageWeight'
-          - description: The weight of a package type.
-      required:
-      - dimensions
-      - id
       - name
       - weight
     Problem:
@@ -655,6 +547,114 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    dimension_unit:
+      title: dimension_unit
+      description: Unit of measurement for the dimensions.
+      type: string
+      enum:
+      - mm
+      - cm
+      - m
+      - in
+      - ft
+    PackageWeight:
+      title: PackageWeight
+      description: The weight of a package type.
+      type: object
+      properties:
+        amount:
+          description: Weight of the package.
+          type: number
+          format: double
+          exclusiveMinimum: 0.0
+        unit:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/weight_unit'
+          - description: Unit of measurement for the weight.
+      required:
+      - amount
+      - unit
+    PackageDimensions:
+      title: PackageDimensions
+      description: The physical dimensions of a package type.
+      type: object
+      properties:
+        height:
+          description: Height of the package.
+          type: number
+          format: double
+          exclusiveMinimum: 0.0
+        length:
+          description: Length of the package.
+          type: number
+          format: double
+          exclusiveMinimum: 0.0
+        unit:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/dimension_unit'
+          - description: Unit of measurement for the dimensions.
+        width:
+          description: Width of the package.
+          type: number
+          format: double
+          exclusiveMinimum: 0.0
+      required:
+      - height
+      - length
+      - unit
+      - width
+    weight_unit:
+      title: weight_unit
+      description: Unit of measurement for the weight.
+      type: string
+      enum:
+      - lb
+      - oz
+      - kg
+      - g
+    UpdatePackageTypeRequest:
+      title: UpdatePackageTypeRequest
+      description: 'Request body for updating an existing package type. All fields are optional;
+
+        only provided fields will be updated.'
+      type: object
+      properties:
+        dimensions:
+          $ref: '#/components/schemas/PackageDimensions'
+        name:
+          description: Display name shown to associates when selecting a package.
+          type: string
+        weight:
+          $ref: '#/components/schemas/PackageWeight'
+    PackageTypeResponse:
+      title: PackageTypeResponse
+      description: A package type that is available for associates to select during the packing flow.
+      type: object
+      properties:
+        dimensions:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/PackageDimensions'
+          - description: The physical dimensions of a package type.
+        id:
+          description: Unique identifier of the package type.
+          type: string
+          format: uuid
+        name:
+          description: Display name shown to associates when selecting a package.
+          type: string
+        weight:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/PackageWeight'
+          - description: The weight of a package type.
+      required:
+      - dimensions
+      - id
+      - name
+      - weight
   securitySchemes:
     oauth:
       type: oauth2

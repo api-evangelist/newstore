@@ -217,46 +217,6 @@ paths:
         required: true
 components:
   schemas:
-    ConfigurationRequest:
-      title: ConfigurationRequest
-      description: Configurations request for updating BYO CRM settings and customer feature toggles.
-      type: object
-      properties:
-        byo_crm:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/ByoCrmConfigRequest'
-          - description: BYO CRM configuration settings
-        first_and_last_name_enabled:
-          description: Whether first and last name fields are enabled for the tenant.
-          example: true
-          type: boolean
-        nom_consumer_profiles_merge:
-          description: Whether consumer profile merge is enabled for the tenant.
-          example: true
-          type: boolean
-    ByoCrmConfigResponse:
-      title: ByoCrmConfigResponse
-      description: BYO CRM configuration settings
-      type: object
-      properties:
-        api_token:
-          description: API token for the CRM provider
-          example: some-api-token
-          type: string
-        enabled:
-          description: Whether BYO CRM is enabled for the tenant
-          example: true
-          type: boolean
-          default: 'false'
-        url:
-          description: URL of the CRM provider
-          example: https://provider-url.com
-          type: string
-      required:
-      - api_token
-      - enabled
-      - url
     ByoCrmConfigRequest:
       title: ByoCrmConfigRequest
       description: BYO CRM configuration settings
@@ -312,6 +272,46 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    ConfigurationRequest:
+      title: ConfigurationRequest
+      description: Configurations request for updating BYO CRM settings and customer feature toggles.
+      type: object
+      properties:
+        byo_crm:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/ByoCrmConfigRequest'
+          - description: BYO CRM configuration settings
+        first_and_last_name_enabled:
+          description: Whether first and last name fields are enabled for the tenant.
+          example: true
+          type: boolean
+        nom_consumer_profiles_merge:
+          description: Whether consumer profile merge is enabled for the tenant.
+          example: true
+          type: boolean
+    ByoCrmConfigResponse:
+      title: ByoCrmConfigResponse
+      description: BYO CRM configuration settings
+      type: object
+      properties:
+        api_token:
+          description: API token for the CRM provider
+          example: some-api-token
+          type: string
+        enabled:
+          description: Whether BYO CRM is enabled for the tenant
+          example: true
+          type: boolean
+          default: 'false'
+        url:
+          description: URL of the CRM provider
+          example: https://provider-url.com
+          type: string
+      required:
+      - api_token
+      - enabled
+      - url
     ConfigurationResponse:
       title: ConfigurationResponse
       description: Configurations response containing BYO CRM settings and customer feature toggles.

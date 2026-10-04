@@ -681,27 +681,37 @@ paths:
         required: true
 components:
   schemas:
-    PaginatedResponse:
-      title: PaginatedResponse
-      description: Contains default fields for paginatable APIs.
+    PutUsersByIdRequest:
+      title: PutUsersByIdRequest
       type: object
       properties:
-        count:
-          description: Contains the count of returned elements.
-          type: integer
-          format: int32
-        offset:
-          description: Contains the current offset.
-          type: integer
-          format: int32
-        total:
-          description: Contains the total count of elements.
-          type: integer
-          format: int32
+        external_directory:
+          description: User is managed by an external directory.
+          type: boolean
+        first_name:
+          description: First name of the user.
+          type: string
+        is_active:
+          description: Whether the user can login or not.
+          type: boolean
+        last_name:
+          description: Last name of the user.
+          type: string
+        phone:
+          description: Telephone number of the user.
+          type: string
+        roles:
+          description: List of role names the user is assigned to.
+          type: array
+          items:
+            type: string
       required:
-      - count
-      - offset
-      - total
+      - external_directory
+      - first_name
+      - is_active
+      - last_name
+      - phone
+      - roles
     User:
       title: User
       type: object
@@ -745,100 +755,27 @@ components:
         updated_at:
           type: string
           format: date-time
-    GetUsersResponse:
-      title: GetUsersResponse
-      description: Gets all users
+    PaginatedResponse:
+      title: PaginatedResponse
+      description: Contains default fields for paginatable APIs.
       type: object
       properties:
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
-        pagination_info:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/PaginatedResponse'
-          - description: Contains default fields for paginatable APIs.
-    RoleItem:
-      title: RoleItem
-      description: Needed for granting permissions per group not individually.
-      type: object
-      properties:
-        id:
-          description: Identifier of the role.
-          type: string
-        is_readonly:
-          description: The role is read-only and not editable.
-          type: boolean
-        name:
-          description: Name of the role.
-          type: string
-        updated_at:
-          type: string
-          format: date-time
+        count:
+          description: Contains the count of returned elements.
+          type: integer
+          format: int32
+        offset:
+          description: Contains the current offset.
+          type: integer
+          format: int32
+        total:
+          description: Contains the total count of elements.
+          type: integer
+          format: int32
       required:
-      - id
-      - name
-    PutUsersByIdRequest:
-      title: PutUsersByIdRequest
-      type: object
-      properties:
-        external_directory:
-          description: User is managed by an external directory.
-          type: boolean
-        first_name:
-          description: First name of the user.
-          type: string
-        is_active:
-          description: Whether the user can login or not.
-          type: boolean
-        last_name:
-          description: Last name of the user.
-          type: string
-        phone:
-          description: Telephone number of the user.
-          type: string
-        roles:
-          description: List of role names the user is assigned to.
-          type: array
-          items:
-            type: string
-      required:
-      - external_directory
-      - first_name
-      - is_active
-      - last_name
-      - phone
-      - roles
-    PostUsersRequest:
-      title: PostUsersRequest
-      type: object
-      properties:
-        email:
-          description: Email address of the user.
-          type: string
-        external_directory:
-          description: User is managed by an external directory.
-          type: boolean
-        first_name:
-          description: First name of the user.
-          type: string
-        is_active:
-          description: Whether the user can login or not.
-          type: boolean
-        last_name:
-          description: Last name of the user.
-          type: string
-        phone:
-          description: Telephone number of the user.
-          type: string
-        roles:
-          description: List of role names the user is assigned to.
-          type: array
-          items:
-            type: string
-      required:
-      - email
+      - count
+      - offset
+      - total
     Problem:
       title: Problem
       type: object
@@ -876,6 +813,69 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    RoleItem:
+      title: RoleItem
+      description: Needed for granting permissions per group not individually.
+      type: object
+      properties:
+        id:
+          description: Identifier of the role.
+          type: string
+        is_readonly:
+          description: The role is read-only and not editable.
+          type: boolean
+        name:
+          description: Name of the role.
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - name
+    GetUsersResponse:
+      title: GetUsersResponse
+      description: Gets all users
+      type: object
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        pagination_info:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/PaginatedResponse'
+          - description: Contains default fields for paginatable APIs.
+    PostUsersRequest:
+      title: PostUsersRequest
+      type: object
+      properties:
+        email:
+          description: Email address of the user.
+          type: string
+        external_directory:
+          description: User is managed by an external directory.
+          type: boolean
+        first_name:
+          description: First name of the user.
+          type: string
+        is_active:
+          description: Whether the user can login or not.
+          type: boolean
+        last_name:
+          description: Last name of the user.
+          type: string
+        phone:
+          description: Telephone number of the user.
+          type: string
+        roles:
+          description: List of role names the user is assigned to.
+          type: array
+          items:
+            type: string
+      required:
+      - email
   securitySchemes:
     oauth:
       type: oauth2

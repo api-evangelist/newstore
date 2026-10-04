@@ -226,14 +226,6 @@ paths:
         - shipments:read
 components:
   schemas:
-    AuditResponse:
-      title: AuditResponse
-      type: object
-      properties:
-        audit:
-          $ref: '#/components/schemas/AuditReadOnly'
-      required:
-      - audit
     AuditReadOnly:
       title: AuditReadOnly
       type: object
@@ -265,38 +257,6 @@ components:
       - request_id
       - search_key
       - tenant
-    AuditsResponse:
-      title: AuditsResponse
-      type: object
-      properties:
-        audits:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuditReadOnly'
-        page_count:
-          type: integer
-          minimum: 0.0
-          format: int64
-      required:
-      - audits
-      - page_count
-    AuditEventReadOnly:
-      title: AuditEventReadOnly
-      type: object
-      properties:
-        happened_at:
-          type: string
-          format: date-time
-        key:
-          type: string
-        originator:
-          type: string
-        value: {}
-      required:
-      - happened_at
-      - key
-      - originator
-      - value
     Problem:
       title: Problem
       type: object
@@ -334,6 +294,46 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    AuditEventReadOnly:
+      title: AuditEventReadOnly
+      type: object
+      properties:
+        happened_at:
+          type: string
+          format: date-time
+        key:
+          type: string
+        originator:
+          type: string
+        value: {}
+      required:
+      - happened_at
+      - key
+      - originator
+      - value
+    AuditResponse:
+      title: AuditResponse
+      type: object
+      properties:
+        audit:
+          $ref: '#/components/schemas/AuditReadOnly'
+      required:
+      - audit
+    AuditsResponse:
+      title: AuditsResponse
+      type: object
+      properties:
+        audits:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditReadOnly'
+        page_count:
+          type: integer
+          minimum: 0.0
+          format: int64
+      required:
+      - audits
+      - page_count
   securitySchemes:
     oauth:
       type: oauth2

@@ -111,26 +111,54 @@ paths:
       - oauth: []
 components:
   schemas:
-    RoutingInsightsStrategyType:
-      title: RoutingInsightsStrategyType
-      type: string
-      enum:
-      - external
-      - prerouted
-      - default
-      - manual
-    RoutingInsights:
-      title: RoutingInsights
-      description: Routing insights data by sales_order_uuid or external_id
+    RoutingInsightsData:
+      title: RoutingInsightsData
+      description: Routing insights information for an order
       type: object
       properties:
-        insights:
+        activities:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutingInsightsActivity'
+        created_at:
+          type: string
+          format: date-time
+        external_id:
+          type: string
+          minLength: 1
+        sales_order_id:
+          type: string
+          format: uuid
+        sales_order_item_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+        sales_order_items:
+          description: A mapping of sales order item uuid to routing insights for this item
           type: object
-          allOf:
-          - $ref: '#/components/schemas/RoutingInsightsData'
-          - description: Routing insights information for an order
+          additionalProperties:
+            $ref: '#/components/schemas/Salesorderitems1'
       required:
-      - insights
+      - activities
+      - created_at
+      - external_id
+      - sales_order_id
+      - sales_order_item_ids
+      - sales_order_items
+    Original:
+      title: Original
+      description: The original routing strategy on order creation
+      type: object
+      properties:
+        fulfillment_node_id:
+          type: string
+          minLength: 1
+        strategy:
+          $ref: '#/components/schemas/RoutingInsightsStrategyType'
+      required:
+      - strategy
     Correlation:
       title: Correlation
       description: Correlation information used to interpret routing attempts by LO uuids
@@ -154,40 +182,133 @@ components:
       - current_fulfillment_request_id
       - current_logistic_order_id
       - logistic_order_ids
-    Salesorderitems1:
-      title: Salesorderitems1
-      description: Routing insights data for the current sales order item uuid
+    RoutingInsightsActivity:
+      title: RoutingInsightsActivity
       type: object
       properties:
-        conflict_reason:
-          description: Current conflict reason for this sales order item. Empty, if item is not in a conflict state
-          type: string
-          minLength: 1
         correlation:
           type: object
           allOf:
-          - $ref: '#/components/schemas/Correlation'
-          - description: Correlation information used to interpret routing attempts by LO uuids
-        product_id:
+          - $ref: '#/components/schemas/RoutingInsightsCorrelation'
+          - description: Information regarding which entities were affected by this event
+        summary:
+          description: Information regarding the event type
           type: string
-          minLength: 1
-        routing_status:
-          $ref: '#/components/schemas/RoutingStatus'
-        service_levels:
-          $ref: '#/components/schemas/ServiceLevels'
-        strategies:
-          $ref: '#/components/schemas/Strategies'
-        updated_at:
+        timestamp:
           type: string
           format: date-time
+        type:
+          description: Event type
+          type: string
+        value: {}
       required:
-      - conflict_reason
       - correlation
-      - product_id
-      - routing_status
-      - service_levels
-      - strategies
-      - updated_at
+      - summary
+      - timestamp
+      - type
+      - value
+    ServiceLevels:
+      title: ServiceLevels
+      type: object
+      properties:
+        current:
+          description: Service level with which the order was fulfilled
+          type: string
+          minLength: 1
+        original:
+          description: Service level with which the order was created
+          type: string
+          minLength: 1
+    Strategies:
+      title: Strategies
+      type: object
+      properties:
+        current:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Current'
+          - description: The current routing strategy
+        original:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Original'
+          - description: The original routing strategy on order creation
+    Current:
+      title: Current
+      description: The current routing strategy
+      type: object
+      properties:
+        fulfillment_node_id:
+          type: string
+          minLength: 1
+        strategy:
+          $ref: '#/components/schemas/RoutingInsightsStrategyType'
+      required:
+      - strategy
+    RoutingInsights:
+      title: RoutingInsights
+      description: Routing insights data by sales_order_uuid or external_id
+      type: object
+      properties:
+        insights:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/RoutingInsightsData'
+          - description: Routing insights information for an order
+      required:
+      - insights
+    Problem:
+      title: Problem
+      type: object
+      properties:
+        detail:
+          description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+          example: some description for the error situation
+          type: string
+        error_code:
+          type: string
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
+          example: /some/uri-reference#specific-occurrence-context
+          type: string
+        message:
+          type: string
+        messages:
+          type: array
+          items:
+            type: string
+        request_id:
+          type: string
+        status:
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          type: integer
+          minimum: 100.0
+          format: int32
+          exclusiveMaximum: 600.0
+        title:
+          description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
+          example: some title for the error situation
+          type: string
+        type:
+          description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
+          example: /some/uri-reference
+          type: string
+          default: about:blank
+    RoutingStatus:
+      title: RoutingStatus
+      type: string
+      enum:
+      - open
+      - processed
+      - cancelled
+      - conflict
+      - dispatched
+      - ready_for_routing
+      - ready_for_rerouting
+      - rerouting_initiated
+      - voided
+      - recalculating_shipments
+      - swapped
     RoutingInsightsCorrelation:
       title: RoutingInsightsCorrelation
       description: Information regarding which entities were affected by this event
@@ -220,6 +341,25 @@ components:
       - routing_strategies
       - sales_order_item_ids
       - service_levels
+    RoutingInsightsStrategyType:
+      title: RoutingInsightsStrategyType
+      type: string
+      enum:
+      - external
+      - prerouted
+      - default
+      - manual
+    RoutingInsightsRoutingStrategy1:
+      title: RoutingInsightsRoutingStrategy1
+      type: object
+      properties:
+        fulfillment_node_id:
+          type: string
+          minLength: 1
+        strategy:
+          $ref: '#/components/schemas/RoutingInsightsStrategyType'
+      required:
+      - strategy
     RoutingInsightsRoutingStrategies:
       title: RoutingInsightsRoutingStrategies
       type: object
@@ -260,57 +400,40 @@ components:
           description: Service level with which the order was created
           type: string
           minLength: 1
-    Strategies:
-      title: Strategies
+    Salesorderitems1:
+      title: Salesorderitems1
+      description: Routing insights data for the current sales order item uuid
       type: object
       properties:
-        current:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Current'
-          - description: The current routing strategy
-        original:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Original'
-          - description: The original routing strategy on order creation
-    Original:
-      title: Original
-      description: The original routing strategy on order creation
-      type: object
-      properties:
-        fulfillment_node_id:
+        conflict_reason:
+          description: Current conflict reason for this sales order item. Empty, if item is not in a conflict state
           type: string
           minLength: 1
-        strategy:
-          $ref: '#/components/schemas/RoutingInsightsStrategyType'
-      required:
-      - strategy
-    RoutingInsightsActivity:
-      title: RoutingInsightsActivity
-      type: object
-      properties:
         correlation:
           type: object
           allOf:
-          - $ref: '#/components/schemas/RoutingInsightsCorrelation'
-          - description: Information regarding which entities were affected by this event
-        summary:
-          description: Information regarding the event type
+          - $ref: '#/components/schemas/Correlation'
+          - description: Correlation information used to interpret routing attempts by LO uuids
+        product_id:
           type: string
-        timestamp:
+          minLength: 1
+        routing_status:
+          $ref: '#/components/schemas/RoutingStatus'
+        service_levels:
+          $ref: '#/components/schemas/ServiceLevels'
+        strategies:
+          $ref: '#/components/schemas/Strategies'
+        updated_at:
           type: string
           format: date-time
-        type:
-          description: Event type
-          type: string
-        value: {}
       required:
+      - conflict_reason
       - correlation
-      - summary
-      - timestamp
-      - type
-      - value
+      - product_id
+      - routing_status
+      - service_levels
+      - strategies
+      - updated_at
     RoutingInsightsFulfillmentRequests:
       title: RoutingInsightsFulfillmentRequests
       description: Any fulfillment request identifiers for this LO uuid
@@ -324,129 +447,6 @@ components:
         fulfillment_request_id:
           type: string
           format: uuid
-    RoutingInsightsRoutingStrategy1:
-      title: RoutingInsightsRoutingStrategy1
-      type: object
-      properties:
-        fulfillment_node_id:
-          type: string
-          minLength: 1
-        strategy:
-          $ref: '#/components/schemas/RoutingInsightsStrategyType'
-      required:
-      - strategy
-    ServiceLevels:
-      title: ServiceLevels
-      type: object
-      properties:
-        current:
-          description: Service level with which the order was fulfilled
-          type: string
-          minLength: 1
-        original:
-          description: Service level with which the order was created
-          type: string
-          minLength: 1
-    RoutingInsightsData:
-      title: RoutingInsightsData
-      description: Routing insights information for an order
-      type: object
-      properties:
-        activities:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoutingInsightsActivity'
-        created_at:
-          type: string
-          format: date-time
-        external_id:
-          type: string
-          minLength: 1
-        sales_order_id:
-          type: string
-          format: uuid
-        sales_order_item_ids:
-          type: array
-          items:
-            type: string
-            format: uuid
-          minItems: 1
-        sales_order_items:
-          description: A mapping of sales order item uuid to routing insights for this item
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Salesorderitems1'
-      required:
-      - activities
-      - created_at
-      - external_id
-      - sales_order_id
-      - sales_order_item_ids
-      - sales_order_items
-    RoutingStatus:
-      title: RoutingStatus
-      type: string
-      enum:
-      - open
-      - processed
-      - cancelled
-      - conflict
-      - dispatched
-      - ready_for_routing
-      - ready_for_rerouting
-      - rerouting_initiated
-      - voided
-      - recalculating_shipments
-      - swapped
-    Current:
-      title: Current
-      description: The current routing strategy
-      type: object
-      properties:
-        fulfillment_node_id:
-          type: string
-          minLength: 1
-        strategy:
-          $ref: '#/components/schemas/RoutingInsightsStrategyType'
-      required:
-      - strategy
-    Problem:
-      title: Problem
-      type: object
-      properties:
-        detail:
-          description: A human readable explanation specific to this occurrence of the problem that is helpful to locate the problem and give advice on how to proceed. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
-          example: some description for the error situation
-          type: string
-        error_code:
-          type: string
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem, e.g. by adding a fragment identifier or sub-path to the problem type. May be used to locate the root of this problem in the source code.
-          example: /some/uri-reference#specific-occurrence-context
-          type: string
-        message:
-          type: string
-        messages:
-          type: array
-          items:
-            type: string
-        request_id:
-          type: string
-        status:
-          description: The HTTP status code generated by the origin server for this occurrence of the problem.
-          type: integer
-          minimum: 100.0
-          format: int32
-          exclusiveMaximum: 600.0
-        title:
-          description: A short summary of the problem type. Written in English and readable for engineers, usually not suited for non technical stakeholders and not localized.
-          example: some title for the error situation
-          type: string
-        type:
-          description: A URI reference that uniquely identifies the problem type only in the context of the provided API. Opposed to the specification in RFC-7807, it is neither recommended to be dereferenceable and point to a human-readable documentation nor globally unique for the problem type.
-          example: /some/uri-reference
-          type: string
-          default: about:blank
   securitySchemes:
     oauth:
       type: oauth2
