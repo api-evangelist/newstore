@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/newstore/integrations
+- https://n8n.io/integrations/newstore/
+- https://composio.dev/toolkits/newstore
+- https://monid.ai/tools/newstore
+checked:
+- https://composio.dev/toolkits/newstore
+- https://monid.ai/tools/newstore
+- https://n8n.io/integrations/newstore/
+- https://zapier.com/apps/newstore/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
