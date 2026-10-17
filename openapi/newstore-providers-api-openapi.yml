@@ -308,16 +308,20 @@ paths:
         - newstore:configuration:read
 components:
   schemas:
-    LocationMappingsResponse:
-      title: LocationMappingsResponse
+    LocationMapping:
+      title: LocationMapping
       type: object
       properties:
-        location_mappings:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/LocationMapping'
+        connected_account_id:
+          type: string
+        environment:
+          type: string
+        location_id:
+          type: string
       required:
-      - location_mappings
+      - connected_account_id
+      - environment
+      - location_id
     Problem:
       title: Problem
       type: object
@@ -355,20 +359,15 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    LocationMapping:
-      title: LocationMapping
+    ProcessorMetadata:
+      title: ProcessorMetadata
       type: object
       properties:
-        connected_account_id:
+        embedded_processor:
           type: string
-        environment:
-          type: string
-        location_id:
-          type: string
+          minLength: 1
       required:
-      - connected_account_id
-      - environment
-      - location_id
+      - embedded_processor
     LocationMappingBody:
       title: LocationMappingBody
       type: object
@@ -388,15 +387,16 @@ components:
       - connected_account_id
       - environment
       - location_id
-    ProcessorMetadata:
-      title: ProcessorMetadata
+    LocationMappingsResponse:
+      title: LocationMappingsResponse
       type: object
       properties:
-        embedded_processor:
-          type: string
-          minLength: 1
+        location_mappings:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LocationMapping'
       required:
-      - embedded_processor
+      - location_mappings
   securitySchemes:
     oauth:
       type: oauth2

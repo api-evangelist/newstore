@@ -306,35 +306,63 @@ paths:
         - fiscalization:orders:read
 components:
   schemas:
-    TransactionState:
-      title: TransactionState
-      description: Fiscal transaction state.
-      example: OK
-      type: string
-      enum:
-      - OK
-      - FAILED
-      - TEMP_SIGNED
-    FiscalMode:
-      title: FiscalMode
-      description: 'Fiscal mode.
+    SignatureResponseV1Dto:
+      title: SignatureResponseV1Dto
+      type: object
+      properties:
+        context:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/ContextV1Dto'
+          - description: Context.
+        country_code:
+          type: string
+        created_at:
+          description: Signature creation timestamp to be used on the receipt.
+          type: string
+          format: date-time
+        external_order_id:
+          description: Sales order identifier used in external system.
+          example: GD000225827
+          type: string
+        fiscal_mode:
+          $ref: '#/components/schemas/FiscalMode'
+        id:
+          description: ID (idempotency key).
+          example: 012345678-abcd-0123-abcd-0123456789ab
+          type: string
+        original_created_at:
+          description: 'Transaction creation timestamp.
 
-        * Defaults to `standard` if not provided.'
-      example: standard
-      type: string
-      enum:
-      - standard
-      - offline
-    TransactionSignatureStrategy:
-      title: TransactionSignatureStrategy
-      description: "Offline transaction signature strategy that will be used while processing offline transactions.\n* `standard-signing`\n\n\n  * Offline orders will be fiscally signed according to regulations.\n  * Can be used in cases if the receipt would be emailed once the offline order is processed.\n* `late-signing`\n\n\n  * Offline orders will be signed with late signing flag.\n  * Can be used in cases if the receipt would be emailed once the offline order is processed.\n* `manual-receipts`\n\n\n  * Offline orders will be signed with manual flag.\n  * A receipt for the offline orders and do not need to be emailed later.\n  * Can be used in cases if the a manual receipt was issued by the store, and an electronic receipt should not be sent.\n* `no-signing`\n\n\n  * Offline orders will not be signed and should be considered completed without any signature needed.\n  * Can be used in cases if the fiscal signature was issued outside of the NewStore platform."
-      example: no-signing
-      type: string
-      enum:
-      - standard-signing
-      - late-signing
-      - manual-receipts
-      - no-signing
+            * If set, will override the fiscal transaction timestamp.'
+          example: '2022-05-25T12:00:00.000Z'
+          type: string
+        reference_order_id:
+          description: ID of a reference order (e.g. referencing an original order).
+          example: 012345678-abcd-0123-abcd-0123456789ab
+          type: string
+        signature_strategy_override:
+          $ref: '#/components/schemas/TransactionSignatureStrategy'
+        state:
+          $ref: '#/components/schemas/OrderManagementState'
+        tax_method:
+          $ref: '#/components/schemas/F11nTaxMethod'
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionMinV1Dto'
+        updated_at:
+          description: Signature update timestamp.
+          type: string
+          format: date-time
+      required:
+      - context
+      - country_code
+      - created_at
+      - id
+      - state
+      - transactions
+      - updated_at
     Problem:
       title: Problem
       type: object
@@ -372,6 +400,14 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    F11nTaxMethod:
+      title: F11nTaxMethod
+      description: Defines the tax method used (tax inclusive or exclusive).
+      example: tax_included
+      type: string
+      enum:
+      - tax_included
+      - tax_excluded
     TransactionMinV1Dto:
       title: TransactionMinV1Dto
       type: object
@@ -432,71 +468,25 @@ components:
       required:
       - associate_id
       - store_id
-    SignatureResponseV1Dto:
-      title: SignatureResponseV1Dto
-      type: object
-      properties:
-        context:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/ContextV1Dto'
-          - description: Context.
-        country_code:
-          type: string
-        created_at:
-          description: Signature creation timestamp to be used on the receipt.
-          type: string
-          format: date-time
-        external_order_id:
-          description: Sales order identifier used in external system.
-          example: GD000225827
-          type: string
-        fiscal_mode:
-          $ref: '#/components/schemas/FiscalMode'
-        id:
-          description: ID (idempotency key).
-          example: 012345678-abcd-0123-abcd-0123456789ab
-          type: string
-        original_created_at:
-          description: 'Transaction creation timestamp.
-
-            * If set, will override the fiscal transaction timestamp.'
-          example: '2022-05-25T12:00:00.000Z'
-          type: string
-        reference_order_id:
-          description: ID of a reference order (e.g. referencing an original order).
-          example: 012345678-abcd-0123-abcd-0123456789ab
-          type: string
-        signature_strategy_override:
-          $ref: '#/components/schemas/TransactionSignatureStrategy'
-        state:
-          $ref: '#/components/schemas/OrderManagementState'
-        tax_method:
-          $ref: '#/components/schemas/F11nTaxMethod'
-        transactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionMinV1Dto'
-        updated_at:
-          description: Signature update timestamp.
-          type: string
-          format: date-time
-      required:
-      - context
-      - country_code
-      - created_at
-      - id
-      - state
-      - transactions
-      - updated_at
-    F11nTaxMethod:
-      title: F11nTaxMethod
-      description: Defines the tax method used (tax inclusive or exclusive).
-      example: tax_included
+    TransactionState:
+      title: TransactionState
+      description: Fiscal transaction state.
+      example: OK
       type: string
       enum:
-      - tax_included
-      - tax_excluded
+      - OK
+      - FAILED
+      - TEMP_SIGNED
+    FiscalMode:
+      title: FiscalMode
+      description: 'Fiscal mode.
+
+        * Defaults to `standard` if not provided.'
+      example: standard
+      type: string
+      enum:
+      - standard
+      - offline
     F11nTransactionType:
       title: F11nTransactionType
       description: Transaction type.
@@ -527,6 +517,16 @@ components:
       enum:
       - OK
       - FAILED
+    TransactionSignatureStrategy:
+      title: TransactionSignatureStrategy
+      description: "Offline transaction signature strategy that will be used while processing offline transactions.\n* `standard-signing`\n\n\n  * Offline orders will be fiscally signed according to regulations.\n  * Can be used in cases if the receipt would be emailed once the offline order is processed.\n* `late-signing`\n\n\n  * Offline orders will be signed with late signing flag.\n  * Can be used in cases if the receipt would be emailed once the offline order is processed.\n* `manual-receipts`\n\n\n  * Offline orders will be signed with manual flag.\n  * A receipt for the offline orders and do not need to be emailed later.\n  * Can be used in cases if the a manual receipt was issued by the store, and an electronic receipt should not be sent.\n* `no-signing`\n\n\n  * Offline orders will not be signed and should be considered completed without any signature needed.\n  * Can be used in cases if the fiscal signature was issued outside of the NewStore platform."
+      example: no-signing
+      type: string
+      enum:
+      - standard-signing
+      - late-signing
+      - manual-receipts
+      - no-signing
   securitySchemes:
     oauth:
       type: oauth2

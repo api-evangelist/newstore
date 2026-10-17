@@ -292,23 +292,15 @@ paths:
       - oauth: []
 components:
   schemas:
-    LineItem11:
-      title: LineItem11
-      description: Line item
-      type: object
-      properties:
-        item_id:
-          description: Sales order item UUID.
-          type: string
-          format: uuid
-        state:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/State'
-          - description: New state that should be applied to this item defined by sales order item UUID.
-      required:
-      - item_id
-      - state
+    Status11:
+      title: Status11
+      description: 'Current status of fulfillment request: dispatched - fulfillment request was sent to sent to store/DC services, but wasn''t acknowledged yet; acknowledged - fulfillment request was acknowledged by store/DC service and will be send to store/DC for fulfillment; partially_completed - some items of fulfillment request were already processed (cancelled, rejected, shipped) but not all of them; completed - all items of fulfillment request were processed (cancelled, rejected, shipped).'
+      type: string
+      enum:
+      - dispatched
+      - acknowledged
+      - partially_completed
+      - completed
     Problem:
       title: Problem
       type: object
@@ -346,6 +338,88 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    LineItem11:
+      title: LineItem11
+      description: Line item
+      type: object
+      properties:
+        item_id:
+          description: Sales order item UUID.
+          type: string
+          format: uuid
+        state:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/State'
+          - description: New state that should be applied to this item defined by sales order item UUID.
+      required:
+      - item_id
+      - state
+    Item8:
+      title: Item8
+      type: object
+      properties:
+        carrier:
+          description: Carrier for the item, if it was provided during after shipment. Otherwise `null`.
+          type: string
+        item_id:
+          description: Unique identifier of the line item.
+          type: string
+          minLength: 1
+        product_id:
+          type: string
+          minLength: 1
+        status:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Status2'
+          - description: 'Status of this item: dispatched - item was routed to a store/DC (check status of fulfillment request to see whether DC/store service has already accepted this fulfillment request or not); shipped - item was marked as shipped; rejected - item was rejected by fulfillment node and going to be rerouted (or was rerouted if fulfillment request already completed); cancelled - item was cancelled.'
+        tracking_code:
+          description: Tracking code for the item, if it was provided after shipment. Otherwise `null`.
+          type: string
+      required:
+      - carrier
+      - item_id
+      - product_id
+      - status
+      - tracking_code
+    OrderFulfillmentRequestsResponse:
+      title: OrderFulfillmentRequestsResponse
+      description: Fulfillment requests for an order
+      type: object
+      properties:
+        fulfillment_requests:
+          description: All fulfillment requests that belongs to the order. Can be empty if order not routed yet, or if order doesn't exist.
+          type: array
+          items:
+            $ref: '#/components/schemas/FulfillmentRequest'
+          maxItems: 2000
+      required:
+      - fulfillment_requests
+    FulfillmentRequestItemsStatesRequest:
+      title: FulfillmentRequestItemsStatesRequest
+      description: Request payload for marking fulfillment request items as shipped or rejected.
+      type: object
+      properties:
+        associate_id:
+          description: Identifier of the associate who is changing the items's states.
+          type: string
+          minLength: 1
+        carrier:
+          description: Carrier used to ship items, which state is being changed to `shipped`.
+          type: string
+        line_items:
+          description: List of fulfillment request items with the target state.
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem11'
+        reason: {}
+        tracking_code:
+          description: Tracking code applied to items, which state is being changed to `shipped`.
+          type: string
+          minLength: 1
+      required:
+      - line_items
     FulfillmentRequest:
       title: FulfillmentRequest
       description: The fulfillment request.
@@ -384,6 +458,13 @@ components:
       - items
       - service_level
       - status
+    State:
+      title: State
+      description: New state that should be applied to this item defined by sales order item UUID.
+      type: string
+      enum:
+      - shipped
+      - rejected
     Status2:
       title: Status2
       description: 'Status of this item: dispatched - item was routed to a store/DC (check status of fulfillment request to see whether DC/store service has already accepted this fulfillment request or not); shipped - item was marked as shipped; rejected - item was rejected by fulfillment node and going to be rerouted (or was rerouted if fulfillment request already completed); cancelled - item was cancelled.'
@@ -393,87 +474,6 @@ components:
       - shipped
       - rejected
       - cancelled
-    FulfillmentRequestItemsStatesRequest:
-      title: FulfillmentRequestItemsStatesRequest
-      description: Request payload for marking fulfillment request items as shipped or rejected.
-      type: object
-      properties:
-        associate_id:
-          description: Identifier of the associate who is changing the items's states.
-          type: string
-          minLength: 1
-        carrier:
-          description: Carrier used to ship items, which state is being changed to `shipped`.
-          type: string
-        line_items:
-          description: List of fulfillment request items with the target state.
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem11'
-        reason: {}
-        tracking_code:
-          description: Tracking code applied to items, which state is being changed to `shipped`.
-          type: string
-          minLength: 1
-      required:
-      - line_items
-    Item8:
-      title: Item8
-      type: object
-      properties:
-        carrier:
-          description: Carrier for the item, if it was provided during after shipment. Otherwise `null`.
-          type: string
-        item_id:
-          description: Unique identifier of the line item.
-          type: string
-          minLength: 1
-        product_id:
-          type: string
-          minLength: 1
-        status:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Status2'
-          - description: 'Status of this item: dispatched - item was routed to a store/DC (check status of fulfillment request to see whether DC/store service has already accepted this fulfillment request or not); shipped - item was marked as shipped; rejected - item was rejected by fulfillment node and going to be rerouted (or was rerouted if fulfillment request already completed); cancelled - item was cancelled.'
-        tracking_code:
-          description: Tracking code for the item, if it was provided after shipment. Otherwise `null`.
-          type: string
-      required:
-      - carrier
-      - item_id
-      - product_id
-      - status
-      - tracking_code
-    State:
-      title: State
-      description: New state that should be applied to this item defined by sales order item UUID.
-      type: string
-      enum:
-      - shipped
-      - rejected
-    Status11:
-      title: Status11
-      description: 'Current status of fulfillment request: dispatched - fulfillment request was sent to sent to store/DC services, but wasn''t acknowledged yet; acknowledged - fulfillment request was acknowledged by store/DC service and will be send to store/DC for fulfillment; partially_completed - some items of fulfillment request were already processed (cancelled, rejected, shipped) but not all of them; completed - all items of fulfillment request were processed (cancelled, rejected, shipped).'
-      type: string
-      enum:
-      - dispatched
-      - acknowledged
-      - partially_completed
-      - completed
-    OrderFulfillmentRequestsResponse:
-      title: OrderFulfillmentRequestsResponse
-      description: Fulfillment requests for an order
-      type: object
-      properties:
-        fulfillment_requests:
-          description: All fulfillment requests that belongs to the order. Can be empty if order not routed yet, or if order doesn't exist.
-          type: array
-          items:
-            $ref: '#/components/schemas/FulfillmentRequest'
-          maxItems: 2000
-      required:
-      - fulfillment_requests
   securitySchemes:
     oauth:
       type: oauth2

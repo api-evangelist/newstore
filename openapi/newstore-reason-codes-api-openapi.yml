@@ -599,6 +599,48 @@ paths:
               $ref: '#/components/schemas/ReasonCodePatch'
 components:
   schemas:
+    ReasonCodePatch:
+      title: ReasonCodePatch
+      example:
+        name: defect
+      type: object
+      properties:
+        name:
+          description: The name of the reason code.
+          type: string
+      required:
+      - name
+    LocalizedReasonCode:
+      title: LocalizedReasonCode
+      example:
+        code: DFT
+        locale: en-us
+        name: defect
+      type: object
+      properties:
+        code:
+          description: An identifier of the reason code, pattern is '^[^+=%]+$'
+          type: string
+          maxLength: 256
+        locale:
+          description: The locale of the reason code, pattern is '(^[a-z]{2}-[A-Za-z]{2}$)'
+          type: string
+        name:
+          type: string
+      required:
+      - code
+      - locale
+      - name
+    ListResponse:
+      title: ListResponse
+      type: object
+      properties:
+        codes:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocalizedReasonCode'
+      required:
+      - codes
     Problem:
       title: Problem
       type: object
@@ -636,27 +678,6 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    LocalizedReasonCode:
-      title: LocalizedReasonCode
-      example:
-        code: DFT
-        locale: en-us
-        name: defect
-      type: object
-      properties:
-        code:
-          description: An identifier of the reason code, pattern is '^[^+=%]+$'
-          type: string
-          maxLength: 256
-        locale:
-          description: The locale of the reason code, pattern is '(^[a-z]{2}-[A-Za-z]{2}$)'
-          type: string
-        name:
-          type: string
-      required:
-      - code
-      - locale
-      - name
     GetResponse:
       title: GetResponse
       type: object
@@ -672,33 +693,6 @@ components:
       required:
       - code
       - localizations
-    Localization:
-      title: Localization
-      example:
-        locale: en-us
-        name: defect
-      type: object
-      properties:
-        locale:
-          description: The locale of the reason code, pattern is '(^[a-z]{2}-[A-Za-z]{2}$)'
-          type: string
-        name:
-          description: The name of the reason code.
-          type: string
-      required:
-      - locale
-      - name
-    ReasonCodePatch:
-      title: ReasonCodePatch
-      example:
-        name: defect
-      type: object
-      properties:
-        name:
-          description: The name of the reason code.
-          type: string
-      required:
-      - name
     ReasonCodeInit:
       title: ReasonCodeInit
       example:
@@ -716,16 +710,22 @@ components:
       required:
       - code
       - name
-    ListResponse:
-      title: ListResponse
+    Localization:
+      title: Localization
+      example:
+        locale: en-us
+        name: defect
       type: object
       properties:
-        codes:
-          type: array
-          items:
-            $ref: '#/components/schemas/LocalizedReasonCode'
+        locale:
+          description: The locale of the reason code, pattern is '(^[a-z]{2}-[A-Za-z]{2}$)'
+          type: string
+        name:
+          description: The name of the reason code.
+          type: string
       required:
-      - codes
+      - locale
+      - name
   securitySchemes:
     oauth:
       type: oauth2

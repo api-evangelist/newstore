@@ -401,14 +401,6 @@ paths:
         required: true
 components:
   schemas:
-    CashboxState:
-      title: CashboxState
-      description: The state of the cashbox, whether it is activated or deactivated.
-      example: activated
-      type: string
-      enum:
-      - activated
-      - deactivated
     StoreListV1Dto:
       title: StoreListV1Dto
       type: object
@@ -428,17 +420,6 @@ components:
           type: string
       required:
       - items
-    PeriodType:
-      title: PeriodType
-      description: Period of the report.
-      example: shift-report
-      type: string
-      enum:
-      - shift-report
-      - day-report
-      - month-report
-      - year-report
-      - grand-totals-report
     Problem:
       title: Problem
       type: object
@@ -476,41 +457,6 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    FiscalProviderId:
-      title: FiscalProviderId
-      description: The fiscal provider id being used.
-      example: axena-se
-      type: string
-      enum:
-      - axena-se
-      - dummy
-      - epson-it
-      - fiskaltrust-at
-      - fiskaltrust-de
-      - fiskaltrust-fr
-      - newstore-ie
-      - newstore-no
-      - posnet-pl
-      - ycs-pr
-      - newstore-in
-      - newstore-th
-      - newstore-es
-      - newstore-be
-      - efsta-pt
-    StoreUpdateV1Dto:
-      title: StoreUpdateV1Dto
-      type: object
-      properties:
-        config:
-          description: Store configuration.
-        country_code:
-          type: string
-        description:
-          description: Store description.
-          example: Dodici Paris Store
-          type: string
-      required:
-      - country_code
     StoreConfigV1Dto:
       title: StoreConfigV1Dto
       type: object
@@ -539,52 +485,6 @@ components:
       - auto_report_types
       - report_types
       - timezone
-    StoreV1Dto:
-      title: StoreV1Dto
-      type: object
-      properties:
-        cashboxes:
-          description: List of cashboxes belonging to the store.
-          type: array
-          items:
-            $ref: '#/components/schemas/CashboxV1Dto'
-        config:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/StoreConfigV1Dto'
-          - description: Store configuration.
-            example:
-              auto_report_types:
-              - month-report
-              - year-report
-              report_types:
-              - month-report
-              - year-report
-              timezone: Europe/Vienna
-        country_code:
-          type: string
-        description:
-          description: Store name/description.
-          example: Dodici Paris Store
-          type: string
-        id:
-          description: Store identifier.
-          example: f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a
-          type: string
-        multi_cashbox:
-          description: Flag that indicates if multiple cashboxes are allowed in the store.
-          example: false
-          type: boolean
-        tenant:
-          description: Tenant identifier.
-          example: dodici
-          type: string
-      required:
-      - config
-      - country_code
-      - id
-      - multi_cashbox
-      - tenant
     Timezone:
       title: Timezone
       description: Timezone.
@@ -1185,6 +1085,106 @@ components:
       - W-SU
       - WET
       - Zulu
+    StoreV1Dto:
+      title: StoreV1Dto
+      type: object
+      properties:
+        cashboxes:
+          description: List of cashboxes belonging to the store.
+          type: array
+          items:
+            $ref: '#/components/schemas/CashboxV1Dto'
+        config:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/StoreConfigV1Dto'
+          - description: Store configuration.
+            example:
+              auto_report_types:
+              - month-report
+              - year-report
+              report_types:
+              - month-report
+              - year-report
+              timezone: Europe/Vienna
+        country_code:
+          type: string
+        description:
+          description: Store name/description.
+          example: Dodici Paris Store
+          type: string
+        id:
+          description: Store identifier.
+          example: f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a
+          type: string
+        multi_cashbox:
+          description: Flag that indicates if multiple cashboxes are allowed in the store.
+          example: false
+          type: boolean
+        tenant:
+          description: Tenant identifier.
+          example: dodici
+          type: string
+      required:
+      - config
+      - country_code
+      - id
+      - multi_cashbox
+      - tenant
+    FiscalProviderId:
+      title: FiscalProviderId
+      description: The fiscal provider id being used.
+      example: axena-se
+      type: string
+      enum:
+      - axena-se
+      - dummy
+      - epson-it
+      - fiskaltrust-at
+      - fiskaltrust-de
+      - fiskaltrust-fr
+      - newstore-ie
+      - newstore-no
+      - posnet-pl
+      - ycs-pr
+      - newstore-in
+      - newstore-th
+      - newstore-es
+      - newstore-be
+      - efsta-pt
+    CashboxState:
+      title: CashboxState
+      description: The state of the cashbox, whether it is activated or deactivated.
+      example: activated
+      type: string
+      enum:
+      - activated
+      - deactivated
+    PeriodType:
+      title: PeriodType
+      description: Period of the report.
+      example: shift-report
+      type: string
+      enum:
+      - shift-report
+      - day-report
+      - month-report
+      - year-report
+      - grand-totals-report
+    StoreUpdateV1Dto:
+      title: StoreUpdateV1Dto
+      type: object
+      properties:
+        config:
+          description: Store configuration.
+        country_code:
+          type: string
+        description:
+          description: Store description.
+          example: Dodici Paris Store
+          type: string
+      required:
+      - country_code
     CashboxV1Dto:
       title: CashboxV1Dto
       type: object

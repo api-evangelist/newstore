@@ -529,14 +529,6 @@ paths:
         required: true
 components:
   schemas:
-    CashboxState:
-      title: CashboxState
-      description: The state of the cashbox, whether it is activated or deactivated.
-      example: activated
-      type: string
-      enum:
-      - activated
-      - deactivated
     Problem:
       title: Problem
       type: object
@@ -574,6 +566,91 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
+    FiscalProviderId:
+      title: FiscalProviderId
+      description: The fiscal provider id being used.
+      example: axena-se
+      type: string
+      enum:
+      - axena-se
+      - dummy
+      - epson-it
+      - fiskaltrust-at
+      - fiskaltrust-de
+      - fiskaltrust-fr
+      - newstore-ie
+      - newstore-no
+      - posnet-pl
+      - ycs-pr
+      - newstore-in
+      - newstore-th
+      - newstore-es
+      - newstore-be
+      - efsta-pt
+    F11nWarningCode:
+      title: F11nWarningCode
+      description: Fiscalization warning codes that are propagated to the clients (e.g. Associate App) for providing information on possible action items.
+      example: f11n_fiscal_printer_paper_running_out
+      type: string
+      enum:
+      - f11n_fiscal_printer_paper_running_out
+      - f11n_fiscal_printer_charger_disconnected
+      - f11n_fiscal_printer_fiscal_memory_nearly_full
+    CashboxGetV1Dto:
+      title: CashboxGetV1Dto
+      type: object
+      properties:
+        activated_at:
+          description: Timestamp of the cashbox activation.
+          type: string
+          format: date-time
+        config:
+          description: Fiscal provider configuration.
+        deactivated_at:
+          description: Timestamp of the cashbox deactivation.
+          type: string
+          format: date-time
+        fiscal_provider_id:
+          $ref: '#/components/schemas/FiscalProviderId'
+        id:
+          description: Cashbox identifier.
+          example: dodici-f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a-1
+          type: string
+        state:
+          $ref: '#/components/schemas/CashboxState'
+        store_id:
+          description: Store identifier that the cashbox belongs to.
+          example: f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a
+          type: string
+        tenant:
+          description: Tenant identifier.
+          example: dodici
+          type: string
+        transaction_series:
+          description: The series used to generate the transaction sequence numbers. This field will have a value only for cashboxes that support multiple series otherwise it will be an empty array.
+          example:
+          - S24-ABCDE
+          - R24-ABCDE
+          type: array
+          items:
+            type: string
+      required:
+      - activated_at
+      - config
+      - fiscal_provider_id
+      - id
+      - state
+      - store_id
+      - tenant
+      - transaction_series
+    CashboxState:
+      title: CashboxState
+      description: The state of the cashbox, whether it is activated or deactivated.
+      example: activated
+      type: string
+      enum:
+      - activated
+      - deactivated
     CashboxCreatedV1Dto:
       title: CashboxCreatedV1Dto
       type: object
@@ -649,83 +726,6 @@ components:
             $ref: '#/components/schemas/CashboxV1Dto'
       required:
       - items
-    FiscalProviderId:
-      title: FiscalProviderId
-      description: The fiscal provider id being used.
-      example: axena-se
-      type: string
-      enum:
-      - axena-se
-      - dummy
-      - epson-it
-      - fiskaltrust-at
-      - fiskaltrust-de
-      - fiskaltrust-fr
-      - newstore-ie
-      - newstore-no
-      - posnet-pl
-      - ycs-pr
-      - newstore-in
-      - newstore-th
-      - newstore-es
-      - newstore-be
-      - efsta-pt
-    CashboxGetV1Dto:
-      title: CashboxGetV1Dto
-      type: object
-      properties:
-        activated_at:
-          description: Timestamp of the cashbox activation.
-          type: string
-          format: date-time
-        config:
-          description: Fiscal provider configuration.
-        deactivated_at:
-          description: Timestamp of the cashbox deactivation.
-          type: string
-          format: date-time
-        fiscal_provider_id:
-          $ref: '#/components/schemas/FiscalProviderId'
-        id:
-          description: Cashbox identifier.
-          example: dodici-f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a-1
-          type: string
-        state:
-          $ref: '#/components/schemas/CashboxState'
-        store_id:
-          description: Store identifier that the cashbox belongs to.
-          example: f9ab99c2-d4ba-4752-ac9b-20e5cbeba82a
-          type: string
-        tenant:
-          description: Tenant identifier.
-          example: dodici
-          type: string
-        transaction_series:
-          description: The series used to generate the transaction sequence numbers. This field will have a value only for cashboxes that support multiple series otherwise it will be an empty array.
-          example:
-          - S24-ABCDE
-          - R24-ABCDE
-          type: array
-          items:
-            type: string
-      required:
-      - activated_at
-      - config
-      - fiscal_provider_id
-      - id
-      - state
-      - store_id
-      - tenant
-      - transaction_series
-    F11nWarningCode:
-      title: F11nWarningCode
-      description: Fiscalization warning codes that are propagated to the clients (e.g. Associate App) for providing information on possible action items.
-      example: f11n_fiscal_printer_paper_running_out
-      type: string
-      enum:
-      - f11n_fiscal_printer_paper_running_out
-      - f11n_fiscal_printer_charger_disconnected
-      - f11n_fiscal_printer_fiscal_memory_nearly_full
     CashboxV1Dto:
       title: CashboxV1Dto
       type: object

@@ -860,15 +860,33 @@ paths:
         - iam:roles:read
 components:
   schemas:
-    GetRolesResponse:
-      title: GetRolesResponse
-      description: Returns a list of roles.
+    PutRolesByIdRequest:
+      title: PutRolesByIdRequest
+      description: Needed for granting permissions per group not individually.
+      type: object
+      properties:
+        name:
+          description: Name of the role. To be valid, it can't include slashes ('/').
+          type: string
+          pattern: ^[^/]+$
+        permissions:
+          description: List of permissions.
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+          minItems: 1
+      required:
+      - name
+      - permissions
+    GetPermissionsResponse:
+      title: GetPermissionsResponse
+      description: Returns a list of available permissions the system provides.
       type: object
       properties:
         elements:
           type: array
           items:
-            $ref: '#/components/schemas/RoleItem'
+            $ref: '#/components/schemas/Permission'
     User:
       title: User
       type: object
@@ -912,15 +930,6 @@ components:
         updated_at:
           type: string
           format: date-time
-    GetPermissionsResponse:
-      title: GetPermissionsResponse
-      description: Returns a list of available permissions the system provides.
-      type: object
-      properties:
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/Permission'
     Problem:
       title: Problem
       type: object
@@ -958,46 +967,32 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    PostRolesRequest:
-      title: PostRolesRequest
-      description: Needed for granting permissions per group not individually.
+    Application:
+      title: Application
+      description: Abbreviation of the application this permission belongs to.
+      type: string
+      enum:
+      - nom
+      - aa
+      - mcp
+    GetUsersByRoleResponse:
+      title: GetUsersByRoleResponse
+      description: Gets all users by role
       type: object
       properties:
-        name:
-          description: Name of the role. To be valid, it can't include slashes ('/').
-          type: string
-          pattern: ^[^/]+$
-        permissions:
-          description: List of permissions.
+        elements:
           type: array
           items:
-            $ref: '#/components/schemas/Permission'
-          minItems: 1
-      required:
-      - name
-      - permissions
-    Permission:
-      title: Permission
-      description: List of all available system permissions.
+            $ref: '#/components/schemas/User'
+    GetRolesResponse:
+      title: GetRolesResponse
+      description: Returns a list of roles.
       type: object
       properties:
-        application:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Application'
-          - description: Abbreviation of the application this permission belongs to.
-        children:
-          description: Nested list of child permissions.
+        elements:
           type: array
           items:
-            $ref: '#/components/schemas/Permission'
-          minItems: 1
-        name:
-          description: Name of the permission.
-          type: string
-      required:
-      - application
-      - name
+            $ref: '#/components/schemas/RoleItem'
     RoleItem:
       title: RoleItem
       description: Needed for granting permissions per group not individually.
@@ -1018,6 +1013,24 @@ components:
       required:
       - id
       - name
+    PostRolesRequest:
+      title: PostRolesRequest
+      description: Needed for granting permissions per group not individually.
+      type: object
+      properties:
+        name:
+          description: Name of the role. To be valid, it can't include slashes ('/').
+          type: string
+          pattern: ^[^/]+$
+        permissions:
+          description: List of permissions.
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+          minItems: 1
+      required:
+      - name
+      - permissions
     Role:
       title: Role
       description: Needed for granting permissions per group not individually.
@@ -1046,41 +1059,28 @@ components:
       required:
       - id
       - name
-    PutRolesByIdRequest:
-      title: PutRolesByIdRequest
-      description: Needed for granting permissions per group not individually.
+    Permission:
+      title: Permission
+      description: List of all available system permissions.
       type: object
       properties:
-        name:
-          description: Name of the role. To be valid, it can't include slashes ('/').
-          type: string
-          pattern: ^[^/]+$
-        permissions:
-          description: List of permissions.
+        application:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Application'
+          - description: Abbreviation of the application this permission belongs to.
+        children:
+          description: Nested list of child permissions.
           type: array
           items:
             $ref: '#/components/schemas/Permission'
           minItems: 1
+        name:
+          description: Name of the permission.
+          type: string
       required:
+      - application
       - name
-      - permissions
-    GetUsersByRoleResponse:
-      title: GetUsersByRoleResponse
-      description: Gets all users by role
-      type: object
-      properties:
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
-    Application:
-      title: Application
-      description: Abbreviation of the application this permission belongs to.
-      type: string
-      enum:
-      - nom
-      - aa
-      - mcp
   securitySchemes:
     oauth:
       type: oauth2

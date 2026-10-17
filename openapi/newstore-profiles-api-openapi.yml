@@ -190,20 +190,26 @@ paths:
         - clienteling:profile:read
 components:
   schemas:
-    Meta:
-      title: Meta
-      description: Additional response information.
+    OptedIn:
+      title: OptedIn
+      description: Opt-in status information for a conversation between a customer and a store.
       example:
-        next_page_token: abcfed
+        opt_in_state: accepted
+        opt_in_state_modified_at: '2025-01-03T18:03:00Z'
       type: object
       properties:
-        next_page_token:
-          description: 'Token that can be used to retrieve the next page of results.
-
-            If this field is null, the last page of the results has been reached.'
+        opt_in_state:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OptInState'
+          - description: The current opt-in state for this store.
+        opt_in_state_modified_at:
+          description: Timestamp when the opt-in state was last modified.
           type: string
+          format: date-time
       required:
-      - next_page_token
+      - opt_in_state
+      - opt_in_state_modified_at
     Problem:
       title: Problem
       type: object
@@ -241,34 +247,59 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    OptedIn:
-      title: OptedIn
-      description: Opt-in status information for a conversation between a customer and a store.
+    Profiles:
+      title: Profiles
+      description: Clienteling profile information for multiple customers.
       example:
-        opt_in_state: accepted
-        opt_in_state_modified_at: '2025-01-03T18:03:00Z'
+        meta:
+          next_page_token: abcfed
+        profiles:
+        - customer_id: 123e4567-e89b-12d3-a456-426614174000
+          opted_in:
+            store_123:
+              opt_in_state: accepted
+              opt_in_state_modified_at: '2024-03-20T15:30:00Z'
+          opted_out: false
+          opted_out_at: null
+          phone_number: '+1234567890'
+        - customer_id: 987fcdeb-51d3-12a4-b678-426614174111
+          opted_in:
+            store_456:
+              opt_in_state: rejected
+              opt_in_state_modified_at: '2024-03-19T10:15:00Z'
+          opted_out: true
+          opted_out_at: '2024-03-19T10:15:00Z'
+          phone_number: '+1987654321'
       type: object
       properties:
-        opt_in_state:
+        meta:
           type: object
           allOf:
-          - $ref: '#/components/schemas/OptInState'
-          - description: The current opt-in state for this store.
-        opt_in_state_modified_at:
-          description: Timestamp when the opt-in state was last modified.
-          type: string
-          format: date-time
+          - $ref: '#/components/schemas/Meta'
+          - description: Additional response information.
+            example:
+              next_page_token: abcfed
+        profiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Profile'
       required:
-      - opt_in_state
-      - opt_in_state_modified_at
-    OptInState:
-      title: OptInState
-      description: The current opt-in state for this store.
-      type: string
-      enum:
-      - accepted
-      - waiting
-      - rejected
+      - meta
+      - profiles
+    Meta:
+      title: Meta
+      description: Additional response information.
+      example:
+        next_page_token: abcfed
+      type: object
+      properties:
+        next_page_token:
+          description: 'Token that can be used to retrieve the next page of results.
+
+            If this field is null, the last page of the results has been reached.'
+          type: string
+      required:
+      - next_page_token
     Profile:
       title: Profile
       description: Clienteling profile information for a customer.
@@ -311,45 +342,14 @@ components:
       - opted_out
       - opted_out_at
       - phone_number
-    Profiles:
-      title: Profiles
-      description: Clienteling profile information for multiple customers.
-      example:
-        meta:
-          next_page_token: abcfed
-        profiles:
-        - customer_id: 123e4567-e89b-12d3-a456-426614174000
-          opted_in:
-            store_123:
-              opt_in_state: accepted
-              opt_in_state_modified_at: '2024-03-20T15:30:00Z'
-          opted_out: false
-          opted_out_at: null
-          phone_number: '+1234567890'
-        - customer_id: 987fcdeb-51d3-12a4-b678-426614174111
-          opted_in:
-            store_456:
-              opt_in_state: rejected
-              opt_in_state_modified_at: '2024-03-19T10:15:00Z'
-          opted_out: true
-          opted_out_at: '2024-03-19T10:15:00Z'
-          phone_number: '+1987654321'
-      type: object
-      properties:
-        meta:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Meta'
-          - description: Additional response information.
-            example:
-              next_page_token: abcfed
-        profiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/Profile'
-      required:
-      - meta
-      - profiles
+    OptInState:
+      title: OptInState
+      description: The current opt-in state for this store.
+      type: string
+      enum:
+      - accepted
+      - waiting
+      - rejected
   securitySchemes:
     oauth:
       type: oauth2

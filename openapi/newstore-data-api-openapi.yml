@@ -348,6 +348,18 @@ paths:
         - customer:profile:read
 components:
   schemas:
+    CreateDataResponse:
+      title: CreateDataResponse
+      description: Store file response.
+      type: object
+      properties:
+        id:
+          description: The ID for retriving the file content.
+          example: NS-EU-a5548746-acc1-4d75-81b9-72aec2bfebb7
+          type: string
+          pattern: ^NS-[A-Z]{2}-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[8|9|aA|bB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$
+      required:
+      - id
     CreateDataRequest:
       title: CreateDataRequest
       description: Create data request.
@@ -406,18 +418,6 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    CreateDataResponse:
-      title: CreateDataResponse
-      description: Store file response.
-      type: object
-      properties:
-        id:
-          description: The ID for retriving the file content.
-          example: NS-EU-a5548746-acc1-4d75-81b9-72aec2bfebb7
-          type: string
-          pattern: ^NS-[A-Z]{2}-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[8|9|aA|bB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$
-      required:
-      - id
   securitySchemes:
     oauth:
       type: oauth2

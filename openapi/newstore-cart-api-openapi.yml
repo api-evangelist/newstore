@@ -927,23 +927,127 @@ paths:
         required: true
 components:
   schemas:
-    ChangeItemRequestBody:
-      title: ChangeItemRequestBody
+    Fulfillment:
+      title: Fulfillment
+      description: Fulfillment type
+      type: string
+      enum:
+      - SHIPPING
+      - IN_STORE_HANDOVER
+    ItemLinks:
+      title: ItemLinks
       type: object
       properties:
+        add_add_on:
+          $ref: '#/components/schemas/Link'
+        add_ons:
+          $ref: '#/components/schemas/Link'
+        change_item:
+          $ref: '#/components/schemas/Link'
+        remove_item:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+      required:
+      - add_ons
+      - self
+    AddItemItemPrice:
+      title: AddItemItemPrice
+      type: object
+      properties:
+        source:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Source'
+          - description: Price source
+            example: INTERNAL
+        source_id:
+          description: Price source ID, e.g. name of pricebook
+          example: default
+          type: string
+    CartLinks:
+      title: CartLinks
+      type: object
+      properties:
+        add_item:
+          $ref: '#/components/schemas/Link'
+        change_cart:
+          $ref: '#/components/schemas/Link'
+        items:
+          $ref: '#/components/schemas/Link'
+        self:
+          $ref: '#/components/schemas/Link'
+      required:
+      - items
+      - self
+    ChangeCartRequestBody:
+      title: ChangeCartRequestBody
+      type: object
+      properties:
+        customer_id:
+          description: Customer ID
+          example: 0196f384-9d57-7190-9e3e-89d5816f5805
+          type: string
+    AddItemRequestBody:
+      title: AddItemRequestBody
+      type: object
+      properties:
+        epc:
+          example: 30A12BCDEF0123456789A1BCDEF01234
+          type: string
         extended_attributes:
           type: array
           items:
-            $ref: '#/components/schemas/ChangeItemExtendedAttribute'
+            $ref: '#/components/schemas/AddItemExtendedAttribute'
+          maxItems: 100
         fulfillment:
           type: object
           allOf:
           - $ref: '#/components/schemas/Fulfillment'
           - description: Fulfillment type
+        price:
+          $ref: '#/components/schemas/AddItemItemPrice'
+        product_id:
+          description: Product ID
+          example: '1000761'
+          type: string
+        serial_number:
+          example: ABC123
+          type: string
         source_id:
           description: Source identifier
           example: gid://newstore/reservations/523/items/345
           type: string
+      required:
+      - product_id
+    ChangeItemResponseBody:
+      title: ChangeItemResponseBody
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            type: string
+        warnings:
+          type: array
+          items:
+            type: string
+      required:
+      - messages
+      - warnings
+    ChangeItemExtendedAttribute:
+      title: ChangeItemExtendedAttribute
+      type: object
+      properties:
+        name:
+          example: engraving
+          type: string
+        value:
+          example: For you.
+          type: string
+      required:
+      - name
+      - value
     Problem:
       title: Problem
       type: object
@@ -981,19 +1085,6 @@ components:
           example: /some/uri-reference
           type: string
           default: about:blank
-    ExtendedAttribute:
-      title: ExtendedAttribute
-      type: object
-      properties:
-        name:
-          description: Extended attribute name
-          type: string
-        value:
-          description: Extended attribute value
-          type: string
-      required:
-      - name
-      - value
     AddItemResponseBody:
       title: AddItemResponseBody
       type: object
@@ -1011,172 +1102,6 @@ components:
       required:
       - messages
       - warnings
-    Source:
-      title: Source
-      description: Price source
-      example: INTERNAL
-      type: string
-      enum:
-      - INTERNAL
-      - internal
-    Fulfillment:
-      title: Fulfillment
-      description: Fulfillment type
-      type: string
-      enum:
-      - SHIPPING
-      - IN_STORE_HANDOVER
-    ChangeItemExtendedAttribute:
-      title: ChangeItemExtendedAttribute
-      type: object
-      properties:
-        name:
-          example: engraving
-          type: string
-        value:
-          example: For you.
-          type: string
-      required:
-      - name
-      - value
-    AddItemExtendedAttribute:
-      title: AddItemExtendedAttribute
-      type: object
-      properties:
-        name:
-          example: engraving
-          type: string
-        value:
-          example: For you.
-          type: string
-      required:
-      - name
-      - value
-    ItemPrice:
-      title: ItemPrice
-      type: object
-      properties:
-        source:
-          type: string
-        source_id:
-          type: string
-      required:
-      - source
-      - source_id
-    ItemResource:
-      title: ItemResource
-      type: object
-      properties:
-        _links:
-          $ref: '#/components/schemas/ItemLinks'
-        add_ons:
-          description: Item add-ons
-          type: array
-          items:
-            $ref: '#/components/schemas/AddOnResource'
-        epc:
-          description: Electronic Product Code
-          type: string
-        extended_attributes:
-          description: Extended attributes
-          type: array
-          items:
-            $ref: '#/components/schemas/ExtendedAttribute'
-        fulfillment:
-          description: Fulfillment method, can be SHIPPING,IN_STORE_HANDOVER
-          type: string
-        id:
-          description: Line ID
-          type: string
-        price:
-          $ref: '#/components/schemas/ItemPrice'
-        product_id:
-          description: Item ID
-          type: string
-        quantity:
-          description: Number of items in the line
-          type: integer
-          format: int32
-        serial_number:
-          description: Unique item serial number
-          type: string
-        source_id:
-          description: Source identifier
-          type: string
-      required:
-      - _links
-      - add_ons
-      - extended_attributes
-      - id
-      - price
-      - product_id
-      - quantity
-    ItemLinks:
-      title: ItemLinks
-      type: object
-      properties:
-        add_add_on:
-          $ref: '#/components/schemas/Link'
-        add_ons:
-          $ref: '#/components/schemas/Link'
-        change_item:
-          $ref: '#/components/schemas/Link'
-        remove_item:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-      required:
-      - add_ons
-      - self
-    RemoveItemResponseBody:
-      title: RemoveItemResponseBody
-      type: object
-      properties:
-        messages:
-          description: Informational messages
-          type: array
-          items:
-            type: string
-        warnings:
-          description: Warning messages
-          type: array
-          items:
-            type: string
-      required:
-      - messages
-      - warnings
-    AddItemRequestBody:
-      title: AddItemRequestBody
-      type: object
-      properties:
-        epc:
-          example: 30A12BCDEF0123456789A1BCDEF01234
-          type: string
-        extended_attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/AddItemExtendedAttribute'
-          maxItems: 100
-        fulfillment:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Fulfillment'
-          - description: Fulfillment type
-        price:
-          $ref: '#/components/schemas/AddItemItemPrice'
-        product_id:
-          description: Product ID
-          example: '1000761'
-          type: string
-        serial_number:
-          example: ABC123
-          type: string
-        source_id:
-          description: Source identifier
-          example: gid://newstore/reservations/523/items/345
-          type: string
-      required:
-      - product_id
     AddOnResource:
       title: AddOnResource
       type: object
@@ -1213,29 +1138,19 @@ components:
       - price
       - product_id
       - quantity
-    ChangeCartRequestBody:
-      title: ChangeCartRequestBody
+    ExtendedAttribute:
+      title: ExtendedAttribute
       type: object
       properties:
-        customer_id:
-          description: Customer ID
-          example: 0196f384-9d57-7190-9e3e-89d5816f5805
+        name:
+          description: Extended attribute name
           type: string
-    ChangeItemResponseBody:
-      title: ChangeItemResponseBody
-      type: object
-      properties:
-        messages:
-          type: array
-          items:
-            type: string
-        warnings:
-          type: array
-          items:
-            type: string
+        value:
+          description: Extended attribute value
+          type: string
       required:
-      - messages
-      - warnings
+      - name
+      - value
     CartResource:
       title: CartResource
       type: object
@@ -1287,6 +1202,44 @@ components:
       - items
       - locale
       - state
+    Source:
+      title: Source
+      description: Price source
+      example: INTERNAL
+      type: string
+      enum:
+      - INTERNAL
+      - internal
+    AddItemExtendedAttribute:
+      title: AddItemExtendedAttribute
+      type: object
+      properties:
+        name:
+          example: engraving
+          type: string
+        value:
+          example: For you.
+          type: string
+      required:
+      - name
+      - value
+    RemoveItemResponseBody:
+      title: RemoveItemResponseBody
+      type: object
+      properties:
+        messages:
+          description: Informational messages
+          type: array
+          items:
+            type: string
+        warnings:
+          description: Warning messages
+          type: array
+          items:
+            type: string
+      required:
+      - messages
+      - warnings
     Link:
       title: Link
       type: object
@@ -1299,6 +1252,65 @@ components:
           type: string
       required:
       - href
+    ItemResource:
+      title: ItemResource
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/ItemLinks'
+        add_ons:
+          description: Item add-ons
+          type: array
+          items:
+            $ref: '#/components/schemas/AddOnResource'
+        epc:
+          description: Electronic Product Code
+          type: string
+        extended_attributes:
+          description: Extended attributes
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtendedAttribute'
+        fulfillment:
+          description: Fulfillment method, can be SHIPPING,IN_STORE_HANDOVER
+          type: string
+        id:
+          description: Line ID
+          type: string
+        price:
+          $ref: '#/components/schemas/ItemPrice'
+        product_id:
+          description: Item ID
+          type: string
+        quantity:
+          description: Number of items in the line
+          type: integer
+          format: int32
+        serial_number:
+          description: Unique item serial number
+          type: string
+        source_id:
+          description: Source identifier
+          type: string
+      required:
+      - _links
+      - add_ons
+      - extended_attributes
+      - id
+      - price
+      - product_id
+      - quantity
+    ItemPrice:
+      title: ItemPrice
+      type: object
+      properties:
+        source:
+          type: string
+        source_id:
+          type: string
+      required:
+      - source
+      - source_id
     AddOnLinks:
       title: AddOnLinks
       type: object
@@ -1311,35 +1323,6 @@ components:
           $ref: '#/components/schemas/Link'
       required:
       - self
-    CartLinks:
-      title: CartLinks
-      type: object
-      properties:
-        add_item:
-          $ref: '#/components/schemas/Link'
-        change_cart:
-          $ref: '#/components/schemas/Link'
-        items:
-          $ref: '#/components/schemas/Link'
-        self:
-          $ref: '#/components/schemas/Link'
-      required:
-      - items
-      - self
-    AddItemItemPrice:
-      title: AddItemItemPrice
-      type: object
-      properties:
-        source:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/Source'
-          - description: Price source
-            example: INTERNAL
-        source_id:
-          description: Price source ID, e.g. name of pricebook
-          example: default
-          type: string
     CreateCartRequestBody:
       title: CreateCartRequestBody
       type: object
@@ -1390,6 +1373,23 @@ components:
       - channel_type
       - currency
       - locale
+    ChangeItemRequestBody:
+      title: ChangeItemRequestBody
+      type: object
+      properties:
+        extended_attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChangeItemExtendedAttribute'
+        fulfillment:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/Fulfillment'
+          - description: Fulfillment type
+        source_id:
+          description: Source identifier
+          example: gid://newstore/reservations/523/items/345
+          type: string
   securitySchemes:
     oauth:
       type: oauth2

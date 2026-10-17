@@ -378,6 +378,25 @@ components:
         skip_soft_routing_on_injection:
           description: When set to true, do not do the soft routing for injected orders with a service level identifier.
           type: boolean
+    OrderInjectionConfigurationResponse:
+      title: OrderInjectionConfigurationResponse
+      description: Update configuration response
+      type: object
+      properties:
+        updated_at:
+          type: string
+          format: date-time
+        updated_by:
+          description: Internal User ID
+          type: string
+        value:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/OrderInjectionTenantConfiguration'
+          - description: Tenant configuration object.
+        version:
+          description: Current Configuration version
+          type: string
     Problem:
       title: Problem
       type: object
@@ -426,25 +445,6 @@ components:
           format: double
       required:
       - hard_limit_for_big_orders
-    OrderInjectionConfigurationResponse:
-      title: OrderInjectionConfigurationResponse
-      description: Update configuration response
-      type: object
-      properties:
-        updated_at:
-          type: string
-          format: date-time
-        updated_by:
-          description: Internal User ID
-          type: string
-        value:
-          type: object
-          allOf:
-          - $ref: '#/components/schemas/OrderInjectionTenantConfiguration'
-          - description: Tenant configuration object.
-        version:
-          description: Current Configuration version
-          type: string
   securitySchemes:
     oauth:
       type: oauth2
