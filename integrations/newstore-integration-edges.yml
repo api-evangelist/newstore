@@ -1,5 +1,5 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/newstore/integrations
 - https://n8n.io/integrations/newstore/
@@ -10,7 +10,26 @@ checked:
 - https://monid.ai/tools/newstore
 - https://n8n.io/integrations/newstore/
 - https://zapier.com/apps/newstore/integrations
+- salesforce-commerce-cloud/integrations/salesforce-commerce-cloud-integration-edges.yml
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: Salesforce Commerce Cloud (own)
+  partner: salesforce-commerce-cloud
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://appexchange.salesforce.com/appxListingDetail?listingId=a0N3A00000FMlVCUA1
+  mirror_of: salesforce-commerce-cloud/integrations/salesforce-commerce-cloud-integration-edges.yml
+  apps:
+  - NewStore POS Connector for Salesforce Order Management
+  - NewStore Guide for B2C Commerce Headless Integration
+  listing_count: 2
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
+  category: eCommerce
 templates: []
